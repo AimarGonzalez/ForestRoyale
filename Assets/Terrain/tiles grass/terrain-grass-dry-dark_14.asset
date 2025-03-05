@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: terrain-grass-dry_11_dark
+  m_Name: terrain-grass-dry-dark_14
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1943359298, guid: 7028e705fb42a4245af4cee77c7cc91c, type: 3}
-  m_Color: {r: 0.899371, g: 0.899371, b: 0.899371, a: 1}
+  m_Sprite: {fileID: 1584748265, guid: 6f1f2d06a5ecd44478c555bee8b9c353, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
