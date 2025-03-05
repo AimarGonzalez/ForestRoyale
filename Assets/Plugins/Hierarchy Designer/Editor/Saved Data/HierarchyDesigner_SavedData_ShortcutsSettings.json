@@ -1,0 +1,6 @@
+{
+    "ToggleGameObjectActiveStateKeyCode": 325,
+    "ToggleLockStateKeyCode": 282,
+    "ChangeTagLayerKeyCode": 283,
+    "RenameSelectedGameObjectsKeyCode": 284
+}

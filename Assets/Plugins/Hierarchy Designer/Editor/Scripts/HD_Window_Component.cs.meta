@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ccbb7272b47c1be4ea2605c38eca6cf2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273928
+  packageName: Hierarchy Designer
+  packageVersion: 1.7.0
+  assetPath: Assets/Verpha/Hierarchy Designer/Editor/Scripts/HD_Window_Component.cs
+  uploadId: 732888
