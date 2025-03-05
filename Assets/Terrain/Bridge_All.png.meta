@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2bd49295398600147a1892826b94c6c8
+guid: 362c76c7b07a4c14cb2177fefe838c17
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,95 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shadows_0
+      name: Bridge_All_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75fd8d16c5cb589419c6a34b6ad842a4
+      internalID: -2142693836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3208091848ef3054b9205d8dad48983d
+      internalID: 1418186262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54cf42cc2279ca44b565666bdfaebfb
+      internalID: -1251980260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5966031b5a385c5478c7de2ff0ad1e58
+      internalID: 346516424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_4
       rect:
         serializedVersion: 2
         x: 64
@@ -125,14 +213,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1373e26f0d58d014fbe1cf5a3fa23898
-      internalID: 383501
+      spriteID: 7eae18b2c3b66824aabc971dce5ced41
+      internalID: -341752623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadows_1
+      name: Bridge_All_5
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22d5173e7e6f6e147aabbec36efe4e0f
+      internalID: -1903416864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_6
       rect:
         serializedVersion: 2
         x: 0
@@ -147,14 +257,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73a125687784217428b4c92a1ac3becd
-      internalID: 1639126935
+      spriteID: 550f0e3703afc924cae6f99847bffa89
+      internalID: -1151128391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadows_2
+      name: Bridge_All_7
       rect:
         serializedVersion: 2
         x: 64
@@ -169,39 +279,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6ccb812458cf4e4a8a3bbcf62320fb0
-      internalID: -2144651332
+      spriteID: 71b939b0802aada47ba37060041b25b0
+      internalID: 890022640
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shadows_3
+      name: Bridge_All_8
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e78309dc99c1c945b971daca58e36ea
-      internalID: 2101623224
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shadows_4
-      rect:
-        serializedVersion: 2
-        x: 64
+        x: 0
         y: 0
         width: 64
         height: 64
@@ -213,8 +301,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b24fce82140d30a4d88be38147890116
-      internalID: 1860813611
+      spriteID: bfe5a60b520afb34f99020adb2b889bd
+      internalID: -576010046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bridge_All_9
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29d3c0ef6b0f70442bc7e24114c3f26e
+      internalID: 1472303431
       vertices: []
       indices: 
       edges: []
@@ -223,7 +333,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 80f9f52635804284ba09640aca694593
+    spriteID: 10bf24fabcc55174ba0e11b1e7945b98
     internalID: 0
     vertices: []
     indices: 
@@ -233,11 +343,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shadows_0: 383501
-      Shadows_1: 1639126935
-      Shadows_2: -2144651332
-      Shadows_3: 2101623224
-      Shadows_4: 1860813611
+      Bridge_All_0: -2142693836
+      Bridge_All_1: 1418186262
+      Bridge_All_2: -1251980260
+      Bridge_All_3: 346516424
+      Bridge_All_4: -341752623
+      Bridge_All_5: -1903416864
+      Bridge_All_6: -1151128391
+      Bridge_All_7: 890022640
+      Bridge_All_8: -576010046
+      Bridge_All_9: 1472303431
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
