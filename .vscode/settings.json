@@ -56,5 +56,34 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Forest Royale.sln"
+    "dotnet.defaultSolution": "Forest Royale.sln",
+    "editor.tokenColorCustomizations": {
+        "[JetBrains*]": {
+            "textMateRules": [
+                {
+                    "scope": "entity.name.variable.field.cs",
+                    "settings": {
+                        "foreground": "#001884"
+                    }
+                },
+                {
+                    "scope": "constant.numeric",
+                    "settings": {
+                        "foreground": "#AB2F6B"
+                    }
+                }
+            ]
+        }
+    },
+    "workbench.colorCustomizations": {
+        "[JetBrains*]": {
+            "editor.background": "#F1F0ED",
+            "tab.activeBackground": "#e86ece",
+            "tab.unfocusedActiveBackground": "#f7bcec",
+            "tab.activeForeground": "#000000",
+            "tab.inactiveBackground": "#dcdcdc",
+            "tab.inactiveForeground": "#000000",
+            "tab.selectedBackground": "#001884"
+        }
+    }
 }
