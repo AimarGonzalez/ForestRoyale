@@ -15,16 +15,15 @@ namespace ForestRoyale
         private float _targetIntensity = 0f;
         private bool _isFlashing = false;
         private float _flashTimer = 0f;
-
-        [SerializeField, Range(0, 1)]
-        private float _maxIntensity = 0.3f;
-       
+        
 #if UNITY_EDITOR
         // Use this param to previsualize the effect in EditMode
         [SerializeField, Range(0, 1)]
         private float _previewIntensity = 0f;
 #endif
-
+        [SerializeField, Range(0, 1)]
+        private float _maxIntensity = 0.3f;
+       
         [SerializeField, Min(0.001f)]
         private float _flashDuration = 1f;
         
@@ -34,11 +33,10 @@ namespace ForestRoyale
 
         void Start()
         {
-            // Get the material from the renderer
-            InitializeMaterial();
+            FetchMaterial();
         }
 
-        private void InitializeMaterial()
+        private void FetchMaterial()
         {
             if(_material != null)
             {
@@ -48,6 +46,8 @@ namespace ForestRoyale
             Renderer renderer = GetComponent<Renderer>();
             if (renderer != null)
             {
+                // Use renderer.sharedMaterial if we're in EditMode. Using renderer.material 
+                // would instance a temporal material, which would pollute our scene.
                 _material = Application.isPlaying ? renderer.material : renderer.sharedMaterial;
             }
             else
@@ -63,8 +63,7 @@ namespace ForestRoyale
 
             UpdateDamageEffect(Time.deltaTime, ref _currentIntensity);
         }
-
-        // This method contains the logic from the original Update method
+        
         private void UpdateDamageEffect(float deltaTime, ref float currentIntensity)
         {
             if (_isFlashing)
@@ -113,7 +112,7 @@ namespace ForestRoyale
 
         void OnEnable()
         {
-            InitializeMaterial();
+            FetchMaterial();
             if (!Application.isPlaying)
             {
                 EditorApplication.update += OnEditorUpdate;           
