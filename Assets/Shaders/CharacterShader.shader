@@ -337,7 +337,7 @@ Shader "Custom/CharacterShader"
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
-            #include "Assets/Shaders/UnityShadersCopy/CustomLitGBufferPass.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitGBufferPass.hlsl"
             ENDHLSL
         }
 
