@@ -130,5 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba50da9073ffb6641952b32b8ce60b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentIntensity: 0
-  _flashDuration: 0.1
+  _maxIntensity: 0.2
+  _flashDuration: 0.3
+  _flashEase: 1
+  _previewIntensity: 0
