@@ -21,6 +21,7 @@ namespace ForestRoyale
         [SerializeField, Range(0, 1)]
         private float _previewIntensity = 0f;
 #endif
+        
         [SerializeField, Range(0, 1)]
         private float _maxIntensity = 0.3f;
        
@@ -31,9 +32,19 @@ namespace ForestRoyale
         private Material _material; 
 
 
-        void Start()
+        void OnEnable()
         {
             FetchMaterial();
+#if UNITY_EDITOR
+            EditorApplication.update += EditorUpdate;
+#endif
+        }
+
+        void OnDisable()
+        {
+#if UNITY_EDITOR
+            EditorApplication.update -= EditorUpdate;
+#endif
         }
 
         private void FetchMaterial()
@@ -56,38 +67,58 @@ namespace ForestRoyale
             }
         }
 
-        void Update()
-        {
-            if (_material == null || !Application.isPlaying)
-                return;
 
-            UpdateDamageEffect(Time.deltaTime, ref _currentIntensity);
+#if UNITY_EDITOR
+        void OnValidate()
+        { 
+            UpdateMaterial(_previewIntensity);
         }
-        
-        private void UpdateDamageEffect(float deltaTime, ref float currentIntensity)
+
+        private void EditorUpdate()
         {
             if (_isFlashing)
             {
-                _flashTimer += deltaTime;
-                if (_flashTimer >= _flashDuration)
-                {
-                    _isFlashing = false;
-                    _targetIntensity = 0f;
-                }
-           
-                // Smoothly interpolate the current intensity to the target
-                float progress = _flashTimer / _flashDuration;
-                currentIntensity = Mathf.Lerp(_maxIntensity, _targetIntensity, progress);
-              
-                UpdateMaterial(currentIntensity);
+                // Mark the object as dirty to ensure a call to Update() while in EditMode
+                EditorUtility.SetDirty(this);
             }
         }
+#endif
 
-         private void UpdateMaterial(float currentIntensity)
+        void Update()
+        {
+            if (_isFlashing)
+            {
+                UpdateFlashEffect();
+            }
+        }
+        
+        private void UpdateFlashEffect()
+        {
+            if (_material == null)
+                return;
+            
+            _flashTimer += Time.deltaTime;
+            if (_flashTimer < _flashDuration)
+            {
+                // Smoothly interpolate the current intensity to the target
+                float progress = _flashTimer / _flashDuration;
+                _currentIntensity = Mathf.Lerp(_maxIntensity, _targetIntensity, progress);
+            }
+            else
+            {
+                _isFlashing = false;
+                _targetIntensity = 0f;
+                _currentIntensity = 0f;
+            }
+            
+            UpdateMaterial(_currentIntensity);
+        }
+        
+        private void UpdateMaterial(float currentIntensity)
         {
             if (_material != null)
             {
-                _material.SetFloat("_DamageIntensity", currentIntensity);
+                _material.SetFloat("_DamageIntensity", currentIntensity * _maxIntensity);
             }
         }
 
@@ -97,43 +128,10 @@ namespace ForestRoyale
             _flashTimer = 0f;
             _targetIntensity = 0f;
             _currentIntensity = _maxIntensity;
-                
-#if UNITY_EDITOR
-            _previewIntensity = _maxIntensity;
-#endif            
-        }
-
-#if UNITY_EDITOR
-
-        void OnValidate()
-        { 
-             UpdateMaterial(_previewIntensity * _maxIntensity);
-        }
-
-        void OnEnable()
-        {
-            FetchMaterial();
-            if (!Application.isPlaying)
-            {
-                EditorApplication.update += OnEditorUpdate;           
-            }
-        }
-
-        void OnDisable()
-        {
-            if (!Application.isPlaying)
-            {
-                EditorApplication.update -= OnEditorUpdate;
-            }
-        }
-
-        void OnEditorUpdate()
-        {
-            if (_material == null || Application.isPlaying)
-                return;
             
-            UpdateDamageEffect(Time.deltaTime, ref _previewIntensity);
-        }
+#if UNITY_EDITOR
+            _previewIntensity = 0; // Reset the previsualization value when animating damage
 #endif
+        }
     }
 } 
