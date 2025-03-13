@@ -78,7 +78,8 @@ namespace ForestRoyale
         {
             if (_isFlashing)
             {
-                // Mark the object as dirty to ensure a call to Update() while in EditMode
+                // Issue: Update() not called regularly in EditMode, so we can't see the color animation.
+                // Solution: Mark the object as dirty to force a call to Update()
                 EditorUtility.SetDirty(this);
             }
         }
