@@ -21,6 +21,9 @@ namespace ForestRoyale
         [SerializeField]
         private Ease _flashEase = Ease.Linear;
 
+        [SerializeField]
+        private Color _damageColor = Color.red;
+
 #if UNITY_EDITOR
         // Use this param to previsualize the effect in EditMode
         [SerializeField, Range(0, 1)]
@@ -66,6 +69,9 @@ namespace ForestRoyale
                 // Use renderer.sharedMaterial if we're in EditMode. Using renderer.material 
                 // would instance a temporal material, which would pollute our scene.
                 _material = Application.isPlaying ? renderer.material : renderer.sharedMaterial;
+                
+                // Set initial color after getting material
+                UpdateMaterial(0f, _damageColor);
             }
             else
             {
@@ -76,15 +82,16 @@ namespace ForestRoyale
 #if UNITY_EDITOR
         void OnValidate()
         { 
-            UpdateMaterial(_previewIntensity);
+             UpdateMaterial(_previewIntensity, _damageColor);
         }
 #endif
         
-        private void UpdateMaterial(float currentIntensity)
+        private void UpdateMaterial(float currentIntensity, Color color)
         {
             if (_material != null)
             {
                 _material.SetFloat("_DamageIntensity", currentIntensity * _maxIntensity);
+                _material.SetColor("_DamageColor", color);
             }
         }
 
@@ -94,7 +101,11 @@ namespace ForestRoyale
                 return;
 
             _flashTween?.Kill();
-            _flashTween = DOTween.To(UpdateMaterial, 1f, 0f, _flashDuration).SetEase(_flashEase);
+            _flashTween = DOTween.To(
+                () => 1f,
+                (currentValue) => { UpdateMaterial(currentValue, _damageColor); },
+                0f, _flashDuration)
+                .SetEase(_flashEase);
             
             
 #if UNITY_EDITOR

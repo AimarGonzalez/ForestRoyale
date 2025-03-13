@@ -11904,6 +11904,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: ce6a8316144d4cb428a58b506d524eb0, type: 2}
     - target: {fileID: 9217261743945449403, guid: e234f691847f45741b3697c44ed0afeb, type: 3}
+      propertyPath: _damageColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217261743945449403, guid: e234f691847f45741b3697c44ed0afeb, type: 3}
+      propertyPath: _damageColor.g
+      value: 0.3536998
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217261743945449403, guid: e234f691847f45741b3697c44ed0afeb, type: 3}
+      propertyPath: _damageColor.r
+      value: 0.25471687
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217261743945449403, guid: e234f691847f45741b3697c44ed0afeb, type: 3}
       propertyPath: _flashIntensity
       value: 0.198
       objectReference: {fileID: 0}
