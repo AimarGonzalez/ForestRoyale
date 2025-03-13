@@ -18,6 +18,9 @@ namespace ForestRoyale
         [SerializeField, Min(0.001f)]
         private float _flashDuration = 1f;
 
+        [SerializeField]
+        private Ease _flashEase = Ease.Linear;
+
 #if UNITY_EDITOR
         // Use this param to previsualize the effect in EditMode
         [SerializeField, Range(0, 1)]
@@ -91,7 +94,7 @@ namespace ForestRoyale
                 return;
 
             _flashTween?.Kill();
-            _flashTween = DOTween.To(UpdateMaterial, 1f, 0f, _flashDuration).SetEase(Ease.Linear);
+            _flashTween = DOTween.To(UpdateMaterial, 1f, 0f, _flashDuration).SetEase(_flashEase);
             
             
 #if UNITY_EDITOR
