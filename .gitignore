@@ -77,3 +77,4 @@ ProjectSettings/RiderScriptEditorPersistedState.asset
 # Blender
 *.blend1
 *.blend1.meta
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
