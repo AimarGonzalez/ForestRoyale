@@ -1,8 +1,10 @@
 using UnityEngine;
+using System;
 
 namespace raven
 {
-    public class ButtonAttribute : PropertyAttribute
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field, AllowMultiple = false)]
+    public class ButtonAttribute : Attribute
     {
         public string ButtonText { get; private set; }
         public ButtonSizes ButtonSize { get; private set; }

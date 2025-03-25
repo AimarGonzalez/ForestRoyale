@@ -4,54 +4,90 @@ using System.Reflection;
 
 namespace raven
 {
-    [CustomPropertyDrawer(typeof(ButtonAttribute))]
+    // Note: This drawer is kept for backward compatibility with ButtonAttribute on fields
+    // For methods, the attribute will be handled by RavenMonoBehaviourEditor
+    [CustomPropertyDrawer(typeof(PropertyWithButtonAttribute))]
     public class ButtonDrawer : PropertyDrawer
     {
-        private ButtonAttribute ButtonAttribute => (ButtonAttribute)attribute;
-        private SerializedProperty _currentProperty;
-
+        // Rename to PropertyWithButtonAttribute for fields
+        private class PropertyWithButtonAttribute : PropertyAttribute
+        {
+            // Empty subclass for compatibility
+        }
+        
+        private ButtonAttribute GetButtonAttribute()
+        {
+            // Get the ButtonAttribute from the field
+            FieldInfo field = GetFieldInfoFromProperty();
+            return field?.GetCustomAttribute<ButtonAttribute>();
+        }
+        
+        private FieldInfo GetFieldInfoFromProperty()
+        {
+            // Try to get the field from the property path
+            string propertyPath = fieldInfo.Name;
+            
+            // Extract the field name from the property path
+            string fieldName = propertyPath;
+            int lastDotIndex = propertyPath.LastIndexOf('.');
+            if (lastDotIndex >= 0)
+            {
+                fieldName = propertyPath.Substring(lastDotIndex + 1);
+            }
+            
+            // Get the field info from the target type
+            System.Type targetType = fieldInfo.DeclaringType;
+            return targetType.GetField(fieldName, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        }
+        
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            _currentProperty = property;
+            ButtonAttribute buttonAttribute = GetButtonAttribute();
+            if (buttonAttribute == null)
+            {
+                EditorGUI.PropertyField(position, property, label);
+                return;
+            }
 
             // Check if we should show the button
-            if (!string.IsNullOrEmpty(ButtonAttribute.ShowIf) && !RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.ShowIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.ShowIf) && !EvaluateCondition(property, buttonAttribute.ShowIf))
             {
                 return;
             }
 
-            if (!string.IsNullOrEmpty(ButtonAttribute.HideIf) && RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.HideIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.HideIf) && EvaluateCondition(property, buttonAttribute.HideIf))
             {
                 return;
             }
 
             // Check if we should disable the button
             bool disabled = false;
-            if (!string.IsNullOrEmpty(ButtonAttribute.DisableIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.DisableIf))
             {
-                disabled = RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.DisableIf);
+                disabled = EvaluateCondition(property, buttonAttribute.DisableIf);
             }
 
-            if (!string.IsNullOrEmpty(ButtonAttribute.EnableIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.EnableIf))
             {
-                disabled = !RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.EnableIf);
+                disabled = !EvaluateCondition(property, buttonAttribute.EnableIf);
             }
 
             // Calculate button size
-            float buttonHeight = GetButtonHeight();
+            float buttonHeight = GetButtonHeight(buttonAttribute);
             Rect buttonRect = position;
             buttonRect.height = buttonHeight;
 
             // Draw the button
             EditorGUI.BeginDisabledGroup(disabled);
-            if (GUI.Button(buttonRect, GetButtonText()))
+            if (GUI.Button(buttonRect, GetButtonText(property, buttonAttribute)))
             {
-                InvokeMethod(property);
+                InvokeMethod(property, buttonAttribute);
             }
             EditorGUI.EndDisabledGroup();
 
             // Draw the result if enabled
-            if (ButtonAttribute.DrawResult)
+            if (buttonAttribute.DrawResult)
             {
                 Rect resultRect = position;
                 resultRect.y += buttonHeight + 5;
@@ -62,20 +98,26 @@ namespace raven
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            ButtonAttribute buttonAttribute = GetButtonAttribute();
+            if (buttonAttribute == null)
+            {
+                return EditorGUI.GetPropertyHeight(property, label);
+            }
+            
             // Check if the button is hidden
-            if (!string.IsNullOrEmpty(ButtonAttribute.ShowIf) && !RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.ShowIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.ShowIf) && !EvaluateCondition(property, buttonAttribute.ShowIf))
             {
                 return 0;
             }
 
-            if (!string.IsNullOrEmpty(ButtonAttribute.HideIf) && RavenInspectorUtility.EvaluateCondition(property, ButtonAttribute.HideIf))
+            if (!string.IsNullOrEmpty(buttonAttribute.HideIf) && EvaluateCondition(property, buttonAttribute.HideIf))
             {
                 return 0;
             }
             
-            float height = GetButtonHeight();
+            float height = GetButtonHeight(buttonAttribute);
 
-            if (ButtonAttribute.DrawResult)
+            if (buttonAttribute.DrawResult)
             {
                 height += EditorGUIUtility.singleLineHeight + 5;
             }
@@ -83,9 +125,9 @@ namespace raven
             return height;
         }
 
-        private float GetButtonHeight()
+        private float GetButtonHeight(ButtonAttribute buttonAttribute)
         {
-            switch (ButtonAttribute.ButtonSize)
+            switch (buttonAttribute.ButtonSize)
             {
                 case ButtonSizes.Small:
                     return EditorGUIUtility.singleLineHeight;
@@ -98,29 +140,31 @@ namespace raven
             }
         }
 
-        private string GetButtonText()
+        private string GetButtonText(SerializedProperty property, ButtonAttribute buttonAttribute)
         {
-            if (!string.IsNullOrEmpty(ButtonAttribute.ButtonText))
+            if (!string.IsNullOrEmpty(buttonAttribute.ButtonText))
             {
-                return ButtonAttribute.ButtonText;
+                return buttonAttribute.ButtonText;
             }
 
-            if (!string.IsNullOrEmpty(ButtonAttribute.MethodName))
+            if (!string.IsNullOrEmpty(buttonAttribute.MethodName))
             {
-                return ButtonAttribute.MethodName;
+                return buttonAttribute.MethodName;
             }
 
-            return _currentProperty.name;
+            return property.name;
         }
 
-        private void InvokeMethod(SerializedProperty property)
+        private void InvokeMethod(SerializedProperty property, ButtonAttribute buttonAttribute)
         {
             try
             {
                 object target = property.serializedObject.targetObject;
-                string methodName = ButtonAttribute.MethodName ?? property.name;
+                string methodName = buttonAttribute.MethodName ?? property.name;
 
-                MethodInfo methodInfo = target.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                MethodInfo methodInfo = target.GetType().GetMethod(methodName, 
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    
                 if (methodInfo != null)
                 {
                     methodInfo.Invoke(target, null);
@@ -134,6 +178,40 @@ namespace raven
             {
                 Debug.LogError($"Error invoking button method: {ex.Message}");
             }
+        }
+        
+        private bool EvaluateCondition(SerializedProperty property, string conditionName)
+        {
+            // Get the target object
+            object target = property.serializedObject.targetObject;
+            System.Type targetType = target.GetType();
+            
+            // Try as method first
+            MethodInfo conditionMethod = targetType.GetMethod(conditionName, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (conditionMethod != null && conditionMethod.ReturnType == typeof(bool))
+            {
+                return (bool)conditionMethod.Invoke(target, null);
+            }
+            
+            // Try as property
+            PropertyInfo conditionProperty = targetType.GetProperty(conditionName, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (conditionProperty != null && conditionProperty.PropertyType == typeof(bool))
+            {
+                return (bool)conditionProperty.GetValue(target);
+            }
+            
+            // Try as field
+            FieldInfo conditionField = targetType.GetField(conditionName, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (conditionField != null && conditionField.FieldType == typeof(bool))
+            {
+                return (bool)conditionField.GetValue(target);
+            }
+            
+            Debug.LogWarning($"Condition '{conditionName}' not found or not a boolean.");
+            return true; // Default to showing/enabling if condition not found
         }
     }
 } 
