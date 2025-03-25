@@ -27,7 +27,7 @@ public class TilemapMeshGenerator : MonoBehaviour
     [Tooltip("Whether to generate a collider for the mesh")]
     [SerializeField] private bool _generateCollider = false;
 
-    [BoxGroup("Debug")]
+    [BoxGroup("Debug")] 
     [Tooltip("Show debug gizmos in the scene view")]
     [SerializeField] private bool _showDebugGizmos = false;
     
