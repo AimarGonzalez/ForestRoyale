@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace raven
+namespace Raven.Attributes
 {
     public class FoldoutGroupAttribute : PropertyAttribute
     {

@@ -1,7 +1,8 @@
+using Raven.Attributes;
 using UnityEngine;
 using UnityEditor;
 
-namespace raven
+namespace Raven
 {
     [CustomPropertyDrawer(typeof(LabelTextAttribute))]
     public class LabelTextDrawer : PropertyDrawer

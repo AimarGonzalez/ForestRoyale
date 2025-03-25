@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ForestRoyale
+namespace ForestRoyale.VFX
 {
     public class ColorChanger : MonoBehaviour
     {

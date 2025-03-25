@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace raven
+namespace Raven.Attributes
 {
     /// <summary>
     /// Groups properties inside a box with an optional title.

@@ -1,9 +1,11 @@
-using UnityEngine;
-using UnityEditor;
-using System.Reflection;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Raven.Attributes;
+using UnityEditor;
+using UnityEngine;
 
-namespace raven
+namespace Raven.Drawers
 {
     [CustomPropertyDrawer(typeof(OnValueChangedAttribute))]
     public class OnValueChangedDrawer : PropertyDrawer
@@ -56,7 +58,7 @@ namespace raven
                 object newValue = GetPropertyValue(property);
                 
                 // Only invoke if the value has actually changed
-                if (!System.Object.Equals(currentValue, newValue))
+                if (!Equals(currentValue, newValue))
                 {
                     // Value has changed, invoke the method
                     InvokeMethod(property);
@@ -171,7 +173,7 @@ namespace raven
                     Debug.LogWarning($"Method '{methodName}' not found on {target.GetType().Name}");
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Debug.LogError($"Error invoking OnValueChanged method: {ex.Message}");
             }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace raven
+namespace Raven
 {
     public class ShowInInspectorAttribute : PropertyAttribute
     {

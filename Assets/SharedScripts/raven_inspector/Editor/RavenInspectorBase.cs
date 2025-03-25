@@ -1,11 +1,12 @@
-using UnityEngine;
-using UnityEditor;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Raven.Attributes;
+using UnityEditor;
+using UnityEngine;
 
-namespace raven
+namespace Raven.editor
 {
     /// <summary>
     /// Base inspector class that handles custom ordering of properties based on PropertyOrderAttribute.

@@ -1,13 +1,12 @@
 using UnityEngine;
 using System;
-using UnityEngine.Serialization;
 using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace ForestRoyale
+namespace ForestRoyale.VFX
 {
     [ExecuteInEditMode]
     public class DamageHighlightController : MonoBehaviour

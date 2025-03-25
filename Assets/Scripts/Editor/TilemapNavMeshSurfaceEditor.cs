@@ -1,110 +1,114 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AI;
+using Raven.Gameplay.Navigation;
 
-[CustomEditor(typeof(TilemapNavMeshSurface))]
-public class TilemapNavMeshSurfaceEditor : Editor
+namespace Raven.Editor
 {
-    private SerializedProperty buildNavMeshOnStartProp;
-    private SerializedProperty navMeshSurfaceProp;
-
-    private void OnEnable()
+    [CustomEditor(typeof(TilemapNavMeshSurface))]
+    public class TilemapNavMeshSurfaceEditor : UnityEditor.Editor
     {
-        buildNavMeshOnStartProp = serializedObject.FindProperty("buildNavMeshOnStart");
-        navMeshSurfaceProp = serializedObject.FindProperty("navMeshSurface");
-    }
+        private SerializedProperty buildNavMeshOnStartProp;
+        private SerializedProperty navMeshSurfaceProp;
 
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Tilemap NavMesh Surface", EditorStyles.boldLabel);
-        EditorGUILayout.HelpBox("This component uses the generated grass mesh as a NavMesh surface.", MessageType.Info);
-        EditorGUILayout.Space();
-
-        // NavMesh Settings section
-        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-        EditorGUILayout.LabelField("NavMesh Settings", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(buildNavMeshOnStartProp);
-        EditorGUILayout.PropertyField(navMeshSurfaceProp);
-        EditorGUILayout.EndVertical();
-        EditorGUILayout.Space();
-
-        // Navigation status
-        TilemapNavMeshSurface navMeshSurface = (TilemapNavMeshSurface)target;
-        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-        EditorGUILayout.LabelField("Navigation Status", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField("Has NavMeshSurface:", navMeshSurface.navMeshSurface != null ? "Yes" : "No");
-        
-        bool hasNavMeshData = false;
-        if (navMeshSurface.navMeshSurface != null)
+        private void OnEnable()
         {
-            hasNavMeshData = navMeshSurface.navMeshSurface.navMeshData != null;
+            buildNavMeshOnStartProp = serializedObject.FindProperty("rebuildNavMeshOnStart");
+            navMeshSurfaceProp = serializedObject.FindProperty("navMeshSurface");
         }
-        EditorGUILayout.LabelField("Has NavMesh Data:", hasNavMeshData ? "Yes" : "No");
-        EditorGUILayout.EndVertical();
-        EditorGUILayout.Space();
 
-        // Action buttons
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        
-        if (GUILayout.Button("Update Mesh", GUILayout.Width(120)))
+        public override void OnInspectorGUI()
         {
-            // Apply any property changes before updating
-            serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Tilemap NavMesh Surface", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("This component uses the generated grass mesh as a NavMesh surface.", MessageType.Info);
+            EditorGUILayout.Space();
+
+            // NavMesh Settings section
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField("NavMesh Settings", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(buildNavMeshOnStartProp);
+            EditorGUILayout.PropertyField(navMeshSurfaceProp);
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space();
+
+            // Navigation status
+            TilemapNavMeshSurface navMeshSurface = (TilemapNavMeshSurface)target;
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField("Navigation Status", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Has NavMeshSurface:", navMeshSurface.navMeshSurface != null ? "Yes" : "No");
             
-            // Try to initialize components
-            if (navMeshSurface.EnsureInitialized())
+            bool hasNavMeshData = false;
+            if (navMeshSurface.navMeshSurface != null)
             {
-                TilemapMeshGenerator meshGenerator = navMeshSurface.GetComponent<TilemapMeshGenerator>();
-                if (meshGenerator != null && meshGenerator.EnsureInitialized())
+                hasNavMeshData = navMeshSurface.navMeshSurface.navMeshData != null;
+            }
+            EditorGUILayout.LabelField("Has NavMesh Data:", hasNavMeshData ? "Yes" : "No");
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space();
+
+            // Action buttons
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            
+            if (GUILayout.Button("Update Mesh", GUILayout.Width(120)))
+            {
+                // Apply any property changes before updating
+                serializedObject.ApplyModifiedProperties();
+                
+                // Try to initialize components
+                if (navMeshSurface.EnsureInitialized())
                 {
-                    meshGenerator.GenerateMeshFromTilemap();
-                    SceneView.RepaintAll();
-                    EditorUtility.SetDirty(target);
+                    TilemapMeshGenerator meshGenerator = navMeshSurface.GetComponent<TilemapMeshGenerator>();
+                    if (meshGenerator != null && meshGenerator.EnsureInitialized())
+                    {
+                        meshGenerator.GenerateMeshFromTilemap();
+                        SceneView.RepaintAll();
+                        EditorUtility.SetDirty(target);
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("Mesh Update Failed",
+                            "Failed to initialize the TilemapMeshGenerator component.", "OK");
+                    }
                 }
                 else
                 {
-                    EditorUtility.DisplayDialog("Mesh Update Failed",
-                        "Failed to initialize the TilemapMeshGenerator component.", "OK");
+                    EditorUtility.DisplayDialog("Initialization Failed",
+                        "Failed to initialize required components for NavMesh generation.", "OK");
                 }
             }
-            else
-            {
-                EditorUtility.DisplayDialog("Initialization Failed",
-                    "Failed to initialize required components for NavMesh generation.", "OK");
-            }
-        }
-        
-        if (GUILayout.Button("Build NavMesh", GUILayout.Width(120)))
-        {
-            // Apply any property changes before building
-            serializedObject.ApplyModifiedProperties();
             
-            // This will handle component initialization internally
-            navMeshSurface.BuildNavMesh();
-            SceneView.RepaintAll();
-            EditorUtility.SetDirty(target);
-        }
-        
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.EndHorizontal();
-        
-        // Show a button to open the Navigation window
-        EditorGUILayout.Space();
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        
-        if (GUILayout.Button("Open Navigation Window", GUILayout.Width(180)))
-        {
-            NavMeshEditorHelpers.OpenAgentSettings(0);
-        }
-        
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.EndHorizontal();
+            if (GUILayout.Button("Build NavMesh", GUILayout.Width(120)))
+            {
+                // Apply any property changes before building
+                serializedObject.ApplyModifiedProperties();
+                
+                // This will handle component initialization internally
+                navMeshSurface.BuildNavMesh();
+                SceneView.RepaintAll();
+                EditorUtility.SetDirty(target);
+            }
+            
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            
+            // Show a button to open the Navigation window
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            
+            if (GUILayout.Button("Open Navigation Window", GUILayout.Width(180)))
+            {
+                NavMeshEditorHelpers.OpenAgentSettings(0);
+            }
+            
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
 
-        serializedObject.ApplyModifiedProperties();
-    }
-} 
+            serializedObject.ApplyModifiedProperties();
+        }
+    } 
+}

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace raven
+namespace Raven.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field, AllowMultiple = false)]
     public class ButtonAttribute : Attribute
