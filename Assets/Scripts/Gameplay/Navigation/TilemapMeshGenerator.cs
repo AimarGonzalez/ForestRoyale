@@ -100,7 +100,7 @@ namespace Raven.Gameplay.Navigation
             }
         }
         
-        [Button("Regenerate Mesh")]
+        [Button("Update Mesh")]
         public void GenerateMeshFromTilemap()
         {
             if (!EnsureInitialized())

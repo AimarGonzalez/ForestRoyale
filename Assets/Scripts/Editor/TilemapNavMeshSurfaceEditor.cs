@@ -53,40 +53,10 @@ namespace Raven.Editor
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             
-            if (GUILayout.Button("Update Mesh", GUILayout.Width(120)))
+            if (GUILayout.Button("Update NavMesh", GUILayout.Width(120)))
             {
-                // Apply any property changes before updating
                 serializedObject.ApplyModifiedProperties();
                 
-                // Try to initialize components
-                if (navMeshSurface.EnsureInitialized())
-                {
-                    TilemapMeshGenerator meshGenerator = navMeshSurface.GetComponent<TilemapMeshGenerator>();
-                    if (meshGenerator != null && meshGenerator.EnsureInitialized())
-                    {
-                        meshGenerator.GenerateMeshFromTilemap();
-                        SceneView.RepaintAll();
-                        EditorUtility.SetDirty(target);
-                    }
-                    else
-                    {
-                        EditorUtility.DisplayDialog("Mesh Update Failed",
-                            "Failed to initialize the TilemapMeshGenerator component.", "OK");
-                    }
-                }
-                else
-                {
-                    EditorUtility.DisplayDialog("Initialization Failed",
-                        "Failed to initialize required components for NavMesh generation.", "OK");
-                }
-            }
-            
-            if (GUILayout.Button("Build NavMesh", GUILayout.Width(120)))
-            {
-                // Apply any property changes before building
-                serializedObject.ApplyModifiedProperties();
-                
-                // This will handle component initialization internally
                 navMeshSurface.BuildNavMesh();
                 SceneView.RepaintAll();
                 EditorUtility.SetDirty(target);
