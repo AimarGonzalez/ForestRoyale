@@ -1,34 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using raven;
 
 [RequireComponent(typeof(MeshFilter))]
 public class TilemapMeshGenerator : MonoBehaviour
 {
-    [Header("Tilemap Reference")]
+    
+    [BoxGroup("Tilemap Data")]
     [Tooltip("Tilemaps to generate the mesh from")]
-    public Tilemap[] _targetTilemaps;
+    [SerializeField] private Tilemap[] _targetTilemaps;
 
-    [Header("Tile Filtering")]
+    [BoxGroup("Tilemap Data")]
     [Tooltip("Tiles to include in the mesh generation")]
-    public TileBase[] _grassTiles;
+    [SerializeField] private TileBase[] _grassTiles;
     
-    [Header("Mesh Settings")]
+    [BoxGroup("Mesh Settings")]
     [Tooltip("Offset from the tilemap to prevent z-fighting")]
-    public float _yOffset = 0.01f;
+    [SerializeField] private float _yOffset = 0.01f;
     
+    [BoxGroup("Mesh Settings")]
     [Tooltip("Whether to update the mesh when the tilemap changes")]
-    public bool _updateDynamically = true;
+    [SerializeField] private bool _updateDynamically = true;
     
-    [Tooltip("Whether to optimize the mesh by removing unused vertices")]
-    public bool _optimizeMesh = true;
-
+    [BoxGroup("Mesh Settings")]
     [Tooltip("Whether to generate a collider for the mesh")]
-    public bool _generateCollider = false;
+    [SerializeField] private bool _generateCollider = false;
 
-    [Header("Debug")]
+    [BoxGroup("Debug")]
     [Tooltip("Show debug gizmos in the scene view")]
-    public bool _showDebugGizmos = false;
+    [SerializeField] private bool _showDebugGizmos = false;
     
     private MeshFilter _meshFilter;
     private MeshCollider _meshCollider;
@@ -98,7 +99,7 @@ public class TilemapMeshGenerator : MonoBehaviour
         }
     }
     
-    [ContextMenu("Generate Mesh")]
+    [Button("Regenerate Mesh")]
     public void GenerateMeshFromTilemap()
     {
         if (!EnsureInitialized())
@@ -293,7 +294,6 @@ public class TilemapMeshGenerator : MonoBehaviour
             _meshCollider.convex = false;
         }
     }
-    
     
     // Optional: Get the generated mesh for external use (e.g., for NavMesh generation)
     public Mesh GetGeneratedMesh()
