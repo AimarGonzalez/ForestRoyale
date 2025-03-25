@@ -49,20 +49,20 @@ namespace Raven.Gameplay.Navigation
                 if (navMeshSurface == null)
                 {
                     navMeshSurface = gameObject.AddComponent<NavMeshSurface>();
+                    
+                    ConfigureNavMeshSurfaceWithDefaultValues();
                 }
             }
 
-            // Set up the NavMeshSurface to use the generated mesh
-            ConfigureNavMeshSurface();
             return true;
         }
 
-        public void ConfigureNavMeshSurface()
+        public void ConfigureNavMeshSurfaceWithDefaultValues()
         {
             if (navMeshSurface != null)
             {
                 // Configure the NavMeshSurface to use the mesh we generate
-                navMeshSurface.collectObjects = CollectObjects.Children;
+                navMeshSurface.collectObjects = CollectObjects.All;
                 navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
             }
         }
