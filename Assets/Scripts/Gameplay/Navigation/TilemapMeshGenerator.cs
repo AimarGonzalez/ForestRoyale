@@ -341,6 +341,7 @@ namespace Raven.Gameplay.Navigation
                 }
             }
             
+            /*
             // Optional: draw a wireframe of the grass grid if available
             if (_grassGrid != null && _lastBounds != null)
             {
@@ -358,6 +359,7 @@ namespace Raven.Gameplay.Navigation
                     }
                 }
             }
+            */
         }
     } 
 }
