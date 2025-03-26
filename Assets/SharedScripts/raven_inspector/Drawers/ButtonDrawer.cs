@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Reflection;
 using Raven.Attributes;
 
-namespace Raven
+namespace Raven.Drawers
 {
     // Note: This drawer is kept for backward compatibility with ButtonAttribute on fields
     // For methods, the attribute will be handled by RavenMonoBehaviourEditor
