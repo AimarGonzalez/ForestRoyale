@@ -6,13 +6,13 @@ using ForestRoyale.Gameplay.Cards.Components;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
-	public class CreateArrowsData : EditorWindow
+	public class CreateArrowsCard : EditorWindow
 	{
-		[MenuItem("ForestRoyale/Create Arrows Data")]
+		[MenuItem("ForestRoyale/Create Arrows Card")]
 		public static void CreateArrows()
 		{
 			// Create a new instance of the SpellCard ScriptableObject
-			SpellCardData arrowsData = ScriptableObject.CreateInstance<SpellCardData>();
+			SpellCardData arrowsCard = ScriptableObject.CreateInstance<SpellCardData>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -23,13 +23,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 			// Generate the asset
 			string assetPath = $"{directory}/Arrows_Card.asset";
-			AssetDatabase.CreateAsset(arrowsData, assetPath);
+			AssetDatabase.CreateAsset(arrowsCard, assetPath);
 
 			// Select the asset in the project window
-			Selection.activeObject = arrowsData;
+			Selection.activeObject = arrowsCard;
 
 			// Initialize card data
-			arrowsData.InitializeCardData(
+			arrowsCard.InitializeCardData(
 				cardName: "Arrows",
 				description: "Arrows shower a large area, dealing moderate area damage to both air and ground units. Effective against swarms of weak enemies.",
 				portrait: null, // Portrait would be set manually
@@ -44,10 +44,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				affectsBuildings: true,
 				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect);
 
-			arrowsData.InitializeSpellCardData(spellEffects);
+			arrowsCard.InitializeSpellCardData(spellEffects);
 
 			// Save changes
-			EditorUtility.SetDirty(arrowsData);
+			EditorUtility.SetDirty(arrowsCard);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 

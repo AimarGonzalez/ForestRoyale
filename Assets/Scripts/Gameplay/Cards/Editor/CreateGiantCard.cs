@@ -6,9 +6,9 @@ using ForestRoyale.Gameplay.Cards.Components;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
-	public class CreateGiantData : EditorWindow
+	public class CreateGiantCard : EditorWindow
 	{
-		[MenuItem("ForestRoyale/Create Giant Data")]
+		[MenuItem("ForestRoyale/Create Giant Card")]
 		public static void CreateGiant()
 		{
 			// Create a new instance of the TroopCardData ScriptableObject

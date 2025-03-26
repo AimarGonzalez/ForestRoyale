@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
-	public class CreateMinionsData : EditorWindow
+	public class CreateMinionsCard : EditorWindow
 	{
-		[MenuItem("ForestRoyale/Create Minions Data")]
+		[MenuItem("ForestRoyale/Create Minions Card")]
 		public static void CreateMinions()
 		{
 			// Create a new instance of the TroopCardData ScriptableObject
