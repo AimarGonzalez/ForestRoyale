@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56aa9db02bdf75b43ba1ff8cde0697d4, type: 3}
-  m_Name: NewBuilding_Card
+  m_Name: Cannon_Card
   m_EditorClassIdentifier: 
-  _cardName: 
-  _description: 
+  _cardName: Cannon
+  _description: Defensive building that attacks ground units. Cannot attack flying
+    enemies.
   _portrait: {fileID: 0}
-  _elixirCost: 0
+  _elixirCost: 3
   _rarity: 0
   UnitStats:
-    _hitPoints: 0
+    _hitPoints: 824
   CombatStats:
-    _damage: 0
-    _attackSpeed: 0
-    _attackRange: 0
+    _damage: 127
+    _attackSpeed: 0.8
+    _attackRange: 5.5
     _areaDamageRadius: 0

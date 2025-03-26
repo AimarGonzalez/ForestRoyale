@@ -1,7 +1,7 @@
 using UnityEngine;
 using Raven.Attributes;
 
-namespace ForestRoyale.Gameplay.Cards.Components
+namespace ForestRoyale.Gameplay.Cards.CardStats
 {
 	[System.Serializable]
 	public class CombatStats
@@ -33,12 +33,16 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		public float AreaDamageRadius => _areaDamageRadius;
 
 #if UNITY_EDITOR
-		public void Initialize(float damage, float attackSpeed, float attackRange, float areaDamageRadius = 0f)
+		public static CombatStats Build(float damage, float attackSpeed, float attackRange, float areaDamageRadius = 0f)
 		{
-			_damage = damage;
-			_attackSpeed = attackSpeed;
-			_attackRange = attackRange;
-			_areaDamageRadius = areaDamageRadius;
+			CombatStats stats = new CombatStats
+			{
+				_damage = damage,
+				_attackSpeed = attackSpeed,
+				_attackRange = attackRange,
+				_areaDamageRadius = areaDamageRadius
+			};
+			return stats;
 		}
 #endif
 	}

@@ -1,5 +1,5 @@
 using UnityEngine;
-using ForestRoyale.Gameplay.Cards.Components;
+using ForestRoyale.Gameplay.Cards.CardStats;
 
 namespace ForestRoyale.Gameplay.Cards
 {
@@ -21,15 +21,24 @@ namespace ForestRoyale.Gameplay.Cards
 		public int UnitCount => _unitCount;
 
 #if UNITY_EDITOR
-		public void InitializeTroopCardData(
+		public static TroopCardData Build(
+			string cardName,
+			string description,
+			Sprite portrait,
+			int elixirCost,
+			CardRarity rarity,
 			int unitCount,
 			TroopStats troopProperties,
-			CombatStats combatStats
-			)
+			CombatStats combatStats)
 		{
-			_unitCount = unitCount;
-			_combatStats = combatStats;
-			_troopProperties = troopProperties;
+			TroopCardData card = CreateInstance<TroopCardData>();
+			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
+
+			card._unitCount = unitCount;
+			card._troopProperties = troopProperties;
+			card._combatStats = combatStats;
+
+			return card;
 		}
 #endif
 	}

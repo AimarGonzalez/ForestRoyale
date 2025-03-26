@@ -1,7 +1,7 @@
 using UnityEngine;
 using Raven.Attributes;
 
-namespace ForestRoyale.Gameplay.Cards.Components
+namespace ForestRoyale.Gameplay.Cards.CardStats
 {
 	[System.Serializable]
 	public class TroopStats : UnitStats
@@ -20,11 +20,21 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		public float MovementSpeed => _movementSpeed;
 
 #if UNITY_EDITOR
-		public void Initialize(float hitPoints, bool isAirUnit, float movementSpeed)
+		public static TroopStats Build(float hitPoints, bool isAirUnit, float movementSpeed)
 		{
-			InitializeUnitCard(hitPoints);
-			_isAirUnit = isAirUnit;
-			_movementSpeed = movementSpeed;
+			TroopStats stats = new TroopStats();
+
+			// Set base class properties
+			UnitStats baseStats = UnitStats.Build(hitPoints);
+			// Copy hitPoints from the baseStats to our instance
+			typeof(UnitStats).GetField("_hitPoints", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+				?.SetValue(stats, baseStats.HitPoints);
+
+			// Set TroopStats specific properties
+			stats._isAirUnit = isAirUnit;
+			stats._movementSpeed = movementSpeed;
+
+			return stats;
 		}
 #endif
 	}

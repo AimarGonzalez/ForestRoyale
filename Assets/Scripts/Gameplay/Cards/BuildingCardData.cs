@@ -1,4 +1,4 @@
-using ForestRoyale.Gameplay.Cards.Components;
+using ForestRoyale.Gameplay.Cards.CardStats;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,10 +11,22 @@ namespace ForestRoyale.Gameplay.Cards
 		public CombatStats CombatStats;
 
 #if UNITY_EDITOR
-		public void InitializeBuildingCardData(UnitStats unitStats, CombatStats combatStats)
+		public static BuildingCardData Build(
+			string cardName,
+			string description,
+			Sprite portrait,
+			int elixirCost,
+			CardRarity rarity,
+			UnitStats unitStats,
+			CombatStats combatStats)
 		{
-			UnitStats = unitStats;
-			CombatStats = combatStats;
+			BuildingCardData card = CreateInstance<BuildingCardData>();
+			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
+
+			card.UnitStats = unitStats;
+			card.CombatStats = combatStats;
+
+			return card;
 		}
 #endif
 	}

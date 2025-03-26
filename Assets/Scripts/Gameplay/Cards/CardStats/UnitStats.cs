@@ -15,9 +15,13 @@ namespace ForestRoyale.Gameplay.Cards
 		public float HitPoints => _hitPoints;
 
 #if UNITY_EDITOR
-		public void InitializeUnitCard(float hitPoints)
+		public static UnitStats Build(float hitPoints)
 		{
-			_hitPoints = hitPoints;
+			UnitStats stats = new UnitStats
+			{
+				_hitPoints = hitPoints
+			};
+			return stats;
 		}
 #endif
 	}

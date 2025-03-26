@@ -34,7 +34,8 @@ namespace ForestRoyale.Gameplay.Cards
 		public CardRarity Rarity => _rarity;
 
 #if UNITY_EDITOR
-		public void InitializeCardData(
+		// Protected method to populate card data fields - called by Build methods in derived classes
+		protected void SetCardData(
 			string cardName,
 			string description,
 			Sprite portrait,

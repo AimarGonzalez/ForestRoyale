@@ -2,7 +2,7 @@ using UnityEngine;
 using Raven.Attributes;
 using System;
 
-namespace ForestRoyale.Gameplay.Cards.Components
+namespace ForestRoyale.Gameplay.Cards.CardStats
 {
 	[Serializable]
 	public class SpellStats
@@ -33,12 +33,16 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		public SpellAttributes Attributes => _attributes;
 
 #if UNITY_EDITOR
-		public void Initialize(bool affectsAir, bool affectsGround, bool affectsBuildings, SpellAttributes attributes)
+		public static SpellStats Build(bool affectsAir, bool affectsGround, bool affectsBuildings, SpellAttributes attributes)
 		{
-			_affectsAir = affectsAir;
-			_affectsGround = affectsGround;
-			_affectsBuildings = affectsBuildings;
-			_attributes = attributes;
+			SpellStats stats = new SpellStats
+			{
+				_affectsAir = affectsAir,
+				_affectsGround = affectsGround,
+				_affectsBuildings = affectsBuildings,
+				_attributes = attributes
+			};
+			return stats;
 		}
 #endif
 	}

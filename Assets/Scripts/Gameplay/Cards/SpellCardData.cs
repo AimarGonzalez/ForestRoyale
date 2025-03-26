@@ -1,5 +1,5 @@
 using UnityEngine;
-using ForestRoyale.Gameplay.Cards.Components;
+using ForestRoyale.Gameplay.Cards.CardStats;
 
 namespace ForestRoyale.Gameplay.Cards
 {
@@ -11,10 +11,20 @@ namespace ForestRoyale.Gameplay.Cards
 		public SpellStats SpellEffects => _spellEffects;
 
 #if UNITY_EDITOR
-		public void InitializeSpellCardData(SpellStats spellEffects)
+		public static SpellCardData Build(
+			string cardName,
+			string description,
+			Sprite portrait,
+			int elixirCost,
+			CardRarity rarity,
+			SpellStats spellEffects)
 		{
-			// Initialize the SpellEffectComponent
-			_spellEffects = spellEffects;
+			SpellCardData card = CreateInstance<SpellCardData>();
+			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
+
+			card._spellEffects = spellEffects;
+
+			return card;
 		}
 #endif
 	}
