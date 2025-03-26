@@ -1,9 +1,11 @@
 using UnityEngine;
 using Raven.Attributes;
+using System;
 
 namespace ForestRoyale.Gameplay.Cards
 {
-	public class UnitCard : CardData
+	[Serializable]
+	public class UnitStats
 	{
 		[BoxGroup("Combat Stats")]
 		[Tooltip("Base health points")]
@@ -11,6 +13,13 @@ namespace ForestRoyale.Gameplay.Cards
 		private float _hitPoints;
 
 		public float HitPoints => _hitPoints;
+
+#if UNITY_EDITOR
+		public void InitializeUnitCard(float hitPoints)
+		{
+			_hitPoints = hitPoints;
+		}
+#endif
 	}
 }
 

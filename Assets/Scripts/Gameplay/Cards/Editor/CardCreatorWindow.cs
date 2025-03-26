@@ -5,12 +5,12 @@ using ForestRoyale.Gameplay.Cards;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
-	public class CardDataCreator : EditorWindow
+	public class CardCreatorWindow : EditorWindow
 	{
 		[MenuItem("ForestRoyale/Open Card Creator Window")]
 		public static void ShowWindow()
 		{
-			GetWindow<CardDataCreator>("Card Creator");
+			GetWindow<CardCreatorWindow>("Card Creator");
 		}
 
 		private void OnGUI()
@@ -64,7 +64,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateEmptyTroop()
 		{
 			// Create a new instance of the TroopData ScriptableObject
-			TroopCard troopCard = ScriptableObject.CreateInstance<TroopCard>();
+			TroopCardData troopCard = ScriptableObject.CreateInstance<TroopCardData>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -73,9 +73,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				Directory.CreateDirectory(directory);
 			}
 
-			// Generate the asset with a timestamp to ensure uniqueness
-			string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
-			string assetPath = $"{directory}/NewTroop_{timestamp}.asset";
+			// Generate a unique asset name with incremental suffix
+			string assetPath = GetUniqueAssetPath(directory, "NewTroop_Card");
+
 			AssetDatabase.CreateAsset(troopCard, assetPath);
 
 			// Select the asset in the project window
@@ -85,13 +85,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log("Empty troop template created at " + assetPath);
+			Debug.Log($"Empty troop template created at {assetPath}");
 		}
 
 		private void CreateEmptyBuilding()
 		{
 			// Create a new instance of the BuildingData ScriptableObject
-			BuildingCard buildingCard = ScriptableObject.CreateInstance<BuildingCard>();
+			BuildingCardData buildingCard = ScriptableObject.CreateInstance<BuildingCardData>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -100,9 +100,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				Directory.CreateDirectory(directory);
 			}
 
-			// Generate the asset with a timestamp to ensure uniqueness
-			string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
-			string assetPath = $"{directory}/NewBuilding_{timestamp}.asset";
+			// Generate a unique asset name with incremental suffix
+			string assetPath = GetUniqueAssetPath(directory, "NewBuilding_Card");
+
 			AssetDatabase.CreateAsset(buildingCard, assetPath);
 
 			// Select the asset in the project window
@@ -112,13 +112,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log("Empty building template created at " + assetPath);
+			Debug.Log($"Empty building template created at {assetPath}");
 		}
 
 		private void CreateEmptySpell()
 		{
 			// Create a new instance of the SpellData ScriptableObject
-			SpellCard spellData = ScriptableObject.CreateInstance<SpellCard>();
+			SpellCardData spellData = ScriptableObject.CreateInstance<SpellCardData>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -127,9 +127,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				Directory.CreateDirectory(directory);
 			}
 
-			// Generate the asset with a timestamp to ensure uniqueness
-			string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
-			string assetPath = $"{directory}/NewSpell_{timestamp}.asset";
+			// Generate a unique asset name with incremental suffix
+			string assetPath = GetUniqueAssetPath(directory, "NewSpell_Card");
+
 			AssetDatabase.CreateAsset(spellData, assetPath);
 
 			// Select the asset in the project window
@@ -139,7 +139,22 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log("Empty spell template created at " + assetPath);
+			Debug.Log($"Empty spell template created at {assetPath}");
+		}
+
+		private string GetUniqueAssetPath(string directory, string baseName)
+		{
+			string assetPath = $"{directory}/{baseName}.asset";
+			int suffix = 1;
+
+			// If the file already exists, add incremental suffix
+			while (File.Exists(assetPath))
+			{
+				assetPath = $"{directory}/{baseName}_{suffix}.asset";
+				suffix++;
+			}
+
+			return assetPath;
 		}
 	}
 }

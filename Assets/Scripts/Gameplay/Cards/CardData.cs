@@ -1,8 +1,9 @@
 using UnityEngine;
 using Raven.Attributes;
-
+using System;
 namespace ForestRoyale.Gameplay.Cards
 {
+	[Serializable]
 	public abstract class CardData : ScriptableObject
 	{
 		[BoxGroup("Card")]

@@ -12,7 +12,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		public static void CreateArrows()
 		{
 			// Create a new instance of the SpellCard ScriptableObject
-			SpellCard arrowsData = ScriptableObject.CreateInstance<SpellCard>();
+			SpellCardData arrowsData = ScriptableObject.CreateInstance<SpellCardData>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -22,7 +22,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			}
 
 			// Generate the asset
-			string assetPath = $"{directory}/Arrows.asset";
+			string assetPath = $"{directory}/Arrows_Card.asset";
 			AssetDatabase.CreateAsset(arrowsData, assetPath);
 
 			// Select the asset in the project window
@@ -37,11 +37,14 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				rarity: CardRarity.Common);
 
 			// Initialize spell card data
-			arrowsData.InitializeSpellCardData(
+			SpellStats spellEffects = new SpellStats();
+			spellEffects.Initialize(
 				affectsAir: true,
 				affectsGround: true,
 				affectsBuildings: true,
 				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect);
+
+			arrowsData.InitializeSpellCardData(spellEffects);
 
 			// Save changes
 			EditorUtility.SetDirty(arrowsData);

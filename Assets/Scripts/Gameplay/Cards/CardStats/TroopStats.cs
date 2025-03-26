@@ -4,7 +4,7 @@ using Raven.Attributes;
 namespace ForestRoyale.Gameplay.Cards.Components
 {
 	[System.Serializable]
-	public class TroopStats
+	public class TroopStats : UnitStats
 	{
 		[BoxGroup("Troop Properties")]
 		[Tooltip("Is this troop an air unit?")]
@@ -20,8 +20,9 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		public float MovementSpeed => _movementSpeed;
 
 #if UNITY_EDITOR
-		public void Initialize(bool isAirUnit, float movementSpeed)
+		public void Initialize(float hitPoints, bool isAirUnit, float movementSpeed)
 		{
+			InitializeUnitCard(hitPoints);
 			_isAirUnit = isAirUnit;
 			_movementSpeed = movementSpeed;
 		}

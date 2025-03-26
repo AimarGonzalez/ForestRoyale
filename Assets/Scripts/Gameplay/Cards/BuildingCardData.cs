@@ -5,8 +5,17 @@ using UnityEngine.Serialization;
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewBuilding", menuName = "ForestRoyale/Building Data", order = 1)]
-	public class BuildingCard : UnitCard
+	public class BuildingCardData : CardData
 	{
-		public CombatStats CombatStats = new CombatStats();
+		public UnitStats UnitStats;
+		public CombatStats CombatStats;
+
+#if UNITY_EDITOR
+		public void InitializeBuildingCardData(UnitStats unitStats, CombatStats combatStats)
+		{
+			UnitStats = unitStats;
+			CombatStats = combatStats;
+		}
+#endif
 	}
 }

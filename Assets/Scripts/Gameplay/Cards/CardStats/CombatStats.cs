@@ -6,8 +6,6 @@ namespace ForestRoyale.Gameplay.Cards.Components
 	[System.Serializable]
 	public class CombatStats
 	{
-
-
 		[BoxGroup("Combat Stats")]
 		[Tooltip("Base damage per attack")]
 		[SerializeField]
