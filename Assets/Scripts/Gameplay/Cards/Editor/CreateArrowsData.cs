@@ -49,8 +49,6 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			SetFieldValue(serializedObject, "_affectsGround", true);
 			SetFieldValue(serializedObject, "_affectsBuildings", true);
 
-			SetFieldValue(serializedObject, "_status", DevelopmentStatus.Ready);
-
 			// Apply the changes
 			serializedObject.ApplyModifiedProperties();
 

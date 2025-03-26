@@ -1,32 +1,36 @@
 using UnityEngine;
 using Raven.Attributes;
+using System;
 
 namespace ForestRoyale.Gameplay.Cards.Components
 {
-	[System.Serializable]
+	[Serializable]
 	public class SpellEffectComponent
 	{
 		[BoxGroup("Spell Effects")]
 		[Tooltip("Can this spell affect air units?")]
-		[SerializeField] private bool _affectsAir = true;
+		[SerializeField]
+		private bool _affectsAir = true;
 
 		[BoxGroup("Spell Effects")]
 		[Tooltip("Can this spell affect ground units?")]
-		[SerializeField] private bool _affectsGround = true;
+		[SerializeField]
+		private bool _affectsGround = true;
 
 		[BoxGroup("Spell Effects")]
 		[Tooltip("Can this spell affect buildings?")]
-		[SerializeField] private bool _affectsBuildings = true;
+		[SerializeField]
+		private bool _affectsBuildings = true;
 
 		[BoxGroup("Spell Effects")]
 		[Tooltip("Special attributes that define spell behavior")]
-		[SerializeField] private SpellAttributes _spellAttributes;
+		[SerializeField]
+		private SpellAttributes _attributes;
 
-		// Public getters for properties
 		public bool AffectsAir => _affectsAir;
 		public bool AffectsGround => _affectsGround;
 		public bool AffectsBuildings => _affectsBuildings;
-		public SpellAttributes Attributes => _spellAttributes;
+		public SpellAttributes Attributes => _attributes;
 	}
 
 	[System.Flags]

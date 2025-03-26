@@ -56,9 +56,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			SetFieldValue(serializedObject, "_canTargetGround", true);
 			SetFieldValue(serializedObject, "_hasArmor", false);
 			SetFieldValue(serializedObject, "_isMelee", true);
-			SetFieldValue(serializedObject, "_targetPreference", FigureTargetPreference.Buildings);
-
-			SetFieldValue(serializedObject, "_status", DevelopmentStatus.Ready);
+			SetFieldValue(serializedObject, "_targetPreference", TargetPreference.Buildings);
 
 			// Apply the changes
 			serializedObject.ApplyModifiedProperties();
