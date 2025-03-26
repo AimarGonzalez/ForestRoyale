@@ -11,7 +11,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		public static void CreateArrows()
 		{
 			// Create a new instance of the SpellData ScriptableObject
-			SpellData arrowsData = ScriptableObject.CreateInstance<SpellData>();
+			SpellCard arrowsData = ScriptableObject.CreateInstance<SpellCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";

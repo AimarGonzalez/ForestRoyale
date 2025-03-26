@@ -64,7 +64,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateEmptyTroop()
 		{
 			// Create a new instance of the TroopData ScriptableObject
-			TroopData troopData = ScriptableObject.CreateInstance<TroopData>();
+			TroopCard troopCard = ScriptableObject.CreateInstance<TroopCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -76,10 +76,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			// Generate the asset with a timestamp to ensure uniqueness
 			string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
 			string assetPath = $"{directory}/NewTroop_{timestamp}.asset";
-			AssetDatabase.CreateAsset(troopData, assetPath);
+			AssetDatabase.CreateAsset(troopCard, assetPath);
 
 			// Select the asset in the project window
-			Selection.activeObject = troopData;
+			Selection.activeObject = troopCard;
 
 			// Save changes
 			AssetDatabase.SaveAssets();
@@ -91,7 +91,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateEmptyBuilding()
 		{
 			// Create a new instance of the BuildingData ScriptableObject
-			BuildingData buildingData = ScriptableObject.CreateInstance<BuildingData>();
+			BuildingCard buildingCard = ScriptableObject.CreateInstance<BuildingCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -103,10 +103,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			// Generate the asset with a timestamp to ensure uniqueness
 			string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmss");
 			string assetPath = $"{directory}/NewBuilding_{timestamp}.asset";
-			AssetDatabase.CreateAsset(buildingData, assetPath);
+			AssetDatabase.CreateAsset(buildingCard, assetPath);
 
 			// Select the asset in the project window
-			Selection.activeObject = buildingData;
+			Selection.activeObject = buildingCard;
 
 			// Save changes
 			AssetDatabase.SaveAssets();
@@ -118,7 +118,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateEmptySpell()
 		{
 			// Create a new instance of the SpellData ScriptableObject
-			SpellData spellData = ScriptableObject.CreateInstance<SpellData>();
+			SpellCard spellData = ScriptableObject.CreateInstance<SpellCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";

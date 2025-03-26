@@ -12,7 +12,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		public static void CreateGiant()
 		{
 			// Create a new instance of the TroopData ScriptableObject
-			TroopData giantData = ScriptableObject.CreateInstance<TroopData>();
+			TroopCard giantCard = ScriptableObject.CreateInstance<TroopCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -23,13 +23,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 			// Generate the asset
 			string assetPath = $"{directory}/Giant.asset";
-			AssetDatabase.CreateAsset(giantData, assetPath);
+			AssetDatabase.CreateAsset(giantCard, assetPath);
 
 			// Select the asset in the project window
-			Selection.activeObject = giantData;
+			Selection.activeObject = giantCard;
 
 			// Get the serialized object to modify its values
-			SerializedObject serializedObject = new SerializedObject(giantData);
+			SerializedObject serializedObject = new SerializedObject(giantCard);
 
 			// Set character data based on Clash Royale Wiki
 			SetFieldValue(serializedObject, "_cardName", "Giant");

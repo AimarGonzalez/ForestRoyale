@@ -4,7 +4,7 @@ using ForestRoyale.Gameplay.Cards.Components;
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewTroop", menuName = "ForestRoyale/Troop Data", order = 1)]
-	public class TroopData : CardData
+	public class TroopCard : CardData
 	{
 		[Tooltip("Number of units in this card")]
 		[SerializeField]

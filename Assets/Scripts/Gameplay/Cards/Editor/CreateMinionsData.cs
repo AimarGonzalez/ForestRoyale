@@ -13,7 +13,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		public static void CreateMinions()
 		{
 			// Create a new instance of the TroopData ScriptableObject
-			TroopData minionsData = CreateInstance<TroopData>();
+			TroopCard minionsCard = CreateInstance<TroopCard>();
 
 			// Create the directory if it doesn't exist
 			string directory = "Assets/Resources/Cards";
@@ -24,13 +24,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 			// Generate the asset
 			string assetPath = $"{directory}/Minions.asset";
-			AssetDatabase.CreateAsset(minionsData, assetPath);
+			AssetDatabase.CreateAsset(minionsCard, assetPath);
 
 			// Select the asset in the project window
-			Selection.activeObject = minionsData;
+			Selection.activeObject = minionsCard;
 
 			// Get the serialized object to modify its values
-			SerializedObject serializedObject = new SerializedObject(minionsData);
+			SerializedObject serializedObject = new SerializedObject(minionsCard);
 
 			// Set card data based on Clash Royale Wiki
 			SetFieldValue(serializedObject, "_cardName", "Minions");

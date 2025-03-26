@@ -11,7 +11,7 @@ namespace ForestRoyale.Gameplay.Cards
 
 		[BoxGroup("Card")]
 		[Tooltip("Description of the card")]
-		[SerializeField] [TextArea(3, 6)] protected string _description;
+		[SerializeField][TextArea(3, 6)] protected string _description;
 
 		[BoxGroup("Card")]
 		[Tooltip("Card portrait image")]
