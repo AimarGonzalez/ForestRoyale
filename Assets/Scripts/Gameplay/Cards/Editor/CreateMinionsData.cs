@@ -92,9 +92,14 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 						break;
 					case SerializedPropertyType.Enum:
 						if (value is Enum)
+						{
 							property.enumValueIndex = Convert.ToInt32(value);
+						}
 						else
+						{
 							property.enumValueIndex = (int)value;
+						}
+
 						break;
 					default:
 						Debug.LogWarning($"Unsupported property type for {fieldName}");

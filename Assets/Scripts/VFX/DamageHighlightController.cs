@@ -97,7 +97,9 @@ namespace ForestRoyale.VFX
 		public void FlashDamage()
 		{
 			if (_material == null)
+			{
 				return;
+			}
 
 			_flashTween?.Kill();
 			_flashTween = DOTween.To(

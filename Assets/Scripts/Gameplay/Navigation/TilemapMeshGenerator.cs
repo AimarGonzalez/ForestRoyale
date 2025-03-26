@@ -126,7 +126,10 @@ namespace Raven.Gameplay.Navigation
 
 			foreach (Tilemap tilemap in _targetTilemaps)
 			{
-				if (tilemap == null) continue;
+				if (tilemap == null)
+				{
+					continue;
+				}
 
 				BoundsInt bounds = tilemap.cellBounds;
 				if (isFirst)
@@ -187,7 +190,10 @@ namespace Raven.Gameplay.Navigation
 			// Check each tilemap for grass tiles
 			foreach (Tilemap tilemap in _targetTilemaps)
 			{
-				if (tilemap == null) continue;
+				if (tilemap == null)
+				{
+					continue;
+				}
 
 				for (int x = bounds.xMin; x < bounds.xMax; x++)
 				{
@@ -237,7 +243,9 @@ namespace Raven.Gameplay.Navigation
 				for (int y = 0; y < height; y++)
 				{
 					if (!grassGrid[x, y])
+					{
 						continue;
+					}
 
 					// Convert from grid coordinates to world coordinates
 					// Note: We're using X and Z for the horizontal plane, Y for height
@@ -319,7 +327,9 @@ namespace Raven.Gameplay.Navigation
 		private void OnDrawGizmos()
 		{
 			if (!_showDebugGizmos || _targetTilemaps == null || _generatedMesh == null)
+			{
 				return;
+			}
 
 			Gizmos.color = Color.green;
 

@@ -35,7 +35,9 @@ namespace Raven.Gameplay.Navigation
 		public bool EnsureInitialized()
 		{
 			if (meshGenerator == null)
+			{
 				meshGenerator = GetComponent<TilemapMeshGenerator>();
+			}
 
 			if (meshGenerator == null)
 			{
