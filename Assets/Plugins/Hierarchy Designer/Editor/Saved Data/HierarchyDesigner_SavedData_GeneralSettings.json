@@ -16,7 +16,10 @@
         "Transform",
         "RectTransform",
         "CanvasRenderer",
-        "MeshRenderer"
+        "ColorChanger",
+        "DamageHighlightController",
+        "MeshRenderer",
+        "TilemapRenderer"
     ],
     "MaximumComponentIconsAmount": 10,
     "ExcludedTags": [],
