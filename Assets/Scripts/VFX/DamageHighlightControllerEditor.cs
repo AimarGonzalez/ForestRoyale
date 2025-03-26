@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace ForestRoyale.VFX
 {
-    [CustomEditor(typeof(DamageHighlightController))]
-    public class DamageHighlightControllerEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI(); // Draw the default inspector
+	[CustomEditor(typeof(DamageHighlightController))]
+	public class DamageHighlightControllerEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI(); // Draw the default inspector
 
-            DamageHighlightController controller = (DamageHighlightController)target;
+			DamageHighlightController controller = (DamageHighlightController)target;
 
-            if (GUILayout.Button("Flash Damage"))
-            {
-                controller.FlashDamage();
-            }
-        }
-    }
+			if (GUILayout.Button("Flash Damage"))
+			{
+				controller.FlashDamage();
+			}
+		}
+	}
 }

@@ -79,22 +79,22 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				switch (property.propertyType)
 				{
 					case SerializedPropertyType.Integer:
-						property.intValue = (int) value;
+						property.intValue = (int)value;
 						break;
 					case SerializedPropertyType.Float:
-						property.floatValue = (float) value;
+						property.floatValue = (float)value;
 						break;
 					case SerializedPropertyType.Boolean:
-						property.boolValue = (bool) value;
+						property.boolValue = (bool)value;
 						break;
 					case SerializedPropertyType.String:
-						property.stringValue = (string) value;
+						property.stringValue = (string)value;
 						break;
 					case SerializedPropertyType.Enum:
 						if (value is Enum)
 							property.enumValueIndex = Convert.ToInt32(value);
 						else
-							property.enumValueIndex = (int) value;
+							property.enumValueIndex = (int)value;
 						break;
 					default:
 						Debug.LogWarning($"Unsupported property type for {fieldName}");
