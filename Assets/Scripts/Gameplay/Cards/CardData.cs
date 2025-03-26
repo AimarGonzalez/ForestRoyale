@@ -31,6 +31,22 @@ namespace ForestRoyale.Gameplay.Cards
 		public Sprite Portrait => _portrait;
 		public int ElixirCost => _elixirCost;
 		public CardRarity Rarity => _rarity;
+
+#if UNITY_EDITOR
+		public void InitializeCardData(
+			string cardName,
+			string description,
+			Sprite portrait,
+			int elixirCost,
+			CardRarity rarity)
+		{
+			_cardName = cardName;
+			_description = description;
+			_portrait = portrait;
+			_elixirCost = elixirCost;
+			_rarity = rarity;
+		}
+#endif
 	}
 
 	public enum CardRarity

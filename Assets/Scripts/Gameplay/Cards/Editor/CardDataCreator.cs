@@ -7,7 +7,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 {
 	public class CardDataCreator : EditorWindow
 	{
-		[MenuItem("ForestRoyale/Card Creator")]
+		[MenuItem("ForestRoyale/Open Card Creator Window")]
 		public static void ShowWindow()
 		{
 			GetWindow<CardDataCreator>("Card Creator");

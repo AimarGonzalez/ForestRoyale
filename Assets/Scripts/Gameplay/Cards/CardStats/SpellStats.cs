@@ -5,7 +5,7 @@ using System;
 namespace ForestRoyale.Gameplay.Cards.Components
 {
 	[Serializable]
-	public class SpellEffectComponent
+	public class SpellStats
 	{
 		[BoxGroup("Spell Effects")]
 		[Tooltip("Can this spell affect air units?")]
@@ -31,6 +31,16 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		public bool AffectsGround => _affectsGround;
 		public bool AffectsBuildings => _affectsBuildings;
 		public SpellAttributes Attributes => _attributes;
+
+#if UNITY_EDITOR
+		public void Initialize(bool affectsAir, bool affectsGround, bool affectsBuildings, SpellAttributes attributes)
+		{
+			_affectsAir = affectsAir;
+			_affectsGround = affectsGround;
+			_affectsBuildings = affectsBuildings;
+			_attributes = attributes;
+		}
+#endif
 	}
 
 	[System.Flags]

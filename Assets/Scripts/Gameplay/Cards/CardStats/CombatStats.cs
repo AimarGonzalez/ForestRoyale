@@ -4,12 +4,9 @@ using Raven.Attributes;
 namespace ForestRoyale.Gameplay.Cards.Components
 {
 	[System.Serializable]
-	public class CombatStatsComponent
+	public class CombatStats
 	{
-		[BoxGroup("Combat Stats")]
-		[Tooltip("Base health points")]
-		[SerializeField]
-		private float _hitPoints;
+
 
 		[BoxGroup("Combat Stats")]
 		[Tooltip("Base damage per attack")]
@@ -32,11 +29,20 @@ namespace ForestRoyale.Gameplay.Cards.Components
 		private float _areaDamageRadius;
 
 		// Public getters for properties
-		public float HitPoints => _hitPoints;
 		public float Damage => _damage;
 		public float AttackSpeed => _attackSpeed;
 		public float AttackRange => _attackRange;
 		public float AreaDamageRadius => _areaDamageRadius;
+
+#if UNITY_EDITOR
+		public void Initialize(float damage, float attackSpeed, float attackRange, float areaDamageRadius = 0f)
+		{
+			_damage = damage;
+			_attackSpeed = attackSpeed;
+			_attackRange = attackRange;
+			_areaDamageRadius = areaDamageRadius;
+		}
+#endif
 	}
 
 	public enum TargetPreference
