@@ -1,0 +1,11 @@
+---
+description: 
+globs: *.cs
+alwaysApply: false
+---
+## No end of file line
+Don't add a line to the file end
+
+
+## Stay away from assembly files
+Don't change assembly files (.asmdef) unless explicitly requested to.

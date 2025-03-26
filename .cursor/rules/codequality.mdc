@@ -3,7 +3,19 @@ description:
 globs: 
 alwaysApply: true
 ---
+
+
 # Code Quality Guidelines
+
+## Read Before Writing
+- Always read the complete implementation of related files before suggesting changes
+- Verify the existence of fields, methods and classes before referencing them
+- Use available code search tools to confirm current state of the codebase
+
+## No Assumptions
+- Never assume fields or methods exist without verification
+- Do not carry forward your own generated implementations from earlier conversations
+- Base all modifications solely on the actual code, not memory of previous suggestions
 
 ## Verify Information
 Always verify information before presenting it. Do not make assumptions or speculate without clear evidence.

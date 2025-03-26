@@ -1,0 +1,9 @@
+---
+description: Describes the game i'm trying to build. Its theme and main 
+globs: 
+alwaysApply: false
+---
+
+- This game is for mobile
+- This game is inspired by Clash Royale, but its pvc, you play against the game.
+- The map is not always the same. The player goes roaming the forest, and fight what its found there.
