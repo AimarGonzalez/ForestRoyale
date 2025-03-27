@@ -6,8 +6,7 @@ namespace ForestRoyale.Gameplay.Units
 {
 	public class Unit
 	{
-		public float Health;
-		public Vector3 Position;
+		public float RemainingHealth;
 
 		public bool IsPlayerTeam;
 		public bool IsForestTeam => !IsPlayerTeam;
@@ -16,14 +15,17 @@ namespace ForestRoyale.Gameplay.Units
 
 		public readonly UnitStats UnitStats;
 
+		public float MaxHealth => UnitStats.HitPoints;
+
 		public Unit(IUnitCard card) : this(card.UnitStats)
 		{
 		}
 
 		public Unit(UnitStats unitStats)
 		{
-			Health = unitStats.HitPoints;
+			RemainingHealth = unitStats.HitPoints;
 		}
+
 	}
 }
 
