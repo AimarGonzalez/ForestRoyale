@@ -35,7 +35,10 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private void FixedUpdate()
 		{
-			if (target == null) return;
+			if (target == null)
+			{
+				return;
+			}
 
 			UpdatePath();
 		}
@@ -60,7 +63,10 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private void OnDrawGizmos()
 		{
-			if (!Application.isPlaying || _agent == null) return;
+			if (!Application.isPlaying || _agent == null)
+			{
+				return;
+			}
 
 			// Draw line to current destination
 			if (_agent.hasPath)
