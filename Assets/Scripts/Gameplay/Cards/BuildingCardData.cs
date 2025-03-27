@@ -5,10 +5,13 @@ using UnityEngine.Serialization;
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewBuilding", menuName = "ForestRoyale/Building Data", order = 1)]
-	public class BuildingCardData : CardData
+	public class BuildingCardData : CardData, IUnitCard
 	{
-		public UnitStats UnitStats;
-		public CombatStats CombatStats;
+		[SerializeField] private UnitStats _unitStats;
+		[SerializeField] private CombatStats _combatStats;
+
+		// Implement IUnitCard interface	
+		public UnitStats UnitStats => _unitStats;
 
 #if UNITY_EDITOR
 		public static BuildingCardData Build(
@@ -23,8 +26,8 @@ namespace ForestRoyale.Gameplay.Cards
 			BuildingCardData card = CreateInstance<BuildingCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
-			card.UnitStats = unitStats;
-			card.CombatStats = combatStats;
+			card._unitStats = unitStats;
+			card._combatStats = combatStats;
 
 			return card;
 		}

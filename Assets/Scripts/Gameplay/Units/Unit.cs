@@ -14,20 +14,15 @@ namespace ForestRoyale.Gameplay.Units
 
 		public FighterComponent Fighter;
 
-		public readonly CardData Card;
+		public readonly UnitStats UnitStats;
 
-		public Unit(CardData card)
+		public Unit(IUnitCard card) : this(card.UnitStats)
 		{
-			Card = card;
+		}
 
-			if (card is TroopCardData troopCard)
-			{
-				Health = troopCard.TroopProperties.HitPoints;
-			}
-			else if (card is BuildingCardData buildingCard)
-			{
-				Health = buildingCard.UnitStats.HitPoints;
-			}
+		public Unit(UnitStats unitStats)
+		{
+			Health = unitStats.HitPoints;
 		}
 	}
 }

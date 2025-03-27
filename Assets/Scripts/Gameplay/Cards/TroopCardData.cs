@@ -4,7 +4,7 @@ using ForestRoyale.Gameplay.Cards.CardStats;
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewTroop", menuName = "ForestRoyale/Troop Data", order = 1)]
-	public class TroopCardData : CardData
+	public class TroopCardData : CardData, IUnitCard
 	{
 		[Tooltip("Number of units in this card")]
 		[SerializeField]
@@ -19,6 +19,9 @@ namespace ForestRoyale.Gameplay.Cards
 		public CombatStats CombatStats => _combatStats;
 		public TroopStats TroopProperties => _troopProperties;
 		public int UnitCount => _unitCount;
+
+		// Implement IUnitCard interface
+		public UnitStats UnitStats => _troopProperties;
 
 #if UNITY_EDITOR
 		public static TroopCardData Build(
