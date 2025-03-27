@@ -5,7 +5,7 @@ using UnityEngine.AI;
 namespace Raven.Gameplay.Navigation
 {
 	[RequireComponent(typeof(TilemapMeshGenerator))]
-	public class TilemapNavMeshSurface : MonoBehaviour
+	public class TilemapNavMeshGenerator : MonoBehaviour
 	{
 		[Header("NavMesh Settings")]
 		public bool rebuildNavMeshOnStart = true;

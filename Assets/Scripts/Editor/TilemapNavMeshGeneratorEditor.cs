@@ -5,8 +5,8 @@ using Raven.Gameplay.Navigation;
 
 namespace Raven.Editor
 {
-	[CustomEditor(typeof(TilemapNavMeshSurface))]
-	public class TilemapNavMeshSurfaceEditor : UnityEditor.Editor
+	[CustomEditor(typeof(TilemapNavMeshGenerator))]
+	public class TilemapNavMeshGeneratorEditor : UnityEditor.Editor
 	{
 		private SerializedProperty buildNavMeshOnStartProp;
 		private SerializedProperty navMeshSurfaceProp;
@@ -35,15 +35,15 @@ namespace Raven.Editor
 			EditorGUILayout.Space();
 
 			// Navigation status
-			TilemapNavMeshSurface navMeshSurface = (TilemapNavMeshSurface)target;
+			TilemapNavMeshGenerator navMeshGenerator = (TilemapNavMeshGenerator)target;
 			EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 			EditorGUILayout.LabelField("Navigation Status", EditorStyles.boldLabel);
-			EditorGUILayout.LabelField("Has NavMeshSurface:", navMeshSurface.navMeshSurface != null ? "Yes" : "No");
+			EditorGUILayout.LabelField("Has NavMeshSurface:", navMeshGenerator.navMeshSurface != null ? "Yes" : "No");
 
 			bool hasNavMeshData = false;
-			if (navMeshSurface.navMeshSurface != null)
+			if (navMeshGenerator.navMeshSurface != null)
 			{
-				hasNavMeshData = navMeshSurface.navMeshSurface.navMeshData != null;
+				hasNavMeshData = navMeshGenerator.navMeshSurface.navMeshData != null;
 			}
 
 			EditorGUILayout.LabelField("Has NavMesh Data:", hasNavMeshData ? "Yes" : "No");
@@ -58,7 +58,7 @@ namespace Raven.Editor
 			{
 				serializedObject.ApplyModifiedProperties();
 
-				navMeshSurface.BuildNavMesh();
+				navMeshGenerator.BuildNavMesh();
 				SceneView.RepaintAll();
 				EditorUtility.SetDirty(target);
 			}
