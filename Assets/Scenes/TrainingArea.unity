@@ -768,6 +768,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1533818356}
     m_Modifications:
+    - target: {fileID: 1316597476516433827, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 480894178}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_4
@@ -888,6 +892,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1533818356}
     m_Modifications:
+    - target: {fileID: 1316597476516433827, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 480894178}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_2
@@ -898,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 920323299}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.16
+      value: 3.58
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -906,7 +914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.7
+      value: -4.74
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1103,6 +1111,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1533818356}
     m_Modifications:
+    - target: {fileID: 1316597476516433827, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 480894178}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_3
@@ -46295,6 +46307,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1533818356}
     m_Modifications:
+    - target: {fileID: 1316597476516433827, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 480894178}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_1
@@ -46305,7 +46321,7 @@ PrefabInstance:
       objectReference: {fileID: 920323299}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.54
+      value: 3.13
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -46313,7 +46329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.54
+      value: 5.48
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
