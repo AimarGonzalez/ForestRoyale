@@ -125,5 +125,16 @@ namespace ForestRoyale.VFX
 			_flashTween?.ManualUpdate(Time.deltaTime, Time.unscaledDeltaTime);
 		}
 #endif
+
+		private void OnDestroy()
+		{
+			_flashTween?.Kill();
+
+			if (Application.isPlaying && _material != null)
+			{
+				Destroy(_material);
+				_material = null;
+			}
+		}
 	}
 }
