@@ -9,10 +9,6 @@ namespace ForestRoyale.Gameplay.Navigation
 	[RequireComponent(typeof(NavMeshAgent))]
 	public class MovementDebugger : MonoBehaviour
 	{
-		[Header("Target Settings")]
-		[Tooltip("The target GameObject to follow")]
-		[SerializeField] private Transform target;
-
 		[Header("Path Visualization")]
 		[Tooltip("Color of the path line")]
 		[SerializeField] private Color pathColor = Color.yellow;
@@ -31,34 +27,6 @@ namespace ForestRoyale.Gameplay.Navigation
 		private void Awake()
 		{
 			_agent = GetComponent<NavMeshAgent>();
-		}
-
-		private void FixedUpdate()
-		{
-			if (target == null)
-			{
-				return;
-			}
-
-			UpdatePath();
-		}
-
-		private void UpdatePath()
-		{
-			if (_agent.isOnNavMesh)
-			{
-				_agent.SetDestination(target.position);
-			}
-		}
-
-		// Public method to set target at runtime
-		public void SetTarget(Transform newTarget)
-		{
-			target = newTarget;
-			if (target != null)
-			{
-				UpdatePath();
-			}
 		}
 
 		private void OnDrawGizmos()
@@ -98,13 +66,13 @@ namespace ForestRoyale.Gameplay.Navigation
 		// Draw additional debug info when object is selected
 		private void OnDrawGizmosSelected()
 		{
-			if (target != null)
+			if (_agent != null && _agent.hasPath)
 			{
 				Gizmos.color = Color.blue;
-				Gizmos.DrawWireSphere(target.position, 0.5f);
+				Gizmos.DrawWireSphere(_agent.destination, 0.5f);
 				if (!Application.isPlaying)
 				{
-					Gizmos.DrawLine(transform.position, target.position);
+					Gizmos.DrawLine(transform.position, _agent.destination);
 				}
 			}
 		}

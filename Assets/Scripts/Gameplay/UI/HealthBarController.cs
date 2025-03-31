@@ -1,6 +1,7 @@
+using ForestRoyale.Gameplay.Units;
 using UnityEngine;
 using UnityEngine.UI;
-using ForestRoyale.Gameplay.Units;
+
 namespace ForestRoyale.Gameplay.UI
 {
 	public class HealthBarController : MonoBehaviour
@@ -9,11 +10,11 @@ namespace ForestRoyale.Gameplay.UI
 		[Tooltip("The UI Image component that represents the health bar fill")]
 		[SerializeField] private Image healthBarFill;
 
-		private Unit _unit;
+		private IDamageable _unit;
 		private float _lastHealth;
 		private void Awake()
 		{
-			_unit = GetComponentInParent<Unit>();
+			_unit = GetComponentInParent<IDamageable>();
 			if (_unit == null)
 			{
 				Debug.LogError("HealthBarController: No IDamageable component found in parent hierarchy!");
