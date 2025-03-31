@@ -554,5 +554,5 @@ Shader "Custom/CharacterShader"
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
+    CustomEditor "ForestRoyale.Shaders.CharacterShaderGUI"
 }
