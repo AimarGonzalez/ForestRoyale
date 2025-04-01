@@ -1295,7 +1295,7 @@ GameObject:
   - component: {fileID: 1116908091}
   - component: {fileID: 1116908088}
   - component: {fileID: 1116908090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: NavigableTerrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
