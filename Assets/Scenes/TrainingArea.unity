@@ -772,6 +772,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 480894178}
+    - target: {fileID: 2248083304886485461, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 715506486}
     - target: {fileID: 4304433659686236060, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.000000038772477
@@ -846,6 +850,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
   m_PrefabInstance: {fileID: 652159873}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &715506486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4024217904527134050, guid: cee0371473a850543b8469db81c665ae, type: 3}
+  m_PrefabInstance: {fileID: 1657394826562224260}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &877143944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -912,6 +927,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 480894178}
+    - target: {fileID: 2248083304886485461, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 715506486}
     - target: {fileID: 4304433659686236060, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.000000038772477
@@ -1147,6 +1166,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 480894178}
+    - target: {fileID: 2248083304886485461, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 715506486}
     - target: {fileID: 4304433659686236060, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.000000038772477
@@ -46359,6 +46382,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 480894178}
+    - target: {fileID: 2248083304886485461, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 715506486}
     - target: {fileID: 4304433659686236060, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.000000038772477
