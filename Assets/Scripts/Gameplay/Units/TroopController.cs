@@ -3,8 +3,9 @@ using UnityEngine.AI;
 using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Cards;
 using Raven.Attributes;
+using UnityEditor;
 
-namespace ForestRoyale.Gameplay.Navigation
+namespace ForestRoyale.Gameplay.Units
 {
 	public class TroopController : MonoBehaviour
 	{
@@ -26,18 +27,32 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		[ShowInInspector] private TroopData _troopData;
 
-		[SerializeField] private Transform _target;
+		[SerializeField] private TroopController _target;
 
-		private Collider[] GetOverlappingColliders()
+		private bool _isInCombatRange;
+
+		public Vector3 Position => transform.position; 
+
+		public TroopController()
 		{
-			// Get all colliders that are currently overlapping with the attack collider
-			Collider[] overlappingColliders = Physics.OverlapSphere(
-				_attackCollider.bounds.center,
-				_attackCollider.bounds.extents.magnitude,
-				LayerMask.GetMask("Default")
-			);
+		}
 
-			return overlappingColliders;
+		public TroopData TroopData => _troopData;
+
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.IsBodyCollider() && other.GetTroopController() == _target)
+			{
+				_isInCombatRange = true;
+			}
+		}
+
+		private void OnTriggerExit(Collider other)
+		{
+			if (other.IsBodyCollider() && other.GetTroopController() == _target)
+			{
+				_isInCombatRange = false;
+			}
 		}
 
 		void OnValidate()
@@ -56,20 +71,31 @@ namespace ForestRoyale.Gameplay.Navigation
 				return;
 			}
 
-			_agent.SetDestination(_target.position);
+			if (!_agent)
+			{
+				//show error message window
+				EditorUtility.DisplayDialog("Error", "Agent is not assigned", "OK");
+				return;
+			}
+
+			if (!_agent.isOnNavMesh)
+			{
+				//show error message window
+				EditorUtility.DisplayDialog("Error", "Agent is not on NavMesh", "OK");
+				return;
+			}
+
+			_agent.SetDestination(_target.Position);
 		}
 
 		void Update()
 		{
-			foreach (Collider collider in GetOverlappingColliders())
+			if (_isInCombatRange)
 			{
-				if (collider.TryGetComponent<TroopController>(out TroopController troopController))
-				{
-					//stop
-					_agent.isStopped = true;
+				//stop
+				_agent.isStopped = true;
 
-					// TODO: Attack the target
-				}
+				// TODO: Attack the target
 			}
 		}
 	}

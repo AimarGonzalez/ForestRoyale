@@ -18,8 +18,6 @@ namespace ForestRoyale.Gameplay.Units
 
 		public float HealthRatio => RemainingHealth / MaxHealth;
 
-		public TroopData Target;
-
 		public TroopData(IUnitCard card) : this(card.UnitStats)
 		{
 			_cardReference = card;
