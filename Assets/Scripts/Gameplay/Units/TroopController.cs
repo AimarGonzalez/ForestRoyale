@@ -31,7 +31,7 @@ namespace ForestRoyale.Gameplay.Units
 
 		private bool _isInCombatRange;
 
-		public Vector3 Position => transform.position; 
+		public Vector3 Position => transform.position;
 
 		public TroopController()
 		{
@@ -39,15 +39,39 @@ namespace ForestRoyale.Gameplay.Units
 
 		public TroopData TroopData => _troopData;
 
-		private void OnTriggerEnter(Collider other)
+		private void Awake()
+		{
+			if (_attackCollider != null)
+			{
+				var trigger = _attackCollider.gameObject.AddComponent<TriggerListener>();
+				trigger.OnTriggerEnterEvent += HandleTriggerEnter;
+				trigger.OnTriggerExitEvent += HandleTriggerExit;
+			}
+		}
+
+		private void OnDestroy()
+		{
+			if (_attackCollider != null)
+			{
+				var trigger = _attackCollider.GetComponent<TriggerListener>();
+				if (trigger != null)
+				{
+					trigger.OnTriggerEnterEvent -= HandleTriggerEnter;
+					trigger.OnTriggerExitEvent -= HandleTriggerExit;
+				}
+			}
+		}
+
+		private void HandleTriggerEnter(Collider other)
 		{
 			if (other.IsBodyCollider() && other.GetTroopController() == _target)
 			{
 				_isInCombatRange = true;
+				OnTargetInRange();
 			}
 		}
 
-		private void OnTriggerExit(Collider other)
+		private void HandleTriggerExit(Collider other)
 		{
 			if (other.IsBodyCollider() && other.GetTroopController() == _target)
 			{
@@ -73,14 +97,12 @@ namespace ForestRoyale.Gameplay.Units
 
 			if (!_agent)
 			{
-				//show error message window
 				EditorUtility.DisplayDialog("Error", "Agent is not assigned", "OK");
 				return;
 			}
 
 			if (!_agent.isOnNavMesh)
 			{
-				//show error message window
 				EditorUtility.DisplayDialog("Error", "Agent is not on NavMesh", "OK");
 				return;
 			}
@@ -90,13 +112,27 @@ namespace ForestRoyale.Gameplay.Units
 
 		void Update()
 		{
-			if (_isInCombatRange)
-			{
-				//stop
-				_agent.isStopped = true;
+		}
+		
+		private void OnTargetInRange()
+		{
+			_agent.isStopped = true;
+		}
+	}
 
-				// TODO: Attack the target
-			}
+	public class TriggerListener : MonoBehaviour
+	{
+		public event System.Action<Collider> OnTriggerEnterEvent;
+		public event System.Action<Collider> OnTriggerExitEvent;
+
+		private void OnTriggerEnter(Collider other)
+		{
+			OnTriggerEnterEvent?.Invoke(other);
+		}
+
+		private void OnTriggerExit(Collider other)
+		{
+			OnTriggerExitEvent?.Invoke(other);
 		}
 	}
 }
