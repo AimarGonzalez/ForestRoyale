@@ -1,7 +1,7 @@
+using Raven.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Raven.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,18 +16,18 @@ namespace Raven.editor
 	public class RavenMonoBehaviourEditor : Editor
 	{
 		// Dictionary to store grouped properties
-		private Dictionary<string, List<SerializedProperty>> _boxGroupedProperties = new Dictionary<string, List<SerializedProperty>>();
+		private Dictionary<string, List<SerializedProperty>> _boxGroupedProperties = new();
 
-		private Dictionary<string, List<SerializedProperty>> _foldoutGroupedProperties = new Dictionary<string, List<SerializedProperty>>();
+		private Dictionary<string, List<SerializedProperty>> _foldoutGroupedProperties = new();
 
 		// List to store properties without a group
-		private List<SerializedProperty> _ungroupedProperties = new List<SerializedProperty>();
+		private List<SerializedProperty> _ungroupedProperties = new();
 
 		// Dictionary to keep track of foldout states for each group
-		private Dictionary<string, bool> _foldoutStates = new Dictionary<string, bool>();
+		private Dictionary<string, bool> _foldoutStates = new();
 
 		// List to store methods with ButtonAttribute
-		private List<MethodInfo> _buttonMethods = new List<MethodInfo>();
+		private List<MethodInfo> _buttonMethods = new();
 
 		private void OnEnable()
 		{
@@ -59,7 +59,9 @@ namespace Raven.editor
 				{
 					// Skip script field
 					if (iterator.name == "m_Script")
+					{
 						continue;
+					}
 
 					// Create a copy of the property
 					SerializedProperty property = serializedObject.FindProperty(iterator.propertyPath);
@@ -150,14 +152,18 @@ namespace Raven.editor
 				List<SerializedProperty> properties = groupPair.Value;
 
 				if (properties.Count == 0)
+				{
 					continue;
+				}
 
 				// Get the BoxGroup attribute from the first property
 				FieldInfo fieldInfo = GetFieldInfo(target.GetType(), properties[0].name);
 				BoxGroupAttribute boxAttribute = fieldInfo?.GetCustomAttribute<BoxGroupAttribute>();
 
 				if (boxAttribute == null)
+				{
 					continue;
+				}
 
 				// Begin the box
 				GUIStyle boxStyle = new GUIStyle(EditorStyles.helpBox);
@@ -199,14 +205,18 @@ namespace Raven.editor
 				List<SerializedProperty> properties = groupPair.Value;
 
 				if (properties.Count == 0)
+				{
 					continue;
+				}
 
 				// Get the FoldoutGroup attribute from the first property
 				FieldInfo fieldInfo = GetFieldInfo(target.GetType(), properties[0].name);
 				FoldoutGroupAttribute foldoutAttribute = fieldInfo?.GetCustomAttribute<FoldoutGroupAttribute>();
 
 				if (foldoutAttribute == null)
+				{
 					continue;
+				}
 
 				// Draw the foldout header
 				GUIStyle headerStyle = new GUIStyle(EditorStyles.foldoutHeader);
@@ -235,27 +245,35 @@ namespace Raven.editor
 		private void DrawButtonMethods()
 		{
 			if (_buttonMethods.Count == 0)
+			{
 				return;
+			}
 
 			foreach (MethodInfo method in _buttonMethods)
 			{
 				ButtonAttribute buttonAttribute = method.GetCustomAttribute<ButtonAttribute>();
 				if (buttonAttribute == null)
+				{
 					continue;
+				}
 
 				// Check if conditions are met to show the button
 				if (!string.IsNullOrEmpty(buttonAttribute.ShowIf))
 				{
 					bool showCondition = EvaluateCondition(buttonAttribute.ShowIf);
 					if (!showCondition)
+					{
 						continue;
+					}
 				}
 
 				if (!string.IsNullOrEmpty(buttonAttribute.HideIf))
 				{
 					bool hideCondition = EvaluateCondition(buttonAttribute.HideIf);
 					if (hideCondition)
+					{
 						continue;
+					}
 				}
 
 				// Check if the button should be disabled
@@ -337,7 +355,9 @@ namespace Raven.editor
 		private void InvokeMethod(MethodInfo method)
 		{
 			if (method == null)
+			{
 				return;
+			}
 
 			try
 			{
@@ -368,7 +388,9 @@ namespace Raven.editor
 				BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
 			if (field != null)
+			{
 				return field;
+			}
 
 			// If not found, try looking in base classes
 			while (type.BaseType != null)
@@ -378,7 +400,9 @@ namespace Raven.editor
 					BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
 				if (field != null)
+				{
 					return field;
+				}
 			}
 
 			return null;

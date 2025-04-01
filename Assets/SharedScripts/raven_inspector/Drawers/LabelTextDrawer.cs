@@ -1,21 +1,21 @@
 using Raven.Attributes;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Raven.Drawers
 {
 	[CustomPropertyDrawer(typeof(LabelTextAttribute))]
 	public class LabelTextDrawer : PropertyDrawer
 	{
-		private LabelTextAttribute _labelTextAttribute => (LabelTextAttribute)attribute;
-
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
+			LabelTextAttribute labelTextAttribute = (LabelTextAttribute)attribute;
+			
 			// Create a new label with the custom text
-			GUIContent customLabel = new GUIContent(_labelTextAttribute.Label);
+			GUIContent customLabel = new GUIContent(labelTextAttribute.Label);
 
 			// Apply styling using custom draw
-			if (_labelTextAttribute.Bold || _labelTextAttribute.Italic || _labelTextAttribute.Color != Color.black)
+			if (labelTextAttribute.Bold || labelTextAttribute.Italic || labelTextAttribute.Color != Color.black)
 			{
 				// Use a modified position to place the label and the field
 				Rect labelRect = position;
@@ -23,9 +23,21 @@ namespace Raven.Drawers
 
 				// Apply text style
 				GUIStyle labelStyle = new GUIStyle(EditorStyles.label);
-				if (_labelTextAttribute.Bold) labelStyle.fontStyle = FontStyle.Bold;
-				if (_labelTextAttribute.Italic) labelStyle.fontStyle |= FontStyle.Italic;
-				if (_labelTextAttribute.Color != Color.black) labelStyle.normal.textColor = _labelTextAttribute.Color;
+				if (labelTextAttribute.Bold)
+				{
+					labelStyle.fontStyle = FontStyle.Bold;
+				}
+
+				if (labelTextAttribute.Italic)
+				{
+					labelStyle.fontStyle |= FontStyle.Italic;
+				}
+
+				if (labelTextAttribute.Color != Color.black)
+				{
+					labelStyle.normal.textColor = labelTextAttribute.Color;
+				}
+
 
 				// Draw the custom label
 				EditorGUI.LabelField(labelRect, customLabel, labelStyle);

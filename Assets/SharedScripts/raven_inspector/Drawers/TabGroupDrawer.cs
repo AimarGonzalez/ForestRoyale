@@ -24,7 +24,7 @@ namespace Raven.Drawers
 		{
 			EditorApplication.playModeStateChanged += CleanupOnPlayModeChange;
 		}
-
+		
 		private static void CleanupOnPlayModeChange(PlayModeStateChange state)
 		{
 			// DISABLED: I'm not sure this is desirable. Do object instance Ids change when entering playmode? And when comming back from playmode?
