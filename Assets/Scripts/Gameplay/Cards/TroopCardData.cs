@@ -11,17 +11,17 @@ namespace ForestRoyale.Gameplay.Cards
 		private int _unitCount = 1;
 
 		[SerializeField]
-		private TroopStats _troopProperties;
+		private TroopStats _troopStats;
 
 		[SerializeField]
 		private CombatStats _combatStats;
 
 		public CombatStats CombatStats => _combatStats;
-		public TroopStats TroopProperties => _troopProperties;
+		public TroopStats TroopStats => _troopStats;
 		public int UnitCount => _unitCount;
 
 		// Implement IUnitCard interface
-		public UnitStats UnitStats => _troopProperties;
+		public UnitStats UnitStats => _troopStats;
 
 #if UNITY_EDITOR
 		public static TroopCardData Build(
@@ -31,14 +31,14 @@ namespace ForestRoyale.Gameplay.Cards
 			int elixirCost,
 			CardRarity rarity,
 			int unitCount,
-			TroopStats troopProperties,
+			TroopStats troopStats,
 			CombatStats combatStats)
 		{
 			TroopCardData card = CreateInstance<TroopCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
 			card._unitCount = unitCount;
-			card._troopProperties = troopProperties;
+			card._troopStats = troopStats;
 			card._combatStats = combatStats;
 
 			return card;

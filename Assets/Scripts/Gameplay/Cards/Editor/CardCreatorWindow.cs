@@ -93,7 +93,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -141,7 +141,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 5,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -310,7 +310,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 2,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -366,7 +366,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -398,7 +398,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -430,7 +430,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 1,
 				rarity: CardRarity.Common,
 				unitCount: 4,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
@@ -491,7 +491,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopProperties: troopStats,
+				troopStats: troopStats,
 				combatStats: combatStats
 			);
 
