@@ -3,12 +3,25 @@ using UnityEngine.AI;
 using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Cards;
 using Raven.Attributes;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEditor;
 
 namespace ForestRoyale.Gameplay.Units
 {
 	public class TroopController : MonoBehaviour
 	{
+		private class TargetData
+		{
+			public TroopController Troop;
+			public bool IsInCombatRange = false;
+
+			public TargetData(TroopController troop)
+			{
+				Troop = troop;
+			}
+		}
+		
 		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
@@ -27,17 +40,14 @@ namespace ForestRoyale.Gameplay.Units
 
 		[ShowInInspector] private TroopData _troopData;
 
-		[SerializeField] private TroopController _target;
+		[SerializeField] private TroopController _debugTarget;
 
-		private bool _isInCombatRange;
-
+		private TargetData _target = null;
+		
 		public Vector3 Position => transform.position;
 
-		public TroopController()
-		{
-		}
-
 		public TroopData TroopData => _troopData;
+		public TroopController Target => _target.Troop;
 
 		private void Awake()
 		{
@@ -46,6 +56,7 @@ namespace ForestRoyale.Gameplay.Units
 				var trigger = _attackCollider.gameObject.AddComponent<TriggerListener>();
 				trigger.OnTriggerEnterEvent += HandleTriggerEnter;
 				trigger.OnTriggerExitEvent += HandleTriggerExit;
+				trigger.OnTriggerStayEvent += HandleTriggerStay;
 			}
 		}
 
@@ -58,24 +69,50 @@ namespace ForestRoyale.Gameplay.Units
 				{
 					trigger.OnTriggerEnterEvent -= HandleTriggerEnter;
 					trigger.OnTriggerExitEvent -= HandleTriggerExit;
+					trigger.OnTriggerStayEvent -= HandleTriggerStay;
 				}
 			}
 		}
 
 		private void HandleTriggerEnter(Collider other)
 		{
-			if (other.IsBodyCollider() && other.GetTroopController() == _target)
+			if (_target == null)
 			{
-				_isInCombatRange = true;
-				OnTargetInRange();
+				return;
+			}
+			
+			if (other.IsBodyCollider() && other.GetTroopController() == _target.Troop)
+			{
+				_target.IsInCombatRange = true;
+				OnTargetInAttackRange();
+			}
+		}
+
+		private void HandleTriggerStay(Collider other)
+		{
+			if (_target == null)
+			{
+				return;
+			}
+			
+			if (other.IsBodyCollider() && other.GetTroopController() == _target.Troop)
+			{
+				_target.IsInCombatRange = true;
+				OnTargetInAttackRange();
 			}
 		}
 
 		private void HandleTriggerExit(Collider other)
 		{
-			if (other.IsBodyCollider() && other.GetTroopController() == _target)
+			if (_target == null)
 			{
-				_isInCombatRange = false;
+				return;
+			}
+			
+			if (other.IsBodyCollider() && other.GetTroopController() == _target.Troop)
+			{
+				_target.IsInCombatRange = false;
+				OnTargetOutOfAttackRange();
 			}
 		}
 
@@ -90,7 +127,7 @@ namespace ForestRoyale.Gameplay.Units
 		[Button]
 		void GoToTarget()
 		{
-			if (!_target)
+			if (!_debugTarget)
 			{
 				return;
 			}
@@ -107,32 +144,28 @@ namespace ForestRoyale.Gameplay.Units
 				return;
 			}
 
-			_agent.SetDestination(_target.Position);
+			SetTarget(_debugTarget);
 		}
 
-		void Update()
+		public void SetTarget(TroopController troop)
 		{
+			_target = new TargetData(troop);
+			
+			// Resumes agent movement
+			_agent.isStopped = false;
+			_agent.destination = _target.Troop.Position;
 		}
-		
-		private void OnTargetInRange()
+
+		private void OnTargetInAttackRange()
 		{
+			// Stops agent movement
 			_agent.isStopped = true;
 		}
-	}
 
-	public class TriggerListener : MonoBehaviour
-	{
-		public event System.Action<Collider> OnTriggerEnterEvent;
-		public event System.Action<Collider> OnTriggerExitEvent;
-
-		private void OnTriggerEnter(Collider other)
+		private void OnTargetOutOfAttackRange()
 		{
-			OnTriggerEnterEvent?.Invoke(other);
-		}
-
-		private void OnTriggerExit(Collider other)
-		{
-			OnTriggerExitEvent?.Invoke(other);
+			// Resumes agent movement
+			_agent.isStopped = false;
 		}
 	}
 }
