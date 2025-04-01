@@ -93,7 +93,7 @@ MonoBehaviour:
   _cardData: {fileID: 11400000, guid: 8e9a3d481e478884ab72babbd888ff23, type: 2}
   _bodyCollider: {fileID: 5255030233950744010}
   _attackCollider: {fileID: 4166368498787790172}
-  _target: {fileID: 0}
+  _debugTarget: {fileID: 0}
 --- !u!136 &5255030233950744010
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3865644830279689474, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: CharacterHealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 5886378281699822466, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_PresetInfoIsWorld
