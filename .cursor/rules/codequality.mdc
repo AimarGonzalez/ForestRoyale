@@ -7,6 +7,9 @@ alwaysApply: true
 
 # Code Quality Guidelines
 
+## Use editorconfig
+- Follow the formatting rules from .editorconfig
+
 ## Read Before Writing
 - Always read the complete implementation of related files before suggesting changes
 - Verify the existence of fields, methods and classes before referencing them
