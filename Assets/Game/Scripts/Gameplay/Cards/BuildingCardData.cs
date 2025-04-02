@@ -12,6 +12,7 @@ namespace ForestRoyale.Gameplay.Cards
 
 		// Implement IUnitCard interface	
 		public UnitStats UnitStats => _unitStats;
+		public CombatStats CombatStats => _combatStats;
 
 #if UNITY_EDITOR
 		public static BuildingCardData Build(

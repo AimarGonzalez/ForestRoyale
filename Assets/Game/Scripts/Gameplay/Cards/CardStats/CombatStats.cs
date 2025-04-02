@@ -1,5 +1,7 @@
+using Game.Scripts.Gameplay.Cards.CardStats;
 using UnityEngine;
 using Raven.Attributes;
+using System.Collections.Generic;
 
 namespace ForestRoyale.Gameplay.Cards.CardStats
 {
@@ -26,11 +28,24 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		[SerializeField]
 		private float _areaDamageRadius;
 
+		[BoxGroup("Combat Stats")]
+		[Tooltip("Range of sight")]
+		[SerializeField]
+		private float _sightRange;
+
+		[BoxGroup("Combat Stats")]
+		[Tooltip("Target preference")]
+		[SerializeField]
+		private List<TroopType> _targetPreference;
+
 		// Public getters for properties
 		public float Damage => _damage;
 		public float AttackSpeed => _attackSpeed;
 		public float AttackRange => _attackRange;
 		public float AreaDamageRadius => _areaDamageRadius;
+		public float SightRange => _sightRange;
+		public List<TroopType> TargetPreference => _targetPreference;
+
 
 #if UNITY_EDITOR
 		public static CombatStats Build(float damage, float attackSpeed, float attackRange, float areaDamageRadius = 0f)
@@ -45,14 +60,5 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 			return stats;
 		}
 #endif
-	}
-
-	public enum TargetPreference
-	{
-		Any, // Target any unit in range
-		Buildings, // Only target buildings
-		Ground, // Prefer ground targets
-		Air, // Prefer air targets
-		Troops // Only target troops (not buildings)
 	}
 }

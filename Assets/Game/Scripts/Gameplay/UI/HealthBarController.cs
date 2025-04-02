@@ -29,7 +29,7 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void Update()
 		{
-			if (_unit.RemainingHealth < _lastHealth)
+			if (_unit.Health < _lastHealth)
 			{
 				UpdateHealthBar();
 				PlayHighlightEffect();
@@ -38,11 +38,11 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void UpdateHealthBar()
 		{
-			float healthRatio = _unit.RemainingHealth / _unit.MaxHealth;
+			float healthRatio = _unit.Health / _unit.MaxHealth;
 
 			healthBarFill.fillAmount = healthRatio;
 
-			_lastHealth = _unit.RemainingHealth;
+			_lastHealth = _unit.Health;
 		}
 
 		private void PlayHighlightEffect()

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8814071115090319185}
   - component: {fileID: 7384560063204836384}
+  - component: {fileID: 1645409795888953433}
+  - component: {fileID: 2199282178545406893}
   - component: {fileID: 1316597476516433827}
   - component: {fileID: 2248083304886485461}
   - component: {fileID: 5255030233950744010}
@@ -61,6 +63,51 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
+--- !u!114 &1645409795888953433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542813079112755275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardData: {fileID: 11400000, guid: 4f2deac7628bf304ab57edc6b85c080b, type: 2}
+  _unit:
+    _team: 0
+    _health: 0
+    TargetIsInCombatRange: 0
+    CardOrigin: {fileID: 0}
+    UnitStats:
+      _hitPoints: 0
+      _transport: 0
+      _movementSpeed: 0
+    CombatStats:
+      _damage: 0
+      _attackSpeed: 0
+      _attackRange: 0
+      _areaDamageRadius: 0
+      _sightRange: 0
+      _targetPreference: 
+    Id: 
+    UnitRoot: {fileID: 0}
+    MovementController: {fileID: 0}
+--- !u!114 &2199282178545406893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542813079112755275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b105102237d4cdba1fb1aa1e753e716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!114 &1316597476516433827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,11 +136,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _root: {fileID: 0}
   _agent: {fileID: 7384560063204836384}
-  _cardData: {fileID: 11400000, guid: 8e9a3d481e478884ab72babbd888ff23, type: 2}
   _bodyCollider: {fileID: 5255030233950744010}
   _attackCollider: {fileID: 4166368498787790172}
-  _debugTarget: {fileID: 0}
+  _unit:
+    _team: 0
+    _health: 0
+    TargetIsInCombatRange: 0
+    CardOrigin: {fileID: 0}
+    UnitStats:
+      _hitPoints: 0
+      _transport: 0
+      _movementSpeed: 0
+    CombatStats:
+      _damage: 0
+      _attackSpeed: 0
+      _attackRange: 0
+      _areaDamageRadius: 0
+      _sightRange: 0
+      _targetPreference: 
+    Id: 
+    UnitRoot: {fileID: 0}
+    MovementController: {fileID: 0}
 --- !u!136 &5255030233950744010
 CapsuleCollider:
   m_ObjectHideFlags: 0

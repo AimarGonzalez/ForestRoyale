@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e424d4619c2f74dbd64d01ad266fce, type: 3}
+  m_Name: Minions_Card
+  m_EditorClassIdentifier: 
+  _cardName: Minions
+  _description: Three fast, unarmored flying attackers. Weak to arrows, fireballs,
+    dragons, and anything else that targets air units.
+  _portrait: {fileID: 0}
+  _elixirCost: 3
+  _rarity: 0
+  _unitCount: 3
+  _unitStats:
+    _hitPoints: 0
+    _transport: 1
+    _movementSpeed: 3
+  _combatStats:
+    _damage: 103
+    _attackSpeed: 1
+    _attackRange: 2
+    _areaDamageRadius: 0
+    _sightRange: 0
+    _targetPreference: 

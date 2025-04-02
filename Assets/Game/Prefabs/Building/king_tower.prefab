@@ -231,7 +231,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6762726433571612419}
   - component: {fileID: 5748764119736028907}
-  - component: {fileID: 4024217904527134050}
+  - component: {fileID: 7992325886180107021}
+  - component: {fileID: 364161777494588138}
   m_Layer: 0
   m_Name: king_tower
   m_TagString: Untagged
@@ -276,7 +277,39 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!114 &4024217904527134050
+--- !u!114 &7992325886180107021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3985169354146865093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardData: {fileID: 11400000, guid: 248904ded3202bf4185ba1a98b31269c, type: 2}
+  _unit:
+    _team: 0
+    _health: 0
+    TargetIsInCombatRange: 0
+    CardOrigin: {fileID: 0}
+    UnitStats:
+      _hitPoints: 0
+      _transport: 0
+      _movementSpeed: 0
+    CombatStats:
+      _damage: 0
+      _attackSpeed: 0
+      _attackRange: 0
+      _areaDamageRadius: 0
+      _sightRange: 0
+      _targetPreference: 
+    Id: 
+    UnitRoot: {fileID: 0}
+    MovementController: {fileID: 0}
+--- !u!114 &364161777494588138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -288,11 +321,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _root: {fileID: 0}
   _agent: {fileID: 0}
-  _cardData: {fileID: 0}
   _bodyCollider: {fileID: 6067404889487231681}
   _attackCollider: {fileID: 72870575340944780}
-  _target: {fileID: 0}
+  _unit:
+    _team: 0
+    _health: 0
+    TargetIsInCombatRange: 0
+    CardOrigin: {fileID: 0}
+    UnitStats:
+      _hitPoints: 0
+      _transport: 0
+      _movementSpeed: 0
+    CombatStats:
+      _damage: 0
+      _attackSpeed: 0
+      _attackRange: 0
+      _areaDamageRadius: 0
+      _sightRange: 0
+      _targetPreference: 
+    Id: 
+    UnitRoot: {fileID: 0}
+    MovementController: {fileID: 0}
 --- !u!1 &7285322230262209692
 GameObject:
   m_ObjectHideFlags: 0

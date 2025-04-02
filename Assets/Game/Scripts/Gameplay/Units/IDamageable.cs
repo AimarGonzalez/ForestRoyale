@@ -2,8 +2,8 @@ namespace ForestRoyale.Gameplay.Units
 {
 	public interface IDamageable
 	{
-		float RemainingHealth { get; }
+		float Health { get; }
 		float MaxHealth { get; }
-		float HealthRatio => RemainingHealth / MaxHealth;
+		float HealthRatio => Health / MaxHealth;
 	}
 }

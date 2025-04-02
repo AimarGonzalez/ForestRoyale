@@ -3,6 +3,7 @@ using UnityEditor;
 using System.IO;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
+using Game.Scripts.Gameplay.Cards.CardStats;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
@@ -71,9 +72,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateMinions()
 		{
 			// Create troop stats for minions
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 190f,
-				isAirUnit: true,
+				transport: TransportType.Air,
 				movementSpeed: 3.0f
 			);
 
@@ -93,12 +95,12 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
 			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
+			string directory = "Assets/Game/Data/Cards";
 			if (!Directory.Exists(directory))
 			{
 				Directory.CreateDirectory(directory);
@@ -119,9 +121,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateGiant()
 		{
 			// Create troop stats for giant
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 3344f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 1.0f
 			);
 
@@ -141,7 +144,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 5,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
@@ -290,9 +293,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateGoblinCard()
 		{
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 80f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 3.0f
 			);
 
@@ -310,7 +314,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 2,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
@@ -346,9 +350,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateKnightCard()
 		{
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 1450f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 1.2f
 			);
 
@@ -366,7 +371,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
@@ -378,9 +383,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateMusketeerCard()
 		{
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 720f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 1.5f
 			);
 
@@ -398,7 +404,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
@@ -410,9 +416,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateSkeletonCard()
 		{
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 32f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 2.5f
 			);
 
@@ -430,7 +437,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 1,
 				rarity: CardRarity.Common,
 				unitCount: 4,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 
@@ -443,7 +450,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateCannonCard()
 		{
 			UnitStats unitStats = UnitStats.Build(
-				hitPoints: 824f
+				type: TroopType.Troop,
+				hitPoints: 824f,
+				transport: TransportType.Ground,
+				movementSpeed: 1.0f
 			);
 
 			CombatStats combatStats = CombatStats.Build(
@@ -471,9 +481,10 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateHogRiderCard()
 		{
-			TroopStats troopStats = TroopStats.Build(
+			UnitStats unitStats = UnitStats.Build(
+				type: TroopType.Troop,
 				hitPoints: 1696f,
-				isAirUnit: false,
+				transport: TransportType.Ground,
 				movementSpeed: 3.5f
 			);
 
@@ -491,7 +502,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				troopStats: troopStats,
+				unitStats: unitStats,
 				combatStats: combatStats
 			);
 

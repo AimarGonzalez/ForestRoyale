@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e424d4619c2f74dbd64d01ad266fce, type: 3}
+  m_Name: HogRider_Card
+  m_EditorClassIdentifier: 
+  _cardName: Hog Rider
+  _description: Fast unit that targets buildings. He jumps over rivers and can push
+    other units aside.
+  _portrait: {fileID: 0}
+  _elixirCost: 4
+  _rarity: 1
+  _unitCount: 1
+  _unitStats:
+    _hitPoints: 0
+    _transport: 0
+    _movementSpeed: 3.5
+  _combatStats:
+    _damage: 264
+    _attackSpeed: 1.6
+    _attackRange: 0.8
+    _areaDamageRadius: 0
+    _sightRange: 0
+    _targetPreference: 
