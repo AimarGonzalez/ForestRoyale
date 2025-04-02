@@ -6,14 +6,17 @@ using VContainer;
 namespace Game.Scripts.Gameplay.Units.MonoBehaviours
 {
 	[RequireComponent(typeof(UnitRoot))]
-	public class UnitDebugger : MonoBehaviour
+	public class UnitDebugTools : MonoBehaviour
 	{
 
-		[SerializeField] private UnitRoot _target;
+		[SerializeField]
+		private UnitRoot _target;
 
 		private UnitRoot _root;
 
-		[Inject] TargetingSystem _targetingSystem;
+		[Inject]
+		private TargetingSystem _targetingSystem;
+
 		private void Awake()
 		{
 			_root = GetComponent<UnitRoot>();
