@@ -12,6 +12,7 @@ namespace ForestRoyale.Gameplay.Units
 	{
 		private static uint s_unitCount = 0;
 		
+		[Header("Target")]
 		[SerializeField] private Team _team;
 		[SerializeField] private float _health;
 

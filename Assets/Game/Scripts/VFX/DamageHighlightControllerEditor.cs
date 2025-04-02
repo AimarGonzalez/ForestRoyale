@@ -1,7 +1,8 @@
+using ForestRoyale.VFX;
 using UnityEditor;
 using UnityEngine;
 
-namespace ForestRoyale.VFX
+namespace ForestRoyaleEditor.VFX
 {
 	[CustomEditor(typeof(DamageHighlightController))]
 	public class DamageHighlightControllerEditor : Editor

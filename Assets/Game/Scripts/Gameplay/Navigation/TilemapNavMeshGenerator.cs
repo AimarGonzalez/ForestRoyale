@@ -2,7 +2,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Raven.Gameplay.Navigation
+namespace ForestRoyale.Gameplay.Navigation
 {
 	[RequireComponent(typeof(TilemapMeshGenerator))]
 	public class TilemapNavMeshGenerator : MonoBehaviour

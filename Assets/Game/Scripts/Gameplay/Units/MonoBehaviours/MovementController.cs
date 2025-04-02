@@ -14,9 +14,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			public bool IsInCombatRange = false;
 		}
 
-		[SerializeField] 
+		[SerializeField]
 		private UnitRoot _root;
-		
+
 		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
@@ -27,10 +27,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		[SerializeField]
 		[Required]
-		private Collider _attackCollider;
+		private CapsuleCollider _attackCollider;
 
-		
-		[SerializeField] 
+
+		[SerializeField]
 		private Unit _unit;
 
 		public Unit Unit => _unit;
@@ -38,9 +38,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private void Awake()
 		{
 			_root ??= GetComponent<UnitRoot>();
-			
+
 			_root.OnUnitChanged += OnUnitChanged;
-			
+
 			if (_attackCollider != null)
 			{
 				var trigger = _attackCollider.gameObject.AddComponent<TriggerListener>();
@@ -53,7 +53,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private void OnDestroy()
 		{
 			_root.OnUnitChanged -= OnUnitChanged;
-			
+
 			if (_attackCollider != null)
 			{
 				var trigger = _attackCollider.GetComponent<TriggerListener>();
@@ -65,16 +65,33 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 				}
 			}
 		}
-		
+
 		private void OnUnitChanged(Unit newUnit)
 		{
 			_unit = newUnit;
+
+			if (_unit == null)
+			{
+				return;
+			}
+
+			if (_agent == null)
+			{
+				// This unit cannot move (e.g. buildings)
+				return;
+			}
+
+			// Update agent with unit stats
+			_agent.speed = _unit.UnitStats.MovementSpeed;
+
+			// Update attackCollider with unit stats
+			_attackCollider.radius = _unit.CombatStats.AttackRange;
 		}
 
 
 		private void HandleTriggerEnter(Collider other)
 		{
-			if (_unit.Target == null)
+			if (_unit?.Target == null)
 			{
 				return;
 			}
@@ -88,7 +105,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		private void HandleTriggerStay(Collider other)
 		{
-			if (_unit.Target == null)
+			if (_unit?.Target == null)
 			{
 				return;
 			}
@@ -102,7 +119,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		private void HandleTriggerExit(Collider other)
 		{
-			if (_unit.Target == null)
+			if (_unit?.Target == null)
 			{
 				return;
 			}
@@ -117,7 +134,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		public void MoveToTarget()
 		{
 			// Resumes agent movement
-			
+
 			Assert.NotNull(_unit.Target);
 			_agent.isStopped = false;
 			_agent.destination = _unit.Target.Position;

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.AI;
-using Raven.Gameplay.Navigation;
+using ForestRoyale.Gameplay.Navigation;
 
-namespace Raven.Editor
+namespace ForestRoyaleEditor.Editor.Gameplay.Navigation
 {
 	[CustomEditor(typeof(TilemapNavMeshGenerator))]
 	public class TilemapNavMeshGeneratorEditor : UnityEditor.Editor

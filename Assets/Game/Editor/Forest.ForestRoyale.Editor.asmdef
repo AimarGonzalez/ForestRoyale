@@ -1,0 +1,19 @@
+{
+    "name": "Forest.ForestRoyale.Editor",
+    "rootNamespace": "ForestRoyaleEditor",
+    "references": [
+        "GUID:3ee29fee7ab89824993db4a416878fa4",
+        "GUID:8c4dd21966739024fbd72155091d199e"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

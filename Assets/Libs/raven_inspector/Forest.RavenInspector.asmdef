@@ -1,0 +1,16 @@
+{
+    "name": "raven_inspector",
+    "rootNamespace": "Raven",
+    "references": [
+        "GUID:8c4dd21966739024fbd72155091d199e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

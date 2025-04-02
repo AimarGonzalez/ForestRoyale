@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Raven.Attributes;
 
-namespace Raven.Gameplay.Navigation
+namespace ForestRoyale.Gameplay.Navigation
 {
 	[RequireComponent(typeof(MeshFilter))]
 	public class TilemapMeshGenerator : MonoBehaviour
