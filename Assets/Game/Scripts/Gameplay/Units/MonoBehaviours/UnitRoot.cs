@@ -1,9 +1,8 @@
 ﻿using ForestRoyale.Gameplay.Cards;
-using Raven.Attributes;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -14,11 +13,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 	{
 		public Action<Unit> OnUnitChanged;
 
-		[SerializeField]
-		[OnValueChanged("SetCardData")]
-		private CardData _cardData;
-
-		[SerializeField]
+		[ShowInInspector, ReadOnly]
 		private Unit _unit;
 
 		[Inject]
@@ -38,32 +33,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private void Awake()
 		{
 			_movementMovementController = GetComponent<MovementController>();
-			OnCardDataChanged(_cardData);
 			Debug.Log("Awake");
 		}
 
-		[Button]
-		public void SetCardData()
-		{
-			SetCardData(_cardData);
-		}
-		public void SetCardData(CardData cardData)
-		{
-			if (cardData == null)
-			{
-				Debug.LogError($"{nameof(cardData)} is null");
-				return;
-			}
 
-			if (cardData is not IUnitCard unitCard)
-			{
-				Debug.LogError($"{nameof(cardData)} is not an IUnitCard (its a {cardData.GetType().Name})");
-				return;
-			}
-
-			_cardData = cardData;
-			OnCardDataChanged(_cardData);
-		}
 
 		private void OnCardDataChanged(CardData cardData)
 		{
@@ -78,14 +51,14 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			SetUnit(unit);
 		}
 
-		private void SetUnit(Unit unit)
+		public void SetUnit(Unit unit)
 		{
 			if (_unit == unit)
 			{
 				return;
 			}
 
-			if (_unit != null)
+			if (_unit != null && Application.isPlaying)
 			{
 				_arenaEvents.TriggerUnitDestroyed(_unit);
 			}
@@ -94,7 +67,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 			OnUnitChanged?.Invoke(Unit);
 
-			if (_unit != null)
+			if (_unit != null && Application.isPlaying)
 			{
 				_arenaEvents.TriggerUnitCreated(_unit);
 			}

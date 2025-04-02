@@ -1,13 +1,14 @@
 using Game.Scripts.Gameplay.Cards.CardStats;
+using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
-using Raven.Attributes;
-using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Cards.CardStats
 {
-	[System.Serializable]
+	[Serializable]
 	public class UnitStats
 	{
+		[SerializeField]
 		private TroopType _type;
 		
 		[BoxGroup("Combat Stats")]

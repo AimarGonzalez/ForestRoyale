@@ -1,5 +1,5 @@
 using UnityEngine;
-using Raven.Attributes;
+using Sirenix.OdinInspector;
 using System;
 
 namespace ForestRoyale.Gameplay.Cards.CardStats

@@ -10,7 +10,7 @@
     "EnableHierarchyLines": true,
     "EnableHierarchyButtons": true,
     "EnableMajorShortcuts": true,
-    "DisableHierarchyDesignerDuringPlayMode": true,
+    "DisableHierarchyDesignerDuringPlayMode": false,
     "ExcludeFolderProperties": true,
     "ExcludedComponents": [
         "Transform",

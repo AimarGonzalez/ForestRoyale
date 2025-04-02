@@ -11,33 +11,36 @@ namespace ForestRoyale.Gameplay.Units
 	public class Unit : IDamageable
 	{
 		private static uint s_unitCount = 0;
-		
-		[Header("Target")]
-		[SerializeField] private Team _team;
-		[SerializeField] private float _health;
 
-		[Header("Target")]
-		[SerializeField] public Unit Target;
-		[SerializeField] public bool TargetIsInCombatRange;
+		[Header("Stats")]
+		public ArenaTeam Team;
+		public float Health;
 
-		public bool IsPlayerTeam => _team == Team.Player;
-		public bool IsForestTeam => _team == Team.Forest;
-		public bool HasTarget => Target != null;
 
+		public string Id;
 		public CardData CardOrigin;
 		public UnitStats UnitStats;
 		public CombatStats CombatStats;
-		public string Id;
 		public UnitRoot UnitRoot;
 		public MovementController MovementController;
+
+		[Header("Target")]
+		public Unit Target;
+		public bool TargetIsInCombatRange;
+
+
 
 
 		// IDamageable interface implementation
 		public float MaxHealth => UnitStats.HitPoints;
-		public float Health => _health;
+		public float CurrentHealth => Health;
 
 		public float HealthRatio => Health / MaxHealth;
-		
+
+		public bool IsPlayerTeam => Team == ArenaTeam.Player;
+		public bool IsForestTeam => Team == ArenaTeam.Forest;
+		public bool HasTarget => Target != null;
+
 		public Vector3 Position => UnitRoot.Position;
 
 		public Unit(CardData _cardOrigin, UnitRoot root, UnitStats unitStats, CombatStats combatStats)
@@ -48,14 +51,8 @@ namespace ForestRoyale.Gameplay.Units
 			Id = $"{CardOrigin.CardName}_{++s_unitCount}";
 			UnitStats = unitStats;
 			CombatStats = combatStats;
-			_health = UnitStats.HitPoints;
+			Health = UnitStats.HitPoints;
 		}
-	}
-
-	internal enum Team
-	{
-		Player,
-		Forest
 	}
 }
 

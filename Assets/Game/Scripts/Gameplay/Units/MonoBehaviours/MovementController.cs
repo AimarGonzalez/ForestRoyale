@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Raven.Attributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,7 +30,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private CapsuleCollider _attackCollider;
 
 
-		[SerializeField]
+		[ShowInInspector, ReadOnly]
 		private Unit _unit;
 
 		public Unit Unit => _unit;

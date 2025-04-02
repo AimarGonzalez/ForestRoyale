@@ -1,6 +1,7 @@
-using UnityEngine;
-using Raven.Attributes;
+using Sirenix.OdinInspector;
 using System;
+using UnityEngine;
+
 namespace ForestRoyale.Gameplay.Cards
 {
 	[Serializable]

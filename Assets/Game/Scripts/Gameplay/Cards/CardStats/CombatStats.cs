@@ -1,6 +1,6 @@
 using Game.Scripts.Gameplay.Cards.CardStats;
 using UnityEngine;
-using Raven.Attributes;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 
 namespace ForestRoyale.Gameplay.Cards.CardStats
