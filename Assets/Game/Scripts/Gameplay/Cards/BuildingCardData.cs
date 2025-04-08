@@ -1,18 +1,16 @@
-using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewBuilding", menuName = "ForestRoyale/Building Data", order = 1)]
 	public class BuildingCardData : CardData, IUnitCard
 	{
-		[SerializeField] private UnitStats _unitStats;
-		[SerializeField] private CombatStats _combatStats;
+		[SerializeField, InlineEditor] private UnitSO _unitSO;
 
 		// Implement IUnitCard interface	
-		public UnitStats UnitStats => _unitStats;
-		public CombatStats CombatStats => _combatStats;
+		public UnitSO UnitSO => _unitSO;
 
 #if UNITY_EDITOR
 		public static BuildingCardData Build(
@@ -21,14 +19,12 @@ namespace ForestRoyale.Gameplay.Cards
 			Sprite portrait,
 			int elixirCost,
 			CardRarity rarity,
-			UnitStats unitStats,
-			CombatStats combatStats)
+			UnitSO unitSO)
 		{
 			BuildingCardData card = CreateInstance<BuildingCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
-			card._unitStats = unitStats;
-			card._combatStats = combatStats;
+			card._unitSO = unitSO;
 
 			return card;
 		}

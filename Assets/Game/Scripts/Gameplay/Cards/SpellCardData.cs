@@ -1,14 +1,14 @@
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using ForestRoyale.Gameplay.Cards.CardStats;
-
 namespace ForestRoyale.Gameplay.Cards
 {
 	[CreateAssetMenu(fileName = "NewSpell", menuName = "ForestRoyale/Spell Data", order = 2)]
 	public class SpellCardData : CardData
 	{
-		[SerializeField]
-		private SpellStats _spellEffects = new SpellStats();
-		public SpellStats SpellEffects => _spellEffects;
+		[SerializeField, InlineEditor]
+		private SpellSO _spellSO;
+		public SpellSO SpellSO => _spellSO;
 
 #if UNITY_EDITOR
 		public static SpellCardData Build(
@@ -17,12 +17,12 @@ namespace ForestRoyale.Gameplay.Cards
 			Sprite portrait,
 			int elixirCost,
 			CardRarity rarity,
-			SpellStats spellEffects)
+			SpellSO spellSO)
 		{
 			SpellCardData card = CreateInstance<SpellCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
-			card._spellEffects = spellEffects;
+			card._spellSO = spellSO;
 
 			return card;
 		}

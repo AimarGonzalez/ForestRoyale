@@ -1,12 +1,9 @@
-
-
-using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 
 namespace ForestRoyale.Gameplay.Cards
 {
 	public interface IUnitCard
 	{
-		UnitStats UnitStats { get; }
-		CombatStats CombatStats { get; }
+		UnitSO UnitSO { get; }
 	}
 }

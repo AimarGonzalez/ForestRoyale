@@ -1,14 +1,24 @@
-using UnityEngine;
-using UnityEditor;
-using System.IO;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using ForestRoyale.Libs.ForestLib.Utils;
 using Game.Scripts.Gameplay.Cards.CardStats;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace ForestRoyale.Editor.Gameplay.Cards
 {
 	public class CardCreatorWindow : EditorWindow
 	{
+		private const string CARDS_DIRECTORY = "Assets/Resources/Cards";
+		private const string UNITS_DIRECTORY = "Assets/Resources/Troops";
+		private const string SPELLS_DIRECTORY = "Assets/Resources/Spells";
+		private const string BUILDINGS_DIRECTORY = "Assets/Resources/Buildings";
+		private const string TOWERS_DIRECTORY = "Assets/Resources/Towers";
+
 		[MenuItem("ForestRoyale/Open Card Creator Window")]
 		public static void ShowWindow()
 		{
@@ -25,17 +35,17 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 			if (GUILayout.Button("Minions", GUILayout.Height(30)))
 			{
-				CreateMinions();
+				CreateMinionsCard();
 			}
 
 			if (GUILayout.Button("Giant", GUILayout.Height(30)))
 			{
-				CreateGiant();
+				CreateGiantCard();
 			}
 
 			if (GUILayout.Button("Arrows", GUILayout.Height(30)))
 			{
-				CreateArrows();
+				CreateArrowsCard();
 			}
 
 			EditorGUILayout.EndHorizontal();
@@ -46,243 +56,184 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				CreateIconicCards();
 			}
 
-			EditorGUILayout.Space(20);
-			GUILayout.Label("Create empty card template:", EditorStyles.boldLabel);
-
+			EditorGUILayout.Space(10);
+			GUILayout.Label("Bulk Creation:", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
 
-			if (GUILayout.Button("New Troop", GUILayout.Height(30)))
+			if (GUILayout.Button("Create All Troops", GUILayout.Height(30)))
 			{
-				CreateEmptyTroop();
+				CreateAllTroops();
 			}
 
-			if (GUILayout.Button("New Building", GUILayout.Height(30)))
+			if (GUILayout.Button("Create All Spells", GUILayout.Height(30)))
 			{
-				CreateEmptyBuilding();
+				CreateAllSpells();
 			}
 
-			if (GUILayout.Button("New Spell", GUILayout.Height(30)))
+			if (GUILayout.Button("Create All Buildings", GUILayout.Height(30)))
 			{
-				CreateEmptySpell();
+				CreateAllBuildings();
+			}
+
+			if (GUILayout.Button("Create All Towers", GUILayout.Height(30)))
+			{
+				CreateAllTowers();
 			}
 
 			EditorGUILayout.EndHorizontal();
 		}
 
-		private void CreateMinions()
+		private void CreateMinionsCard()
 		{
-			// Create troop stats for minions
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 190f,
-				transport: TransportType.Air,
-				movementSpeed: 3.0f
-			);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
 
-			// Create combat stats for minions
-			CombatStats combatStats = CombatStats.Build(
-				damage: 103f,
-				attackSpeed: 1.0f,
-				attackRange: 2.0f,
-				areaDamageRadius: 0f // Single target
-			);
-
-			// Create the minions card
+			var minionsSO = CreateMinionsUnit(UNITS_DIRECTORY);
 			TroopCardData minionsCard = TroopCardData.Build(
 				cardName: "Minions",
 				description: "Three fast, unarmored flying attackers. Weak to arrows, fireballs, dragons, and anything else that targets air units.",
-				portrait: null, // This would need to be loaded from Resources or AssetDatabase
+				portrait: null,
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: minionsSO
 			);
 
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Game/Data/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Save the asset
-			string assetPath = $"{directory}/Minions_Card.asset";
-			AssetDatabase.CreateAsset(minionsCard, assetPath);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Minions_Card.asset";
+			AssetDatabase.CreateAsset(minionsCard, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log($"Minions card created at {assetPath}");
-
-			// Select the asset in the project window
+			Debug.Log($"Minions card created at {cardAssetPath}");
 			Selection.activeObject = minionsCard;
 		}
 
-		private void CreateGiant()
+		private void CreateGiantCard()
 		{
-			// Create troop stats for giant
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 3344f,
-				transport: TransportType.Ground,
-				movementSpeed: 1.0f
-			);
-
-			// Create combat stats for giant
-			CombatStats combatStats = CombatStats.Build(
-				damage: 188f,
-				attackSpeed: 1.5f,
-				attackRange: 1.0f,
-				areaDamageRadius: 0f // Single target
-			);
-
-			// Create the giant card
+			var giantSO = CreateGiantUnit(UNITS_DIRECTORY);
 			TroopCardData giantCard = TroopCardData.Build(
 				cardName: "Giant",
 				description: "Slow but durable, the Giant is a powerful tank that only targets buildings. He leads the charge while other troops deal damage.",
-				portrait: null, // This would need to be loaded from Resources or AssetDatabase
+				portrait: null,
 				elixirCost: 5,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: giantSO
 			);
 
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Save the asset
-			string assetPath = $"{directory}/Giant_Card.asset";
-			AssetDatabase.CreateAsset(giantCard, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Giant_Card.asset";
+			AssetDatabase.CreateAsset(giantCard, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log($"Giant card created at {assetPath}");
-
-			// Select the asset in the project window
+			Debug.Log($"Giant card created at {cardAssetPath}");
 			Selection.activeObject = giantCard;
 		}
 
-		private void CreateArrows()
+		private void CreateArrowsCard()
 		{
-			// Create spell stats for arrows
-			SpellStats spellStats = SpellStats.Build(
-				affectsAir: true,
-				affectsGround: true,
-				affectsBuildings: true,
-				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect
-			);
-
-			// Create the arrows card
+			var spellSO = CreateArrowsSpell(SPELLS_DIRECTORY);
 			SpellCardData arrowsCard = SpellCardData.Build(
 				cardName: "Arrows",
 				description: "Arrows shower a large area, dealing moderate area damage to both air and ground units. Effective against swarms of weak enemies.",
-				portrait: null, // This would need to be loaded from Resources or AssetDatabase
+				portrait: null,
 				elixirCost: 3,
 				rarity: CardRarity.Common,
-				spellEffects: spellStats
+				spellSO: spellSO
 			);
 
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Save the asset
-			string assetPath = $"{directory}/Arrows_Card.asset";
-			AssetDatabase.CreateAsset(arrowsCard, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Arrows_Card.asset";
+			AssetDatabase.CreateAsset(arrowsCard, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 
-			Debug.Log($"Arrows card created at {assetPath}");
-
-			// Select the asset in the project window
+			Debug.Log($"Arrows card created at {cardAssetPath}");
 			Selection.activeObject = arrowsCard;
 		}
 
+		private void CreateFireballCard()
+		{
+			var spellSO = CreateFireballSpell(SPELLS_DIRECTORY);
+			SpellCardData card = SpellCardData.Build(
+				cardName: "Fireball",
+				description: "Deals high damage in a medium radius. Effective against groups of enemies.",
+				portrait: null,
+				elixirCost: 4,
+				rarity: CardRarity.Rare,
+				spellSO: spellSO
+			);
+
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Fireball_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh();
+		}
+
+
 		private void CreateIconicCards()
 		{
-			// Directory checks
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
 
-			// Create each iconic card, checking if it already exists
 			int createdCount = 0;
 
-			// 1. Minions (already have a creation method)
-			if (!File.Exists($"{directory}/Minions_Card.asset"))
+			// Create each iconic card, checking if it already exists
+			if (!File.Exists($"{CARDS_DIRECTORY}/Minions_Card.asset"))
 			{
-				CreateMinions();
+				CreateMinionsCard();
 				createdCount++;
 			}
 
-			// 2. Giant (already have a creation method)
-			if (!File.Exists($"{directory}/Giant_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Giant_Card.asset"))
 			{
-				CreateGiant();
+				CreateGiantCard();
 				createdCount++;
 			}
 
-			// 3. Arrows (already have a creation method)
-			if (!File.Exists($"{directory}/Arrows_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Arrows_Card.asset"))
 			{
-				CreateArrows();
+				CreateArrowsCard();
 				createdCount++;
 			}
 
-			// 4. Goblin
-			if (!File.Exists($"{directory}/Goblin_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Goblin_Card.asset"))
 			{
 				CreateGoblinCard();
 				createdCount++;
 			}
 
-			// 5. Fireball
-			if (!File.Exists($"{directory}/Fireball_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Fireball_Card.asset"))
 			{
 				CreateFireballCard();
 				createdCount++;
 			}
 
-			// 6. Knight
-			if (!File.Exists($"{directory}/Knight_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Knight_Card.asset"))
 			{
 				CreateKnightCard();
 				createdCount++;
 			}
 
-			// 7. Musketeer
-			if (!File.Exists($"{directory}/Musketeer_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Musketeer_Card.asset"))
 			{
 				CreateMusketeerCard();
 				createdCount++;
 			}
 
-			// 8. Skeleton
-			if (!File.Exists($"{directory}/Skeleton_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Skeleton_Card.asset"))
 			{
 				CreateSkeletonCard();
 				createdCount++;
 			}
 
-			// 9. Cannon
-			if (!File.Exists($"{directory}/Cannon_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/Cannon_Card.asset"))
 			{
 				CreateCannonCard();
 				createdCount++;
 			}
 
-			// 10. Hog Rider
-			if (!File.Exists($"{directory}/HogRider_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/HogRider_Card.asset"))
 			{
 				CreateHogRiderCard();
 				createdCount++;
@@ -293,20 +244,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateGoblinCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 80f,
-				transport: TransportType.Ground,
-				movementSpeed: 3.0f
-			);
 
-			CombatStats combatStats = CombatStats.Build(
-				damage: 50f,
-				attackSpeed: 1.1f,
-				attackRange: 0.5f,
-				areaDamageRadius: 0f
-			);
-
+			var goblinSO = CreateGoblinUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Goblin",
 				description: "Fast, cheap and weak. Deploy in a swarm to overwhelm enemies.",
@@ -314,56 +253,19 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 2,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: goblinSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/Goblin_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-		}
-
-		private void CreateFireballCard()
-		{
-			SpellStats spellStats = SpellStats.Build(
-				affectsAir: true,
-				affectsGround: true,
-				affectsBuildings: true,
-				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect
-			);
-
-			SpellCardData card = SpellCardData.Build(
-				cardName: "Fireball",
-				description: "Deals high damage in a medium radius. Effective against groups of enemies.",
-				portrait: null,
-				elixirCost: 4,
-				rarity: CardRarity.Rare,
-				spellEffects: spellStats
-			);
-
-			string assetPath = "Assets/Resources/Cards/Fireball_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Goblin_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
 		private void CreateKnightCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 1450f,
-				transport: TransportType.Ground,
-				movementSpeed: 1.2f
-			);
-
-			CombatStats combatStats = CombatStats.Build(
-				damage: 159f,
-				attackSpeed: 1.2f,
-				attackRange: 1.0f,
-				areaDamageRadius: 0f
-			);
-
+			var knightSO = CreateKnightUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Knight",
 				description: "A tough melee fighter. The Mustache says it all.",
@@ -371,32 +273,19 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: knightSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/Knight_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Knight_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
 		private void CreateMusketeerCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 720f,
-				transport: TransportType.Ground,
-				movementSpeed: 1.5f
-			);
-
-			CombatStats combatStats = CombatStats.Build(
-				damage: 176f,
-				attackSpeed: 1.1f,
-				attackRange: 6.0f,
-				areaDamageRadius: 0f
-			);
-
+			var musketeerSO = CreateMusketerUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Musketeer",
 				description: "Don't be fooled by her delicate appearance. She can take out a tower from a mile away.",
@@ -404,32 +293,19 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: musketeerSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/Musketeer_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Musketeer_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
 		private void CreateSkeletonCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 32f,
-				transport: TransportType.Ground,
-				movementSpeed: 2.5f
-			);
-
-			CombatStats combatStats = CombatStats.Build(
-				damage: 32f,
-				attackSpeed: 1.0f,
-				attackRange: 0.5f,
-				areaDamageRadius: 0f
-			);
-
+			var skeletonSO = CreateSkeletonUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Skeleton",
 				description: "Four fast, very weak melee fighters. Generate positive elixir trades.",
@@ -437,64 +313,38 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 1,
 				rarity: CardRarity.Common,
 				unitCount: 4,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: skeletonSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/Skeleton_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Skeleton_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
 		private void CreateCannonCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 824f,
-				transport: TransportType.Ground,
-				movementSpeed: 1.0f
-			);
-
-			CombatStats combatStats = CombatStats.Build(
-				damage: 127f,
-				attackSpeed: 0.8f,
-				attackRange: 5.5f,
-				areaDamageRadius: 0f
-			);
-
+			var cannonSO = CreateCannonUnit(UNITS_DIRECTORY);
 			BuildingCardData card = BuildingCardData.Build(
 				cardName: "Cannon",
 				description: "Defensive building that attacks ground units. Cannot attack flying enemies.",
 				portrait: null,
 				elixirCost: 3,
 				rarity: CardRarity.Common,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: cannonSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/Cannon_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Cannon_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
 		private void CreateHogRiderCard()
 		{
-			UnitStats unitStats = UnitStats.Build(
-				type: TroopType.Troop,
-				hitPoints: 1696f,
-				transport: TransportType.Ground,
-				movementSpeed: 3.5f
-			);
-
-			CombatStats combatStats = CombatStats.Build(
-				damage: 264f,
-				attackSpeed: 1.6f,
-				attackRange: 0.8f,
-				areaDamageRadius: 0f
-			);
-
+			var hogRiderSO = CreateHogRiderUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Hog Rider",
 				description: "Fast unit that targets buildings. He jumps over rivers and can push other units aside.",
@@ -502,110 +352,364 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitStats: unitStats,
-				combatStats: combatStats
+				unitSO: hogRiderSO
 			);
 
-			string assetPath = "Assets/Resources/Cards/HogRider_Card.asset";
-			AssetDatabase.CreateAsset(card, assetPath);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/HogRider_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
-		private void CreateEmptyTroop()
+
+		#region Unit Creation Methods
+		private UnitSO CreateMinionsUnit(string directory)
 		{
-			// Create a new instance of the TroopData ScriptableObject
-			TroopCardData troopCard = ScriptableObject.CreateInstance<TroopCardData>();
-
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Generate a unique asset name with incremental suffix
-			string assetPath = GetUniqueAssetPath(directory, "NewTroop_Card");
-
-			AssetDatabase.CreateAsset(troopCard, assetPath);
-
-			// Select the asset in the project window
-			Selection.activeObject = troopCard;
-
-			// Save changes
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-
-			Debug.Log($"Empty troop template created at {assetPath}");
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Minions_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 190f,
+				transport: TransportType.Air,
+				movementSpeed: 3.0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 103f,
+				attackSpeed: 1.0f,
+				attackRange: 2.0f,
+				areaDamageRadius: 0f,
+				sightRange: 2.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
 
-		private void CreateEmptyBuilding()
+		private UnitSO CreateGiantUnit(string directory)
 		{
-			// Create a new instance of the BuildingData ScriptableObject
-			BuildingCardData buildingCard = ScriptableObject.CreateInstance<BuildingCardData>();
-
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Generate a unique asset name with incremental suffix
-			string assetPath = GetUniqueAssetPath(directory, "NewBuilding_Card");
-
-			AssetDatabase.CreateAsset(buildingCard, assetPath);
-
-			// Select the asset in the project window
-			Selection.activeObject = buildingCard;
-
-			// Save changes
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-
-			Debug.Log($"Empty building template created at {assetPath}");
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Giant_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 3344f,
+				transport: TransportType.Ground,
+				movementSpeed: 1.0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 188f,
+				attackSpeed: 1.5f,
+				attackRange: 1.0f,
+				areaDamageRadius: 0f,
+				sightRange: 1.5f,
+				targetPreference: new List<TroopType> { TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
 
-		private void CreateEmptySpell()
+		private UnitSO CreateGoblinUnit(string directory)
 		{
-			// Create a new instance of the SpellData ScriptableObject
-			SpellCardData spellData = ScriptableObject.CreateInstance<SpellCardData>();
-
-			// Create the directory if it doesn't exist
-			string directory = "Assets/Resources/Cards";
-			if (!Directory.Exists(directory))
-			{
-				Directory.CreateDirectory(directory);
-			}
-
-			// Generate a unique asset name with incremental suffix
-			string assetPath = GetUniqueAssetPath(directory, "NewSpell_Card");
-
-			AssetDatabase.CreateAsset(spellData, assetPath);
-
-			// Select the asset in the project window
-			Selection.activeObject = spellData;
-
-			// Save changes
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-
-			Debug.Log($"Empty spell template created at {assetPath}");
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Goblin_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 80f,
+				transport: TransportType.Ground,
+				movementSpeed: 3.0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 50f,
+				attackSpeed: 1.1f,
+				attackRange: 0.5f,
+				areaDamageRadius: 0f,
+				sightRange: 5.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
 
-		private string GetUniqueAssetPath(string directory, string baseName)
+		private UnitSO CreateKnightUnit(string directory)
 		{
-			string assetPath = $"{directory}/{baseName}.asset";
-			int suffix = 1;
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Knight_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 1450f,
+				transport: TransportType.Ground,
+				movementSpeed: 1.2f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 159f,
+				attackSpeed: 1.2f,
+				attackRange: 1.0f,
+				areaDamageRadius: 0f,
+				sightRange: 5.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
 
-			// If the file already exists, add incremental suffix
-			while (File.Exists(assetPath))
+		private UnitSO CreateMusketerUnit(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Musketeer_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 720f,
+				transport: TransportType.Ground,
+				movementSpeed: 1.5f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 176f,
+				attackSpeed: 1.1f,
+				attackRange: 6.0f,
+				areaDamageRadius: 0f,
+				sightRange: 7.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+
+		private UnitSO CreateHogRiderUnit(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/HogRider_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 1696f,
+				transport: TransportType.Ground,
+				movementSpeed: 3.5f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 264f,
+				attackSpeed: 1.6f,
+				attackRange: 0.8f,
+				areaDamageRadius: 0f,
+				sightRange: 6.0f,
+				targetPreference: new List<TroopType> { TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+
+		private UnitSO CreateCannonUnit(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Cannon_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Building,
+				hitPoints: 824f,
+				transport: TransportType.Ground,
+				movementSpeed: 0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 127f,
+				attackSpeed: 0.8f,
+				attackRange: 5.5f,
+				areaDamageRadius: 0f,
+				sightRange: 7.0f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+
+		private UnitSO CreateSkeletonUnit(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Skeleton_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.Troop,
+				hitPoints: 100f,
+				transport: TransportType.Ground,
+				movementSpeed: 2.5f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 100f,
+				attackSpeed: 1.0f,
+				attackRange: 1.0f,
+				areaDamageRadius: 0f,
+				sightRange: 5.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+		#endregion // Unit Creation Methods
+
+		#region Spell Creation Methods
+		private SpellSO CreateArrowsSpell(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+
+			string assetPath = $"{directory}/Arrows_Spell.asset";
+			var spellStats = SpellStats.Build(
+				affectsAir: true,
+				affectsGround: true,
+				affectsBuildings: true,
+				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect
+			);
+
+			return CreateOrLoadSpell(assetPath, spellStats);
+		}
+
+		private SpellSO CreateFireballSpell(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+
+			string assetPath = $"{directory}/Fireball_Spell.asset";
+			var spellStats = SpellStats.Build(
+				affectsAir: true,
+				affectsGround: true,
+				affectsBuildings: true,
+				attributes: SpellAttributes.Damage | SpellAttributes.AreaEffect
+			);
+
+			return CreateOrLoadSpell(assetPath, spellStats);
+		}
+		#endregion // Spell Creation Methods
+
+		#region Bulk Creation Methods
+		private void CreateAllTroops()
+		{
+			var createdUnits = new List<UnitSO>
 			{
-				assetPath = $"{directory}/{baseName}_{suffix}.asset";
-				suffix++;
+				CreateMinionsUnit(UNITS_DIRECTORY),
+				CreateGiantUnit(UNITS_DIRECTORY),
+				CreateKnightUnit(UNITS_DIRECTORY),
+				CreateMusketerUnit(UNITS_DIRECTORY),
+				CreateHogRiderUnit(UNITS_DIRECTORY),
+				CreateGoblinUnit(UNITS_DIRECTORY),
+				CreateSkeletonUnit(UNITS_DIRECTORY),
+			};
+
+			int createdCount = createdUnits.Where(unit => unit != null).Count();
+
+			if (createdCount > 0)
+			{
+				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh();
+			}
+			Debug.Log($"Created {createdCount} unit ScriptableObjects");
+		}
+
+		private void CreateAllSpells()
+		{
+			var createdSpells = new List<SpellSO>
+			{
+				CreateArrowsSpell(SPELLS_DIRECTORY),
+				CreateFireballSpell(SPELLS_DIRECTORY)
+			};
+
+			int createdCount = createdSpells.Where(spell => spell != null).Count();
+
+			if (createdCount > 0)
+			{
+				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh();
+			}
+			Debug.Log($"Created {createdCount} spell ScriptableObjects");
+		}
+
+		private void CreateAllBuildings()
+		{
+			AssetUtils.CreateDirectory(BUILDINGS_DIRECTORY);
+
+			var createdBuildings = new List<UnitSO>
+			{
+				CreateCannonUnit(BUILDINGS_DIRECTORY)
+			};
+
+			int createdCount = createdBuildings.Where(building => building != null).Count();
+
+			if (createdCount > 0)
+			{
+				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh();
+			}
+			Debug.Log($"Created {createdCount} building ScriptableObjects");
+		}
+
+		private void CreateAllTowers()
+		{
+			AssetUtils.CreateDirectory(TOWERS_DIRECTORY);
+
+			var createdTowers = new List<UnitSO>
+			{
+				CreatePrincessTower(TOWERS_DIRECTORY),
+				CreateKingTower(TOWERS_DIRECTORY)
+			};
+
+			int createdCount = createdTowers.Where(tower => tower != null).Count();
+
+			if (createdCount > 0)
+			{
+				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh();
+			}
+			Debug.Log($"Created {createdCount} tower ScriptableObjects");
+		}
+
+		private UnitSO CreatePrincessTower(string directory)
+		{
+			string assetPath = $"{directory}/PrincessTower_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.ArenaTower,
+				hitPoints: 2534f,
+				transport: TransportType.Ground,
+				movementSpeed: 0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 90f,
+				attackSpeed: 0.8f,
+				attackRange: 7.5f,
+				areaDamageRadius: 0f,
+				sightRange: 8.5f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+
+		private UnitSO CreateKingTower(string directory)
+		{
+			string assetPath = $"{directory}/KingTower_Unit.asset";
+			var unitStats = UnitStats.Build(
+				type: TroopType.ArenaTower,
+				hitPoints: 4008f,
+				transport: TransportType.Ground,
+				movementSpeed: 0f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 120f,
+				attackSpeed: 1.0f,
+				attackRange: 7.0f,
+				areaDamageRadius: 0f,
+				sightRange: 8.0f,
+				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
+		#endregion
+
+		#region Helper Methods
+		private UnitSO CreateOrLoadUnit(string assetPath, UnitStats unitStats, CombatStats combatStats)
+		{
+			if (File.Exists(assetPath))
+			{
+				return AssetDatabase.LoadAssetAtPath<UnitSO>(assetPath);
 			}
 
-			return assetPath;
+			var unitSO = UnitSO.Build(unitStats: unitStats, combatStats: combatStats);
+			AssetDatabase.CreateAsset(unitSO, assetPath);
+			return unitSO;
 		}
+
+		private SpellSO CreateOrLoadSpell(string assetPath, SpellStats spellStats)
+		{
+			if (File.Exists(assetPath))
+			{
+				return AssetDatabase.LoadAssetAtPath<SpellSO>(assetPath);
+			}
+
+			var spellSO = SpellSO.Build(spellStats: spellStats);
+			AssetDatabase.CreateAsset(spellSO, assetPath);
+			return spellSO;
+		}
+		#endregion // Helper Methods
 	}
 }

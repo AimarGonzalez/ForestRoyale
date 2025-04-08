@@ -10,8 +10,8 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 	{
 		[SerializeField]
 		private TroopType _type;
-		
-		[BoxGroup("Combat Stats")]
+
+		[BoxGroup("Troop Stats")]
 		[Tooltip("Base health points")]
 		[SerializeField]
 		private float _hitPoints;
@@ -37,6 +37,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 
 			// Set TroopStats specific properties
 			stats._type = type;
+			stats._hitPoints = hitPoints;
 			stats._transport = transport;
 			stats._movementSpeed = movementSpeed;
 

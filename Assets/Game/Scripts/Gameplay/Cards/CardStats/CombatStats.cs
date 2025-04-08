@@ -48,14 +48,22 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 
 
 #if UNITY_EDITOR
-		public static CombatStats Build(float damage, float attackSpeed, float attackRange, float areaDamageRadius = 0f)
+		public static CombatStats Build(
+			float damage,
+			float attackSpeed,
+			float attackRange,
+			float areaDamageRadius,
+			float sightRange,
+			List<TroopType> targetPreference)
 		{
 			CombatStats stats = new CombatStats
 			{
 				_damage = damage,
 				_attackSpeed = attackSpeed,
 				_attackRange = attackRange,
-				_areaDamageRadius = areaDamageRadius
+				_areaDamageRadius = areaDamageRadius,
+				_sightRange = sightRange,
+				_targetPreference = targetPreference
 			};
 			return stats;
 		}

@@ -73,7 +73,7 @@ namespace Game.Scripts.Gameplay.Units.MonoBehaviours
 			_cardData = cardData;
 
 			//TODO: Use a factory to spawn the Unit from CardData
-			Unit unit = new Unit(cardData, _root, unitCard.UnitStats, unitCard.CombatStats);
+			Unit unit = new Unit(cardData, _root, unitCard.UnitSO.UnitStats, unitCard.UnitSO.CombatStats);
 			_root.SetUnit(unit);
 		}
 

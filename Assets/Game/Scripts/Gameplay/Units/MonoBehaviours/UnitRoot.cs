@@ -1,5 +1,5 @@
-﻿using ForestRoyale.Gameplay.Cards;
-using ForestRoyale.Gameplay.Systems;
+﻿using ForestRoyale.Gameplay.Systems;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -16,6 +16,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		[ShowInInspector, ReadOnly]
 		private Unit _unit;
+
+		[SerializeField]
+		private UnitSO _startingUnitSO;
 
 		[Inject]
 		private ArenaEvents _arenaEvents;

@@ -18,8 +18,4 @@ MonoBehaviour:
   _portrait: {fileID: 0}
   _elixirCost: 4
   _rarity: 1
-  _spellEffects:
-    _affectsAir: 1
-    _affectsGround: 1
-    _affectsBuildings: 1
-    _attributes: 3
+  _spellSO: {fileID: 11400000, guid: b045ba4c9b22a054cb894c27ec7aa3f9, type: 2}

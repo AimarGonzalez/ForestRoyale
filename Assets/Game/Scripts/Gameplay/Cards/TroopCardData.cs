@@ -1,5 +1,6 @@
 using UnityEngine;
-using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using Sirenix.OdinInspector;
 
 namespace ForestRoyale.Gameplay.Cards
 {
@@ -10,17 +11,13 @@ namespace ForestRoyale.Gameplay.Cards
 		[SerializeField]
 		private int _unitCount = 1;
 
-		[SerializeField]
-		private UnitStats _unitStats;
-
-		[SerializeField]
-		private CombatStats _combatStats;
+		[SerializeField, InlineEditor]
+		private UnitSO _unitSO;
 
 		public int UnitCount => _unitCount;
 
 		// Implement IUnitCard interface
-		public UnitStats UnitStats => _unitStats;
-		public CombatStats CombatStats => _combatStats;
+		public UnitSO UnitSO => _unitSO;
 
 #if UNITY_EDITOR
 		public static TroopCardData Build(
@@ -30,15 +27,13 @@ namespace ForestRoyale.Gameplay.Cards
 			int elixirCost,
 			CardRarity rarity,
 			int unitCount,
-			UnitStats unitStats,
-			CombatStats combatStats)
+			UnitSO unitSO)
 		{
 			TroopCardData card = CreateInstance<TroopCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
 			card._unitCount = unitCount;
-			card._unitStats = unitStats;
-			card._combatStats = combatStats;
+			card._unitSO = unitSO;
 
 			return card;
 		}

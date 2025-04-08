@@ -19,14 +19,4 @@ MonoBehaviour:
   _elixirCost: 4
   _rarity: 1
   _unitCount: 1
-  _unitStats:
-    _hitPoints: 0
-    _transport: 0
-    _movementSpeed: 3.5
-  _combatStats:
-    _damage: 264
-    _attackSpeed: 1.6
-    _attackRange: 0.8
-    _areaDamageRadius: 0
-    _sightRange: 0
-    _targetPreference: 
+  _unitSO: {fileID: 11400000, guid: c798d3d8219ef83469c52c9b70006c34, type: 2}
