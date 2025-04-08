@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitStats:
     _type: 0
-    _hitPoints: 0
+    _hitPoints: 720
     _transport: 0
     _movementSpeed: 1.5
   _combatStats:
@@ -22,5 +22,5 @@ MonoBehaviour:
     _attackSpeed: 1.1
     _attackRange: 6
     _areaDamageRadius: 0
-    _sightRange: 0
-    _targetPreference: 
+    _sightRange: 7.5
+    _targetPreference: 000000000100000002000000
