@@ -3,7 +3,8 @@
     "rootNamespace": "ForestRoyaleEditor",
     "references": [
         "GUID:3ee29fee7ab89824993db4a416878fa4",
-        "GUID:8c4dd21966739024fbd72155091d199e"
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:20f3d03bfb704409a7d6e162fbda8700"
     ],
     "includePlatforms": [
         "Editor"
