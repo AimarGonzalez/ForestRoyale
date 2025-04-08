@@ -44,7 +44,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 		public void SetTarget(Unit troop, Unit newTarget)
 		{
-			troop.SetTarget(newTarget, targetIsInCombatRange:false);
+			troop.Target = newTarget;
 			OnTargetChanged?.Invoke(troop);
 		}
 

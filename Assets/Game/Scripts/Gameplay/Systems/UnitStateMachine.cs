@@ -4,12 +4,12 @@ using System;
 
 namespace ForestRoyale.Gameplay.Systems
 {
-	public class MovementSystem
+	public class UnitStateMachine
 	{
 		private readonly ArenaEvents _arenaEvents;
 		private readonly HashSet<Unit> _activeUnits;
 
-		public MovementSystem(ArenaEvents arenaEvents)
+		public UnitStateMachine(ArenaEvents arenaEvents)
 		{
 			_arenaEvents = arenaEvents;
 			_activeUnits = new HashSet<Unit>();
@@ -32,17 +32,7 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
-				if (troop.HasTarget)
-				{
-					if (troop.TargetIsInCombatRange)
-					{
-						troop.MovementController.Stop();
-					}
-					else
-					{
-						troop.MovementController.MoveToTarget();
-					}
-				}
+				// TODO: Implement state machine
 			}
 		}
 

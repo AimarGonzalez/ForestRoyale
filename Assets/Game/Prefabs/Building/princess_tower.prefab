@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 1075371503255144863}
   - component: {fileID: 2822151972902616218}
   - component: {fileID: 5563134270203112240}
-  - component: {fileID: 1342122359133671745}
+  - component: {fileID: 8028147629642433926}
   m_Layer: 0
   m_Name: princess_tower
   m_TagString: Untagged
@@ -232,27 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardData: {fileID: 0}
-  _unit:
-    _team: 0
-    _health: 0
-    TargetIsInCombatRange: 0
-    CardOrigin: {fileID: 0}
-    UnitStats:
-      _hitPoints: 0
-      _transport: 0
-      _movementSpeed: 0
-    CombatStats:
-      _damage: 0
-      _attackSpeed: 0
-      _attackRange: 0
-      _areaDamageRadius: 0
-      _sightRange: 0
-      _targetPreference: 
-    Id: 
-    UnitRoot: {fileID: 0}
-    MovementController: {fileID: 0}
---- !u!114 &1342122359133671745
+--- !u!114 &8028147629642433926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,32 +241,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7549416225333322028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 892a63fe77884445af0e4c3aaa477f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _root: {fileID: 5563134270203112240}
-  _agent: {fileID: 0}
-  _bodyCollider: {fileID: 4174132377605295709}
   _attackCollider: {fileID: 1509472835549422454}
-  _unit:
-    _team: 0
-    _health: 0
-    TargetIsInCombatRange: 0
-    CardOrigin: {fileID: 0}
-    UnitStats:
-      _hitPoints: 0
-      _transport: 0
-      _movementSpeed: 0
-    CombatStats:
-      _damage: 0
-      _attackSpeed: 0
-      _attackRange: 0
-      _areaDamageRadius: 0
-      _sightRange: 0
-      _targetPreference: 
-    Id: 
-    UnitRoot: {fileID: 0}
-    MovementController: {fileID: 0}
 --- !u!1 &9029378825866020775
 GameObject:
   m_ObjectHideFlags: 0

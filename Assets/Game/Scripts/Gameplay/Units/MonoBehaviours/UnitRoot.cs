@@ -37,21 +37,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			Debug.Log("Awake");
 		}
 
-
-
-		private void OnCardDataChanged(CardData cardData)
-		{
-			Unit unit = null;
-			if (cardData is not null)
-			{
-				IUnitCard unitCard = cardData as IUnitCard;
-
-				//TODO: Use a factory to spawn the Unit from CardData
-				unit = new Unit(cardData, this, unitCard.UnitStats, unitCard.CombatStats);
-			}
-			SetUnit(unit);
-		}
-
 		public void SetUnit(Unit unit)
 		{
 			if (_unit == unit)

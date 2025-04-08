@@ -1,3 +1,4 @@
+using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -5,18 +6,8 @@ using UnityEngine.AI;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 {
-	public class MovementController : MonoBehaviour
+	public class MovementController : UnitComponent
 	{
-		private class TargetData
-		{
-			public UnitRoot UnitRoot;
-			public Unit Unit;
-			public bool IsInCombatRange = false;
-		}
-
-		[SerializeField]
-		private UnitRoot _root;
-
 		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
@@ -25,131 +16,44 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		[Required]
 		private Collider _bodyCollider;
 
-		[SerializeField]
-		[Required]
-		private CapsuleCollider _attackCollider;
 
-
-		[ShowInInspector, ReadOnly]
-		private Unit _unit;
-
-		public Unit Unit => _unit;
-
-		private void Awake()
+		protected override void OnUnitChanged()
 		{
-			_root ??= GetComponent<UnitRoot>();
-
-			_root.OnUnitChanged += OnUnitChanged;
-
-			if (_attackCollider != null)
-			{
-				var trigger = _attackCollider.gameObject.AddComponent<TriggerListener>();
-				trigger.OnTriggerEnterEvent += HandleTriggerEnter;
-				trigger.OnTriggerExitEvent += HandleTriggerExit;
-				trigger.OnTriggerStayEvent += HandleTriggerStay;
-			}
-		}
-
-		private void OnDestroy()
-		{
-			_root.OnUnitChanged -= OnUnitChanged;
-
-			if (_attackCollider != null)
-			{
-				var trigger = _attackCollider.GetComponent<TriggerListener>();
-				if (trigger != null)
-				{
-					trigger.OnTriggerEnterEvent -= HandleTriggerEnter;
-					trigger.OnTriggerExitEvent -= HandleTriggerExit;
-					trigger.OnTriggerStayEvent -= HandleTriggerStay;
-				}
-			}
-		}
-
-		private void OnUnitChanged(Unit newUnit)
-		{
-			_unit = newUnit;
-
-			if (_unit == null)
-			{
-				return;
-			}
-
 			if (_agent == null)
 			{
-				// This unit cannot move (e.g. buildings)
+				Debug.LogError("Missing NavMeshAgent component.");
 				return;
 			}
 
-			// Update agent with unit stats
-			_agent.speed = _unit.UnitStats.MovementSpeed;
-
-			// Update attackCollider with unit stats
-			_attackCollider.radius = _unit.CombatStats.AttackRange;
-		}
-
-
-		private void HandleTriggerEnter(Collider other)
-		{
-			if (_unit?.Target == null)
+			if (Unit != null)
 			{
-				return;
+				// Update agent with unit stats
+				_agent.speed = Unit.UnitStats.MovementSpeed;
+			}
+			else
+			{
+				// Disable movement
+				_agent.speed = 0;
 			}
 
-			if (other.IsBodyCollider() && other.GetUnit() == _unit.Target)
-			{
-				_unit.TargetIsInCombatRange = true;
-				OnTargetInCombatRange();
-			}
-		}
-
-		private void HandleTriggerStay(Collider other)
-		{
-			if (_unit?.Target == null)
-			{
-				return;
-			}
-
-			if (other.IsBodyCollider() && other.GetUnit() == _unit.Target)
-			{
-				_unit.TargetIsInCombatRange = true;
-				OnTargetInCombatRange();
-			}
-		}
-
-		private void HandleTriggerExit(Collider other)
-		{
-			if (_unit?.Target == null)
-			{
-				return;
-			}
-
-			if (other.IsBodyCollider() && other.GetUnit() == _unit.Target)
-			{
-				_unit.TargetIsInCombatRange = false;
-				OnTargetOutOfAttackRange();
-			}
 		}
 
 		public void MoveToTarget()
 		{
-			// Resumes agent movement
+			Assert.NotNull(Unit.Target);
+			_agent.destination = Unit.Target.Position;
 
-			Assert.NotNull(_unit.Target);
-			_agent.isStopped = false;
-			_agent.destination = _unit.Target.Position;
+			Move();
 		}
 
-		private void OnTargetInCombatRange()
+		public void Move()
 		{
-			// Stops agent movement
+			_agent.isStopped = false;
+		}
+
+		public void Stop()
+		{
 			_agent.isStopped = true;
-		}
-
-		private void OnTargetOutOfAttackRange()
-		{
-			// Resumes agent movement
-			_agent.isStopped = false;
 		}
 	}
 }

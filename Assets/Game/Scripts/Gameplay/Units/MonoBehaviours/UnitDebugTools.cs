@@ -46,7 +46,7 @@ namespace Game.Scripts.Gameplay.Units.MonoBehaviours
 		}
 
 		[BoxGroup("Unit setup")]
-		[Button]
+		[Button, EnableIf("@_cardData != null")]
 		public void SetCardData()
 		{
 			FetchDependencies();
@@ -72,14 +72,12 @@ namespace Game.Scripts.Gameplay.Units.MonoBehaviours
 
 			_cardData = cardData;
 
-			Unit unit = null;
-
 			//TODO: Use a factory to spawn the Unit from CardData
-			unit = new Unit(cardData, _root, unitCard.UnitStats, unitCard.CombatStats);
+			Unit unit = new Unit(cardData, _root, unitCard.UnitStats, unitCard.CombatStats);
 			_root.SetUnit(unit);
 		}
 
-		[BoxGroup("Target")]
+		[BoxGroup("Target"), EnableIf("@_target != null && UnityEngine.Application.isPlaying")]
 		[Button]
 		void GoToTarget()
 		{
