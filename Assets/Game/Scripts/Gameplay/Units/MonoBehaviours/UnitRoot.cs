@@ -41,7 +41,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
-				Unit unit = new Unit(null, this, _startingUnitSO.UnitStats, _startingUnitSO.CombatStats);
+				Unit unit = new Unit(null, this, _startingUnitSO);
 				SetUnit(unit);
 			}
 		}

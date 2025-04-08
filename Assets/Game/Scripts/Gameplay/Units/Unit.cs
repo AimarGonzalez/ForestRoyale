@@ -1,5 +1,6 @@
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using System;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private UnitStats _unitStats;
 		[SerializeField] private CombatStats _combatStats;
 		[SerializeField] private UnitRoot _unitRoot;
+		[SerializeField] private UnitSO _unitSO;
 		[SerializeField] private MovementController _movementController;
 
 		[Header("Target")]
@@ -60,7 +62,7 @@ namespace ForestRoyale.Gameplay.Units
 			set
 			{
 				_target = value;
-			
+
 				// invalidate old target info
 				_targetIsInCombatRange = false;
 			}
@@ -73,15 +75,22 @@ namespace ForestRoyale.Gameplay.Units
 			set => _targetIsInCombatRange = value;
 		}
 
-		public Unit(CardData cardOrigin, UnitRoot root, UnitStats unitStats, CombatStats combatStats)
+		public Unit(CardData cardOrigin, UnitRoot root, UnitSO unitSO)
 		{
 			_cardOrigin = cardOrigin;
 			_unitRoot = root;
+			_unitSO = unitSO;
 			_movementController = root.MovementController;
-			_id = $"{cardOrigin.CardName}_{++s_unitCount}";
-			_unitStats = unitStats;
-			_combatStats = combatStats;
-			_health = unitStats.HitPoints;
+			_unitStats = unitSO.UnitStats;
+			_combatStats = unitSO.CombatStats;
+			_health = _unitStats.HitPoints;
+
+			_id = GenerateId();
+		}
+
+		public string GenerateId()
+		{
+			return $"{_cardOrigin?.CardName ?? _unitSO.name}_{++s_unitCount}";
 		}
 	}
 }
