@@ -37,7 +37,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private void Awake()
 		{
 			_movementMovementController = GetComponent<MovementController>();
-			Debug.Log("Awake");
+
+			if (_startingUnitSO != null)
+			{
+				//TODO: Use a factory to spawn the Unit from CardData
+				Unit unit = new Unit(null, this, _startingUnitSO.UnitStats, _startingUnitSO.CombatStats);
+				SetUnit(unit);
+			}
 		}
 
 		public void SetUnit(Unit unit)
