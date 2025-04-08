@@ -2,56 +2,58 @@ using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
 using System;
 
-public class TargetingSystem
+namespace ForestRoyale.Gameplay.Systems
 {
-	public event Action<Unit> OnTargetChanged;
-
-	private readonly ArenaEvents _arenaEvents;
-	private readonly HashSet<Unit> _activeUnits;
-
-	public TargetingSystem(ArenaEvents arenaEvents)
+	public class TargetingSystem
 	{
-		_arenaEvents = arenaEvents;
-		_activeUnits = new HashSet<Unit>();
+		public event Action<Unit> OnTargetChanged;
 
-		_arenaEvents.OnUnitCreated += HandleUnitCreated;
-		_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
-	}
+		private readonly ArenaEvents _arenaEvents;
+		private readonly HashSet<Unit> _activeUnits;
 
-	private void HandleUnitCreated(Unit unit)
-	{
-		_activeUnits.Add(unit);
-	}
-
-	private void HandleUnitDestroyed(Unit unit)
-	{
-		_activeUnits.Remove(unit);
-	}
-
-	public void UpdateTargets()
-	{
-		foreach (Unit troop in _activeUnits)
+		public TargetingSystem(ArenaEvents arenaEvents)
 		{
-			// If troop doesn't have a target, find a new target
-			if (troop.Target == null)
+			_arenaEvents = arenaEvents;
+			_activeUnits = new HashSet<Unit>();
+
+			_arenaEvents.OnUnitCreated += HandleUnitCreated;
+			_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
+		}
+
+		private void HandleUnitCreated(Unit unit)
+		{
+			_activeUnits.Add(unit);
+		}
+
+		private void HandleUnitDestroyed(Unit unit)
+		{
+			_activeUnits.Remove(unit);
+		}
+
+		public void UpdateTargets()
+		{
+			foreach (Unit troop in _activeUnits)
 			{
-				SetTarget(troop, FindBestTarget(troop));
+				// If troop doesn't have a target, find a new target
+				if (troop.Target == null)
+				{
+					SetTarget(troop, FindBestTarget(troop));
+				}
 			}
 		}
-	}
 
-	public void SetTarget(Unit troop, Unit newTarget)
-	{
-		troop.Target = newTarget;
-		troop.TargetIsInCombatRange = false;
-		OnTargetChanged?.Invoke(troop);
-	}
+		public void SetTarget(Unit troop, Unit newTarget)
+		{
+			troop.SetTarget(newTarget, targetIsInCombatRange:false);
+			OnTargetChanged?.Invoke(troop);
+		}
 
-	private Unit FindBestTarget(Unit troop)
-	{
-		// Troops have a prioritized list of target types.
-		// We should iterate through the list and find the all types within sight range, and get the closest one of them.
-		// If no target is found, we should go the the next preferred type, and so on.
-		return null;
+		private Unit FindBestTarget(Unit troop)
+		{
+			// Troops have a prioritized list of target types.
+			// We should iterate through the list and find the all types within sight range, and get the closest one of them.
+			// If no target is found, we should go the the next preferred type, and so on.
+			return null;
+		}
 	}
 }

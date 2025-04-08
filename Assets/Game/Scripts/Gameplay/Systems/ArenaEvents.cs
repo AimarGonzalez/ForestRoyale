@@ -1,25 +1,28 @@
 using System;
 using ForestRoyale.Gameplay.Units;
 
-public class ArenaEvents
+namespace ForestRoyale.Gameplay.Systems
 {
-
-	public event Action<Unit> OnUnitCreated;
-	public event Action<Unit> OnUnitDestroyed;
-	public event Action<Unit> OnUnitDamaged;
-
-	public void TriggerUnitCreated(Unit unit)
+	public class ArenaEvents
 	{
-		OnUnitCreated?.Invoke(unit);
-	}
 
-	public void TriggerUnitDestroyed(Unit unit)
-	{
-		OnUnitDestroyed?.Invoke(unit);
-	}
+		public event Action<Unit> OnUnitCreated;
+		public event Action<Unit> OnUnitDestroyed;
+		public event Action<Unit> OnUnitDamaged;
 
-	public void TriggerUnitDamaged(Unit unit)
-	{
-		OnUnitDamaged?.Invoke(unit);
+		public void TriggerUnitCreated(Unit unit)
+		{
+			OnUnitCreated?.Invoke(unit);
+		}
+
+		public void TriggerUnitDestroyed(Unit unit)
+		{
+			OnUnitDestroyed?.Invoke(unit);
+		}
+
+		public void TriggerUnitDamaged(Unit unit)
+		{
+			OnUnitDamaged?.Invoke(unit);
+		}
 	}
 }
