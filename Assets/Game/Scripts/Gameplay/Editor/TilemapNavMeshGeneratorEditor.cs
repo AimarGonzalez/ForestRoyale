@@ -13,7 +13,6 @@ namespace ForestRoyaleEditor.Editor.Gameplay.Navigation
 
 		private void OnEnable()
 		{
-			buildNavMeshOnStartProp = serializedObject.FindProperty("rebuildNavMeshOnStart");
 			navMeshSurfaceProp = serializedObject.FindProperty("navMeshSurface");
 		}
 
@@ -29,7 +28,6 @@ namespace ForestRoyaleEditor.Editor.Gameplay.Navigation
 			// NavMesh Settings section
 			EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 			EditorGUILayout.LabelField("NavMesh Settings", EditorStyles.boldLabel);
-			EditorGUILayout.PropertyField(buildNavMeshOnStartProp);
 			EditorGUILayout.PropertyField(navMeshSurfaceProp);
 			EditorGUILayout.EndVertical();
 			EditorGUILayout.Space();

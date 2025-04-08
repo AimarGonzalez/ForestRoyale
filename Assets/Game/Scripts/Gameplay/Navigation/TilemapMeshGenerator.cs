@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// TODO: Consider moving this class to an Editor namespace
 namespace ForestRoyale.Gameplay.Navigation
 {
 	[RequireComponent(typeof(MeshFilter))]

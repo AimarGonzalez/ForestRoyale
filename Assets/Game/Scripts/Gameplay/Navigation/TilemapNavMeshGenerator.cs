@@ -1,15 +1,16 @@
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+#if UNITY_EDITOR
+using Unity.AI.Navigation.Editor;
+#endif
 
+// TODO: Consider moving this class to an Editor namespace
 namespace ForestRoyale.Gameplay.Navigation
 {
 	[RequireComponent(typeof(TilemapMeshGenerator))]
 	public class TilemapNavMeshGenerator : MonoBehaviour
 	{
-		[Header("NavMesh Settings")]
-		public bool rebuildNavMeshOnStart = true;
-
 		public NavMeshSurface navMeshSurface;
 
 		private TilemapMeshGenerator meshGenerator;
@@ -17,14 +18,6 @@ namespace ForestRoyale.Gameplay.Navigation
 		private void Awake()
 		{
 			EnsureInitialized();
-		}
-
-		private void Start()
-		{
-			if (rebuildNavMeshOnStart)
-			{
-				BuildNavMesh();
-			}
 		}
 
 		/// <summary>
@@ -69,6 +62,7 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 		}
 
+#if UNITY_EDITOR
 		[ContextMenu("Rebuild NavMesh")]
 		public void BuildNavMesh()
 		{
@@ -91,7 +85,8 @@ namespace ForestRoyale.Gameplay.Navigation
 				meshGenerator.GenerateMeshFromTilemap();
 
 				// Build the NavMesh
-				navMeshSurface.BuildNavMesh();
+				Object[] surfaces = {navMeshSurface};
+				NavMeshAssetManager.instance.StartBakingSurfaces(surfaces);
 			}
 			else
 			{
@@ -99,14 +94,6 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 		}
 
-		// Optional: Update the NavMesh when changes are made to the tilemap
-		public void UpdateNavMesh()
-		{
-			if (EnsureInitialized() && meshGenerator.EnsureInitialized())
-			{
-				meshGenerator.UpdateMesh();
-				BuildNavMesh();
-			}
-		}
+#endif
 	}
 }
