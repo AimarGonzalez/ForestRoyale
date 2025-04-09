@@ -35,6 +35,7 @@ namespace ForestRoyale.Gui
 				{
 					fontSize = 12,
 					alignment = TextAnchor.MiddleLeft,
+					wordWrap = false,
 					normal =
 					{
 						textColor = Color.white,
