@@ -252,6 +252,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _panelPosition
       value: 2
       objectReference: {fileID: 0}
@@ -46378,6 +46382,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
+      propertyPath: _team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: _unit.Id
       value: Musketeer_2
       objectReference: {fileID: 0}
@@ -46460,6 +46468,10 @@ PrefabInstance:
     - target: {fileID: 1317888740006588980, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_StaticShadowCaster
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _team
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _panelPosition

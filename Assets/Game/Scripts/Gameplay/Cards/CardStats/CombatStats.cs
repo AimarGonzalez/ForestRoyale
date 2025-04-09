@@ -36,7 +36,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		[BoxGroup("Combat Stats")]
 		[Tooltip("Target preference")]
 		[SerializeField]
-		private List<TroopType> _targetPreference;
+		private List<UnitType> _targetPreference;
 
 		// Public getters for properties
 		public float Damage => _damage;
@@ -44,7 +44,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		public float AttackRange => _attackRange;
 		public float AreaDamageRadius => _areaDamageRadius;
 		public float SightRange => _sightRange;
-		public List<TroopType> TargetPreference => _targetPreference;
+		public List<UnitType> TargetPreference => _targetPreference;
 
 
 #if UNITY_EDITOR
@@ -54,7 +54,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 			float attackRange,
 			float areaDamageRadius,
 			float sightRange,
-			List<TroopType> targetPreference)
+			List<UnitType> targetPreference)
 		{
 			CombatStats stats = new CombatStats
 			{

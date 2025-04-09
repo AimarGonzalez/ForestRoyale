@@ -32,7 +32,22 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
-				// TODO: Implement state machine
+				switch (troop.State)
+				{
+					case UnitState.Moving:
+						if (troop.HasTarget && troop.TargetIsInCombatRange)
+						{
+							troop.State = UnitState.Attacking;
+						}
+						break;
+
+					case UnitState.Attacking:
+						break;
+
+					default:
+						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
+						break;
+				}
 			}
 		}
 

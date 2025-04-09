@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
+using Game.Scripts.Gameplay.Cards.CardStats;
 using System;
+using System.Linq;
+using NUnit.Framework;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -35,7 +38,7 @@ namespace ForestRoyale.Gameplay.Systems
 			foreach (Unit troop in _activeUnits)
 			{
 				// If troop doesn't have a target, find a new target
-				if (troop.Target == null)
+				if (troop.State == UnitState.Moving)
 				{
 					SetTarget(troop, FindBestTarget(troop));
 				}
@@ -50,10 +53,30 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private Unit FindBestTarget(Unit troop)
 		{
-			// Troops have a prioritized list of target types.
-			// We should iterate through the list and find the all types within sight range, and get the closest one of them.
-			// If no target is found, we should go the the next preferred type, and so on.
-			return null;
+			Unit foundTarget = null;
+
+			foreach (UnitType targetType in troop.CombatStats.TargetPreference)
+			{
+				if (FindClosestTarget(troop, targetType, out foundTarget))
+				{
+					return foundTarget;
+				}
+			}
+
+			// If no target is found look for the closest Tower
+			FindClosestTarget(troop, UnitType.ArenaTower, out foundTarget);
+
+			Assert.NotNull(foundTarget, $"Could not find a target for troop {troop.ToLogString()}");
+			return foundTarget;
+		}
+
+		private bool FindClosestTarget(Unit troop, UnitType targetType, out Unit result)
+		{
+			result = _activeUnits.Where(unit => unit.Team != troop.Team && unit.UnitStats.UnitType == targetType).
+							OrderBy(target => troop.Position.DistanceSquared(target.Position)).
+							FirstOrDefault();
+
+			return result != null;
 		}
 	}
 }

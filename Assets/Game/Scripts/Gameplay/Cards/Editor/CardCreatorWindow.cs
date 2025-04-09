@@ -368,7 +368,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Minions_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Minions",
+				type: UnitType.Troop,
 				hitPoints: 190f,
 				transport: TransportType.Air,
 				movementSpeed: 3.0f
@@ -379,7 +380,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 2.0f,
 				areaDamageRadius: 0f,
 				sightRange: 2.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -389,7 +390,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Giant_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Giant",
+				type: UnitType.Troop,
 				hitPoints: 3344f,
 				transport: TransportType.Ground,
 				movementSpeed: 1.0f
@@ -400,7 +402,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 1.0f,
 				areaDamageRadius: 0f,
 				sightRange: 1.5f,
-				targetPreference: new List<TroopType> { TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -410,7 +412,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Goblin_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Goblin",
+				type: UnitType.Troop,
 				hitPoints: 80f,
 				transport: TransportType.Ground,
 				movementSpeed: 3.0f
@@ -421,7 +424,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 0.5f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -431,7 +434,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Knight_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Knight",
+				type: UnitType.Troop,
 				hitPoints: 1450f,
 				transport: TransportType.Ground,
 				movementSpeed: 1.2f
@@ -442,7 +446,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 1.0f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -452,7 +456,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Musketeer_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Musketeer",
+				type: UnitType.Troop,
 				hitPoints: 720f,
 				transport: TransportType.Ground,
 				movementSpeed: 1.5f
@@ -463,7 +468,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 6.0f,
 				areaDamageRadius: 0f,
 				sightRange: 7.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -473,7 +478,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/HogRider_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Hog Rider",
+				type: UnitType.Troop,
 				hitPoints: 1696f,
 				transport: TransportType.Ground,
 				movementSpeed: 3.5f
@@ -484,7 +490,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 0.8f,
 				areaDamageRadius: 0f,
 				sightRange: 6.0f,
-				targetPreference: new List<TroopType> { TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -494,7 +500,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Cannon_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Building,
+				name: "Cannon",
+				type: UnitType.Building,
 				hitPoints: 824f,
 				transport: TransportType.Ground,
 				movementSpeed: 0f
@@ -505,7 +512,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 5.5f,
 				areaDamageRadius: 0f,
 				sightRange: 7.0f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -515,7 +522,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Skeleton_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.Troop,
+				name: "Skeleton",
+				type: UnitType.Troop,
 				hitPoints: 100f,
 				transport: TransportType.Ground,
 				movementSpeed: 2.5f
@@ -526,7 +534,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 1.0f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building, TroopType.ArenaTower }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -649,7 +657,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			string assetPath = $"{directory}/PrincessTower_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.ArenaTower,
+				type: UnitType.ArenaTower,
 				hitPoints: 2534f,
 				transport: TransportType.Ground,
 				movementSpeed: 0f
@@ -660,7 +668,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 7.5f,
 				areaDamageRadius: 0f,
 				sightRange: 8.5f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
@@ -669,7 +677,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			string assetPath = $"{directory}/KingTower_Unit.asset";
 			var unitStats = UnitStats.Build(
-				type: TroopType.ArenaTower,
+				type: UnitType.ArenaTower,
 				hitPoints: 4008f,
 				transport: TransportType.Ground,
 				movementSpeed: 0f
@@ -680,7 +688,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				attackRange: 7.0f,
 				areaDamageRadius: 0f,
 				sightRange: 8.0f,
-				targetPreference: new List<TroopType> { TroopType.Troop, TroopType.Building }
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
 using System;
+using System.Diagnostics;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -32,16 +33,32 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
-				if (troop.HasTarget)
+				switch (troop.State)
 				{
-					if (troop.TargetIsInCombatRange)
-					{
+					case UnitState.Moving:
+						if (!troop.CanMove)
+						{
+							break;
+						}
+						
+						if (troop.HasTarget)
+						{
+							troop.MovementController.MoveToTarget();
+						}
+						else
+						{
+							troop.MovementController.Stop();
+						}
+
+						break;
+
+					case UnitState.Attacking:
 						troop.MovementController.Stop();
-					}
-					else
-					{
-						troop.MovementController.MoveToTarget();
-					}
+						break;
+
+					default:
+						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
+						break;
 				}
 			}
 		}

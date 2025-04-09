@@ -1,5 +1,6 @@
 ﻿using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,8 +11,9 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 		
 		[SerializeField]
 		private UnitRoot _root;
-		
+
 		[ShowInInspector, ReadOnly]
+		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
 		private Unit _unit;
 		
 		protected Unit Unit => _unit;

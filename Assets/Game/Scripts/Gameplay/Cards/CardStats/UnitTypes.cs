@@ -6,7 +6,7 @@
 		Air
 	}
 
-	public enum TroopType
+	public enum UnitType
 	{
 		Troop,
 		Building,

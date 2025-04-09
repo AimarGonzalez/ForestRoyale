@@ -24,11 +24,22 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private UnitSO _unitSO;
 		[SerializeField] private MovementController _movementController;
 
+		[Header("State")]
+		[SerializeField] private UnitState _state;
+
 		[Header("Target")]
 		[SerializeField] private Unit _target;
 		[SerializeField] private bool _targetIsInCombatRange;
 
 		public string Id => _id;
+		public bool CanMove => _movementController != null;
+
+		public UnitState State
+		{
+			get => _state;
+			set => _state = value;
+		}
+
 		public ArenaTeam Team
 		{
 			get => _team;
@@ -75,10 +86,11 @@ namespace ForestRoyale.Gameplay.Units
 			set => _targetIsInCombatRange = value;
 		}
 
-		public Unit(CardData cardOrigin, UnitRoot root, UnitSO unitSO)
+		public Unit(CardData cardOrigin, UnitRoot root, ArenaTeam team, UnitSO unitSO)
 		{
 			_cardOrigin = cardOrigin;
 			_unitRoot = root;
+			_team = team;
 			_unitSO = unitSO;
 			_movementController = root.MovementController;
 			_unitStats = unitSO.UnitStats;
@@ -91,6 +103,11 @@ namespace ForestRoyale.Gameplay.Units
 		public string GenerateId()
 		{
 			return $"{_cardOrigin?.CardName ?? _unitSO.name}_{++s_unitCount}";
+		}
+
+		public string ToLogString()
+		{
+			return $"{_unitStats.Name} ({_id}/{_team}/{_state})";
 		}
 	}
 }

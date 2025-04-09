@@ -5,6 +5,7 @@ using System;
 using UnityEngine;
 using VContainer;
 using ForestRoyale.Gui;
+using UnityEngine.Assertions;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -25,10 +26,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		public Action<Unit> OnUnitChanged;
 
 		[SerializeField]
+		private ArenaTeam _team;
+		[SerializeField]
 		private UnitSO _startingUnitSO;
 
 		[ShowInInspector, ReadOnly]
-		[BoxGroup("Debug")]
+		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
 		private Unit _unit;
 
 		[SerializeField]
@@ -45,6 +48,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		// Properties
 		//--------------------------------
 
+		public ArenaTeam Team => _team;
 		public Unit Unit => _unit;
 		public MovementController MovementController => _movementMovementController;
 
@@ -54,10 +58,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		{
 			_movementMovementController = GetComponent<MovementController>();
 
+			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
-				Unit unit = new Unit(null, this, _startingUnitSO);
+				Unit unit = new Unit(null, this, _team, _startingUnitSO);
 				SetUnit(unit);
 			}
 		}
@@ -84,6 +89,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			}
 		}
 
+		
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{

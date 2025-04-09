@@ -9,7 +9,10 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 	public class UnitStats
 	{
 		[SerializeField]
-		private TroopType _type;
+		private string _name;
+
+		[SerializeField]
+		private UnitType _type;
 
 		[BoxGroup("Troop Stats")]
 		[Tooltip("Base health points")]
@@ -26,16 +29,19 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		[SerializeField]
 		private float _movementSpeed;
 
+		public string Name => _name;
+		public UnitType UnitType => _type;
 		public float HitPoints => _hitPoints;
 		public TransportType Transport => _transport;
 		public float MovementSpeed => _movementSpeed;
 
 #if UNITY_EDITOR
-		public static UnitStats Build(TroopType type, float hitPoints, TransportType transport, float movementSpeed)
+		public static UnitStats Build(string name, UnitType type, float hitPoints, TransportType transport, float movementSpeed)
 		{
 			UnitStats stats = new UnitStats();
 
 			// Set TroopStats specific properties
+			stats._name = name;
 			stats._type = type;
 			stats._hitPoints = hitPoints;
 			stats._transport = transport;
