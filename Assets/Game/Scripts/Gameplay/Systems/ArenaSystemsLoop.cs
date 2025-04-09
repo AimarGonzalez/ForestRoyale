@@ -10,10 +10,14 @@ namespace ForestRoyale.Gameplay.Systems
 
 		[Inject]
 		private readonly TargetingSystem _targetingSystem;
+		
+		[Inject]
+		private readonly UnitStateMachine _unitStateMachine;
 
 		public void Update()
 		{
 			_targetingSystem.UpdateTargets();
+			_unitStateMachine.UpdateState();
 			_movementSystem.UpdateMovement();
 		}
 	}

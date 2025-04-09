@@ -47,8 +47,11 @@ namespace ForestRoyale.Gameplay.Systems
 
 		public void SetTarget(Unit troop, Unit newTarget)
 		{
-			troop.Target = newTarget;
-			OnTargetChanged?.Invoke(troop);
+			if (troop.Target != newTarget)
+			{
+				troop.Target = newTarget;
+				OnTargetChanged?.Invoke(troop);
+			}
 		}
 
 		private Unit FindBestTarget(Unit troop)

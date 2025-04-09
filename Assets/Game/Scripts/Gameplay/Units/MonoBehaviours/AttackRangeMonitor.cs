@@ -1,5 +1,6 @@
 ﻿using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -11,6 +12,14 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		[Required]
 		private CapsuleCollider _attackCollider;
+
+		[ShowInInspector]
+		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		private string Target => Unit?.Target?.Id ?? "<none>";
+		
+		[ShowInInspector]
+		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		private bool IsTargetInCombatRange => Unit?.TargetIsInCombatRange ?? false;
 
 
 		private TriggerListener _targetListener;

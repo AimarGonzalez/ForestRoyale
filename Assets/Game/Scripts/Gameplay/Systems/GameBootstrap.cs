@@ -1,17 +1,12 @@
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 
 namespace ForestRoyale.Gameplay.Systems
 {
 	[DefaultExecutionOrder(-5000)]
 	public class GameBootstrap : LifetimeScope
 	{
-
-
-
 		protected override void Configure(IContainerBuilder builder)
 		{
 			Debug.Log("Boostrap");
@@ -19,6 +14,7 @@ namespace ForestRoyale.Gameplay.Systems
 			builder.Register<ArenaEvents>(Lifetime.Scoped);
 			builder.Register<MovementSystem>(Lifetime.Scoped);
 			builder.Register<TargetingSystem>(Lifetime.Scoped);
+			builder.Register<UnitStateMachine>(Lifetime.Scoped);
 		}
 	}
 }

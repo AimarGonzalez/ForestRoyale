@@ -33,14 +33,14 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
+				if (!troop.CanMove)
+				{
+					continue;
+				}
+				
 				switch (troop.State)
 				{
 					case UnitState.Moving:
-						if (!troop.CanMove)
-						{
-							break;
-						}
-						
 						if (troop.HasTarget)
 						{
 							troop.MovementController.MoveToTarget();

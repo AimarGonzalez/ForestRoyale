@@ -28,7 +28,7 @@ namespace ForestRoyale.Gameplay.Systems
 			_activeUnits.Remove(unit);
 		}
 
-		public void UpdateMovement()
+		public void UpdateState()
 		{
 			foreach (Unit troop in _activeUnits)
 			{

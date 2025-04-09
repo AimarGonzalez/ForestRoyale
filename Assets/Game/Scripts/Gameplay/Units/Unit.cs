@@ -72,10 +72,13 @@ namespace ForestRoyale.Gameplay.Units
 			get => _target;
 			set
 			{
-				_target = value;
+				if (_target != value)
+				{
+					_target = value;
 
-				// invalidate old target info
-				_targetIsInCombatRange = false;
+					// invalidate old target info
+					_targetIsInCombatRange = false;
+				}
 			}
 		}
 		public bool HasTarget => _target != null;
