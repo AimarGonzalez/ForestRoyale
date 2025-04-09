@@ -76,7 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _team: 0
   _startingUnitSO: {fileID: 11400000, guid: 3acb7a78d9cfd1a499b890389b3b8c49, type: 2}
+  _panelPosition: 0
 --- !u!114 &2248083304886485461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +280,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8814071115090319185}
     m_Modifications:
+    - target: {fileID: 3390396912961260220, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 127
+      objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -304,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_SizeDelta.y
