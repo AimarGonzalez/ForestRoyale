@@ -1,9 +1,11 @@
-﻿using ForestRoyale.Gameplay.Systems;
-using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+﻿using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using ForestRoyale.Gameplay.Systems;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using VContainer;
+using ForestRoyale.Gui;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,13 +14,27 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 {
 	public class UnitRoot : MonoBehaviour
 	{
-		public Action<Unit> OnUnitChanged;
+		private enum PanelPosition
+		{
+			Bottom,
+			Top,
+			Left,
+			Right
+		}
 
-		[ShowInInspector, ReadOnly]
-		private Unit _unit;
+		public Action<Unit> OnUnitChanged;
 
 		[SerializeField]
 		private UnitSO _startingUnitSO;
+
+		[ShowInInspector, ReadOnly]
+		[BoxGroup("Debug")]
+		private Unit _unit;
+
+		[SerializeField]
+		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		private PanelPosition _panelPosition;
+
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
@@ -68,35 +84,69 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			}
 		}
 
+#if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
-#if UNITY_EDITOR
+			string info = "";
 			if (_unit == null)
 			{
-				return;
+				info = "null unit";
+			}
+			else
+			{
+				info = $"[{_unit.Id}]\n";
+				info += $"Target: {_unit.Target?.Id ?? "None"}\n";
+				info += $"In Combat Range: {(_unit?.TargetIsInCombatRange ?? false ? "Yes" : "No")}";
 			}
 
-			Vector3 position = transform.position;
-			Vector3 labelPosition = position + Vector3.down * 0.5f;
+			DrawDebugPanel(info);
+		}
+
+		private void DrawDebugPanel(string info)
+		{
+			Vector2 screenOffset = Vector2.zero;
+			Vector3 worldOffset = Vector3.zero;
+
+			float baseWorldOffset = 1f;
+			
+			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
+
+			Vector2 size = panelStyle.CalcSize(new GUIContent(info));
+
+			switch (_panelPosition)
+			{
+				case PanelPosition.Top:
+					screenOffset = Vector2.down * (size.y * 0.5f);
+					worldOffset = Vector3.forward * baseWorldOffset;
+					break;
+				case PanelPosition.Bottom:
+					screenOffset = Vector2.up * (size.y * 0.5f);
+					worldOffset = Vector3.back * baseWorldOffset;
+					break;
+				case PanelPosition.Left:
+					screenOffset = Vector2.left * (size.x * 0.5f);
+					worldOffset = Vector3.left * baseWorldOffset;
+					break;
+				case PanelPosition.Right:
+					screenOffset = Vector2.right * (size.x * 0.5f);
+					worldOffset = Vector3.right * baseWorldOffset;
+					break;
+			}
+
+			Vector3 worldPosition = transform.position + worldOffset;
+			Vector2 screenPoint = HandleUtility.WorldToGUIPoint(worldPosition);
+			Vector3 labelPosition = screenPoint + screenOffset;
 
 			Handles.BeginGUI();
 			try
 			{
-				Vector2 screenPoint = HandleUtility.WorldToGUIPoint(labelPosition);
+				// Create rect centered on the labelPosition
+				Rect rect = new Rect(labelPosition.x - size.x * 0.5f, labelPosition.y - size.y * 0.5f, size.x, size.y);
 
-				string info = $"[{_unit.Id}]\n";
-				info += $"Target: {_unit.Target?.Id ?? "None"}\n";
-				info += $"In Combat Range: {(_unit?.TargetIsInCombatRange ?? false ? "Yes" : "No")}\n";
-
-				GUIStyle style = new GUIStyle();
-				style.normal.textColor = Color.white;
-				style.padding = new RectOffset(5, 5, 5, 5);
-
-				Vector2 size = style.CalcSize(new GUIContent(info));
-				Rect rect = new Rect(screenPoint.x - size.x * 0.5f, screenPoint.y, size.x, size.y);
-
-				EditorGUI.DrawRect(rect, new Color(0, 0, 0, 0.5f));
-				EditorGUI.LabelField(rect, info, style);
+				// Forcing color as a hack, cause our black texture is not displaying properly.
+				GUIUtils.PushBackgroundColor(Color.black);
+				EditorGUI.LabelField(rect, info, panelStyle);
+				GUIUtils.PopBackgroundColor();
 			}
 			catch (Exception e)
 			{
@@ -106,7 +156,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			{
 				Handles.EndGUI();
 			}
-#endif
 		}
+#endif //UNITY_EDITOR
 	}
 }

@@ -251,6 +251,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _panelPosition
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7549416225333322028, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_Name
       value: princess_tower-north_left
@@ -907,6 +911,10 @@ PrefabInstance:
     - target: {fileID: 1317888740006588980, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_StaticShadowCaster
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _panelPosition
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7549416225333322028, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_Name
@@ -37785,6 +37793,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _panelPosition
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7549416225333322028, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_Name
       value: 'princess_tower-south_left '
@@ -46374,13 +46386,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
+      propertyPath: _panelPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: _unit.UnitRoot
       value: 
       objectReference: {fileID: 1657394826562224261}
     - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: _unit.CardOrigin
       value: 
-      objectReference: {fileID: 11400000, guid: 248904ded3202bf4185ba1a98b31269c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7992325886180107021, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: _unit.CombatStats._damage
       value: 176
@@ -46444,6 +46460,10 @@ PrefabInstance:
     - target: {fileID: 1317888740006588980, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_StaticShadowCaster
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _panelPosition
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7549416225333322028, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: m_Name
