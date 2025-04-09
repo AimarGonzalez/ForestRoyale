@@ -657,6 +657,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			string assetPath = $"{directory}/PrincessTower_Unit.asset";
 			var unitStats = UnitStats.Build(
+				name: "Princess Tower",
 				type: UnitType.ArenaTower,
 				hitPoints: 2534f,
 				transport: TransportType.Ground,
@@ -677,6 +678,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			string assetPath = $"{directory}/KingTower_Unit.asset";
 			var unitStats = UnitStats.Build(
+				name: "King Tower",
 				type: UnitType.ArenaTower,
 				hitPoints: 4008f,
 				transport: TransportType.Ground,
