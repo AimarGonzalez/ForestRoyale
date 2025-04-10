@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ForestLib.Utils;
+using UnityEngine;
 
 namespace ForestRoyale.Gui
 {
@@ -7,9 +8,14 @@ namespace ForestRoyale.Gui
 		private static Texture2D s_blackTransparentTexture;
 		private static GUIStyle s_blackBoxStyle;
 		private static GUIStyle s_debugPanelStyle;
+
 		private static GUIStyle s_labelBlueStyle;
 		private static GUIStyle s_labelGreenStyle;
 		private static GUIStyle s_labelRedStyle;
+		private static GUIStyle s_labelYellowStyle;
+		private static GUIStyle s_labelOrangeStyle;
+		private static GUIStyle s_labelPurpleStyle;
+		private static GUIStyle s_labelPinkStyle;
 
 
 		// Static initializer
@@ -29,10 +35,10 @@ namespace ForestRoyale.Gui
 			get
 			{
 				InitializeTexture();
-				
+
 				s_blackBoxStyle ??= new GUIStyle(GUI.skin.box)
 				{
-					normal = {background = s_blackTransparentTexture}
+					normal = { background = s_blackTransparentTexture }
 				};
 				return s_blackBoxStyle;
 			}
@@ -44,7 +50,7 @@ namespace ForestRoyale.Gui
 			get
 			{
 				InitializeTexture();
-				
+
 				s_debugPanelStyle ??= new GUIStyle()
 				{
 					fontSize = 12,
@@ -68,7 +74,7 @@ namespace ForestRoyale.Gui
 		{
 			get
 			{
-				s_labelBlueStyle ??= new GUIStyle(GUI.skin.label) { normal = { textColor = Color.blue } };
+				s_labelBlueStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = Color.blue } };
 				return s_labelBlueStyle;
 			}
 		}
@@ -77,7 +83,7 @@ namespace ForestRoyale.Gui
 		{
 			get
 			{
-				s_labelGreenStyle ??= new GUIStyle(GUI.skin.label) { normal = { textColor = Color.green } };
+				s_labelGreenStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = Color.green } };
 				return s_labelGreenStyle;
 			}
 		}
@@ -86,11 +92,46 @@ namespace ForestRoyale.Gui
 		{
 			get
 			{
-				s_labelRedStyle ??= new GUIStyle(GUI.skin.label) { normal = { textColor = Color.red } };			
+				s_labelRedStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = Color.red } };
 				return s_labelRedStyle;
 			}
 		}
 
+		public static GUIStyle LabelYellowStyle
+		{
+			get
+			{
+				s_labelYellowStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = Color.yellow } };
+				return s_labelYellowStyle;
+			}
+		}
+
+		public static GUIStyle LabelOrangeStyle
+		{
+			get
+			{
+				s_labelOrangeStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = ColorConstants.Orange } };
+				return s_labelOrangeStyle;
+			}
+		}
+
+		public static GUIStyle LabelPurpleStyle
+		{
+			get
+			{
+				s_labelPurpleStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = ColorConstants.Purple } };
+				return s_labelPurpleStyle;
+			}
+		}
+
+		public static GUIStyle LabelPinkStyle
+		{
+			get
+			{
+				s_labelPinkStyle ??= new GUIStyle(GUI.skin.textField) { normal = { textColor = ColorConstants.Pink } };
+				return s_labelPinkStyle;
+			}
+		}
 
 		public static void InitializeTexture()
 		{
@@ -98,7 +139,7 @@ namespace ForestRoyale.Gui
 			{
 				return;
 			}
-			
+
 			s_blackTransparentTexture = Resources.Load<Texture2D>("GUI/square-16px-4r-black-50t-solid");
 		}
 	}
