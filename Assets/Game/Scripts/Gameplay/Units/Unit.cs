@@ -3,6 +3,7 @@ using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units
@@ -10,7 +11,7 @@ namespace ForestRoyale.Gameplay.Units
 	[Serializable]
 	public class Unit : IDamageable
 	{
-		private static uint s_unitCount = 0;
+		private static Dictionary<string, uint> s_unitCount = new Dictionary<string, uint>();
 
 		[Header("Stats")]
 		[SerializeField] private ArenaTeam _team;
@@ -105,7 +106,13 @@ namespace ForestRoyale.Gameplay.Units
 
 		public string GenerateId()
 		{
-			return $"{_cardOrigin?.CardName ?? _unitSO.name}_{++s_unitCount}";
+			string name = _cardOrigin?.CardName ?? _unitSO.UnitStats.Name ?? _unitSO.name;
+			if (!s_unitCount.ContainsKey(name))
+			{
+				s_unitCount[name] = 0;
+			}
+
+			return $"{name}_{++s_unitCount[name]}";
 		}
 
 		public string ToLogString()
