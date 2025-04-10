@@ -11,6 +11,9 @@ namespace Raven.editor
 	/// Custom editor for MonoBehaviours that supports property grouping using the BoxGroup attribute.
 	/// This editor automatically groups properties with the same BoxGroup attribute into a single box.
 	/// </summary>
+	
+	// DISABLED to avoid messing with other editors.
+	/*
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(MonoBehaviour), true)]
 	public class RavenMonoBehaviourEditor : Editor
@@ -408,4 +411,5 @@ namespace Raven.editor
 			return null;
 		}
 	}
+	*/
 }
