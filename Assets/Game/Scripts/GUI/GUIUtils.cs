@@ -31,7 +31,7 @@ namespace ForestRoyale.Gui
 			}
 
 			public Property(string label, string value)
-				: this(label, value, GUI.skin.label, GUI.skin.label)
+				: this(label, value, GUI.skin.label, GUI.skin.textField)
 			{
 			}
 
