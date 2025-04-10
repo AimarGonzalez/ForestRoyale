@@ -4689,6 +4689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: knight_4
       objectReference: {fileID: 0}
+    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.29
@@ -7022,6 +7026,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 920323299}
+    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.58
@@ -8292,6 +8300,10 @@ PrefabInstance:
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61381,6 +61393,10 @@ PrefabInstance:
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Name
       value: knight_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: m_ObstacleAvoidanceType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
