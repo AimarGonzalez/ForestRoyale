@@ -32,6 +32,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		[ShowInInspector, ReadOnly]
 		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		[NonSerialized]
 		private Unit _unit;
 
 		[SerializeField]
@@ -89,7 +90,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			}
 		}
 
-		
+
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
@@ -113,8 +114,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			Vector2 screenOffset = Vector2.zero;
 			Vector3 worldOffset = Vector3.zero;
 
-			float baseWorldOffset = 1f;
-			
+			float baseWorldOffset = 1f; //1 meter - TODO: Calculate based on the unit bounding box.
+
 			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
 			Vector2 size = panelStyle.CalcSize(new GUIContent(info));
@@ -144,24 +145,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			Vector3 labelPosition = screenPoint + screenOffset;
 
 			Handles.BeginGUI();
-			try
 			{
 				// Create rect centered on the labelPosition
 				Rect rect = new Rect(labelPosition.x - size.x * 0.5f, labelPosition.y - size.y * 0.5f, size.x, size.y);
-
-				// Forcing color as a hack, cause our black texture is not displaying properly.
-				GUIUtils.PushBackgroundColor(Color.black);
-				EditorGUI.LabelField(rect, info, panelStyle);
-				GUIUtils.PopBackgroundColor();
+				GUI.Box(rect, info, panelStyle);
 			}
-			catch (Exception e)
-			{
-				Debug.LogError(e);
-			}
-			finally
-			{
-				Handles.EndGUI();
-			}
+			Handles.EndGUI();
 		}
 #endif //UNITY_EDITOR
 	}

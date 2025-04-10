@@ -20,9 +20,11 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 		
 		protected virtual void Awake()
 		{
-			_root ??= GetComponent<UnitRoot>();
+			_root ??= GetComponentInParent<UnitRoot>();
 
 			_root.OnUnitChanged += OnUnitChanged_Internal;
+
+			_unit = _root.Unit;
 		}
 
 		protected virtual void OnDestroy()
@@ -37,6 +39,9 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 			OnUnitChanged();
 		}
 
-		protected abstract void OnUnitChanged();
+		protected virtual void OnUnitChanged()
+		{
+			// implement in children
+		}
 	}
 }
