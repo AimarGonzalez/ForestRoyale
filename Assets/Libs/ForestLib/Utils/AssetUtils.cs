@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace ForestRoyale.Libs.ForestLib.Utils
+namespace ForestLib.Utils
 {
 	public static class AssetUtils
 	{

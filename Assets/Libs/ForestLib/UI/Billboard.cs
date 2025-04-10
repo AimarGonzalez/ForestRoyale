@@ -5,40 +5,42 @@ using UnityEngine;
 // - TrueBillboard: Rotate to face the camera
 // - SameAsCameraDirection: Rotate to face the camera direction
 
-[ExecuteInEditMode]
-public class Billboard : MonoBehaviour
+namespace ForestLib.UI
 {
-	private Transform _mainCamera;
-	private Vector3 _worldDirection;
-
-	public enum BillbordMode
+	[ExecuteInEditMode]
+	public class Billboard : MonoBehaviour
 	{
-		TrueBillboard, // Rotate to face the camera
-		SameAsCameraDirection, // Rotate to face the camera direction
-	}
+		private Transform _mainCamera;
+		private Vector3 _worldDirection;
 
-	[SerializeField] private BillbordMode mode;
-
-	private void Start()
-	{
-		_mainCamera = Camera.main.transform;
-	}
-
-	private void OnValidate()
-	{
-	}
-
-	private void Update()
-	{
-		if (mode == BillbordMode.TrueBillboard)
+		public enum BillbordMode
 		{
-			transform.LookAt(_mainCamera);
+			TrueBillboard, // Rotate to face the camera
+			SameAsCameraDirection, // Rotate to face the camera direction
 		}
-		else
+
+		[SerializeField] private BillbordMode mode;
+
+		private void Start()
 		{
-			// 180 degrees from camera direction
-			transform.rotation = _mainCamera.rotation * Quaternion.AngleAxis(180, Vector3.up);
+			_mainCamera = Camera.main.transform;
+		}
+
+		private void OnValidate()
+		{
+		}
+
+		private void Update()
+		{
+			if (mode == BillbordMode.TrueBillboard)
+			{
+				transform.LookAt(_mainCamera);
+			}
+			else
+			{
+				// 180 degrees from camera direction
+				transform.rotation = _mainCamera.rotation * Quaternion.AngleAxis(180, Vector3.up);
+			}
 		}
 	}
 }
-

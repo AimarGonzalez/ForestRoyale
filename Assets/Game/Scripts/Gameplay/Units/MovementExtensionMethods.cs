@@ -1,4 +1,5 @@
-﻿using ForestRoyale.Gameplay.Units.MonoBehaviors;
+﻿using ForestLib.Gameplay.Units;
+using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using UnityEngine;
 using UnityEngine.Assertions;
 

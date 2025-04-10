@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ForestRoyale.Gameplay.Units
+namespace ForestLib.Gameplay.Units
 {
 	public static class ComponentExtensionMethods
 	{
