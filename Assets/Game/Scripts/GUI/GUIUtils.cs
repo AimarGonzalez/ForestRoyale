@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ForestLib.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -87,7 +88,7 @@ namespace ForestRoyale.Gui
 		{
 			GUI.contentColor = _contentColorStack.Pop();
 		}
-	
+
 		public static void DrawTextField(int index,
 			Property property,
 			Rect rect,
@@ -96,7 +97,7 @@ namespace ForestRoyale.Gui
 			float valueWidth = 0f
 			)
 		{
-			
+
 			float rowHeigh = Mathf.Max(property.labelSize.y, property.valueSize.y);
 			valueWidth = valueWidth > 0f ? valueWidth : property.valueSize.x;
 
@@ -114,11 +115,11 @@ namespace ForestRoyale.Gui
 				new Rect(
 					panelStyle.padding.left + labelWidth + rect.xMin,
 					panelStyle.padding.top + rect.yMin + index * rowHeigh,
-					property.valueSize.x,
+					valueWidth,
 					rowHeigh),
 				property.value,
 				property.valueStyle);
-			
+
 			PopBackgroundColor();
 		}
 
@@ -142,7 +143,10 @@ namespace ForestRoyale.Gui
 
 		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPosition panelPosition)
 		{
-			float baseWorldOffset = 1f; //1 meter - TODO: Calculate based on the unit bounding box.
+			var characterBounds = MeshUtils.GetBoundingBox(transform);
+
+			float verticalOffset = characterBounds.size.z * 0.5f;
+			float horizontalOffset = characterBounds.size.x * 0.5f;
 			Vector2 screenOffset = Vector2.zero;
 			Vector3 worldOffset = Vector3.zero;
 
@@ -150,19 +154,19 @@ namespace ForestRoyale.Gui
 			{
 				case PanelPosition.Top:
 					screenOffset = Vector2.down * (size.y * 0.5f);
-					worldOffset = Vector3.forward * baseWorldOffset;
+					worldOffset = Vector3.forward * verticalOffset;
 					break;
 				case PanelPosition.Bottom:
 					screenOffset = Vector2.up * (size.y * 0.5f);
-					worldOffset = Vector3.back * baseWorldOffset;
+					worldOffset = Vector3.back * verticalOffset;
 					break;
 				case PanelPosition.Left:
 					screenOffset = Vector2.left * (size.x * 0.5f);
-					worldOffset = Vector3.left * baseWorldOffset;
+					worldOffset = Vector3.left * horizontalOffset;
 					break;
 				case PanelPosition.Right:
 					screenOffset = Vector2.right * (size.x * 0.5f);
-					worldOffset = Vector3.right * baseWorldOffset;
+					worldOffset = Vector3.right * horizontalOffset;
 					break;
 			}
 
@@ -171,5 +175,6 @@ namespace ForestRoyale.Gui
 			Vector3 labelPosition = screenPoint + screenOffset;
 			return labelPosition;
 		}
+
 	}
 }
