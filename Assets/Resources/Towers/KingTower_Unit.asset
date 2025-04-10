@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: KingTower_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: King Tower
     _type: 2
     _hitPoints: 4008
     _transport: 0

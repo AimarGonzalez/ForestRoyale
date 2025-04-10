@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Giant_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Giant
     _type: 0
     _hitPoints: 3344
     _transport: 0

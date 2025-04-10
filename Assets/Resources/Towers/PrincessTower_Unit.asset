@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PrincessTower_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Princess Tower
     _type: 2
     _hitPoints: 2534
     _transport: 0

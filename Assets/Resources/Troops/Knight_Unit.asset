@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Knight_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Knight
     _type: 0
     _hitPoints: 1450
     _transport: 0

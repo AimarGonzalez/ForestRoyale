@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Minions_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Minions
     _type: 0
     _hitPoints: 190
     _transport: 1

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Skeleton_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Skeleton
     _type: 0
     _hitPoints: 100
     _transport: 0

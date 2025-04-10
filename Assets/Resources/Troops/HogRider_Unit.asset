@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HogRider_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Hog Rider
     _type: 0
     _hitPoints: 1696
     _transport: 0

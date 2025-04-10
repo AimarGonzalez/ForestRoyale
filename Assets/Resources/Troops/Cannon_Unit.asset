@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cannon_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Cannon
     _type: 1
     _hitPoints: 824
     _transport: 0

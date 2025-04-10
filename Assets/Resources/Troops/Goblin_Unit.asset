@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Goblin_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Goblin
     _type: 0
     _hitPoints: 80
     _transport: 0

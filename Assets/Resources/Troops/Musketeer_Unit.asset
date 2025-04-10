@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Musketeer_Unit
   m_EditorClassIdentifier: 
   _unitStats:
+    _name: Musketeer
     _type: 0
     _hitPoints: 720
     _transport: 0
