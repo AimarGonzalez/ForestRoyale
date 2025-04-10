@@ -110,7 +110,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		{
 			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
-			(Vector2 panelSize, float labelWidth) = GUIUtils.CalcPanelSize(panelStyle, properties);
+			(Vector2 panelSize, float labelWidth, float valueWidth) = GUIUtils.CalcPanelSize(panelStyle, properties);
 			Vector3 panelPosition = GUIUtils.CalcPanelPosition(transform, panelSize, _panelPosition);
 
 			Handles.BeginGUI();
@@ -122,7 +122,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 				for (int i = 0; i < properties.Length; i++)
 				{
-					GUIUtils.DrawTextField(i, properties[i], rect, labelWidth, panelStyle);
+					GUIUtils.DrawTextField(i, properties[i], rect, panelStyle, labelWidth, valueWidth);
 				}
 			}
 			Handles.EndGUI();

@@ -91,12 +91,14 @@ namespace ForestRoyale.Gui
 		public static void DrawTextField(int index,
 			Property property,
 			Rect rect,
+			GUIStyle panelStyle,
 			float labelWidth,
-			GUIStyle panelStyle)
+			float valueWidth = 0f
+			)
 		{
-			Vector2 labelSize = property.labelSize;
-			Vector2 valueSize = property.valueSize;
-			float rowHeigh = Mathf.Max(labelSize.y, valueSize.y);
+			
+			float rowHeigh = Mathf.Max(property.labelSize.y, property.valueSize.y);
+			valueWidth = valueWidth > 0f ? valueWidth : property.valueSize.x;
 
 			GUI.Label(
 				new Rect(
@@ -107,17 +109,20 @@ namespace ForestRoyale.Gui
 				property.label,
 				property.labelStyle);
 
-			GUI.Label(
+			PushBackgroundColor(new Color(0f, 0f, 0f, 0.8f));
+			GUI.TextField(
 				new Rect(
 					panelStyle.padding.left + labelWidth + rect.xMin,
 					panelStyle.padding.top + rect.yMin + index * rowHeigh,
-					valueSize.x,
+					property.valueSize.x,
 					rowHeigh),
 				property.value,
 				property.valueStyle);
+			
+			PopBackgroundColor();
 		}
 
-		public static (Vector2 size, float labelWidth) CalcPanelSize(GUIStyle panelStyle, GUIUtils.Property[] properties)
+		public static (Vector2 size, float labelWidth, float valueWidth) CalcPanelSize(GUIStyle panelStyle, GUIUtils.Property[] properties)
 		{
 			float maxRowHeight = 0f;
 			float maxLabelWidth = 0f;
@@ -132,7 +137,7 @@ namespace ForestRoyale.Gui
 			}
 
 			Vector2 size = new Vector2(maxLabelWidth + maxValueWidth + panelStyle.padding.horizontal, properties.Length * maxRowHeight + panelStyle.padding.vertical);
-			return (size, maxLabelWidth);
+			return (size, maxLabelWidth, maxValueWidth);
 		}
 
 		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPosition panelPosition)
