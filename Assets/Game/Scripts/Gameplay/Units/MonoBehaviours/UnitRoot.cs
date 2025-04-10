@@ -5,6 +5,8 @@ using System;
 using UnityEngine;
 using VContainer;
 using ForestRoyale.Gui;
+using Sirenix.Utilities.Editor;
+using System.Linq;
 using UnityEngine.Assertions;
 
 #if UNITY_EDITOR
@@ -15,14 +17,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 {
 	public class UnitRoot : MonoBehaviour
 	{
-		private enum PanelPosition
-		{
-			Bottom,
-			Top,
-			Left,
-			Right
-		}
-
 		public Action<Unit> OnUnitChanged;
 
 		[SerializeField]
@@ -37,7 +31,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		[SerializeField]
 		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
-		private PanelPosition _panelPosition;
+		private GUIUtils.PanelPosition _panelPosition;
 
 
 		[Inject]
@@ -94,61 +88,42 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
-			string info = "";
+			GUIUtils.Property[] properties;
 			if (_unit == null)
 			{
-				info = "null unit";
+				properties = new[] { new GUIUtils.Property("null unit") };
 			}
 			else
 			{
-				info = $"[{_unit.Id}]\n";
-				info += $"Target: {_unit.Target?.Id ?? "None"}\n";
-				info += $"In Combat Range: {(_unit?.TargetIsInCombatRange ?? false ? "Yes" : "No")}";
+				properties = new[] {
+					new GUIUtils.Property ("Id", _unit.Id.ToString()),
+					new GUIUtils.Property ("Target", _unit.Target?.Id.ToString() ?? "None"),
+					_unit.TargetIsInCombatRange ?
+						new GUIUtils.Property ("In Range", "Yes", GuiStylesCatalog.LabelGreenStyle) :
+						new GUIUtils.Property ("In Range", "No", GuiStylesCatalog.LabelRedStyle)
+				};
 			}
-
-			DrawDebugPanel(info);
+			DrawDebugPanel(properties);
 		}
 
-		private void DrawDebugPanel(string info)
+		private void DrawDebugPanel(GUIUtils.Property[] properties)
 		{
-			Vector2 screenOffset = Vector2.zero;
-			Vector3 worldOffset = Vector3.zero;
-
-			float baseWorldOffset = 1f; //1 meter - TODO: Calculate based on the unit bounding box.
-
 			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
-			Vector2 size = panelStyle.CalcSize(new GUIContent(info));
-
-			switch (_panelPosition)
-			{
-				case PanelPosition.Top:
-					screenOffset = Vector2.down * (size.y * 0.5f);
-					worldOffset = Vector3.forward * baseWorldOffset;
-					break;
-				case PanelPosition.Bottom:
-					screenOffset = Vector2.up * (size.y * 0.5f);
-					worldOffset = Vector3.back * baseWorldOffset;
-					break;
-				case PanelPosition.Left:
-					screenOffset = Vector2.left * (size.x * 0.5f);
-					worldOffset = Vector3.left * baseWorldOffset;
-					break;
-				case PanelPosition.Right:
-					screenOffset = Vector2.right * (size.x * 0.5f);
-					worldOffset = Vector3.right * baseWorldOffset;
-					break;
-			}
-
-			Vector3 worldPosition = transform.position + worldOffset;
-			Vector2 screenPoint = HandleUtility.WorldToGUIPoint(worldPosition);
-			Vector3 labelPosition = screenPoint + screenOffset;
+			(Vector2 panelSize, float labelWidth) = GUIUtils.CalcPanelSize(panelStyle, properties);
+			Vector3 panelPosition = GUIUtils.CalcPanelPosition(transform, panelSize, _panelPosition);
 
 			Handles.BeginGUI();
 			{
-				// Create rect centered on the labelPosition
-				Rect rect = new Rect(labelPosition.x - size.x * 0.5f, labelPosition.y - size.y * 0.5f, size.x, size.y);
-				GUI.Box(rect, info, panelStyle);
+				// Create rect centered on the panel's position
+				Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
+
+				GUI.Box(rect, GUIContent.none, panelStyle);
+
+				for (int i = 0; i < properties.Length; i++)
+				{
+					GUIUtils.DrawTextField(i, properties[i], rect, labelWidth, panelStyle);
+				}
 			}
 			Handles.EndGUI();
 		}
