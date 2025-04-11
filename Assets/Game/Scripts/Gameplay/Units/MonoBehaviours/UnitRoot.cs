@@ -25,12 +25,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private UnitSO _startingUnitSO;
 
 		[ShowInInspector, ReadOnly]
-		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		[NonSerialized]
 		private Unit _unit;
 
 		[SerializeField]
-		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private GUIUtils.PanelPosition _panelPosition;
 
 

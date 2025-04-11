@@ -14,11 +14,11 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 		private CapsuleCollider _attackCollider;
 
 		[ShowInInspector]
-		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private string Target => Unit?.Target?.Id ?? "<none>";
-		
+
 		[ShowInInspector]
-		[BoxGroup(InspectorConstants.DebugBoxGroup), PropertyOrder(InspectorConstants.DebugBoxGroupOrder)]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private bool IsTargetInCombatRange => Unit?.TargetIsInCombatRange ?? false;
 
 
@@ -26,11 +26,11 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 
 
 		public Action OnTargetInRangeChanged;
-		
+
 		protected override void Awake()
 		{
 			base.Awake();
-			
+
 			if (_attackCollider != null)
 			{
 				_targetListener = _attackCollider.gameObject.AddComponent<TriggerListener>();
@@ -39,11 +39,11 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 				_targetListener.OnTriggerStayEvent += HandleTriggerStay;
 			}
 		}
-	
+
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
-			
+
 			if (_attackCollider != null)
 			{
 				if (_targetListener != null)
@@ -110,8 +110,8 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 			}
 		}
 
-		
+
 	}
-	
-	
+
+
 }

@@ -2,7 +2,7 @@ namespace ForestRoyale.Gui
 {
 	public static class InspectorConstants
 	{
-		public const string DebugBoxGroup = "Debug";
-		public const int DebugBoxGroupOrder = 999;
+		public const string DebugGroup = "Debug";
+		public const int DebugGroupOrder = 999;
 	}
 }
