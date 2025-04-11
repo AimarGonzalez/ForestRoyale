@@ -17,26 +17,28 @@ namespace ForestRoyale.Gameplay.UI
 			[SerializeField]
 			public Color BarColor;
 			[SerializeField]
-			public Color BackgroundColor;
+			public Color FrameColor;
 		}
 
 		[BoxGroup("Unit Colors")]
 		[SerializeField]
+		[OnValueChanged(nameof(SaveMe))]
 		private HealthBarColors _allyHealthBarColors;
 
 		[BoxGroup("Unit Colors")]
 		[SerializeField]
+		[OnValueChanged(nameof(SaveMe))]
 		private HealthBarColors _enemyHealthBarColors;
 
 		public HealthBarColors AllyHealthBarColors => _allyHealthBarColors;
 		public HealthBarColors EnemyHealthBarColors => _enemyHealthBarColors;
 
-		private void OnValidate()
+		private void SaveMe()
 		{
 			Save(true);
 		}
 	}
-	
+
 	public class UISettingsWindow : OdinEditorWindow
 	{
 		[MenuItem("ForestRoyale/Settings/UI Settings")]
@@ -44,7 +46,7 @@ namespace ForestRoyale.Gameplay.UI
 		{
 			GetWindow<UISettingsWindow>("UI Settings").Show();
 		}
-		
+
 		protected override object GetTarget()
 		{
 			return UISettings.instance;

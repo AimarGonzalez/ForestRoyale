@@ -11,8 +11,8 @@ namespace ForestRoyale.Gameplay.UI
 		[Tooltip("The UI Image component that represents the health bar fill")]
 		[SerializeField] private Image _healthBarFill;
 
-		[Tooltip("The UI Image component that represents the health bar background")]
-		[SerializeField] private Image _background;
+		[Tooltip("The UI Image component that represents the health bar frame")]
+		[SerializeField] private Image _healthBarFrame;
 
 		private float _lastHealth;
 
@@ -20,11 +20,11 @@ namespace ForestRoyale.Gameplay.UI
 		{
 			SetupHealthBar();
 		}
-		
+
 		protected override void OnUnitChanged()
 		{
 			base.OnUnitChanged();
-			
+
 			SetupHealthBar();
 		}
 
@@ -46,12 +46,12 @@ namespace ForestRoyale.Gameplay.UI
 			{
 				UpdateHealthBar(1.0f);
 			}
-			
+
 			if (Unit.CurrentHealth < _lastHealth)
 			{
 				UpdateFillRatio();
 				PlayHighlightEffect();
-				
+
 				_lastHealth = Unit.CurrentHealth;
 			}
 		}
@@ -67,8 +67,8 @@ namespace ForestRoyale.Gameplay.UI
 			{
 				healthBarColors = UISettings.instance.AllyHealthBarColors;
 			}
-			
-			_background.color = healthBarColors.BackgroundColor;
+
+			_healthBarFrame.color = healthBarColors.FrameColor;
 			_healthBarFill.color = healthBarColors.BarColor;
 		}
 
@@ -79,7 +79,7 @@ namespace ForestRoyale.Gameplay.UI
 
 			_healthBarFill.fillAmount = healthRatio;
 		}
-		
+
 		private void UpdateHealthBar(float ratio)
 		{
 			_healthBarFill.fillAmount = ratio;
