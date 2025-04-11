@@ -38,8 +38,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.11190033}
-  m_SizeDelta: {x: -1.06, y: -0.7838}
+  m_AnchoredPosition: {x: 0, y: 0.13500017}
+  m_SizeDelta: {x: -1.06, y: -0.8299997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7158593681579327461
 CanvasRenderer:
@@ -224,6 +224,8 @@ MonoBehaviour:
   _root: {fileID: 0}
   _healthBarFill: {fileID: 6196536953659341157}
   _healthBarFrame: {fileID: 5711590451828853085}
+  _team: 0
+  _healthRatio: 1
 --- !u!1 &6524521939585085941
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.30980393, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.16415483, g: 0.3140825, b: 0.6289307, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -432,7 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.34442854, g: 0.7168092, b: 0.8490566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
