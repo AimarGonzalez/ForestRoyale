@@ -1,5 +1,7 @@
 using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units;
+using ForestRoyale.Gui;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +15,13 @@ namespace ForestRoyale.Gameplay.UI
 
 		[Tooltip("The UI Image component that represents the health bar frame")]
 		[SerializeField] private Image _healthBarFrame;
+
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[SerializeField] private ArenaTeam _team = ArenaTeam.Player;
+
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[Range(0f, 1f)]
+		[SerializeField] private float _healthRatio = 1f;
 
 		private float _lastHealth;
 
@@ -30,36 +39,44 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void SetupHealthBar()
 		{
-			if (Unit == null)
-			{
-				return;
-			}
-
-			_lastHealth = Unit.CurrentHealth;
 			UpdateColor();
 			UpdateFillRatio();
+		}
+
+		void OnValidate()
+		{
+			SetColor(_team);
+			SetFillRatio(_healthRatio);
 		}
 
 		private void Update()
 		{
 			if (Unit == null)
 			{
-				UpdateHealthBar(1.0f);
+				return;
 			}
 
 			if (Unit.CurrentHealth < _lastHealth)
 			{
 				UpdateFillRatio();
 				PlayHighlightEffect();
-
-				_lastHealth = Unit.CurrentHealth;
 			}
 		}
 
 		private void UpdateColor()
 		{
-			UISettings.HealthBarColors healthBarColors = null;
-			if (Unit.Team == ArenaTeam.Forest)
+			if(Unit == null)
+			{
+				return;
+			}
+
+			SetColor(Unit.Team);
+		}
+
+		private void SetColor(ArenaTeam team)
+		{
+			UISettings.HealthBarColors healthBarColors;
+			if (team == ArenaTeam.Forest)
 			{
 				healthBarColors = UISettings.instance.EnemyHealthBarColors;
 			}
@@ -75,15 +92,21 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void UpdateFillRatio()
 		{
-			float healthRatio = Unit.CurrentHealth / Unit.MaxHealth;
+			if(Unit == null)
+			{
+				return;
+			}
+			
+			SetFillRatio(Unit.CurrentHealth / Unit.MaxHealth);
 
+			_lastHealth = Unit.CurrentHealth;
+		}
+		
+		private void SetFillRatio(float healthRatio)
+		{
 			_healthBarFill.fillAmount = healthRatio;
 		}
 
-		private void UpdateHealthBar(float ratio)
-		{
-			_healthBarFill.fillAmount = ratio;
-		}
 
 		private void PlayHighlightEffect()
 		{
