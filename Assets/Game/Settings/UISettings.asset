@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b2635df6eff51449d4dc2f9e284ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allyHealthBarColors:
+    BarColor: {r: 0, g: 0.16727304, b: 1, a: 1}
+    BackgroundColor: {r: 0, g: 0.007740716, b: 0.5031446, a: 1}
+  _enemyHealthBarColors:
+    BarColor: {r: 1, g: 0, b: 0, a: 1}
+    BackgroundColor: {r: 0.38364768, g: 0, b: 0, a: 1}

@@ -1,48 +1,88 @@
+using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ForestRoyale.Gameplay.UI
 {
-	public class HealthBarController : MonoBehaviour
+	public class HealthBarController : UnitComponent
 	{
 		[Header("UI References")]
 		[Tooltip("The UI Image component that represents the health bar fill")]
-		[SerializeField] private Image healthBarFill;
+		[SerializeField] private Image _healthBarFill;
 
-		private IDamageable _unit;
+		[Tooltip("The UI Image component that represents the health bar background")]
+		[SerializeField] private Image _background;
+
 		private float _lastHealth;
-		private void Awake()
-		{
-			_unit = GetComponentInParent<IDamageable>();
-			if (_unit == null)
-			{
-				Debug.LogError("HealthBarController: No IDamageable component found in parent hierarchy!");
-				return;
-			}
-		}
 
 		private void Start()
 		{
-			UpdateHealthBar();
+			SetupHealthBar();
+		}
+		
+		protected override void OnUnitChanged()
+		{
+			base.OnUnitChanged();
+			
+			SetupHealthBar();
+		}
+
+		private void SetupHealthBar()
+		{
+			if (Unit == null)
+			{
+				return;
+			}
+
+			_lastHealth = Unit.CurrentHealth;
+			UpdateColor();
+			UpdateFillRatio();
 		}
 
 		private void Update()
 		{
-			if (_unit.CurrentHealth < _lastHealth)
+			if (Unit == null)
 			{
-				UpdateHealthBar();
+				UpdateHealthBar(1.0f);
+			}
+			
+			if (Unit.CurrentHealth < _lastHealth)
+			{
+				UpdateFillRatio();
 				PlayHighlightEffect();
+				
+				_lastHealth = Unit.CurrentHealth;
 			}
 		}
 
-		private void UpdateHealthBar()
+		private void UpdateColor()
 		{
-			float healthRatio = _unit.CurrentHealth / _unit.MaxHealth;
+			UISettings.HealthBarColors healthBarColors = null;
+			if (Unit.Team == ArenaTeam.Forest)
+			{
+				healthBarColors = UISettings.instance.EnemyHealthBarColors;
+			}
+			else
+			{
+				healthBarColors = UISettings.instance.AllyHealthBarColors;
+			}
+			
+			_background.color = healthBarColors.BackgroundColor;
+			_healthBarFill.color = healthBarColors.BarColor;
+		}
 
-			healthBarFill.fillAmount = healthRatio;
 
-			_lastHealth = _unit.CurrentHealth;
+		private void UpdateFillRatio()
+		{
+			float healthRatio = Unit.CurrentHealth / Unit.MaxHealth;
+
+			_healthBarFill.fillAmount = healthRatio;
+		}
+		
+		private void UpdateHealthBar(float ratio)
+		{
+			_healthBarFill.fillAmount = ratio;
 		}
 
 		private void PlayHighlightEffect()
