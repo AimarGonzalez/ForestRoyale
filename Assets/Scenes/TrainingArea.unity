@@ -780,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410191724324038728, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _healthRatio
-      value: 0.735
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _team
@@ -1210,7 +1210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
-      value: 0.786
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1789,6 +1789,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4410191724324038728, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _healthRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _panelPosition
       value: 3
@@ -1841,11 +1845,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
-      value: 1
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.58
+      value: 4.33
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1853,7 +1857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.74
+      value: -10.499
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1986,6 +1990,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e55cd8ce8c7ad4b4498ecb0ccb4fa2f3, type: 2}
+    - target: {fileID: 3983354039809444969, guid: cee0371473a850543b8469db81c665ae, type: 3}
+      propertyPath: _healthRatio
+      value: 0.647
+      objectReference: {fileID: 0}
     - target: {fileID: 3985169354146865093, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: m_Name
       value: KingTowerSouth
@@ -2063,6 +2071,10 @@ PrefabInstance:
     - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_ObstacleAvoidanceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
+      propertyPath: _healthRatio
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -39511,6 +39523,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4410191724324038728, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
+      propertyPath: _healthRatio
+      value: 0.647
+      objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _panelPosition
       value: 2
@@ -48769,7 +48785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3983354039809444969, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: _healthRatio
-      value: 0.923
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 3985169354146865093, guid: cee0371473a850543b8469db81c665ae, type: 3}
       propertyPath: m_Name
@@ -48965,7 +48981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410191724324038728, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _healthRatio
-      value: 0.833
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 5563134270203112240, guid: 7ea1099165b382542a850bcc71b934ef, type: 3}
       propertyPath: _team
@@ -49022,7 +49038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
-      value: 0.252
+      value: 0.647
       objectReference: {fileID: 0}
     - target: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_LocalPosition.x
