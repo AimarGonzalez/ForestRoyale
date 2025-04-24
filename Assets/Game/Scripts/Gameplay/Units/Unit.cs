@@ -27,7 +27,7 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private UnitRoot _unitRoot;
 		[SerializeField] private UnitSO _unitSO;
 		[SerializeField] private MovementController _movementController;
-		[FormerlySerializedAs("_attackComponent")] [SerializeField] private CombatComponent _combatComponent;
+		[SerializeField] private CombatComponent _combatComponent;
 
 		[Header("State")]
 		[SerializeField] private UnitState _state;
@@ -106,6 +106,7 @@ namespace ForestRoyale.Gameplay.Units
 			_team = team;
 			_unitSO = unitSO;
 			_movementController = root.MovementController;
+			_combatComponent = root.CombatComponent;
 			_unitStats = unitSO.UnitStats;
 			_combatStats = unitSO.CombatStats;
 			_health = _unitStats.HitPoints;

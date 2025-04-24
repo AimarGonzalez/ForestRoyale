@@ -1,4 +1,5 @@
-﻿using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+﻿using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using Sirenix.OdinInspector;
 using System;
@@ -38,7 +39,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private ArenaEvents _arenaEvents;
 
 		private MovementController _movementMovementController;
-
+		private CombatComponent _combatComponent;
 		//--------------------------------
 		// Properties
 		//--------------------------------
@@ -46,12 +47,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		public ArenaTeam Team => _team;
 		public Unit Unit => _unit;
 		public MovementController MovementController => _movementMovementController;
-
+		public CombatComponent CombatComponent => _combatComponent;
 		public Vector3 Position => transform.position;
 
 		private void Awake()
 		{
 			_movementMovementController = GetComponent<MovementController>();
+			_combatComponent = GetComponent<CombatComponent>();
 
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
@@ -101,10 +103,16 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 					_unit.TargetIsInCombatRange ?
 						new GUIUtils.Property ("In Range", "Yes", GuiStylesCatalog.LabelGreenStyle) :
 						new GUIUtils.Property ("In Range", "No", GuiStylesCatalog.LabelRedStyle),
-					new GUIUtils.Property ("State", _unit.State.ToString()),
-					new GUIUtils.Property ("CombatState", _unit.CombatComponent.State.ToString()),
-					new GUIUtils.Property ("  Cooldown", _unit.CombatComponent.Cooldown.ToString("F2"))
+					new GUIUtils.Property ("State", _unit.State.ToString())
 				};
+
+				if (_unit.CanFight)
+				{
+					properties = properties
+						.Append(new GUIUtils.Property("CombatState", _unit.CombatComponent.State.ToString()))
+						.Append(new GUIUtils.Property("  Cooldown", _unit.CombatComponent.Cooldown.ToString("F2")))
+						.ToArray();
+				}
 			}
 			DrawDebugPanel(properties);
 		}

@@ -14,7 +14,6 @@ namespace ForestRoyale.Gameplay.Systems
 		}
 
 		private readonly ArenaEvents _arenaEvents;
-		private readonly HashSet<Unit> _allUnits;
 		private readonly HashSet<Unit> _combatUnits;
 
 		private readonly List<HitData> _hits = new List<HitData>();
@@ -22,7 +21,7 @@ namespace ForestRoyale.Gameplay.Systems
 		public CombatSystem(ArenaEvents arenaEvents)
 		{
 			_arenaEvents = arenaEvents;
-			_allUnits = new HashSet<Unit>();
+			_combatUnits = new HashSet<Unit>();
 
 			_arenaEvents.OnUnitCreated += HandleUnitCreated;
 			_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
@@ -31,8 +30,6 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private void HandleUnitCreated(Unit unit)
 		{
-			_allUnits.Add(unit);
-			
 			if (unit.CanFight)
 			{
 				_combatUnits.Add(unit);
@@ -41,7 +38,6 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private void HandleUnitDestroyed(Unit unit)
 		{
-			_allUnits.Remove(unit);
 			_combatUnits.Remove(unit);
 		}
 
