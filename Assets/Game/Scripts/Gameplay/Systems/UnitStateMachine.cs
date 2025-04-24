@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
-using System;
+using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -42,11 +42,29 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 
 					case UnitState.Attacking:
+						if(!troop.TargetIsInCombatRange && !troop.AttackComponent.IsPlayingAnimation)
+						{
+							troop.State = UnitState.Moving;
+						}
 						break;
 
 					default:
 						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
 						break;
+				}
+				
+				if (troop.IsAlive && troop.CurrentHealth <= 0)
+				{
+					//TODO: Implement death effects
+					//troop.State = UnitState.Dying;
+					troop.State = UnitState.Dead;
+				}
+
+				if (troop.State == UnitState.Dead)
+				{
+					_arenaEvents.TriggerUnitDestroyed(troop);
+
+					Object.Destroy(troop.UnitRoot.gameObject);
 				}
 			}
 		}

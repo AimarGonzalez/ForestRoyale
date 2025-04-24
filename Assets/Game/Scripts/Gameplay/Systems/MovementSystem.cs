@@ -21,7 +21,10 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private void HandleUnitCreated(Unit unit)
 		{
-			_activeUnits.Add(unit);
+			if (unit.CanMove)
+			{
+				_activeUnits.Add(unit);
+			}
 		}
 
 		private void HandleUnitDestroyed(Unit unit)
@@ -33,11 +36,6 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
-				if (!troop.CanMove)
-				{
-					continue;
-				}
-				
 				switch (troop.State)
 				{
 					case UnitState.Moving:

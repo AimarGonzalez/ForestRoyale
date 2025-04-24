@@ -1,6 +1,8 @@
+using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using System;
 using System.Collections.Generic;
@@ -24,16 +26,21 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private UnitRoot _unitRoot;
 		[SerializeField] private UnitSO _unitSO;
 		[SerializeField] private MovementController _movementController;
+		[SerializeField] private AttackComponent _attackComponent;
 
 		[Header("State")]
 		[SerializeField] private UnitState _state;
 
+		// TODO: Consider moving _target management to AttackComponent
 		[Header("Target")]
 		[SerializeField] private Unit _target;
 		[SerializeField] private bool _targetIsInCombatRange;
 
 		public string Id => _id;
 		public bool CanMove => _movementController != null;
+		public bool CanFight => _attackComponent != null;
+
+		public bool IsAlive => _state != UnitState.Dying && _state != UnitState.Dead;
 
 		public UnitState State
 		{
@@ -52,6 +59,7 @@ namespace ForestRoyale.Gameplay.Units
 		public CombatStats CombatStats => _combatStats;
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementController MovementController => _movementController;
+		public AttackComponent AttackComponent => _attackComponent;
 
 
 		// IDamageable interface implementation
@@ -118,6 +126,13 @@ namespace ForestRoyale.Gameplay.Units
 		public string ToLogString()
 		{
 			return $"{_unitStats.Name} ({_id}/{_team}/{_state})";
+		}
+
+		public void TakeDamage(CombatSystem.HitData hitData)
+		{
+			_health -= hitData.Damage;
+
+			//TODO: play damage effects
 		}
 	}
 }

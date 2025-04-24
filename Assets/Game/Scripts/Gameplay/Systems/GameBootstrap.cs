@@ -14,6 +14,7 @@ namespace ForestRoyale.Gameplay.Systems
 			builder.Register<ArenaEvents>(Lifetime.Scoped);
 			builder.Register<MovementSystem>(Lifetime.Scoped);
 			builder.Register<TargetingSystem>(Lifetime.Scoped);
+			builder.Register<CombatSystem>(Lifetime.Scoped);
 			builder.Register<UnitStateMachine>(Lifetime.Scoped);
 		}
 	}
