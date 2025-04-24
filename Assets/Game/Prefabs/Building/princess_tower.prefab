@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 2822151972902616218}
   - component: {fileID: 5563134270203112240}
   - component: {fileID: 8028147629642433926}
+  - component: {fileID: 7195433430455351051}
   m_Layer: 0
   m_Name: princess_tower
   m_TagString: Untagged
@@ -250,6 +251,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _root: {fileID: 5563134270203112240}
   _attackCollider: {fileID: 1509472835549422454}
+--- !u!114 &7195433430455351051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549416225333322028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d105f26fef4a95b3e23cd084e3c0a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _root: {fileID: 5563134270203112240}
 --- !u!1 &9029378825866020775
 GameObject:
   m_ObjectHideFlags: 0
