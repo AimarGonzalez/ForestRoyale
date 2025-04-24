@@ -42,7 +42,7 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 
 					case UnitState.Attacking:
-						if(!troop.TargetIsInCombatRange && !troop.AttackComponent.IsPlayingAnimation)
+						if(!troop.TargetIsInCombatRange && !troop.CombatComponent.IsPlayingAnimation)
 						{
 							troop.State = UnitState.Moving;
 						}

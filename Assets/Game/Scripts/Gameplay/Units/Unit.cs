@@ -7,6 +7,7 @@ using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units
 {
@@ -26,7 +27,7 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private UnitRoot _unitRoot;
 		[SerializeField] private UnitSO _unitSO;
 		[SerializeField] private MovementController _movementController;
-		[SerializeField] private AttackComponent _attackComponent;
+		[FormerlySerializedAs("_attackComponent")] [SerializeField] private CombatComponent _combatComponent;
 
 		[Header("State")]
 		[SerializeField] private UnitState _state;
@@ -38,7 +39,7 @@ namespace ForestRoyale.Gameplay.Units
 
 		public string Id => _id;
 		public bool CanMove => _movementController != null;
-		public bool CanFight => _attackComponent != null;
+		public bool CanFight => _combatComponent != null;
 
 		public bool IsAlive => _state != UnitState.Dying && _state != UnitState.Dead;
 
@@ -59,7 +60,7 @@ namespace ForestRoyale.Gameplay.Units
 		public CombatStats CombatStats => _combatStats;
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementController MovementController => _movementController;
-		public AttackComponent AttackComponent => _attackComponent;
+		public CombatComponent CombatComponent => _combatComponent;
 
 
 		// IDamageable interface implementation

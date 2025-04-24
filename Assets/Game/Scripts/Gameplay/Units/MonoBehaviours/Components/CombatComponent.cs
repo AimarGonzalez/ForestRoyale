@@ -1,13 +1,14 @@
 ﻿using ForestLib.Utils;
 using ForestRoyale.Gameplay.Systems;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
 namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 {
-	public class AttackComponent : UnitComponent
+	public class CombatComponent : UnitComponent
 	{
-		[SerializeField]
+		[ShowInInspector, ReadOnly]
 		private AttackState _state;
 
 		private Timer _timer;
@@ -17,6 +18,8 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 			get => _state;
 			set => _state = value;
 		}
+
+		public float Cooldown => _timer.TimeLeft;
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
