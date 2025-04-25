@@ -100,7 +100,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 				properties = new[] {
 					new GUIUtils.Property ("Id", _unit.Id.ToString()),
 					new GUIUtils.Property ("Target", _unit.Target?.Id.ToString() ?? "None"),
-					_unit.TargetIsInCombatRange ?
+					_unit.IsTargetInCombatRange ?
 						new GUIUtils.Property ("In Range", "Yes", GuiStylesCatalog.LabelGreenStyle) :
 						new GUIUtils.Property ("In Range", "No", GuiStylesCatalog.LabelRedStyle),
 					new GUIUtils.Property ("State", _unit.State.ToString())

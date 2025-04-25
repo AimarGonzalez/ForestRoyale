@@ -53,7 +53,7 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _combatUnits)
 			{
-				if (troop.State == UnitState.Attacking && troop.TargetIsInCombatRange)
+				if (troop.State == UnitState.Attacking && troop.IsTargetInCombatRange)
 				{
 					troop.CombatComponent.Attack();
 				}

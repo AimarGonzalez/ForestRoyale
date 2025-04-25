@@ -15,15 +15,20 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 
 		[ShowInInspector]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
-		private string Target => Unit?.Target?.Id ?? "<none>";
+		private Unit _target;
 
 		[ShowInInspector]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
-		private bool IsTargetInCombatRange => Unit?.TargetIsInCombatRange ?? false;
-
+		private bool _isTargetInCombatRange = false;
 
 		private TriggerListener _targetListener;
-
+		
+		public Unit Target
+		{
+			get => _target;
+			set => _target = value;
+		}
+		public bool IsTargetInCombatRange => _isTargetInCombatRange;
 
 		public Action OnTargetInRangeChanged;
 
@@ -70,42 +75,42 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 
 		private void HandleTriggerEnter(Collider other)
 		{
-			if (Unit?.Target == null)
+			if (_target == null)
 			{
 				return;
 			}
 
-			if (other.IsBodyCollider() && other.GetUnit() == Unit.Target)
+			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
-				Unit.TargetIsInCombatRange = true;
+				_isTargetInCombatRange = true;
 				OnTargetInRangeChanged?.Invoke();
 			}
 		}
 
 		private void HandleTriggerStay(Collider other)
 		{
-			if (Unit?.Target == null)
+			if (_target == null)
 			{
 				return;
 			}
 
-			if (other.IsBodyCollider() && other.GetUnit() == Unit.Target)
+			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
-				Unit.TargetIsInCombatRange = true;
+				_isTargetInCombatRange = true;
 				OnTargetInRangeChanged?.Invoke();
 			}
 		}
 
 		private void HandleTriggerExit(Collider other)
 		{
-			if (Unit?.Target == null)
+			if (_target == null)
 			{
 				return;
 			}
 
-			if (other.IsBodyCollider() && other.GetUnit() == Unit.Target)
+			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
-				Unit.TargetIsInCombatRange = false;
+				_isTargetInCombatRange = false;
 				OnTargetInRangeChanged?.Invoke();
 			}
 		}

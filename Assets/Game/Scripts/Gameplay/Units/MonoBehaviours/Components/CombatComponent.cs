@@ -1,5 +1,6 @@
 ﻿using ForestLib.Utils;
 using ForestRoyale.Gameplay.Systems;
+using ForestRoyale.Gameplay.Units;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -19,7 +20,12 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 		[ShowInInspector, ReadOnly]
 		private AttackState _state;
 
+		[ShowInInspector, ReadOnly]
+		private Unit _target;
+
 		private Timer _timer;
+
+		private AttackRangeMonitor _attackRangeMonitor;
 
 		public AttackState State
 		{
@@ -27,12 +33,26 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 			set => _state = value;
 		}
 
+		public Unit Target
+		{
+			get => _target;
+			set
+			{
+				_target = value;
+				_attackRangeMonitor.Target = _target;
+			}
+		}
+		
+		public bool HasTarget => _target != null;
+
 		public float Cooldown => _timer.TimeLeft;
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
 
 		public bool IsPlayingAnimation => _state == AttackState.PlayingAttackAnimation;
+
+		public bool IsTargetInCombatRange => _attackRangeMonitor.IsTargetInCombatRange;
 		
 
 		protected override void Awake()
@@ -40,6 +60,8 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 			base.Awake();
 			_timer = new Timer();
 			_timer.OnFinished += OnCooldownFinished;
+
+			_attackRangeMonitor = GetComponent<AttackRangeMonitor>();
 		}
 
 		private void Update()
@@ -77,7 +99,7 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 
 		private void OnAnimationHitEvent()
 		{
-			_arenaEvents.TriggerUnitAttacked(Unit, Unit.Target);
+			_arenaEvents.TriggerUnitAttacked(Unit, _target);
 		}
 
 		private void StartCooldown()

@@ -4,6 +4,7 @@ using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,10 +33,16 @@ namespace ForestRoyale.Gameplay.Units
 		[Header("State")]
 		[SerializeField] private UnitState _state;
 
-		// TODO: Consider moving _target management to AttackComponent
 		[Header("Target")]
-		[SerializeField] private Unit _target;
-		[SerializeField] private bool _targetIsInCombatRange;
+		[ShowInInspector]
+		public Unit Target
+		{
+			get => _combatComponent.Target;
+			set => _combatComponent.Target = value;
+		}
+
+		[ShowInInspector] 
+		public bool IsTargetInCombatRange => _combatComponent.IsTargetInCombatRange;
 
 		public string Id => _id;
 		public bool CanMove => _movementComponent != null;
@@ -77,27 +84,15 @@ namespace ForestRoyale.Gameplay.Units
 
 		public Vector3 Position => _unitRoot.Position;
 
-		public Unit Target
-		{
-			get => _target;
-			set
-			{
-				if (_target != value)
-				{
-					_target = value;
+		public bool HasTarget => _combatComponent.HasTarget;
 
-					// invalidate old target info
-					_targetIsInCombatRange = false;
-				}
-			}
-		}
-		public bool HasTarget => _target != null;
-
+		/*
 		public bool TargetIsInCombatRange
 		{
 			get => _targetIsInCombatRange;
 			set => _targetIsInCombatRange = value;
 		}
+		*/
 
 		public Unit(CardData cardOrigin, UnitRoot root, ArenaTeam team, UnitSO unitSO)
 		{
