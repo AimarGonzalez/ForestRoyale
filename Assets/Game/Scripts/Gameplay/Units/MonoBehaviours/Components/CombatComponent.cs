@@ -1,6 +1,7 @@
 ﻿using ForestLib.Utils;
 using ForestRoyale.Gameplay.Systems;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 using VContainer;
 
@@ -8,6 +9,13 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 {
 	public class CombatComponent : UnitComponent
 	{
+		public enum AttackState
+		{
+			None,
+			PlayingAttackAnimation,
+			Cooldown
+		}
+		
 		[ShowInInspector, ReadOnly]
 		private AttackState _state;
 
@@ -34,6 +42,11 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 			_timer.OnFinished += OnCooldownFinished;
 		}
 
+		private void Update()
+		{
+			_timer.Elapsed(Time.deltaTime);
+		}
+
 		public void Attack()
 		{
 			switch (_state)
@@ -47,6 +60,7 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 					//Listen for animation event
 
 					OnAnimationHitEvent();
+					_state = AttackState.Cooldown;
 
 					break;
 
@@ -75,13 +89,6 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 		{
 			_state = AttackState.None;
 		}
-	}
-
-	public enum AttackState
-	{
-		None,
-		PlayingAttackAnimation,
-		Cooldown
 	}
 }
 
