@@ -32,7 +32,7 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
 		[Inject]
 		private ArenaEvents _arenaEvents;
 
-		public bool IsPlayingAnimation => _state != AttackState.PlayingAttackAnimation;
+		public bool IsPlayingAnimation => _state == AttackState.PlayingAttackAnimation;
 		
 
 		protected override void Awake()
