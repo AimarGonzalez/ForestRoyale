@@ -87,9 +87,9 @@ namespace ForestLib.Utils
 
 			_timeLeft -= dt;
 			
-			bool elapsed = _timeLeft <= 0;
-			if (elapsed)
+			if (_timeLeft <= 0)
 			{
+				_timeLeft = 0;
 				_state = State.Finished;
 				OnFinished?.Invoke();
 			}
