@@ -45,7 +45,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		public float AreaDamageRadius => _areaDamageRadius;
 		public float SightRange => _sightRange;
 		public List<UnitType> TargetPreference => _targetPreference;
-		public float Cooldown => 1 / _attackSpeed;
+		public float Cooldown => _attackSpeed;
 		
 
 
