@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
+using System.Linq;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Systems
@@ -7,12 +8,12 @@ namespace ForestRoyale.Gameplay.Systems
 	public class UnitStateMachine
 	{
 		private readonly ArenaEvents _arenaEvents;
-		private readonly HashSet<Unit> _activeUnits;
+		private readonly HashSet<Unit> _allUnits;
 
 		public UnitStateMachine(ArenaEvents arenaEvents)
 		{
 			_arenaEvents = arenaEvents;
-			_activeUnits = new HashSet<Unit>();
+			_allUnits = new HashSet<Unit>();
 
 			_arenaEvents.OnUnitCreated += HandleUnitCreated;
 			_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
@@ -20,17 +21,20 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private void HandleUnitCreated(Unit unit)
 		{
-			_activeUnits.Add(unit);
+			_allUnits.Add(unit);
 		}
 
 		private void HandleUnitDestroyed(Unit unit)
 		{
-			_activeUnits.Remove(unit);
+			_allUnits.Remove(unit);
 		}
 
 		public void UpdateState()
 		{
-			foreach (Unit troop in _activeUnits)
+			// Work on cloned list to avoid invalidating iterator
+			Unit[] allUnits = _allUnits.ToArray();
+			
+			foreach (Unit troop in allUnits)
 			{
 				switch (troop.State)
 				{
@@ -63,7 +67,6 @@ namespace ForestRoyale.Gameplay.Systems
 				if (troop.State == UnitState.Dead)
 				{
 					_arenaEvents.TriggerUnitDestroyed(troop);
-
 					Object.Destroy(troop.UnitRoot.gameObject);
 				}
 			}
