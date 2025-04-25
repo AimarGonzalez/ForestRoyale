@@ -69,6 +69,8 @@ namespace ForestRoyale.Gameplay.Systems
 					}
 				}
 			}
+			
+			_hits.Clear();
 		}
 
 	}
