@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 {
-	public class MovementController : UnitComponent
+	public class MovementComponent : UnitComponent
 	{
 		[SerializeField]
 		[Required]

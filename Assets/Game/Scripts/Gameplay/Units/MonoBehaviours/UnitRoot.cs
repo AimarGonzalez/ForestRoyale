@@ -38,7 +38,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		[Inject]
 		private ArenaEvents _arenaEvents;
 
-		private MovementController _movementMovementController;
+		private MovementComponent _movementMovementComponent;
 		private CombatComponent _combatComponent;
 		//--------------------------------
 		// Properties
@@ -46,13 +46,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		public ArenaTeam Team => _team;
 		public Unit Unit => _unit;
-		public MovementController MovementController => _movementMovementController;
+		public MovementComponent MovementComponent => _movementMovementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
 		public Vector3 Position => transform.position;
 
 		private void Awake()
 		{
-			_movementMovementController = GetComponent<MovementController>();
+			_movementMovementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");

@@ -41,17 +41,17 @@ namespace ForestRoyale.Gameplay.Systems
 					case UnitState.Moving:
 						if (troop.HasTarget)
 						{
-							troop.MovementController.MoveToTarget();
+							troop.MovementComponent.MoveToTarget();
 						}
 						else
 						{
-							troop.MovementController.Stop();
+							troop.MovementComponent.Stop();
 						}
 
 						break;
 
 					case UnitState.Attacking:
-						troop.MovementController.Stop();
+						troop.MovementComponent.Stop();
 						break;
 
 					default:

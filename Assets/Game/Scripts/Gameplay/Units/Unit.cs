@@ -26,7 +26,7 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private CombatStats _combatStats;
 		[SerializeField] private UnitRoot _unitRoot;
 		[SerializeField] private UnitSO _unitSO;
-		[SerializeField] private MovementController _movementController;
+		[FormerlySerializedAs("_movementController")] [SerializeField] private MovementComponent _movementComponent;
 		[SerializeField] private CombatComponent _combatComponent;
 
 		[Header("State")]
@@ -38,7 +38,7 @@ namespace ForestRoyale.Gameplay.Units
 		[SerializeField] private bool _targetIsInCombatRange;
 
 		public string Id => _id;
-		public bool CanMove => _movementController != null;
+		public bool CanMove => _movementComponent != null;
 		public bool CanFight => _combatComponent != null;
 
 		public bool IsAlive => _state != UnitState.Dying && _state != UnitState.Dead;
@@ -59,7 +59,7 @@ namespace ForestRoyale.Gameplay.Units
 		public UnitStats UnitStats => _unitStats;
 		public CombatStats CombatStats => _combatStats;
 		public UnitRoot UnitRoot => _unitRoot;
-		public MovementController MovementController => _movementController;
+		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
 
 
@@ -105,7 +105,7 @@ namespace ForestRoyale.Gameplay.Units
 			_unitRoot = root;
 			_team = team;
 			_unitSO = unitSO;
-			_movementController = root.MovementController;
+			_movementComponent = root.MovementComponent;
 			_combatComponent = root.CombatComponent;
 			_unitStats = unitSO.UnitStats;
 			_combatStats = unitSO.CombatStats;
