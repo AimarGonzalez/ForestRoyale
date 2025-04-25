@@ -63,7 +63,10 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				foreach (Unit target in hit.Targets)
 				{
-					target.TakeDamage(hit);
+					if (target.IsAlive)
+					{
+						target.TakeDamage(hit);
+					}
 				}
 			}
 		}

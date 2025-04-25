@@ -46,10 +46,25 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 
 					case UnitState.Attacking:
-						if(!troop.TargetIsInCombatRange && !troop.CombatComponent.IsPlayingAnimation)
+						if (troop.CombatComponent.IsPlayingAnimation)
+						{
+							// Don't interrupt the attack animation
+							break;
+						}
+						
+						if (!troop.Target.IsAlive)
+						{
+							troop.Target = null;
+							troop.State = UnitState.Moving;
+							break;
+						}
+						
+						if(!troop.TargetIsInCombatRange)
 						{
 							troop.State = UnitState.Moving;
+							break;
 						}
+						
 						break;
 
 					default:
