@@ -70,7 +70,6 @@ namespace ForestRoyale.Gameplay.Systems
 			// If no target is found look for the closest Tower
 			FindClosestTarget(troop, UnitType.ArenaTower, out foundTarget);
 
-			Assert.NotNull(foundTarget, $"Could not find a target for troop {troop.ToLogString()}");
 			return foundTarget;
 		}
 
