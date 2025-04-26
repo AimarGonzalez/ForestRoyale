@@ -39,6 +39,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		private MovementComponent _movementMovementComponent;
 		private CombatComponent _combatComponent;
+		private IDeathComponent _deathComponent;
 		//--------------------------------
 		// Properties
 		//--------------------------------
@@ -47,12 +48,14 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		public Unit Unit => _unit;
 		public MovementComponent MovementComponent => _movementMovementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
+		public IDeathComponent DeathComponent => _deathComponent;
 		public Vector3 Position => transform.position;
 
 		private void Awake()
 		{
 			_movementMovementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
+			_deathComponent = GetComponent<IDeathComponent>();
 
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)

@@ -29,6 +29,7 @@ namespace ForestRoyale.Gameplay.Units
 		
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
+		private IDeathComponent _deathComponent;
 
 		[Header("State")]
 		[ShowInInspector, ReadOnly] 
@@ -64,6 +65,7 @@ namespace ForestRoyale.Gameplay.Units
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
+		public IDeathComponent DeathComponent => _deathComponent;
 
 
 		// IDamageable interface implementation
@@ -94,6 +96,7 @@ namespace ForestRoyale.Gameplay.Units
 			_unitSO = unitSO;
 			_movementComponent = root.MovementComponent;
 			_combatComponent = root.CombatComponent;
+			_deathComponent = root.DeathComponent;
 			_unitStats = unitSO.UnitStats;
 			_combatStats = unitSO.CombatStats;
 			_health = _unitStats.HitPoints;

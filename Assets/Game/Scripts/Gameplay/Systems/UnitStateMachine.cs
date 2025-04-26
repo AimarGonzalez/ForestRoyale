@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using System.Linq;
 using UnityEngine;
 
@@ -82,7 +83,15 @@ namespace ForestRoyale.Gameplay.Systems
 				if (troop.State == UnitState.Dead)
 				{
 					_arenaEvents.TriggerUnitDestroyed(troop);
-					Object.Destroy(troop.UnitRoot.gameObject);
+
+					if (troop.DeathComponent is IDeathComponent deathComponent)
+					{
+						deathComponent.OnDeath();
+					}
+					else
+					{
+						Object.Destroy(troop.UnitRoot.gameObject);
+					}
 				}
 			}
 		}
