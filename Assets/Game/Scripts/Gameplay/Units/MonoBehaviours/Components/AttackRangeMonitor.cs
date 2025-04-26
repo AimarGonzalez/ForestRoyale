@@ -20,12 +20,17 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private bool _isTargetInCombatRange = false;
 
 		private TriggerListener _targetListener;
-		
+
 		public Unit Target
 		{
 			get => _target;
-			set => _target = value;
+			set
+			{
+				_target = value;
+				_isTargetInCombatRange = false;
+			}
 		}
+
 		public bool IsTargetInCombatRange => _isTargetInCombatRange;
 
 		public Action OnTargetInRangeChanged;
