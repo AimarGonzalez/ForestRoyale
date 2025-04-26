@@ -19,7 +19,7 @@ namespace ForestRoyale.Gameplay.Units
 
 		public static UnitRoot GetUnitComponent(this Collider other)
 		{
-			UnitRoot unitRoot = other.transform.GetComponentInParentRecursive<UnitRoot>();
+			UnitRoot unitRoot = other.transform.GetComponentInParent<UnitRoot>();
 			Assert.IsNotNull(unitRoot);
 			return unitRoot;
 		}
