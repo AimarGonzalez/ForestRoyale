@@ -12,26 +12,29 @@ using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units
 {
-	[Serializable]
+	// TODO: Rename IDamageable to IHealthBarSource
 	public class Unit : IDamageable
 	{
 		private static Dictionary<string, uint> s_unitCount = new Dictionary<string, uint>();
 
 		[Header("Stats")]
-		[SerializeField] private ArenaTeam _team;
-		[SerializeField] private float _health;
+		[ShowInInspector, ReadOnly] private ArenaTeam _team;
+		[ShowInInspector, ReadOnly] private float _health;
 
-		[SerializeField] private string _id;
-		[SerializeField] private CardData _cardOrigin;
-		[SerializeField] private UnitStats _unitStats;
-		[SerializeField] private CombatStats _combatStats;
-		[SerializeField] private UnitRoot _unitRoot;
-		[SerializeField] private UnitSO _unitSO;
-		[FormerlySerializedAs("_movementController")] [SerializeField] private MovementComponent _movementComponent;
-		[SerializeField] private CombatComponent _combatComponent;
+		[ShowInInspector, ReadOnly] private string _id;
+		[ShowInInspector, ReadOnly] private CardData _cardOrigin;
+		[ShowInInspector, ReadOnly] private UnitStats _unitStats;
+		[ShowInInspector, ReadOnly] private CombatStats _combatStats;
+		
+		private UnitRoot _unitRoot;
+		private UnitSO _unitSO;
+		
+		private MovementComponent _movementComponent;
+		private CombatComponent _combatComponent;
 
 		[Header("State")]
-		[SerializeField] private UnitState _state;
+		[ShowInInspector, ReadOnly] 
+		private UnitState _state;
 
 		[Header("Target")]
 		[ShowInInspector]
@@ -56,12 +59,7 @@ namespace ForestRoyale.Gameplay.Units
 			set => _state = value;
 		}
 
-		public ArenaTeam Team
-		{
-			get => _team;
-			set => _team = value;
-		}
-
+		public ArenaTeam Team => _team;
 		public CardData CardOrigin => _cardOrigin;
 		public UnitStats UnitStats => _unitStats;
 		public CombatStats CombatStats => _combatStats;
@@ -73,11 +71,7 @@ namespace ForestRoyale.Gameplay.Units
 		// IDamageable interface implementation
 		public float MaxHealth => _unitStats.HitPoints;
 		public float HealthRatio => _health / MaxHealth;
-		public float CurrentHealth
-		{
-			get => _health;
-			set => _health = value;
-		}
+		public float CurrentHealth => _health;
 
 		public bool IsPlayerTeam => _team == ArenaTeam.Player;
 		public bool IsForestTeam => _team == ArenaTeam.Forest;
@@ -109,7 +103,7 @@ namespace ForestRoyale.Gameplay.Units
 			_id = GenerateId();
 		}
 
-		public string GenerateId()
+		private string GenerateId()
 		{
 			string name = _cardOrigin?.CardName ?? _unitSO.UnitStats.Name ?? _unitSO.name;
 			if (!s_unitCount.ContainsKey(name))
