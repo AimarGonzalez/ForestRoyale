@@ -1,7 +1,8 @@
 using UnityEngine;
+
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-	public class TowerDeathBehavior : MonoBehaviour, IDeathBehavior
+	public class TowerDeathComponent : MonoBehaviour, IDeathComponent
 	{
 		[SerializeField]
 		private GameObject _aliveRoot;
