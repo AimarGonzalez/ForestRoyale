@@ -40,6 +40,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 		private MovementComponent _movementMovementComponent;
 		private CombatComponent _combatComponent;
 		private IDeathComponent _deathComponent;
+
+		private bool _showDebugPanel = false;
 		//--------------------------------
 		// Properties
 		//--------------------------------
@@ -92,6 +94,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
+			if (!_showDebugPanel)
+			{
+				return;
+			}
+
 			GUIUtils.Property[] properties;
 			if (_unit == null)
 			{
@@ -139,6 +146,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 				}
 			}
 			Handles.EndGUI();
+		}
+
+		private void OnMouseDown()
+		{
+			_showDebugPanel = !_showDebugPanel;
 		}
 #endif //UNITY_EDITOR
 	}
