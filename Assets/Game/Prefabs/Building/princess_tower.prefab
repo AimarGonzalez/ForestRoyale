@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 5563134270203112240}
   - component: {fileID: 8028147629642433926}
   - component: {fileID: 7195433430455351051}
+  - component: {fileID: 5101226238229130232}
   m_Layer: 0
   m_Name: princess_tower
   m_TagString: Untagged
@@ -405,6 +406,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _root: {fileID: 5563134270203112240}
+--- !u!114 &5101226238229130232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549416225333322028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca322105aadfd24d8f4803cc8f75efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aliveRoot: {fileID: 629778511919935330}
+  _deadRoot: {fileID: 8017131287307033944}
 --- !u!1 &8017131287307033944
 GameObject:
   m_ObjectHideFlags: 0
