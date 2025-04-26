@@ -1,14 +1,12 @@
-using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units
 {

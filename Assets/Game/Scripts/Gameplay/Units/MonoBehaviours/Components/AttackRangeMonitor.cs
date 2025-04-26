@@ -1,11 +1,9 @@
-﻿using ForestRoyale.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
-using ForestRoyale.Gui;
+﻿using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class AttackRangeMonitor : UnitComponent
 	{
@@ -114,9 +112,5 @@ namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
 				OnTargetInRangeChanged?.Invoke();
 			}
 		}
-
-
 	}
-
-
 }

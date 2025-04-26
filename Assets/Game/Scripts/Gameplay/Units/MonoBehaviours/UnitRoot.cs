@@ -1,14 +1,13 @@
-﻿using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components;
-using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+﻿using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using VContainer;
 using ForestRoyale.Gui;
-using Sirenix.Utilities.Editor;
 using System.Linq;
 using UnityEngine.Assertions;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;

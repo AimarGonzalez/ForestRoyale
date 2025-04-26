@@ -1,11 +1,10 @@
-﻿using ForestRoyale.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
+﻿using ForestRoyale.Gameplay.Units.MonoBehaviors;
 using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
 	public abstract class UnitComponent : MonoBehaviour
 	{

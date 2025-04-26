@@ -1,10 +1,9 @@
-using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace ForestRoyale.Gameplay.Units.MonoBehaviors
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class MovementComponent : UnitComponent
 	{

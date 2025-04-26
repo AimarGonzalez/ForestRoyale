@@ -6,7 +6,7 @@ using System;
 using UnityEngine;
 using VContainer;
 
-namespace ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours.Components
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class CombatComponent : UnitComponent
 	{

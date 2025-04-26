@@ -1,5 +1,5 @@
-using ForestRoyale.Game.Scripts.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using UnityEngine;
