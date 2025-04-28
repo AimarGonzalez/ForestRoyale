@@ -58,7 +58,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			_movementMovementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 			_deathComponent = GetComponent<IDeathComponent>();
+		}
 
+		private void Start()
+		{
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{
