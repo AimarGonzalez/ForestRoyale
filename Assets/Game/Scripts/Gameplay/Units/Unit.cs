@@ -106,6 +106,8 @@ namespace ForestRoyale.Gameplay.Units
 
 		private string GenerateId()
 		{
+			return _unitRoot.name;
+			
 			string name = _cardOrigin?.CardName ?? _unitSO.UnitStats.Name ?? _unitSO.name;
 			if (!s_unitCount.ContainsKey(name))
 			{
