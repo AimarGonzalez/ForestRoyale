@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: king_red_material
+  m_Name: king_blue_mat
   m_Shader: {fileID: 4800000, guid: bdf873fdf034f344b88de36c425488bb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -124,7 +124,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DamageColor: {r: 1, g: 0.254902, b: 0.37711197, a: 1}
     - _EmissionColor: {r: 1024, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 1, g: 0.2358489, b: 0.2358489, a: 1}
+    - _SpecColor: {r: 0.26100624, g: 0.32024953, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5580974833386967084
