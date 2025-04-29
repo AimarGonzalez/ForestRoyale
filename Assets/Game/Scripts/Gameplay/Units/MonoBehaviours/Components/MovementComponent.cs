@@ -55,19 +55,16 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public void MoveToTarget()
 		{
-			_agent.enabled = true;
+			Move();
 			
 			Assert.NotNull(Unit.Target);
 			_agent.destination = Unit.Target.Position;
-
-			Move();
 		}
 
 		public void Move()
 		{
-			_agent.enabled = true;
-			
 			_obstacle.enabled = false;
+			_agent.enabled = true;
 		}
 
 		public void Stop()
