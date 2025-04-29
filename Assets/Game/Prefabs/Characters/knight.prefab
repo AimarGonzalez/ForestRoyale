@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8814071115090319185}
   - component: {fileID: 7384560063204836384}
+  - component: {fileID: 5255030233950744010}
+  - component: {fileID: 9082800254052272769}
   - component: {fileID: 1645409795888953433}
   - component: {fileID: 2248083304886485461}
   - component: {fileID: 7601780070824195045}
-  - component: {fileID: 5255030233950744010}
-  - component: {fileID: 9082800254052272769}
-  - component: {fileID: 2199282178545406893}
   - component: {fileID: 1316597476516433827}
   - component: {fileID: 1279115043402092364}
   m_Layer: 0
@@ -65,50 +64,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 1
---- !u!114 &1645409795888953433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4542813079112755275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _team: 0
-  _startingUnitSO: {fileID: 11400000, guid: 3acb7a78d9cfd1a499b890389b3b8c49, type: 2}
-  _panelPosition: 0
---- !u!114 &2248083304886485461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4542813079112755275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 1645409795888953433}
-  _agent: {fileID: 7384560063204836384}
-  _bodyCollider: {fileID: 5255030233950744010}
---- !u!114 &7601780070824195045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4542813079112755275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892a63fe77884445af0e4c3aaa477f74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 1645409795888953433}
-  _attackCollider: {fileID: 4166368498787790172}
 --- !u!136 &5255030233950744010
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -159,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2199282178545406893
+--- !u!114 &1645409795888953433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,12 +123,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4542813079112755275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b105102237d4cdba1fb1aa1e753e716, type: 3}
+  m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardData: {fileID: 11400000, guid: 4f2deac7628bf304ab57edc6b85c080b, type: 2}
-  _setOnAwake: 0
-  _target: {fileID: 0}
+  _team: 0
+  _startingUnitSO: {fileID: 11400000, guid: 3acb7a78d9cfd1a499b890389b3b8c49, type: 2}
+  _panelPosition: 0
+--- !u!114 &2248083304886485461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542813079112755275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8ea8906cccd7345aa55906238007cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _root: {fileID: 1645409795888953433}
+  _agent: {fileID: 7384560063204836384}
+  _bodyCollider: {fileID: 5255030233950744010}
+--- !u!114 &7601780070824195045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542813079112755275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892a63fe77884445af0e4c3aaa477f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _root: {fileID: 1645409795888953433}
+  _attackCollider: {fileID: 4166368498787790172}
 --- !u!114 &1316597476516433827
 MonoBehaviour:
   m_ObjectHideFlags: 0
