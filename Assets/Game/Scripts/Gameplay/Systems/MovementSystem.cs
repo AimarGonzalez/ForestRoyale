@@ -51,6 +51,8 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 
 					case UnitState.Attacking:
+					case UnitState.Dying:
+					case UnitState.Dead:
 						troop.MovementComponent.Stop();
 						break;
 
@@ -60,6 +62,5 @@ namespace ForestRoyale.Gameplay.Systems
 				}
 			}
 		}
-
 	}
 }

@@ -10,11 +10,27 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
+		
+		[SerializeField]
+		[Required]
+		private NavMeshObstacle _obstacle;
 
 		[SerializeField]
 		[Required]
 		private Collider _bodyCollider;
 
+
+		protected override void Awake()
+		{
+			base.Awake();
+			
+			// look for component fallbacks
+			_agent ??= GetComponent<NavMeshAgent>();
+			_obstacle ??= GetComponent<NavMeshObstacle>();
+			_bodyCollider ??= GetComponent<Collider>();
+
+			Stop();
+		}
 
 		protected override void OnUnitChanged()
 		{
@@ -39,6 +55,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public void MoveToTarget()
 		{
+			_agent.enabled = true;
+			
 			Assert.NotNull(Unit.Target);
 			_agent.destination = Unit.Target.Position;
 
@@ -47,12 +65,16 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public void Move()
 		{
-			_agent.isStopped = false;
+			_agent.enabled = true;
+			
+			_obstacle.enabled = false;
 		}
 
 		public void Stop()
 		{
-			_agent.isStopped = true;
+			_agent.enabled = false;
+			
+			_obstacle.enabled = true;
 		}
 	}
 }
