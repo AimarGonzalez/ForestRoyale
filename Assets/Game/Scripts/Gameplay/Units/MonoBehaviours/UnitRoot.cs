@@ -62,6 +62,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		private void Start()
 		{
+			InitializeUnit();
+		}
+		
+
+		[Button]
+		private void InitializeUnit()
+		{
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{

@@ -8,17 +8,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	public class MovementComponent : UnitComponent
 	{
 		[SerializeField]
+		private bool _followBody;
+		
+		[SerializeField]
+		[Required]
+		private Rigidbody2D _body;
+		
+		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
 		
 		[SerializeField]
 		[Required]
 		private NavMeshObstacle _obstacle;
-
-		[SerializeField]
-		[Required]
-		private Collider _bodyCollider;
-
 
 		protected override void Awake()
 		{
@@ -27,7 +29,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			// look for component fallbacks
 			_agent ??= GetComponent<NavMeshAgent>();
 			_obstacle ??= GetComponent<NavMeshObstacle>();
-			_bodyCollider ??= GetComponent<Collider>();
 
 			Stop();
 		}
@@ -72,6 +73,24 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_agent.enabled = false;
 			
 			_obstacle.enabled = true;
+		}
+
+		public void Update()
+		{
+			FollowBody();
+		}
+
+		private void FollowBody()
+		{
+			if (!_followBody)
+			{
+				return;
+			}
+			// move to bodies position
+			transform.position = _body.transform.position;
+			
+			// clear body local position
+			_body.transform.localPosition = Vector3.zero;
 		}
 	}
 }

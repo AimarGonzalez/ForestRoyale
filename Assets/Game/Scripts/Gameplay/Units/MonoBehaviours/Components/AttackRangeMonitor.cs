@@ -9,7 +9,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	{
 		[SerializeField]
 		[Required]
-		private CapsuleCollider _attackCollider;
+		private CircleCollider2D _attackCollider;
 
 		[ShowInInspector]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
@@ -76,7 +76,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 		}
 
-		private void HandleTriggerEnter(Collider other)
+		private void HandleTriggerEnter(Collider2D other)
 		{
 			if (_target == null)
 			{
@@ -90,7 +90,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 		}
 
-		private void HandleTriggerStay(Collider other)
+		private void HandleTriggerStay(Collider2D other)
 		{
 			if (_target == null)
 			{
@@ -104,7 +104,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 		}
 
-		private void HandleTriggerExit(Collider other)
+		private void HandleTriggerExit(Collider2D other)
 		{
 			if (_target == null)
 			{
