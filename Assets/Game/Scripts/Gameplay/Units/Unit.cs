@@ -2,7 +2,7 @@ using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;

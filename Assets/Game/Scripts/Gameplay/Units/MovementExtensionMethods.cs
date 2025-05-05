@@ -1,5 +1,4 @@
-﻿using ForestLib.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
+﻿using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -33,6 +32,11 @@ namespace ForestRoyale.Gameplay.Units
 #endif
 			
 			return unitRoot;
+		}
+		
+		public static Unit GetUnit(this UnitComponent other)
+		{
+			return other.Unit;
 		}
 
 		public static Unit GetUnit(this Behaviour other)

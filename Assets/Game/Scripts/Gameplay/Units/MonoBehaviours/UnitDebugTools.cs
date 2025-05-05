@@ -1,7 +1,7 @@
 ﻿using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviors;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;

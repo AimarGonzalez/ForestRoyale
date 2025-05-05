@@ -9,6 +9,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	{
 		[SerializeField]
 		[Required]
+		private Collider2D _bodyCollider;
+		
+		[SerializeField]
+		[Required]
 		private CircleCollider2D _attackCollider;
 
 		[ShowInInspector]
@@ -19,7 +23,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private bool _isTargetInCombatRange = false;
 
-		private TriggerListener _targetListener;
+		private Collider2DListener _targetListener;
 
 		public Unit Target
 		{
@@ -41,7 +45,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 			if (_attackCollider != null)
 			{
-				_targetListener = _attackCollider.gameObject.AddComponent<TriggerListener>();
+				_targetListener = _attackCollider.GetComponent<Collider2DListener>();
 				_targetListener.OnTriggerEnterEvent += HandleTriggerEnter;
 				_targetListener.OnTriggerExitEvent += HandleTriggerExit;
 				_targetListener.OnTriggerStayEvent += HandleTriggerStay;
@@ -52,14 +56,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		{
 			base.OnDestroy();
 
-			if (_attackCollider != null)
+			if (_targetListener != null)
 			{
-				if (_targetListener != null)
-				{
-					_targetListener.OnTriggerEnterEvent -= HandleTriggerEnter;
-					_targetListener.OnTriggerExitEvent -= HandleTriggerExit;
-					_targetListener.OnTriggerStayEvent -= HandleTriggerStay;
-				}
+				_targetListener.OnTriggerEnterEvent -= HandleTriggerEnter;
+				_targetListener.OnTriggerExitEvent -= HandleTriggerExit;
+				_targetListener.OnTriggerStayEvent -= HandleTriggerStay;
 			}
 		}
 
@@ -83,6 +84,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				return;
 			}
 
+			if (other == _bodyCollider)
+			{
+				// ignore own colliders
+				return;
+			}
+
 			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
 				_isTargetInCombatRange = true;
@@ -97,6 +104,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				return;
 			}
 
+			if (other == _bodyCollider)
+			{
+				// ignore own colliders
+				return;
+			}
+			
 			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
 				_isTargetInCombatRange = true;
@@ -108,6 +121,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		{
 			if (_target == null)
 			{
+				return;
+			}
+			
+			if (other == _bodyCollider)
+			{
+				// ignore own colliders
 				return;
 			}
 

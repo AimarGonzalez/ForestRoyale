@@ -1,5 +1,4 @@
-﻿using ForestRoyale.Gameplay.Units.MonoBehaviors;
-using ForestRoyale.Gui;
+﻿using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[NonSerialized]
 		private Unit _unit;
 
-		protected Unit Unit => _unit;
+		public Unit Unit => _unit;
 
 		protected virtual void Awake()
 		{

@@ -1012,6 +1012,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TimeScale.Pause",
+                    "type": "Button",
+                    "id": "1488c617-b611-4f3c-89b5-e460f24c296b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TimeScale.Reset",
+                    "type": "Button",
+                    "id": "83d39ac1-8e8a-442f-8ec7-d8aae6b85422",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1029,7 +1047,7 @@
                 {
                     "name": "",
                     "id": "7bd4d340-3baf-4036-af25-7bdb432e604b",
-                    "path": "<Keyboard>/pageDown",
+                    "path": "<Keyboard>/pageUp",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
@@ -1051,11 +1069,33 @@
                 {
                     "name": "",
                     "id": "5c110c9e-5de5-4c9e-bcfd-0abeba24da9a",
-                    "path": "<Keyboard>/pageUp",
+                    "path": "<Keyboard>/insert",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
                     "action": "TimeScale.Decrease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2131101-955f-407b-b260-c590e9f65270",
+                    "path": "<Keyboard>/home",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
+                    "action": "TimeScale.Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a1fc24d-1862-4084-b169-995447f47767",
+                    "path": "<Keyboard>/end",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Touch;Joystick;XR",
+                    "action": "TimeScale.Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

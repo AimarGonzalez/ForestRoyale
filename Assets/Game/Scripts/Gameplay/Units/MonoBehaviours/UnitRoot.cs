@@ -13,7 +13,7 @@ using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using UnityEditor;
 #endif
 
-namespace ForestRoyale.Gameplay.Units.MonoBehaviors
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
 	public class UnitRoot : MonoBehaviour
 	{
@@ -31,41 +31,53 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 
 		[SerializeField]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		private bool _showDebugPanel = false;
+		
+		[SerializeField]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private GUIUtils.PanelPosition _panelPosition;
 
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
 
-		private MovementComponent _movementMovementComponent;
+		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
 		private IDeathComponent _deathComponent;
+		private Collider2DListener _colliderListener;
 
-		private bool _showDebugPanel = false;
+
 		//--------------------------------
 		// Properties
 		//--------------------------------
 
 		public ArenaTeam Team => _team;
 		public Unit Unit => _unit;
-		public MovementComponent MovementComponent => _movementMovementComponent;
+		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
 		public IDeathComponent DeathComponent => _deathComponent;
 		public Vector3 Position => transform.position;
 
 		private void Awake()
 		{
-			_movementMovementComponent = GetComponent<MovementComponent>();
+			_movementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 			_deathComponent = GetComponent<IDeathComponent>();
+
+			if (_movementComponent)
+			{
+				_colliderListener = _movementComponent.Body.GetComponent<Collider2DListener>();
+				Assert.IsNotNull(_colliderListener);
+			}
 		}
 
 		private void Start()
 		{
 			InitializeUnit();
+
+			Subscribe();
 		}
 		
-
 		[Button]
 		private void InitializeUnit()
 		{
@@ -99,8 +111,34 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 				_arenaEvents.TriggerUnitCreated(_unit);
 			}
 		}
+		
+		
+		private void Subscribe()
+		{
+			if (_colliderListener != null)
+			{
+				_colliderListener.OnMouseDownEvent += OnMouseDown;
+			}
+		}
 
+		private void Unsubscribe()
+		{
+			if (_colliderListener != null)
+			{
+				_colliderListener.OnMouseDownEvent -= OnMouseDown;
+			}
+		}
 
+		private void OnDestroy()
+		{
+			Unsubscribe();
+		}
+
+		private void OnMouseDown()
+		{
+			_showDebugPanel = !_showDebugPanel;
+		}
+		
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
@@ -158,10 +196,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviors
 			Handles.EndGUI();
 		}
 
-		private void OnMouseDown()
-		{
-			_showDebugPanel = !_showDebugPanel;
-		}
 #endif //UNITY_EDITOR
 	}
 }
