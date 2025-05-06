@@ -1,3 +1,4 @@
+using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,7 +7,6 @@ namespace ForestRoyale.Gameplay.Navigation
 	/// <summary>
 	/// Debug component that handles both path visualization and target setting for NavMeshAgents
 	/// </summary>
-	[RequireComponent(typeof(NavMeshAgent))]
 	public class MovementDebugger : MonoBehaviour
 	{
 		[Header("Path Visualization")]
@@ -26,7 +26,7 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private void Awake()
 		{
-			_agent = GetComponent<NavMeshAgent>();
+			_agent = GetComponent<MovementComponent>().Agent;
 		}
 
 		private void OnDrawGizmos()

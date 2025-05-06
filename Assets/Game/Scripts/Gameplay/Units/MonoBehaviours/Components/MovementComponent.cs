@@ -2,13 +2,14 @@ using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class MovementComponent : UnitComponent
 	{
 		[SerializeField]
-		private bool _followBody;
+		private bool _followChildren = true;
 
 		[SerializeField]
 		[Required]
@@ -23,14 +24,15 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private NavMeshObstacle _obstacle;
 
 		public Collider2D Body => _body;
+		public NavMeshAgent Agent => _agent;
 
 		protected override void Awake()
 		{
 			base.Awake();
 
 			// look for component fallbacks
-			_agent ??= GetComponent<NavMeshAgent>();
-			_obstacle ??= GetComponent<NavMeshObstacle>();
+			_agent ??= GetComponentInChildren<NavMeshAgent>();
+			_obstacle ??= GetComponentInChildren<NavMeshObstacle>();
 
 			Stop();
 		}
@@ -84,23 +86,24 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_obstacle.enabled = true;
 		}
 
-		public void Update()
+		public void LateUpdate()
 		{
-			FollowBody();
+			FollowComponent(_agent);
+			FollowComponent(_body);
 		}
 
-		private void FollowBody()
+		private void FollowComponent(Component component)
 		{
-			if (!_followBody)
+			if (!_followChildren)
 			{
 				return;
 			}
 
 			// move to bodies position
-			transform.position = _body.transform.position;
+			transform.position = component.transform.position;
 
 			// clear body local position
-			_body.transform.localPosition = Vector3.zero;
+			component.transform.localPosition = Vector3.zero;
 		}
 	}
 }

@@ -1220,15 +1220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689030503111085090, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_FillAmount
       value: 0.647
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
@@ -1914,7 +1910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689030503111085090, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Color.b
@@ -2779,15 +2775,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689030503111085090, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_FillAmount
       value: 0.647
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
@@ -3582,14 +3574,6 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.647
       objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7601780070824195045, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4147,15 +4131,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689030503111085090, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_FillAmount
       value: 0.647
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
@@ -4481,15 +4461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542813079112755275, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4689030503111085090, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_FillAmount
       value: 0.647
-      objectReference: {fileID: 0}
-    - target: {fileID: 7384560063204836384, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_ObstacleAvoidanceType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7661924030056431555, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: _healthRatio
@@ -4814,9 +4790,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2801750384518046135, guid: 3301e473020dd0f4992946e700f89e6f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2801750384518046135, guid: 3301e473020dd0f4992946e700f89e6f, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: d71d53c01a5872549823e1cb4969b615, type: 2}
+    - target: {fileID: 4195716467988239000, guid: 3301e473020dd0f4992946e700f89e6f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7039339652991387770, guid: 3301e473020dd0f4992946e700f89e6f, type: 3}
       propertyPath: m_Mesh
       value: 
