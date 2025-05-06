@@ -39,9 +39,7 @@ namespace ForestRoyale.Gameplay.Navigation
 		[BoxGroup("Mesh Settings")]
 		[Tooltip("Path where the generated mesh will be saved as an asset (relative to Assets folder)")]
 		[HorizontalGroup("Mesh Settings/Path")]
-		[Sirenix.OdinInspector.FilePath(
-			ParentFolder = "Assets/Game/Scenes",
-			Extensions = ".asset")]
+		[Sirenix.OdinInspector.FilePath(Extensions = ".asset")]
 		[Required]
 		[InlineButton(nameof(AutoFillMeshPath), SdfIconType.Magic, "")]
 		[ValidateInput(nameof(IsValidateMeshPath), "Mesh path is invalid")]
@@ -54,7 +52,7 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private bool IsValidateMeshPath(string path)
 		{
-			return !string.IsNullOrEmpty(path) && path.EndsWith(".asset") && Regex.IsMatch(path, @"^Assets/.*/\w+.asset$");
+			return !string.IsNullOrEmpty(path) && path.EndsWith(".asset") && Regex.IsMatch(path, @"^Assets/.*/[\w\- ]+.asset$");
 		}
 
 		[BoxGroup("Debug")]
@@ -129,7 +127,7 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 		}
 
-		private bool MeshAssetPathIsValid => !string.IsNullOrEmpty(_meshAssetPath);
+		private bool MeshAssetPathIsValid => IsValidateMeshPath(_meshAssetPath);
 
 		[Button("Update Mesh")]
 		[EnableIf(nameof(MeshAssetPathIsValid))]
@@ -367,15 +365,6 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 
 			return _generatedMesh;
-		}
-
-		// Optional: Update the mesh at runtime if the tilemap changes
-		public void UpdateMesh()
-		{
-			if (_targetTilemaps != null)
-			{
-				GenerateMeshFromTilemap();
-			}
 		}
 
 		private void OnDrawGizmos()
