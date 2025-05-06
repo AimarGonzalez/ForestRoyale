@@ -101,13 +101,11 @@ namespace ForestRoyale.Gameplay.Units
 			_combatStats = unitSO.CombatStats;
 			_health = _unitStats.HitPoints;
 
-			_id = GenerateId();
+			_id = _unitRoot.name;
 		}
 
 		private string GenerateId()
 		{
-			return _unitRoot.name;
-			
 			string name = _cardOrigin?.CardName ?? _unitSO.UnitStats.Name ?? _unitSO.name;
 			if (!s_unitCount.ContainsKey(name))
 			{
