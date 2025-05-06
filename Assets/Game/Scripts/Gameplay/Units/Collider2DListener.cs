@@ -8,8 +8,15 @@ namespace ForestRoyale.Gameplay.Units
 		public event Action<Collider2D> OnTriggerEnterEvent;
 		public event Action<Collider2D> OnTriggerExitEvent;
 		public event Action<Collider2D> OnTriggerStayEvent;
-		
+
+		public event Action<Collider2D> OnCollisionEnterEvent;
+		public event Action<Collider2D> OnCollisionExitEvent;
+		public event Action<Collider2D> OnCollisionStayEvent;
+
 		public event Action OnMouseDownEvent;
+
+
+		//--------------------------------
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
@@ -26,22 +33,28 @@ namespace ForestRoyale.Gameplay.Units
 			OnTriggerStayEvent?.Invoke(other);
 		}
 
-		private void OnMouseDown()
-		{
-			OnMouseDownEvent?.Invoke();
-		}
+		//--------------------------------
 
 		private void OnCollisionEnter2D(Collision2D other)
 		{
-			Debug.Log($"[{this.transform.parent.parent.name}>{name}] OnCollisionEnter2D: {other.transform.parent.parent.name}");
+			OnCollisionEnterEvent?.Invoke(other.collider);
 		}
 
-		private void OnCollisionStay(Collision other)
+		private void OnCollisionStay2D(Collision2D other)
 		{
+			OnCollisionStayEvent?.Invoke(other.collider);
 		}
 
-		private void OnCollisionExit(Collision other)
+		private void OnCollisionExit2D(Collision2D other)
 		{
+			OnCollisionExitEvent?.Invoke(other.collider);
+		}
+
+		//--------------------------------
+
+		private void OnMouseDown()
+		{
+			OnMouseDownEvent?.Invoke();
 		}
 	}
 }
