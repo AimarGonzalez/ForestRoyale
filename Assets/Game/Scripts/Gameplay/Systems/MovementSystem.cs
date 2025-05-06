@@ -41,7 +41,7 @@ namespace ForestRoyale.Gameplay.Systems
 					case UnitState.Moving:
 						if (troop.HasTarget)
 						{
-							troop.MovementComponent.MoveToTarget();
+							_ = troop.MovementComponent.MoveToTarget();
 						}
 						else
 						{
