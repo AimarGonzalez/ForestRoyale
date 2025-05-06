@@ -1,6 +1,8 @@
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using Sirenix.OdinInspector;
+using UnityEditor.AI;
 #if UNITY_EDITOR
 using Unity.AI.Navigation.Editor;
 #endif
@@ -11,7 +13,20 @@ namespace ForestRoyale.Gameplay.Navigation
 	[RequireComponent(typeof(TilemapMeshGenerator))]
 	public class TilemapNavMeshGenerator : MonoBehaviour
 	{
+		[Required]
+		[SerializeField]
+		[InlineEditor]
 		public NavMeshSurface navMeshSurface;
+
+		[ShowInInspector]
+		[ReadOnly]
+		[BoxGroup("Navigation Status")]
+		private bool HasNavMeshSurface => navMeshSurface != null;
+
+		[ShowInInspector]
+		[ReadOnly]
+		[BoxGroup("Navigation Status")]
+		private bool HasNavMeshData => navMeshSurface != null && navMeshSurface.navMeshData != null;
 
 		private TilemapMeshGenerator meshGenerator;
 
@@ -63,7 +78,9 @@ namespace ForestRoyale.Gameplay.Navigation
 		}
 
 #if UNITY_EDITOR
-		[ContextMenu("Rebuild NavMesh")]
+		[Button("Update NavMesh")]
+		[HorizontalGroup("Actions")]
+		[PropertyOrder(100)]
 		public void BuildNavMesh()
 		{
 			// Ensure initialization when called from editor
@@ -94,6 +111,13 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 		}
 
+		[Button("Open Navigation Window")]
+		[HorizontalGroup("Actions")]
+		[PropertyOrder(100)]
+		private void OpenNavigationWindow()
+		{
+			NavMeshEditorHelpers.OpenAgentSettings(0);
+		}
 #endif
 	}
 }
