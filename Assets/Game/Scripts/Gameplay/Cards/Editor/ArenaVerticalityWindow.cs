@@ -53,10 +53,9 @@ namespace ForestRoyale.Game.Editor
 			_isVertical = !_isVertical;
 
 			Undo.RecordObject(_arena.transform, "Toggle Arena Rotation");
-			BoxCollider2D[] boxColliders = FindObjectsByType<BoxCollider2D>(FindObjectsSortMode.None);
-
 			_arena.transform.rotation = Quaternion.Euler(_isVertical ? 270f : 0f, 0f, 0f);
-
+			
+			BoxCollider2D[] boxColliders = FindObjectsByType<BoxCollider2D>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 			foreach (BoxCollider2D collider in boxColliders)
 			{
 				Undo.RecordObject(collider.transform, "Toggle Collider Rotation");

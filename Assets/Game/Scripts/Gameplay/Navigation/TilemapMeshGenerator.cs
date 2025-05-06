@@ -66,6 +66,7 @@ namespace ForestRoyale.Gameplay.Navigation
 		// Cache for optimization
 		private bool[,] _grassGrid;
 		private BoundsInt _lastBounds;
+		private Quaternion[] _cachedRotations;
 
 		private void Awake()
 		{
@@ -129,6 +130,36 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private bool MeshAssetPathIsValid => IsValidateMeshPath(_meshAssetPath);
 
+		private void CacheAndUnrotateTilemaps()
+		{
+			_cachedRotations = new Quaternion[_targetTilemaps.Length];
+			for (int i = 0; i < _targetTilemaps.Length; i++)
+			{
+				if (_targetTilemaps[i] != null)
+				{
+					_cachedRotations[i] = _targetTilemaps[i].transform.rotation;
+					_targetTilemaps[i].transform.rotation = Quaternion.identity;
+				}
+			}
+		}
+
+		private void RestoreTilemapRotations()
+		{
+			if (_cachedRotations == null)
+			{
+				return;
+			}
+
+			for (int i = 0; i < _targetTilemaps.Length; i++)
+			{
+				if (_targetTilemaps[i] != null)
+				{
+					_targetTilemaps[i].transform.rotation = _cachedRotations[i];
+				}
+			}
+			_cachedRotations = null;
+		}
+
 		[Button("Update Mesh")]
 		[EnableIf(nameof(MeshAssetPathIsValid))]
 		public void GenerateMeshFromTilemap()
@@ -138,11 +169,17 @@ namespace ForestRoyale.Gameplay.Navigation
 				return;
 			}
 
-			_lastBounds = GetCombinedTilemapBounds();
-
-			_grassGrid = PopulateGrassGrid(_lastBounds);
-
-			GenerateSimpleMesh(_grassGrid, _lastBounds);
+			try
+			{
+				CacheAndUnrotateTilemaps();
+				_lastBounds = GetCombinedTilemapBounds();
+				_grassGrid = PopulateGrassGrid(_lastBounds);
+				GenerateSimpleMesh(_grassGrid, _lastBounds);
+			}
+			finally
+			{
+				RestoreTilemapRotations();
+			}
 		}
 
 		/// <summary>
@@ -288,18 +325,26 @@ namespace ForestRoyale.Gameplay.Navigation
 						continue;
 					}
 
-					// Convert from grid coordinates to world coordinates
-					// Note: We're using X and Z for the horizontal plane, Y for height
+					// Convert from grid coordinates to world coordinates and project onto XZ plane
 					Vector3 worldBottomLeft = _targetTilemaps[0].CellToWorld(new Vector3Int(x + bounds.xMin, y + bounds.yMin, 0));
 					Vector3 worldBottomRight = _targetTilemaps[0].CellToWorld(new Vector3Int(x + 1 + bounds.xMin, y + bounds.yMin, 0));
 					Vector3 worldTopLeft = _targetTilemaps[0].CellToWorld(new Vector3Int(x + bounds.xMin, y + 1 + bounds.yMin, 0));
 					Vector3 worldTopRight = _targetTilemaps[0].CellToWorld(new Vector3Int(x + 1 + bounds.xMin, y + 1 + bounds.yMin, 0));
 
-					// Apply Y offset for z-fighting prevention
-					worldBottomLeft.y = _yOffset;
-					worldBottomRight.y = _yOffset;
-					worldTopLeft.y = _yOffset;
-					worldTopRight.y = _yOffset;
+					// Project vertices onto XZ plane (tilemaps are already unrotated)
+					worldBottomLeft = new Vector3(worldBottomLeft.x, _yOffset, worldBottomLeft.z);
+					worldBottomRight = new Vector3(worldBottomRight.x, _yOffset, worldBottomRight.z);
+					worldTopLeft = new Vector3(worldTopLeft.x, _yOffset, worldTopLeft.z);
+					worldTopRight = new Vector3(worldTopRight.x, _yOffset, worldTopRight.z);
+
+					// For vertical tilemaps, we need to use the Y coordinate as Z
+					if (Mathf.Approximately(Mathf.Abs(_targetTilemaps[0].transform.up.y), 0f))
+					{
+						worldBottomLeft = new Vector3(worldBottomLeft.x, _yOffset, worldBottomLeft.y);
+						worldBottomRight = new Vector3(worldBottomRight.x, _yOffset, worldBottomRight.y);
+						worldTopLeft = new Vector3(worldTopLeft.x, _yOffset, worldTopLeft.y);
+						worldTopRight = new Vector3(worldTopRight.x, _yOffset, worldTopRight.y);
+					}
 
 					// Add vertices for this cell
 					int baseIndex = vertices.Count;
