@@ -43059,7 +43059,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8038769555714929466}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: be52bac94b28ecc48918c3c977f043d3, type: 2}
 --- !u!23 &4195716467988239000
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -43126,7 +43126,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: be52bac94b28ecc48918c3c977f043d3, type: 2}
 --- !u!114 &2801750384518046135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43157,7 +43157,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e5bb35203a387004999bfdb76a26cc44, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!114 &379639150232042305
 MonoBehaviour:
@@ -43252,6 +43252,7 @@ MonoBehaviour:
   _yOffset: -0.01
   _updateDynamically: 0
   _generateCollider: 1
+  _meshAssetPath: Assets/Game/Scenes/TrainingArea/TrainingArea_Mesh.asset
   _showDebugGizmos: 0
 --- !u!114 &2029395226893539487
 MonoBehaviour:

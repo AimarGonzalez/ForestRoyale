@@ -1,7 +1,14 @@
+using ForestLib.ExtensionMethods;
+using ForestLib.Utils;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 // TODO: Consider moving this class to an Editor namespace
 namespace ForestRoyale.Gameplay.Navigation
@@ -28,6 +35,27 @@ namespace ForestRoyale.Gameplay.Navigation
 		[BoxGroup("Mesh Settings")]
 		[Tooltip("Whether to generate a collider for the mesh")]
 		[SerializeField] private bool _generateCollider = false;
+
+		[BoxGroup("Mesh Settings")]
+		[Tooltip("Path where the generated mesh will be saved as an asset (relative to Assets folder)")]
+		[HorizontalGroup("Mesh Settings/Path")]
+		[Sirenix.OdinInspector.FilePath(
+			ParentFolder = "Assets/Game/Scenes",
+			Extensions = ".asset")]
+		[Required]
+		[InlineButton(nameof(AutoFillMeshPath), SdfIconType.Magic, "")]
+		[ValidateInput(nameof(IsValidateMeshPath), "Mesh path is invalid")]
+		[SerializeField] private string _meshAssetPath = "";
+
+		private void AutoFillMeshPath()
+		{
+			_meshAssetPath = GeneratePathFromCurrentScene();
+		}
+
+		private bool IsValidateMeshPath(string path)
+		{
+			return !string.IsNullOrEmpty(path) && path.EndsWith(".asset") && Regex.IsMatch(path, @"^Assets/.*/\w+.asset$");
+		}
 
 		[BoxGroup("Debug")]
 		[Tooltip("Show debug gizmos in the scene view")]
@@ -101,7 +129,10 @@ namespace ForestRoyale.Gameplay.Navigation
 			}
 		}
 
+		private bool MeshAssetPathIsValid => !string.IsNullOrEmpty(_meshAssetPath);
+
 		[Button("Update Mesh")]
+		[EnableIf(nameof(MeshAssetPathIsValid))]
 		public void GenerateMeshFromTilemap()
 		{
 			if (!EnsureInitialized())
@@ -219,6 +250,17 @@ namespace ForestRoyale.Gameplay.Navigation
 
 		private void GenerateSimpleMesh(bool[,] grassGrid, BoundsInt bounds)
 		{
+
+#if UNITY_EDITOR
+			_generatedMesh = null;
+			
+			// Load asset from path
+			if(IsValidateMeshPath(_meshAssetPath))
+			{
+				_generatedMesh = AssetDatabase.LoadAssetAtPath<Mesh>(_meshAssetPath);
+			}
+#endif
+
 			// Create or clear the mesh
 			if (_generatedMesh == null)
 			{
@@ -294,6 +336,17 @@ namespace ForestRoyale.Gameplay.Navigation
 			// Recalculate normals and bounds
 			_generatedMesh.RecalculateNormals();
 			_generatedMesh.RecalculateBounds();
+
+#if UNITY_EDITOR
+			// create asset in new path
+			if (IsValidateMeshPath(_meshAssetPath))
+			{
+				_generatedMesh = AssetUtils.CreateOrReplaceAsset(_generatedMesh, _meshAssetPath);
+			}
+			else{
+				Debug.LogError("Mesh path is invalid - " + _meshAssetPath);
+			}
+#endif
 
 			// Assign the mesh to the appropriate components
 			_meshFilter.mesh = _generatedMesh;
@@ -372,6 +425,12 @@ namespace ForestRoyale.Gameplay.Navigation
 			    }
 			}
 			*/
+		}
+
+		private string GeneratePathFromCurrentScene()
+		{
+			string sceneName = SceneManager.GetActiveScene().name;
+			return $"Assets/Game/Scenes/{sceneName}/{sceneName}_Mesh.asset";
 		}
 	}
 }
