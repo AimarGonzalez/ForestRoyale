@@ -9,25 +9,25 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	{
 		[SerializeField]
 		private bool _followBody;
-		
+
 		[SerializeField]
 		[Required]
 		private Collider2D _body;
-		
+
 		[SerializeField]
 		[Required]
 		private NavMeshAgent _agent;
-		
+
 		[SerializeField]
 		[Required]
 		private NavMeshObstacle _obstacle;
 
 		public Collider2D Body => _body;
-		
+
 		protected override void Awake()
 		{
 			base.Awake();
-			
+
 			// look for component fallbacks
 			_agent ??= GetComponent<NavMeshAgent>();
 			_obstacle ??= GetComponent<NavMeshObstacle>();
@@ -53,27 +53,34 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				// Disable movement
 				_agent.speed = 0;
 			}
-
 		}
 
-		public void MoveToTarget()
+		public async Awaitable MoveToTarget()
 		{
-			Move();
-			
+			await Move();
+
 			Assert.NotNull(Unit.Target);
 			_agent.destination = Unit.Target.Position;
 		}
 
-		public void Move()
+		public async Awaitable Move()
 		{
-			_obstacle.enabled = false;
+			if (_obstacle.enabled)
+			{
+				_obstacle.enabled = false;
+
+				// BUGFIX: Wait next frame to let the navmesh remove the hole carved by the obstacle.
+				// Otherwise the agent glitches out of the hole instantly and looks terrible.
+				await Awaitable.NextFrameAsync();
+			}
+
 			_agent.enabled = true;
 		}
 
 		public void Stop()
 		{
 			_agent.enabled = false;
-			
+
 			_obstacle.enabled = true;
 		}
 
@@ -88,9 +95,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			{
 				return;
 			}
+
 			// move to bodies position
 			transform.position = _body.transform.position;
-			
+
 			// clear body local position
 			_body.transform.localPosition = Vector3.zero;
 		}
