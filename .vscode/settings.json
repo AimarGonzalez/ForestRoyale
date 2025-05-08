@@ -85,5 +85,6 @@
             "tab.inactiveForeground": "#000000",
             "tab.selectedBackground": "#001884"
         }
-    }
+    },
+    "dotnet.preferCSharpExtension": true
 }
