@@ -4,7 +4,7 @@
     "EnableGameObjectMainIcon": true,
     "EnableGameObjectComponentIcons": true,
     "EnableHierarchyTree": true,
-    "EnableGameObjectTag": false,
+    "EnableGameObjectTag": true,
     "EnableGameObjectLayer": true,
     "EnableHierarchyRows": true,
     "EnableHierarchyLines": true,
@@ -21,8 +21,10 @@
         "MeshRenderer",
         "TilemapRenderer"
     ],
-    "MaximumComponentIconsAmount": 10,
-    "ExcludedTags": [],
+    "MaximumComponentIconsAmount": 5,
+    "ExcludedTags": [
+        "Untagged"
+    ],
     "ExcludedLayers": [
         "Default"
     ]
