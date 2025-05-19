@@ -15,7 +15,7 @@ MonoBehaviour:
   _cardName: Giant
   _description: Slow but durable, the Giant is a powerful tank that only targets
     buildings. He leads the charge while other troops deal damage.
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: b37f7d0d1d040b74f889b50258b2fb44, type: 3}
   _elixirCost: 5
   _rarity: 1
   _unitCount: 1

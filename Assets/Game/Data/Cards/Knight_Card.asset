@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardName: Knight
   _description: A tough melee fighter. The Mustache says it all.
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 1bbd732ef7d5b6148aa7baf839dc2a87, type: 3}
   _elixirCost: 3
   _rarity: 0
   _unitCount: 1
