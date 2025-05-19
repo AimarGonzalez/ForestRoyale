@@ -16,6 +16,10 @@ Shader "UI/RoundedInset"
         _ShadowWidth ("Shadow Width", Range(0, 1.0)) = 0.02
     	_ShadowRamp ("Shadow Ramp", Range(0.1, 10)) = 1
 
+        // Border properties
+        _BorderColor ("Border Color", Color) = (1,1,1,0.5)
+        _BorderWidth ("Border Width", Range(0, 1.0)) = 0.01
+
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
         _StencilOp ("Stencil Operation", Float) = 0
@@ -23,6 +27,8 @@ Shader "UI/RoundedInset"
         _StencilReadMask ("Stencil Read Mask", Float) = 255
 
         _ColorMask ("Color Mask", Float) = 15
+		
+		_testFloat("Test Float", Float) = 0.0
 
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
     }
@@ -102,6 +108,12 @@ Shader "UI/RoundedInset"
             float4 _ShadowColor;
             float _ShadowRamp;
             float _ShadowWidth;
+            
+            // Border properties
+            float4 _BorderColor;
+            float _BorderWidth;
+
+			float _testFloat;
 
             v2f vert(appdata_t v)
             {
@@ -160,17 +172,33 @@ Shader "UI/RoundedInset"
             float insetShadow(float2 p, float scale, float ratio)
             {
             	float radius = max(_ShadowWidth, 1e-6);
-	            float2 offset = float2(0.0, 0.0);
+	            float2 offset = float2(0.0, 0.0); // pass as shader parameter
 	            p += offset;
 
-	            p = p * scale;
-
 	            float distance = roundedSquareSDF(p, radius, scale, ratio);
-            	//distance = lerp(0., 1., distance/radius);  // normalize shadow value
+            	distance = lerp(0., 1., distance/radius);  // normalize shadow value
             	
             	// Apply shadow curve to shape the ramp
             	return pow(distance, _ShadowRamp);
             }
+			
+
+			// Calculate border
+			float calculateBorder(float2 p, float scale, float ratio)
+			{
+				float radius = max(_CornerRadius, 1e-6);
+
+				// distance outer and inner shape distances
+				float distance = roundedSquareSDF(p, radius, scale, ratio);
+				distance = lerp(0., 1., distance/radius);
+				
+				// Create a border mask - 1 where border is, 0 elsewhere
+				float borderWidth = max(1-_BorderWidth, 1e-6);
+				float outerMask = step(borderWidth, distance);
+				
+				return outerMask;
+			}
+
 
             fixed4 frag(v2f IN) : SV_Target
             {
@@ -188,11 +216,14 @@ Shader "UI/RoundedInset"
 
             	// Shadow
             	float shadowRatio = insetShadow(p, scale, ratio);
+            	color.rgb = lerp(color.rgb, _ShadowColor.rgb, shadowRatio * _ShadowColor.a);
+
+				// Border
+				float border = calculateBorder(p, scale, ratio);
+				color.rgb = lerp(color.rgb, _BorderColor.rgb, border * _BorderColor.a);
                 
                 // Rounded corner clipping
                 float clipping = clippingMask(p, scale, ratio);
-
-            	color.rgb = lerp(color.rgb, _ShadowColor.rgb, shadowRatio * _ShadowColor.a);
 				color.a *= clipping;
             	
 				 // Apply alpha clipping
