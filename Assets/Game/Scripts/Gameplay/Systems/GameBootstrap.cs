@@ -10,6 +10,7 @@ namespace ForestRoyale.Gameplay.Systems
 		protected override void Configure(IContainerBuilder builder)
 		{
 			Debug.Log("Boostrap");
+			builder.Register<ApplicationEvents>(Lifetime.Singleton);
 			builder.Register<ArenaSystemsLoop>(Lifetime.Scoped);
 			builder.Register<ArenaEvents>(Lifetime.Scoped);
 			builder.Register<MovementSystem>(Lifetime.Scoped);
