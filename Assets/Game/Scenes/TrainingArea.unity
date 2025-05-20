@@ -2973,26 +2973,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1112468618}
     m_Modifications:
-    - target: {fileID: 1092084366587989258, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -23.999996
-      objectReference: {fileID: 0}
-    - target: {fileID: 1092084366587989258, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -27.600006
-      objectReference: {fileID: 0}
-    - target: {fileID: 1092084366587989258, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1092084366587989258, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 3.7999954
-      objectReference: {fileID: 0}
-    - target: {fileID: 2307170339247612022, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3071,14 +3051,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095480961385579236, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_Name
-      value: txt_card_name
-      objectReference: {fileID: 0}
-    - target: {fileID: 4409643946557085777, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
@@ -3526,10 +3498,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1112468618}
     m_Modifications:
-    - target: {fileID: 2307170339247612022, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3609,18 +3577,6 @@ PrefabInstance:
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095480961385579236, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_Name
-      value: txt_card_name
-      objectReference: {fileID: 0}
-    - target: {fileID: 4409643946557085777, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Name
@@ -4704,10 +4660,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1112468618}
     m_Modifications:
-    - target: {fileID: 2307170339247612022, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4787,18 +4739,6 @@ PrefabInstance:
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095480961385579236, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_Name
-      value: txt_card_name
-      objectReference: {fileID: 0}
-    - target: {fileID: 4409643946557085777, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Name
@@ -6458,10 +6398,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1112468618}
     m_Modifications:
-    - target: {fileID: 2307170339247612022, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6542,17 +6478,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3521501897650913802, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095480961385579236, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_Name
-      value: txt_card_name
       objectReference: {fileID: 0}
     - target: {fileID: 4409643946557085777, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_IsActive
@@ -6561,18 +6489,6 @@ PrefabInstance:
     - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_Name
       value: CardSlot (0)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5669685201787359075, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7316807046520041897, guid: 6778c93967533e349ab443af134250ab, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
