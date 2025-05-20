@@ -1,7 +1,7 @@
 // UI Shader with rounded corners and inset shadow
 // Based on Unity's UI-Default shader
 
-Shader "UI/RoundedInset"
+Shader "UI/RoundedPanel"
 {
     Properties
     {
