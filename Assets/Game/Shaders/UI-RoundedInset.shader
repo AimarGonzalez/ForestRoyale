@@ -9,6 +9,7 @@ Shader "UI/RoundedInset"
         _Color ("Tint", Color) = (1,1,1,1)
         
         // Rounded corners properties
+		_AspectRatio ("Aspect Ratio", Float) = 1.0
         _CornerRadius ("Corner Radius", Range(0, 1)) = 0.1
         
         // Inset shadow properties
@@ -28,8 +29,6 @@ Shader "UI/RoundedInset"
 
         _ColorMask ("Color Mask", Float) = 15
 		
-		_testFloat("Test Float", Float) = 0.0
-
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
     }
 
@@ -102,6 +101,7 @@ Shader "UI/RoundedInset"
             int _UIVertexColorAlwaysGammaSpace;
             
             // Rounded corners properties
+			float _AspectRatio;
             float _CornerRadius;
             
             // Inset shadow properties
@@ -113,7 +113,6 @@ Shader "UI/RoundedInset"
             float4 _BorderColor;
             float _BorderWidth;
 
-			float _testFloat;
 
             v2f vert(appdata_t v)
             {
@@ -210,7 +209,8 @@ Shader "UI/RoundedInset"
                 half4 color = IN.color * (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd);
                 
 				float scale = 1.0;
-				float ratio = 1.0;
+                float ratio = _AspectRatio; // value set from UIPanelShaderProperties.cs
+                
 				float2 p = IN.texcoord;
 				p.y *= ratio;
 

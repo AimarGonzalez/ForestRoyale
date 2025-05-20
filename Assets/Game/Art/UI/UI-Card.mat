@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UI-RoundedInset
+  m_Name: UI-Card
   m_Shader: {fileID: 4800000, guid: 49464eceac71b9a4d806e41197094e9a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -85,15 +85,16 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
+    - _AspectRatio: 1.2205263
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderSoftness: 0.001
-    - _BorderWidth: 0.181
+    - _BorderWidth: 0.485
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ColorMask: 15
-    - _CornerRadius: 0.245
+    - _CornerRadius: 0.19
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -112,7 +113,7 @@ Material:
     - _ShadowCurve: 2
     - _ShadowRadius: 0.13
     - _ShadowRamp: 1.5
-    - _ShadowWidth: 0.352
+    - _ShadowWidth: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -130,7 +131,7 @@ Material:
     - _testFloat: 0.54
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BorderColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BorderColor: {r: 0, g: 0, b: 0, a: 0.9254902}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0.09173333, g: 0.23260956, b: 0.344, a: 1}
