@@ -77,7 +77,11 @@
             "m_Id": "e8284a1383234c68ae5d392fe8756b1a"
         }
     ],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "9b22b84b58db4504a6f9bce20ada9fdd"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -608,10 +612,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1288.0,
-            "y": -264.66668701171877,
+            "x": -1153.9998779296875,
+            "y": 222.66659545898438,
             "width": 89.333251953125,
-            "height": 102.66668701171875
+            "height": 102.66671752929688
         }
     },
     "m_Slots": [
@@ -785,10 +789,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1200.0,
-            "y": -264.66668701171877,
+            "x": -1065.9998779296875,
+            "y": 222.66659545898438,
             "width": 127.333251953125,
-            "height": 120.00001525878906
+            "height": 120.00003051757813
         }
     },
     "m_Slots": [
@@ -1048,10 +1052,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1226.666748046875,
-            "y": -393.3333435058594,
+            "x": -1092.6666259765625,
+            "y": 93.99995422363281,
             "width": 147.3333740234375,
-            "height": 130.6666259765625
+            "height": 130.66673278808595
         }
     },
     "m_Slots": [
@@ -1335,10 +1339,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1074.0,
-            "y": -264.66668701171877,
-            "width": 141.33331298828126,
-            "height": 168.00003051757813
+            "x": -939.9999389648438,
+            "y": 222.66659545898438,
+            "width": 141.33343505859376,
+            "height": 168.00009155273438
         }
     },
     "m_Slots": [
@@ -1674,10 +1678,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -926.0,
-            "y": -393.3333435058594,
+            "x": -791.9999389648438,
+            "y": 93.99995422363281,
             "width": 131.3333740234375,
-            "height": 120.0
+            "height": 119.99998474121094
         }
     },
     "m_Slots": [
@@ -1742,6 +1746,26 @@
     },
     "m_Labels": [],
     "m_Space": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "9b22b84b58db4504a6f9bce20ada9fdd",
+    "m_Title": "Problem!",
+    "m_Content": "Using the screen UV the squares align to the screen, so when we resize the screen the squares move away.\n",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -873.3333129882813,
+        "y": -144.6666717529297,
+        "width": 200.0,
+        "height": 160.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
 }
 
 {
@@ -2073,10 +2097,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1082.0,
-            "y": -393.3333435058594,
-            "width": 133.3333740234375,
-            "height": 125.33334350585938
+            "x": -947.9998779296875,
+            "y": 93.99995422363281,
+            "width": 133.33331298828126,
+            "height": 125.33329772949219
         }
     },
     "m_Slots": [
@@ -2203,8 +2227,8 @@
     "m_ObjectId": "e8284a1383234c68ae5d392fe8756b1a",
     "m_Title": "Screenspace UV coordinates",
     "m_Position": {
-        "x": -1313.3333740234375,
-        "y": -452.0
+        "x": -1179.3333740234375,
+        "y": 35.33326721191406
     }
 }
 
