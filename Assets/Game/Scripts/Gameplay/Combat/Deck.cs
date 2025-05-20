@@ -2,7 +2,7 @@ using ForestRoyale.Gameplay.Cards;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ForestRoyale.Gameplay.Battle
+namespace ForestRoyale.Gameplay.Combat
 {
 	public class Deck
 	{

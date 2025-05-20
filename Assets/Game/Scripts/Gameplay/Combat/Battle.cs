@@ -1,4 +1,3 @@
-using ForestRoyale.Gameplay.Battle;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Combat

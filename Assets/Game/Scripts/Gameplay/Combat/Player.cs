@@ -1,7 +1,7 @@
 using ForestRoyale.Gameplay.Cards;
 using UnityEngine;
 
-namespace ForestRoyale.Gameplay.Battle
+namespace ForestRoyale.Gameplay.Combat
 {
 	public class Player
 	{

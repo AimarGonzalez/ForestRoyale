@@ -1,7 +1,7 @@
 using ForestRoyale.Gameplay.Cards;
 using System.Collections.Generic;
 
-namespace ForestRoyale.Gameplay.Battle
+namespace ForestRoyale.Gameplay.Combat
 {
 	public class Hand
 	{
