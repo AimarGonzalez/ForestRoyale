@@ -85,7 +85,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AspectRatio: 1.2151685
+    - _AspectRatio: 1.2302197
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderSoftness: 0.001
