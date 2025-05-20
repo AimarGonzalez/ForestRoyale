@@ -341,7 +341,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 1827248511}
+  - {fileID: 1369798545}
   - {fileID: 1043605366}
 --- !u!43 &155650019
 Mesh:
@@ -2436,14 +2436,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910884317}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1400931071}
-  - {fileID: 1369798546}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 1400931071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &920323298
 PrefabInstance:
@@ -2578,10 +2576,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2123168577521216321, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
       propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3906892272511894025, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
-      propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4304433659686236060, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
@@ -4189,14 +4183,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369798545}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1961463508}
   - {fileID: 1827248512}
-  m_Father: {fileID: 910884320}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400931070
 GameObject:
@@ -4229,7 +4223,8 @@ Transform:
   m_Children:
   - {fileID: 45926024}
   - {fileID: 1163184644}
-  m_Father: {fileID: 910884320}
+  - {fileID: 910884320}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1416509738
 Mesh:
@@ -5526,7 +5521,7 @@ GameObject:
   - component: {fileID: 1961463508}
   - component: {fileID: 1961463509}
   m_Layer: 0
-  m_Name: CardPlayer
+  m_Name: CardCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6796,10 +6791,6 @@ PrefabInstance:
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: d71d53c01a5872549823e1cb4969b615, type: 2}
-    - target: {fileID: 5975491379398321087, guid: 3301e473020dd0f4992946e700f89e6f, type: 3}
-      propertyPath: m_Mode
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6963,7 +6954,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 910884320}
+  - {fileID: 1400931071}
+  - {fileID: 1369798546}
   - {fileID: 340569230}
   - {fileID: 1294737035}
   - {fileID: 1878247171}
