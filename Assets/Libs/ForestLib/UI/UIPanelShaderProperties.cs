@@ -1,49 +1,62 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ForestLib.UI
 {
-	public class UIPanelShaderProperties : MonoBehaviour
+	public class UIPanelShaderProperties : UIBehaviour, IMaterialModifier
 	{
+		private static readonly int s_aspectRatioPropertyId = Shader.PropertyToID("_AspectRatio");
+		
+		private Graphic _graphic;
 		private RectTransform _rectTransform;
+		
+		
 		private RectTransform RectTransform
 		{
 			get
 			{
 				if (_rectTransform == null)
 				{
-					FetchDependencies();
+					_rectTransform = GetComponent<RectTransform>();
 				}
 				return _rectTransform;
 			}
 		}
 
-
-		private CanvasRenderer _canvasRenderer;
+		private Graphic Graphic
+		{
+			get
+			{
+				if (_graphic == null)
+				{
+					_graphic = GetComponent<Graphic>();
+				}
+				return _graphic;
+			}
+		}
 
 		[ShowInInspector, ReadOnly]
 		public float AspectRatio => RectTransform.rect.height / RectTransform.rect.width;
 
-		private void Start()
+		protected override void Start()
 		{
+			base.Start();
 			FetchDependencies();
+			UpdateMaterial();
+		}
+		
+		protected override void OnRectTransformDimensionsChange()
+		{
+			base.OnRectTransformDimensionsChange();
+			UpdateMaterial();
 		}
 
 		private void FetchDependencies()
 		{
 			_rectTransform = GetComponent<RectTransform>();
-			_canvasRenderer = GetComponent<CanvasRenderer>();
-		}
-
-		private void Update()
-		{
-			UpdateMaterial();
-		}
-
-
-		private void UpdateMaterial()
-		{
-			_canvasRenderer.GetMaterial().SetFloat("_AspectRatio", AspectRatio);
+			_graphic = GetComponent<Graphic>();
 		}
 
 		[Button("Update Material")]
@@ -51,6 +64,31 @@ namespace ForestLib.UI
 		{
 			FetchDependencies();
 			UpdateMaterial();
+		}
+		
+		private void UpdateMaterial()
+		{
+			if (Application.isPlaying)
+			{
+				Graphic.SetMaterialDirty();
+			}
+			else
+			{
+				Graphic.material.SetFloat(s_aspectRatioPropertyId, AspectRatio);
+			}
+
+		}
+
+		public Material GetModifiedMaterial(Material baseMaterial)
+		{
+			Material material = new Material(baseMaterial);
+
+			if (material.HasFloat(s_aspectRatioPropertyId))
+			{
+				material.SetFloat(s_aspectRatioPropertyId, AspectRatio);
+			}
+
+			return material;
 		}
 	}
 }
