@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ae9243894bfc44a4f92ed4957ce28793, type: 2}
   m_sharedMaterial: {fileID: -6661601358948781445, guid: ae9243894bfc44a4f92ed4957ce28793, type: 2}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPicture: {fileID: 4427158670394317814}
   cardName: {fileID: 1626952908674142486}
-  elixirCost: {fileID: 0}
+  elixirCost: {fileID: 3092959044656899900}
   _cardData: {fileID: 11400000, guid: 80a67db43e9fdd2418aa06afdacc8ba9, type: 2}
 --- !u!1 &7456295135048037836
 GameObject:
