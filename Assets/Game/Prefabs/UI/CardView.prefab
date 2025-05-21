@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7472108761021801481}
   - component: {fileID: 3057655535106980184}
   - component: {fileID: 4202908615640807921}
+  - component: {fileID: 4623637220836508795}
   m_Layer: 0
   m_Name: CardView
   m_TagString: Untagged
@@ -200,6 +201,27 @@ MonoBehaviour:
   cardName: {fileID: 1626952908674142486}
   elixirCost: {fileID: 3092959044656899900}
   _cardData: {fileID: 11400000, guid: 80a67db43e9fdd2418aa06afdacc8ba9, type: 2}
+--- !u!114 &4623637220836508795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798305000199632919}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565ab40fde8f9824e862eda78c283cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetCursor: 0
+  easing: 0.1
+  followX: 1
+  followY: 1
+  keepDistanceToTarget: 0
+  updateType: 0
+  offset: {x: 0, y: 0}
+  canvasCamera: {fileID: 0}
 --- !u!1 &7456295135048037836
 GameObject:
   m_ObjectHideFlags: 0
