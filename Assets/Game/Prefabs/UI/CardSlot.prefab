@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3240278979221673730}
   - component: {fileID: 3686784631201684143}
   - component: {fileID: 8672480025342253860}
+  - component: {fileID: 7972423156716173362}
   m_Layer: 0
   m_Name: CardSlot
   m_TagString: Untagged
@@ -37,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 165, y: 220}
+  m_SizeDelta: {x: 165, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3686784631201684143
 Canvas:
@@ -79,6 +80,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 127
+--- !u!114 &7972423156716173362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391959968706600329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 0.8282083
 --- !u!1 &7316807046520041897
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5798305000199632919, guid: f7a4152142efeca498b87994829cabca, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7472108761021801481, guid: f7a4152142efeca498b87994829cabca, type: 3}
       propertyPath: m_Pivot.x
