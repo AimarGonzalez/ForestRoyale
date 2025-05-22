@@ -127,12 +127,12 @@ namespace Game.UI
 		{
 			if (_isDragging)
 			{
-				_follower.TargetCursor = true;
+				_follower.TargetMouse = true;
 				_follower.enabled = true;
 			}
 			else
 			{
-				_follower.TargetCursor = false;
+				_follower.TargetMouse = false;
 				_follower.enabled = false;
 
 				if (_selected)

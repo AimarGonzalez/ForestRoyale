@@ -3084,6 +3084,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3274101455237522493, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274101455237522493, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: targetMouse
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274101455237522493, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: targetCursor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
@@ -3630,6 +3642,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274101455237522493, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: targetCursor
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
@@ -4805,6 +4821,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274101455237522493, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: targetCursor
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3686784631201684143, guid: 6778c93967533e349ab443af134250ab, type: 3}
@@ -6492,7 +6512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMin.x
@@ -6500,15 +6520,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 197.525
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 238.49675
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6540,11 +6560,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 98.7625
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -121.95
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6572,6 +6592,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391959968706600329, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6463489075350373340, guid: 6778c93967533e349ab443af134250ab, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

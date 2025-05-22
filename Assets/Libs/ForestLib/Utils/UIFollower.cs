@@ -1,5 +1,8 @@
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+#if UNITY_EDITOR
+#endif
 
 namespace ForestLib.Utils
 {
@@ -9,7 +12,7 @@ namespace ForestLib.Utils
 		[SerializeField] private Transform target;
 
 		[Tooltip("Whether to follow the cursor position instead of a target transform")]
-		[SerializeField] private bool targetCursor = false;
+		[SerializeField] private bool targetMouse = false;
 
 		[Tooltip("How quickly to move toward the target (0-1, higher values = faster movement)")]
 		[Range(0.01f, 1f)]
@@ -33,11 +36,19 @@ namespace ForestLib.Utils
 		[Tooltip("Camera used for UI canvas calculations (defaults to canvas camera or main camera)")]
 		[SerializeField] private Camera canvasCamera;
 
+		[Tooltip("Show debug information in game view")]
+		[SerializeField]
+		[OnValueChanged("SetupDebugUI")]
+		private bool showDebugInfo = false;
+
 		private RectTransform _rectTransform;
 		private Canvas _canvas;
 		private bool _isCanvasOverlay;
 		private Camera _camera;
-		private Vector2 _originalPosition;
+		private Vector2 _originalAnchor;
+		private TextMeshProUGUI _debugText;
+
+		private Vector2 _targetScreenPosition;
 
 		public Transform Target
 		{
@@ -57,14 +68,51 @@ namespace ForestLib.Utils
 			set => offset = value;
 		}
 
-		public bool TargetCursor
+		public bool TargetMouse
 		{
-			get => targetCursor;
-			set => targetCursor = value;
+			get => targetMouse;
+			set => targetMouse = value;
+		}
+
+		public static Vector2 GetScreenPosition(RectTransform rectTransform)
+		{
+			return rectTransform.position;
+		}
+
+		public static void SetScreenPosition(RectTransform rectTransform, Vector2 screenPosition, Canvas canvas, Camera camera = null)
+		{
+			if (rectTransform == null || canvas == null)
+			{
+				return;
+			}
+
+			Debug.Assert(canvas.renderMode == RenderMode.ScreenSpaceOverlay, "UIFollower: SetScreenPosition can only be used for ScreenSpaceOverlay canvas!");
+
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(
+				canvas.GetComponent<RectTransform>(),
+				screenPosition,
+				null,
+				out Vector2 localPoint);
+
+			rectTransform.position = canvas.GetComponent<RectTransform>().TransformPoint(localPoint);
 		}
 
 		private void Awake()
 		{
+			FetchDependencies();
+			SetupDebugUI();
+		}
+
+		private void FetchDependencies()
+		{
+#if UNITY_EDITOR
+			if (_rectTransform != null)
+			{
+				// Skip if already initialized - can happen in editor mode due to OnDrawGizmos
+				return;
+			}
+#endif
+
 			_rectTransform = GetComponent<RectTransform>();
 			if (_rectTransform == null)
 			{
@@ -73,7 +121,7 @@ namespace ForestLib.Utils
 				return;
 			}
 
-			_originalPosition = _rectTransform.anchoredPosition;
+			_originalAnchor = _rectTransform.anchoredPosition;
 
 			_canvas = GetComponentInParent<Canvas>();
 			if (_canvas == null)
@@ -121,17 +169,15 @@ namespace ForestLib.Utils
 
 		private void FollowTarget()
 		{
-			if (target == null && !targetCursor)
+			if (target == null && !targetMouse)
 			{
 				return;
 			}
 
-			Vector2 currentPosition = _rectTransform.anchoredPosition;
-			Vector2 targetPosition;
-
-			if (targetCursor)
+			if (targetMouse)
 			{
-				targetPosition = GetCursorCanvasPosition();
+				// For mouse, we already have screen coordinates
+				_targetScreenPosition = Input.mousePosition;
 			}
 			else if (target != null)
 			{
@@ -139,12 +185,13 @@ namespace ForestLib.Utils
 				RectTransform targetRect = target.GetComponent<RectTransform>();
 				if (targetRect != null)
 				{
-					targetPosition = targetRect.anchoredPosition;
+					// Get screen position of the target UI element
+					_targetScreenPosition = GetScreenPosition(targetRect);
 				}
 				else
 				{
 					// Target is a world object, convert to canvas space
-					targetPosition = WorldToCanvasPosition(target.position);
+					_targetScreenPosition = WorldToCanvasPosition(target.position);
 				}
 			}
 			else
@@ -152,30 +199,44 @@ namespace ForestLib.Utils
 				return;
 			}
 
-			targetPosition += offset;
-			Vector2 newPosition = currentPosition;
+			_targetScreenPosition += offset;
 
+
+			Vector2 originPosition = _rectTransform.position;
+			Vector2 newPosition = originPosition;
 			if (followX)
 			{
-				newPosition.x = Mathf.Lerp(currentPosition.x, targetPosition.x, easing);
+				newPosition.x = Mathf.Lerp(originPosition.x, _targetScreenPosition.x, easing);
 			}
 
 			if (followY)
 			{
-				newPosition.y = Mathf.Lerp(currentPosition.y, targetPosition.y, easing);
+				newPosition.y = Mathf.Lerp(originPosition.y, _targetScreenPosition.y, easing);
 			}
 
 			if (keepDistanceToTarget > 0)
 			{
-				float distance = Vector2.Distance(newPosition, targetPosition);
+				float distance = Vector2.Distance(newPosition, _targetScreenPosition);
 				if (distance < keepDistanceToTarget)
 				{
-					Vector2 direction = (newPosition - targetPosition).normalized;
-					newPosition = targetPosition + (direction * keepDistanceToTarget);
+					Vector2 direction = (originPosition - _targetScreenPosition).normalized;
+					newPosition = _targetScreenPosition + (direction * keepDistanceToTarget);
 				}
 			}
 
-			_rectTransform.anchoredPosition = newPosition;
+			_rectTransform.position = newPosition;
+			//SetScreenPosition(_rectTransform, newPosition, _canvas, _camera);
+
+			// Update debug text
+			if (showDebugInfo && _debugText != null)
+			{
+				_debugText.text = $"Mouse: {Input.mousePosition}\n" +
+								  	$"Target: {_targetScreenPosition}\n" +
+									$"New Position: {newPosition}\n" +
+									$"Original Anchor: {_originalAnchor}\n" +
+									$"Current Anchor: {_rectTransform.anchoredPosition}\n" +
+									$"Current Position: {_rectTransform.position}\n";
+			}
 		}
 
 		private Vector2 GetCursorCanvasPosition()
@@ -185,21 +246,14 @@ namespace ForestLib.Utils
 				return Vector2.zero;
 			}
 
-			if (_isCanvasOverlay)
-			{
-				// For Screen Space - Overlay canvas
-				return Input.mousePosition;
-			}
-			else
-			{
-				// For Screen Space - Camera or World Space canvas
-				RectTransformUtility.ScreenPointToLocalPointInRectangle(
-					_canvas.GetComponent<RectTransform>(),
-					Input.mousePosition,
-					_canvas.worldCamera,
-					out Vector2 localPoint);
-				return localPoint;
-			}
+			// Mouse position is already in screen coordinates, convert to canvas space
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(
+				_canvas.GetComponent<RectTransform>(),
+				Input.mousePosition,
+				_isCanvasOverlay ? null : _camera,
+				out Vector2 localPoint);
+
+			return localPoint;
 		}
 
 		private Vector2 WorldToCanvasPosition(Vector3 worldPosition)
@@ -215,10 +269,73 @@ namespace ForestLib.Utils
 				(viewportPosition.y * _canvas.GetComponent<RectTransform>().sizeDelta.y) - (_canvas.GetComponent<RectTransform>().sizeDelta.y * 0.5f)
 			);
 		}
-		
+
 		public void ResetPosition()
 		{
-			_rectTransform.anchoredPosition = _originalPosition;
+			_rectTransform.anchoredPosition = _originalAnchor;
+		}
+
+		private void SetupDebugUI()
+		{
+			if (!showDebugInfo || _debugText != null)
+			{
+				return;
+			}
+
+			// Create debug text object
+			GameObject debugObj = new GameObject("DebugText");
+			debugObj.transform.SetParent(transform, false);
+
+			_debugText = debugObj.AddComponent<TextMeshProUGUI>();
+			_debugText.fontSize = 44;
+			_debugText.color = Color.black;
+			_debugText.fontWeight = FontWeight.Bold;
+			_debugText.alignment = TextAlignmentOptions.Left;
+
+			RectTransform textRect = _debugText.rectTransform;
+			textRect.anchorMin = new Vector2(0, 1);
+			textRect.anchorMax = new Vector2(0, 1);
+			textRect.pivot = new Vector2(0, 1);
+			textRect.anchoredPosition = new Vector2(200, -10);
+			textRect.sizeDelta = new Vector2(800, 100);
+			textRect.position = new Vector3(textRect.position.x, textRect.position.y, 10);
+		}
+
+
+		private void OnDrawGizmos()
+		{
+			if (!Application.isPlaying || !enabled)
+			{
+				return;
+			}
+
+			FetchDependencies();
+
+			if (_rectTransform == null || _camera == null)
+			{
+				return;
+			}
+
+			// Convert UI rect transform position to world space for gizmo drawing
+			Vector3 myScreenPos = _rectTransform.position;
+
+			// Draw current position
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawSphere(ScreenToGizmoPosition(myScreenPos), 0.5f);
+
+			// Draw target position
+			Gizmos.color = Color.blue;
+			Gizmos.DrawWireCube(ScreenToGizmoPosition(_targetScreenPosition), new Vector3(1f, 1f, 1f));
+
+
+			// Draw lines connecting positions
+			Gizmos.color = Color.white;
+			Gizmos.DrawLine(_targetScreenPosition, myScreenPos);
+		}
+
+		private Vector3 ScreenToGizmoPosition(Vector3 screenPosition)
+		{
+			return _camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, _camera.nearClipPlane + 1));
 		}
 	}
 }
