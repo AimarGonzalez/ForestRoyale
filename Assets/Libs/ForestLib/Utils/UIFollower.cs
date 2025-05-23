@@ -8,11 +8,18 @@ namespace ForestLib.Utils
 {
 	public class UIFollower : MonoBehaviour
 	{
-		[Tooltip("The target to follow")]
-		[SerializeField] private Transform target;
+		public enum TargetMode
+		{
+			Mouse,
+			Object,
+		}
 
-		[Tooltip("Whether to follow the cursor position instead of a target transform")]
-		[SerializeField] private bool targetMouse = false;
+		[Tooltip("Whether to follow the mouse/touch position instead of a target transform")]
+		[SerializeField] private TargetMode _targetMode = TargetMode.Mouse;
+
+		[Tooltip("The target to follow")]
+		[SerializeField] private Transform targetObject;
+
 
 		[Tooltip("How quickly to move toward the target (0-1, higher values = faster movement)")]
 		[Range(0.01f, 1f)]
@@ -51,8 +58,8 @@ namespace ForestLib.Utils
 
 		public Transform Target
 		{
-			get => target;
-			set => target = value;
+			get => targetObject;
+			set => targetObject = value;
 		}
 
 		public float Easing
@@ -65,12 +72,6 @@ namespace ForestLib.Utils
 		{
 			get => offset;
 			set => offset = value;
-		}
-
-		public bool TargetMouse
-		{
-			get => targetMouse;
-			set => targetMouse = value;
 		}
 
 		private void Awake()
@@ -140,40 +141,24 @@ namespace ForestLib.Utils
 				FollowTarget();
 			}
 		}
+		
+		private bool HasValidTarget()
+		{
+			return _targetMode == TargetMode.Mouse || targetObject != null;
+		}
 
 		private void FollowTarget()
 		{
-			if (target == null && !targetMouse)
+			if (!HasValidTarget())
 			{
 				return;
 			}
 
-			if (targetMouse)
-			{
-				// For mouse, we already have screen coordinates
-				_targetScreenPos = Input.mousePosition;
-			}
-			else if (target != null)
-			{
-				// If target is another UI element
-				RectTransform targetRect = target.GetComponent<RectTransform>();
-				if (targetRect != null)
-				{
-					_targetScreenPos = targetRect.position; // screen space
-				}
-				else
-				{
-					_targetScreenPos = _camera.WorldToScreenPoint(target.position);
-				}
-			}
-			else
-			{
-				return;
-			}
+			_targetScreenPos = GetTargetScreenPosition();
 
 			_targetScreenPos += offset;
 
-
+			// Interpolate to target position
 			Vector2 originPosition = _rectTransform.position;
 			Vector2 newPosition = originPosition;
 			if (followX)
@@ -186,6 +171,7 @@ namespace ForestLib.Utils
 				newPosition.y = Mathf.Lerp(originPosition.y, _targetScreenPos.y, easing);
 			}
 
+			// Keep distance to target
 			if (keepDistanceToTarget > 0)
 			{
 				float distance = Vector2.Distance(newPosition, _targetScreenPos);
@@ -202,9 +188,34 @@ namespace ForestLib.Utils
 			if (showDebugInfo && _debugText != null)
 			{
 				_debugText.text = $"Mouse: {Input.mousePosition:F0}\n" +
-				                  $"Target: {_targetScreenPos:F0}\n" +
-				                  $"New Position: {newPosition:F0}\n";
+								  $"Target: {_targetScreenPos:F0}\n" +
+								  $"New Position: {newPosition:F0}\n";
 			}
+		}
+
+		private Vector2 GetTargetScreenPosition()
+		{
+			Vector2 targetScreenPos = Vector2.zero;
+			if (_targetMode == TargetMode.Mouse)
+			{
+				// For mouse, we already have screen coordinates
+				targetScreenPos = Input.mousePosition;
+			}
+			else if (targetObject != null)
+			{
+				// If target is another UI element
+				RectTransform targetRect = targetObject.GetComponent<RectTransform>();
+				if (targetRect != null)
+				{
+					targetScreenPos = targetRect.position; // screen space
+				}
+				else
+				{
+					targetScreenPos = _camera.WorldToScreenPoint(targetObject.position);
+				}
+			}
+
+			return targetScreenPos;
 		}
 
 		private Vector2 GetCursorCanvasPosition()
