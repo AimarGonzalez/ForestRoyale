@@ -201,7 +201,9 @@ namespace Game.UI
 
 		private float CalcMarginNormalized()
 		{
-			return _cardRectTransform.rect.height * 0.5f / _camera.pixelHeight;
+			// Margin size is half of the card height
+			float heightInScreenSpace = _cardRectTransform.rect.height * _cardRectTransform.lossyScale.y;
+			return heightInScreenSpace * 0.5f / _camera.pixelHeight;
 		}
 
 		private void OnDrawGizmos()
@@ -230,8 +232,13 @@ namespace Game.UI
 			//Draw margin line
 			float normalizedYPosition = _cardRectTransform.position.y / _camera.pixelHeight;
 			float normalizedMarginY = normalizedYPosition + CalcMarginNormalized();
-			
+
+
 			GizmoUtils.DrawHorizontalLineOnScreen(normalizedMarginY, Color.blue);
+			//GizmoUtils.DrawHorizontalLineOnScreen((_cardRectTransform.position.y + _cardRectTransform.rect.height * _cardRectTransform.lossyScale.y * 0.5f) / _camera.pixelHeight, Color.cyan);
+			//GizmoUtils.DrawHorizontalLineOnScreen(_cardRectTransform.rect.y + 1f / _camera.pixelHeight, Color.yellow);
+			//GizmoUtils.DrawHorizontalLineOnScreen(normalizedYPosition, Color.white);
+		}
 		}
 	}
 }
