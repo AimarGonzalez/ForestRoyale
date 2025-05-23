@@ -189,8 +189,8 @@ namespace Game.UI
 			_slotDistanceToLine = CastingLinePosition - _slotRectTransform.position.y;
 
 			float margin = SlotHeigh * 0.5f;
-
-			_scale = Mathf.Clamp(_cardDistanceToLine / (_slotDistanceToLine - margin), 0.3f, 1f);
+			float ratio = _cardDistanceToLine / (_slotDistanceToLine - margin);
+			_scale = Mathf.Lerp(0.3f, 1f,ratio);
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 		}
 
