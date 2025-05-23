@@ -11,10 +11,11 @@ using UnityEngine.UI;
 
 namespace Game.UI
 {
-	public class CardView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+	public class CardSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
-		public Action<CardView, CardData> OnClick;
+		public Action<CardSlot, CardData> OnClick;
 
+		[SerializeField] private RectTransform _cardView;
 		[SerializeField] private Image _cardPicture;
 		[SerializeField] private TMP_Text _cardName;
 		[SerializeField] private TMP_Text _elixirCost;
