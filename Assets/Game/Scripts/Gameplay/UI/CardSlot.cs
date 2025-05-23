@@ -24,10 +24,6 @@ namespace Game.UI
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		[ShowInInspector, Unity.Collections.ReadOnly] private bool _selected = false;
 
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
-		[ShowInInspector, Unity.Collections.ReadOnly]
-		private bool _scalingEnabled = true;
-
 		private UIFollower _mouseFollower;
 		private RectTransform _cardRectTransform;
 		private RectTransform _containerRectTransform;
