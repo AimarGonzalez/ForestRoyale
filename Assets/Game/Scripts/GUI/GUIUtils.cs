@@ -2,12 +2,13 @@
 using ForestLib.Utils;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 namespace ForestRoyale.Gui
 {
 	public static class GUIUtils
 	{
-		public enum PanelPosition
+		public enum PanelPlacement
 		{
 			Bottom,
 			Top,
@@ -28,6 +29,26 @@ namespace ForestRoyale.Gui
 
 			public Property(string label)
 				: this(label, "", GUI.skin.label, GUI.skin.label)
+			{
+			}
+
+			public Property(string label, int value)
+				: this(label, value.ToString())
+			{
+			}
+
+			public Property(string label, float value)
+				: this(label, value.ToString())
+			{
+			}
+
+			public Property(string label, Vector3 value)
+				: this(label, $"v({value.x}, {value.y}, {value.z})")
+			{
+			}
+
+			public Property(string label, Enum value)
+				: this(label, value.ToString())
 			{
 			}
 
@@ -141,7 +162,7 @@ namespace ForestRoyale.Gui
 			return (size, maxLabelWidth, maxValueWidth);
 		}
 
-		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPosition panelPosition)
+		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPlacement panelPosition)
 		{
 			var characterBounds = MeshUtils.GetBoundingBox(transform);
 
@@ -152,19 +173,19 @@ namespace ForestRoyale.Gui
 
 			switch (panelPosition)
 			{
-				case PanelPosition.Top:
+				case PanelPlacement.Top:
 					screenOffset = Vector2.down * (size.y * 0.5f);
 					worldOffset = Vector3.forward * verticalOffset;
 					break;
-				case PanelPosition.Bottom:
+				case PanelPlacement.Bottom:
 					screenOffset = Vector2.up * (size.y * 0.5f);
 					worldOffset = Vector3.back * verticalOffset;
 					break;
-				case PanelPosition.Left:
+				case PanelPlacement.Left:
 					screenOffset = Vector2.left * (size.x * 0.5f);
 					worldOffset = Vector3.left * horizontalOffset;
 					break;
-				case PanelPosition.Right:
+				case PanelPlacement.Right:
 					screenOffset = Vector2.right * (size.x * 0.5f);
 					worldOffset = Vector3.right * horizontalOffset;
 					break;
@@ -174,6 +195,28 @@ namespace ForestRoyale.Gui
 			Vector2 screenPoint = HandleUtility.WorldToGUIPoint(worldPosition);
 			Vector3 labelPosition = screenPoint + screenOffset;
 			return labelPosition;
+		}
+
+		public static void DrawDebugPanel(Property[] properties, Transform transform, PanelPlacement panelPlacement)
+		{
+			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
+
+			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
+			Vector3 panelPosition = CalcPanelPosition(transform, panelSize, panelPlacement);
+
+			Handles.BeginGUI();
+			{
+				// Create rect centered on the panel's position
+				Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
+
+				GUI.Box(rect, GUIContent.none, panelStyle);
+
+				for (int i = 0; i < properties.Length; i++)
+				{
+					GUIUtils.DrawTextField(i, properties[i], rect, panelStyle, labelWidth, valueWidth);
+				}
+			}
+			Handles.EndGUI();
 		}
 
 	}

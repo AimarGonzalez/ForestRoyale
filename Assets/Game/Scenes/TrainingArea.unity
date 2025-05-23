@@ -1059,7 +1059,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 19.2
+  orthographic size: 20.72
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5654,7 +5654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683dca2a648731644ac8e43ca4c753a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castingLinePosition: 0.238
+  _castingLinePosition: 0.26
   _cardSlots:
   - {fileID: 859280052}
   - {fileID: 1202734836}
@@ -6512,7 +6512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMin.x
@@ -6520,15 +6520,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 197.525
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 238.49675
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6560,11 +6560,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 98.7625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -121.95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240278979221673730, guid: 6778c93967533e349ab443af134250ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

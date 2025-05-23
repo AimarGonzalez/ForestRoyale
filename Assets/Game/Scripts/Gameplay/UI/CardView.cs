@@ -15,9 +15,9 @@ namespace Game.UI
 	{
 		public Action<CardView, CardData> OnClick;
 
-		[SerializeField] private Image cardPicture;
-		[SerializeField] private TMP_Text cardName;
-		[SerializeField] private TMP_Text elixirCost;
+		[SerializeField] private Image _cardPicture;
+		[SerializeField] private TMP_Text _cardName;
+		[SerializeField] private TMP_Text _elixirCost;
 
 		[SerializeField] private CardData _cardData;
 
@@ -28,6 +28,12 @@ namespace Game.UI
 		private RectTransform _rectTransform;
 		private Vector2 _originalPosition;
 		private bool _isDragging = false;
+		private Camera _camera;
+
+		private float _castingLinePosition;
+		private float _initialDistanceToCastingLine;
+
+		private bool _debugInitialized = false;
 
 		public CardData CardData
 		{
@@ -44,6 +50,25 @@ namespace Game.UI
 			_follower = GetComponent<UIFollower>();
 			_rectTransform = GetComponent<RectTransform>();
 			_originalPosition = _rectTransform.anchoredPosition;
+			_camera = Camera.main;
+		}
+
+		public void Init(float castingLinePosition)
+		{
+			_castingLinePosition = castingLinePosition;
+			_initialDistanceToCastingLine = DistanceToCastingLine(_rectTransform);
+		}
+
+		private void DebugInit()
+		{
+			if (_debugInitialized)
+			{
+				return;
+			}
+			
+			Awake();
+			Init(0.26f);
+			_debugInitialized = true;
 		}
 
 		private void Start()
@@ -63,19 +88,19 @@ namespace Game.UI
 				return;
 			}
 
-			if (cardPicture != null)
+			if (_cardPicture != null)
 			{
-				cardPicture.sprite = _cardData.Portrait;
+				_cardPicture.sprite = _cardData.Portrait;
 			}
 
-			if (cardName != null)
+			if (_cardName != null)
 			{
-				cardName.text = _cardData.CardName;
+				_cardName.text = _cardData.CardName;
 			}
 
-			if (elixirCost != null)
+			if (_elixirCost != null)
 			{
-				elixirCost.text = _cardData.ElixirCost.ToString();
+				_elixirCost.text = _cardData.ElixirCost.ToString();
 			}
 		}
 
@@ -144,8 +169,48 @@ namespace Game.UI
 					_rectTransform.anchoredPosition = _originalPosition;
 				}
 			}
+		}
 
+		private void Update()
+		{
+			ReduceSizeWhenApproachingCastingLine();
+		}
 
+		private void ReduceSizeWhenApproachingCastingLine()
+		{
+			float distance = DistanceToCastingLine(_rectTransform);
+			float scale = Mathf.Clamp(distance / _initialDistanceToCastingLine, 0.0f, 1f);
+			_rectTransform.localScale = new Vector3(scale, scale, scale);
+		}
+
+		private float DistanceToCastingLine(RectTransform rectTransform)
+		{
+			float verticalPosition = rectTransform.position.y / _camera.pixelHeight;
+			float distance = _castingLinePosition - verticalPosition;
+			return distance;
+		}
+
+		private void OnDrawGizmos()
+		{
+			//if (!_isDragging)
+			//{
+			//	return;
+			//}
+
+			if (!Application.isPlaying)
+			{
+				DebugInit();
+			}
+
+			GUIUtils.Property[] properties = new[] {
+					new GUIUtils.Property ("_castingLine", _castingLinePosition),
+					new GUIUtils.Property ("_initialDistanceToCastingLine", _initialDistanceToCastingLine),
+					new GUIUtils.Property ("_distanceToCastingLine", DistanceToCastingLine(_rectTransform)),
+					new GUIUtils.Property ("rectTransform.position.y", _rectTransform.position.y),
+					new GUIUtils.Property ("_camera.pixelHeight", _camera.pixelHeight),
+			};
+			
+			GUIUtils.DrawDebugPanel(properties, transform, GUIUtils.PanelPlacement.Top);
 		}
 	}
 }

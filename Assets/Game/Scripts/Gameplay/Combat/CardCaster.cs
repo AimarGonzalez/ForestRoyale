@@ -10,8 +10,8 @@ namespace ForestRoyale.Gameplay.Combat
 	public class CardCaster : MonoBehaviour
 	{
 		[SerializeField, Range(0f, 1f)]
-		private float castingLinePosition = 0.3f;
-	
+		private float _castingLinePosition = 0.3f;
+
 		[SerializeField]
 		private List<CardView> _cardSlots;
 
@@ -30,6 +30,11 @@ namespace ForestRoyale.Gameplay.Combat
 		private void Start()
 		{
 			Subscribe();
+
+			foreach (CardView cardView in _cardSlots)
+			{
+				cardView.Init(_castingLinePosition);
+			}
 		}
 
 		private void Subscribe()
@@ -57,7 +62,7 @@ namespace ForestRoyale.Gameplay.Combat
 			_player = battle.Player;
 			_hand = battle.Player.Hand;
 			_deck = battle.Player.Deck;
-			
+
 		}
 
 		private void OnCardClicked(CardView cardView, CardData cardData)
@@ -82,8 +87,8 @@ namespace ForestRoyale.Gameplay.Combat
 			float screenHeight = camera.pixelHeight;
 			float screenWidth = camera.pixelWidth;
 
-			Vector3 leftPoint = camera.ScreenToWorldPoint(new Vector3(0, screenHeight * castingLinePosition, 10));
-			Vector3 rightPoint = camera.ScreenToWorldPoint(new Vector3(screenWidth, screenHeight * castingLinePosition, 10));
+			Vector3 leftPoint = camera.ScreenToWorldPoint(new Vector3(0, screenHeight * _castingLinePosition, 10));
+			Vector3 rightPoint = camera.ScreenToWorldPoint(new Vector3(screenWidth, screenHeight * _castingLinePosition, 10));
 
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(leftPoint, rightPoint);

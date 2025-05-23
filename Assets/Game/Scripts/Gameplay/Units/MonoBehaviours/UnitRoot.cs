@@ -32,10 +32,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private bool _showDebugPanel = false;
-		
+
 		[SerializeField]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
-		private GUIUtils.PanelPosition _panelPosition;
+		private GUIUtils.PanelPlacement _panelPosition;
 
 
 		[Inject]
@@ -77,7 +77,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			Subscribe();
 		}
-		
+
 		[Button]
 		private void InitializeUnit()
 		{
@@ -111,8 +111,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_arenaEvents.TriggerUnitCreated(_unit);
 			}
 		}
-		
-		
+
+
 		private void Subscribe()
 		{
 			if (_colliderListener != null)
@@ -138,7 +138,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		{
 			_showDebugPanel = !_showDebugPanel;
 		}
-		
+
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
@@ -155,12 +155,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			else
 			{
 				properties = new[] {
-					new GUIUtils.Property ("Id", _unit.Id.ToString()),
-					new GUIUtils.Property ("Target", _unit.Target?.Id.ToString() ?? "None"),
+					new GUIUtils.Property ("Id", _unit.Id),
+					new GUIUtils.Property ("Target", _unit.Target?.Id ?? "None"),
 					_unit.IsTargetInCombatRange ?
 						new GUIUtils.Property ("In Range", "Yes", GuiStylesCatalog.LabelGreenStyle) :
 						new GUIUtils.Property ("In Range", "No", GuiStylesCatalog.LabelRedStyle),
-					new GUIUtils.Property ("State", _unit.State.ToString())
+					new GUIUtils.Property ("State", _unit.State)
 				};
 
 				if (_unit.CanFight)
@@ -171,31 +171,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 						.ToArray();
 				}
 			}
-			DrawDebugPanel(properties);
+
+			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition);
 		}
-
-		private void DrawDebugPanel(GUIUtils.Property[] properties)
-		{
-			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
-
-			(Vector2 panelSize, float labelWidth, float valueWidth) = GUIUtils.CalcPanelSize(panelStyle, properties);
-			Vector3 panelPosition = GUIUtils.CalcPanelPosition(transform, panelSize, _panelPosition);
-
-			Handles.BeginGUI();
-			{
-				// Create rect centered on the panel's position
-				Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
-
-				GUI.Box(rect, GUIContent.none, panelStyle);
-
-				for (int i = 0; i < properties.Length; i++)
-				{
-					GUIUtils.DrawTextField(i, properties[i], rect, panelStyle, labelWidth, valueWidth);
-				}
-			}
-			Handles.EndGUI();
-		}
-
 #endif //UNITY_EDITOR
 	}
 }
