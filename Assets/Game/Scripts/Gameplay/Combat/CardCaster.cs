@@ -1,3 +1,4 @@
+using ForestLib.Utils;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Systems;
 using Game.UI;
@@ -84,14 +85,7 @@ namespace ForestRoyale.Gameplay.Combat
 				return;
 			}
 
-			float screenHeight = camera.pixelHeight;
-			float screenWidth = camera.pixelWidth;
-
-			Vector3 leftPoint = camera.ScreenToWorldPoint(new Vector3(0, screenHeight * _castingLinePosition, 10));
-			Vector3 rightPoint = camera.ScreenToWorldPoint(new Vector3(screenWidth, screenHeight * _castingLinePosition, 10));
-
-			Gizmos.color = Color.red;
-			Gizmos.DrawLine(leftPoint, rightPoint);
+			GizmoUtils.DrawHorizontalLineOnScreen(_castingLinePosition, Color.red);
 		}
 	}
 }

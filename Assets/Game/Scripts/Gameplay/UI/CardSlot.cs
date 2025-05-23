@@ -179,7 +179,11 @@ namespace Game.UI
 		{
 			float distance = DistanceToCastingLine(_cardRectTransform);
 			float containerDistance = ContainerDistanceToCastingLine();
-			float scale = Mathf.Clamp(distance / containerDistance, 0.0f, 1f);
+
+			// Margin: The card won't scale down during the initial margin (aka: until its out of the slot)
+			float margin = CalcMarginNormalized();
+
+			float scale = Mathf.Clamp(distance / (containerDistance - margin), 0.3f, 1f);
 			_cardRectTransform.localScale = new Vector3(scale, scale, scale);
 		}
 
@@ -193,6 +197,11 @@ namespace Game.UI
 		private float ContainerDistanceToCastingLine()
 		{
 			return DistanceToCastingLine(_containerRectTransform);
+		}
+
+		private float CalcMarginNormalized()
+		{
+			return _cardRectTransform.rect.height * 0.5f / _camera.pixelHeight;
 		}
 
 		private void OnDrawGizmos()
@@ -216,6 +225,13 @@ namespace Game.UI
 			};
 
 			GUIUtils.DrawDebugPanel(properties, transform, GUIUtils.PanelPlacement.Top);
+
+
+			//Draw margin line
+			float normalizedYPosition = _cardRectTransform.position.y / _camera.pixelHeight;
+			float normalizedMarginY = normalizedYPosition + CalcMarginNormalized();
+			
+			GizmoUtils.DrawHorizontalLineOnScreen(normalizedMarginY, Color.blue);
 		}
 	}
 }
