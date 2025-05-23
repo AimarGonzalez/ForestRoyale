@@ -26,14 +26,21 @@ namespace Game.UI
 
 		private UIFollower _mouseFollower;
 		private RectTransform _cardRectTransform;
-		private RectTransform _containerRectTransform;
+		private RectTransform _slotRectTransform;
 		private Vector2 _cardOriginalAnchor;
 		private bool _isDragging = false;
 		private Camera _camera;
 
 		private float _castingLinePosition;
 
+		// internal values for gizmo drawing
+		private float _cardDistanceToLine;
+		private float _slotDistanceToLine;
 		private bool _debugInitialized = false;
+
+		// dynamic values depending on camera or scene context
+		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
+		private float CardHeight => _cardRectTransform.rect.height * _cardRectTransform.lossyScale.y;
 
 		public CardData CardData
 		{
@@ -48,7 +55,7 @@ namespace Game.UI
 		private void Awake()
 		{
 			_mouseFollower = _cardView.GetComponent<UIFollower>();
-			_containerRectTransform = GetComponent<RectTransform>();
+			_slotRectTransform = GetComponent<RectTransform>();
 			_cardRectTransform = _cardView.GetComponent<RectTransform>();
 			_cardOriginalAnchor = _cardRectTransform.anchoredPosition;
 			_camera = Camera.main;
@@ -177,33 +184,13 @@ namespace Game.UI
 
 		private void ReduceSizeWhenApproachingCastingLine()
 		{
-			float distance = DistanceToCastingLine(_cardRectTransform);
-			float containerDistance = ContainerDistanceToCastingLine();
+			_cardDistanceToLine = CastingLinePosition - _cardRectTransform.position.y;
+			_slotDistanceToLine = CastingLinePosition - _slotRectTransform.position.y;
 
-			// Margin: The card won't scale down during the initial margin (aka: until its out of the slot)
-			float margin = CalcMarginNormalized();
+			float margin = CardHeight * 0.5f;
 
-			float scale = Mathf.Clamp(distance / (containerDistance - margin), 0.3f, 1f);
+			float scale = Mathf.Clamp(_cardDistanceToLine / (_slotDistanceToLine - margin), 0.3f, 1f);
 			_cardRectTransform.localScale = new Vector3(scale, scale, scale);
-		}
-
-		private float DistanceToCastingLine(RectTransform rectTransform)
-		{
-			float verticalPosition = rectTransform.position.y / _camera.pixelHeight;
-			float distance = _castingLinePosition - verticalPosition;
-			return distance;
-		}
-
-		private float ContainerDistanceToCastingLine()
-		{
-			return DistanceToCastingLine(_containerRectTransform);
-		}
-
-		private float CalcMarginNormalized()
-		{
-			// Margin size is half of the card height
-			float heightInScreenSpace = _cardRectTransform.rect.height * _cardRectTransform.lossyScale.y;
-			return heightInScreenSpace * 0.5f / _camera.pixelHeight;
 		}
 
 		private void OnDrawGizmos()
@@ -220,8 +207,8 @@ namespace Game.UI
 
 			GUIUtils.Property[] properties = new[] {
 					new GUIUtils.Property ("_castingLine", _castingLinePosition),
-					new GUIUtils.Property ("_initialDistanceToCastingLine", ContainerDistanceToCastingLine()),
-					new GUIUtils.Property ("_distanceToCastingLine", DistanceToCastingLine(_cardRectTransform)),
+					new GUIUtils.Property ("_cardDistanceToLine", _cardDistanceToLine),
+					new GUIUtils.Property ("_slotDistanceToLine", _slotDistanceToLine),
 					new GUIUtils.Property ("rectTransform.position.y", _cardRectTransform.position.y),
 					new GUIUtils.Property ("_camera.pixelHeight", _camera.pixelHeight),
 			};
@@ -230,15 +217,8 @@ namespace Game.UI
 
 
 			//Draw margin line
-			float normalizedYPosition = _cardRectTransform.position.y / _camera.pixelHeight;
-			float normalizedMarginY = normalizedYPosition + CalcMarginNormalized();
-
-
-			GizmoUtils.DrawHorizontalLineOnScreen(normalizedMarginY, Color.blue);
-			//GizmoUtils.DrawHorizontalLineOnScreen((_cardRectTransform.position.y + _cardRectTransform.rect.height * _cardRectTransform.lossyScale.y * 0.5f) / _camera.pixelHeight, Color.cyan);
-			//GizmoUtils.DrawHorizontalLineOnScreen(_cardRectTransform.rect.y + 1f / _camera.pixelHeight, Color.yellow);
-			//GizmoUtils.DrawHorizontalLineOnScreen(normalizedYPosition, Color.white);
-		}
+			GizmoUtils.DrawHorizontalLineOnScreen(_cardRectTransform.position.y + CardHeight * 0.5f, Color.blue);
+			GizmoUtils.DrawHorizontalLineOnScreen(_cardRectTransform.position.y, Color.white);
 		}
 	}
 }

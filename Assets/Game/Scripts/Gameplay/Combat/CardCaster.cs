@@ -85,7 +85,7 @@ namespace ForestRoyale.Gameplay.Combat
 				return;
 			}
 
-			GizmoUtils.DrawHorizontalLineOnScreen(_castingLinePosition, Color.red);
+			GizmoUtils.DrawHorizontalLineOnScreen(_castingLinePosition * camera.pixelHeight, Color.red);
 		}
 	}
 }
