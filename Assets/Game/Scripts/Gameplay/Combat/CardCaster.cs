@@ -13,7 +13,7 @@ namespace ForestRoyale.Gameplay.Combat
 		private float _castingLinePosition = 0.3f;
 
 		[SerializeField]
-		private List<CardView> _cardSlots;
+		private List<CardSlot> _cardSlots;
 
 		[Inject]
 		private ApplicationEvents _applicationEvents;
@@ -31,7 +31,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			Subscribe();
 
-			foreach (CardView cardView in _cardSlots)
+			foreach (CardSlot cardView in _cardSlots)
 			{
 				cardView.Init(_castingLinePosition);
 			}
@@ -40,7 +40,7 @@ namespace ForestRoyale.Gameplay.Combat
 		private void Subscribe()
 		{
 			_applicationEvents.OnBattleStarted += OnBattleStarted;
-			foreach (CardView cardView in _cardSlots)
+			foreach (CardSlot cardView in _cardSlots)
 			{
 				cardView.OnClick += OnCardClicked;
 			}
@@ -65,12 +65,12 @@ namespace ForestRoyale.Gameplay.Combat
 
 		}
 
-		private void OnCardClicked(CardView cardView, CardData cardData)
+		private void OnCardClicked(CardSlot cardSlot, CardData cardData)
 		{
-			Debug.Log($"CardCaster - OnCardClicked ({cardView})");
-			foreach (CardView otherCardView in _cardSlots)
+			Debug.Log($"CardCaster - OnCardClicked ({cardSlot})");
+			foreach (CardSlot otherCardView in _cardSlots)
 			{
-				otherCardView.SetSelected(otherCardView == cardView);
+				otherCardView.SetSelected(otherCardView == cardSlot);
 			}
 		}
 

@@ -1,5 +1,5 @@
-using ForestRoyale.Gameplay.Cards;
 using ForestLib.Utils;
+using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
 
 namespace Game.UI
 {
@@ -25,14 +24,18 @@ namespace Game.UI
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		[ShowInInspector, Unity.Collections.ReadOnly] private bool _selected = false;
 
-		private UIFollower _follower;
-		private RectTransform _rectTransform;
-		private Vector2 _originalPosition;
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[ShowInInspector, Unity.Collections.ReadOnly]
+		private bool _scalingEnabled = true;
+
+		private UIFollower _mouseFollower;
+		private RectTransform _cardRectTransform;
+		private RectTransform _containerRectTransform;
+		private Vector2 _cardOriginalAnchor;
 		private bool _isDragging = false;
 		private Camera _camera;
 
 		private float _castingLinePosition;
-		private float _initialDistanceToCastingLine;
 
 		private bool _debugInitialized = false;
 
@@ -48,16 +51,16 @@ namespace Game.UI
 
 		private void Awake()
 		{
-			_follower = GetComponent<UIFollower>();
-			_rectTransform = GetComponent<RectTransform>();
-			_originalPosition = _rectTransform.anchoredPosition;
+			_mouseFollower = _cardView.GetComponent<UIFollower>();
+			_containerRectTransform = GetComponent<RectTransform>();
+			_cardRectTransform = _cardView.GetComponent<RectTransform>();
+			_cardOriginalAnchor = _cardRectTransform.anchoredPosition;
 			_camera = Camera.main;
 		}
 
 		public void Init(float castingLinePosition)
 		{
 			_castingLinePosition = castingLinePosition;
-			_initialDistanceToCastingLine = DistanceToCastingLine(_rectTransform);
 		}
 
 		private void DebugInit()
@@ -66,7 +69,7 @@ namespace Game.UI
 			{
 				return;
 			}
-			
+
 			Awake();
 			Init(0.26f);
 			_debugInitialized = true;
@@ -75,6 +78,7 @@ namespace Game.UI
 		private void Start()
 		{
 			UpdateView();
+
 		}
 
 		private void OnValidate()
@@ -128,7 +132,7 @@ namespace Game.UI
 
 		public void OnPointerUp(PointerEventData eventData)
 		{
-			StopDragging();
+			// Do nothing
 		}
 
 		public void SetSelected(bool selected)
@@ -153,19 +157,19 @@ namespace Game.UI
 		{
 			if (_isDragging)
 			{
-				_follower.enabled = true;
+				_mouseFollower.enabled = true;
 			}
 			else
 			{
-				_follower.enabled = false;
+				_mouseFollower.enabled = false;
 
 				if (_selected)
 				{
-					_rectTransform.anchoredPosition = _originalPosition + new Vector2(0, 40);
+					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
 				}
 				else
 				{
-					_rectTransform.anchoredPosition = _originalPosition;
+					_cardRectTransform.anchoredPosition = _cardOriginalAnchor;
 				}
 			}
 		}
@@ -177,9 +181,10 @@ namespace Game.UI
 
 		private void ReduceSizeWhenApproachingCastingLine()
 		{
-			float distance = DistanceToCastingLine(_rectTransform);
-			float scale = Mathf.Clamp(distance / _initialDistanceToCastingLine, 0.0f, 1f);
-			_rectTransform.localScale = new Vector3(scale, scale, scale);
+			float distance = DistanceToCastingLine(_cardRectTransform);
+			float containerDistance = ContainerDistanceToCastingLine();
+			float scale = Mathf.Clamp(distance / containerDistance, 0.0f, 1f);
+			_cardRectTransform.localScale = new Vector3(scale, scale, scale);
 		}
 
 		private float DistanceToCastingLine(RectTransform rectTransform)
@@ -187,6 +192,11 @@ namespace Game.UI
 			float verticalPosition = rectTransform.position.y / _camera.pixelHeight;
 			float distance = _castingLinePosition - verticalPosition;
 			return distance;
+		}
+
+		private float ContainerDistanceToCastingLine()
+		{
+			return DistanceToCastingLine(_containerRectTransform);
 		}
 
 		private void OnDrawGizmos()
@@ -203,12 +213,12 @@ namespace Game.UI
 
 			GUIUtils.Property[] properties = new[] {
 					new GUIUtils.Property ("_castingLine", _castingLinePosition),
-					new GUIUtils.Property ("_initialDistanceToCastingLine", _initialDistanceToCastingLine),
-					new GUIUtils.Property ("_distanceToCastingLine", DistanceToCastingLine(_rectTransform)),
-					new GUIUtils.Property ("rectTransform.position.y", _rectTransform.position.y),
+					new GUIUtils.Property ("_initialDistanceToCastingLine", ContainerDistanceToCastingLine()),
+					new GUIUtils.Property ("_distanceToCastingLine", DistanceToCastingLine(_cardRectTransform)),
+					new GUIUtils.Property ("rectTransform.position.y", _cardRectTransform.position.y),
 					new GUIUtils.Property ("_camera.pixelHeight", _camera.pixelHeight),
 			};
-			
+
 			GUIUtils.DrawDebugPanel(properties, transform, GUIUtils.PanelPlacement.Top);
 		}
 	}
