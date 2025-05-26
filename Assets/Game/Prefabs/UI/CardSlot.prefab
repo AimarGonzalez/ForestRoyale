@@ -112,6 +112,7 @@ MonoBehaviour:
   _cardName: {fileID: 8922085441091809616}
   _elixirCost: {fileID: 5163906654883972986}
   _cardData: {fileID: 11400000, guid: 80a67db43e9fdd2418aa06afdacc8ba9, type: 2}
+  _showDebugPosition: 1
 --- !u!1 &7316807046520041897
 GameObject:
   m_ObjectHideFlags: 0
