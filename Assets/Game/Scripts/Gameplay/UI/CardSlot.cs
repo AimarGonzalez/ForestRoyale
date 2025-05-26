@@ -269,7 +269,7 @@ namespace Game.UI
 
 		private bool IsDraggingAboveCastingLine()
 		{
-			return Input.mousePosition.y < CastingLinePosition;
+			return Input.mousePosition.y > CastingLinePosition;
 		}
 
 		private void ReduceSizeWhenApproachingCastingLine()
