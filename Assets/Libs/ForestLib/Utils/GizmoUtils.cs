@@ -20,7 +20,9 @@ namespace ForestLib.Utils
 			Vector3 destinationScreenSpace = new Vector3(screenWidth, lineY, 10);
 			Vector3 originWorldSpace = camera.ScreenToWorldPoint(originScreenSpace);
 			Vector3 destinationWorldSpace = camera.ScreenToWorldPoint(destinationScreenSpace);
-			Debug.DrawLine(originWorldSpace, destinationWorldSpace, color);
+			
+			Gizmos.color = color;
+			Gizmos.DrawLine(originWorldSpace, destinationWorldSpace);
 		}		
 	}
 }
