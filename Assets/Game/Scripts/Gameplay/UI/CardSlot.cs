@@ -139,7 +139,7 @@ namespace Game.UI
 			{
 				return;
 			}
-			
+
 			switch (_state)
 			{
 				case State.NotSelected:
@@ -260,6 +260,22 @@ namespace Game.UI
 					}
 					break;
 			}
+
+			// Update view
+			switch (_state)
+			{
+				case State.NotSelected:
+				case State.Selected:
+					// do nothing
+					break;
+
+				case State.DraggingCard:
+					ReduceSizeWhenApproachingCastingLine();
+					break;
+				case State.CastPreview:
+					UpdateSpawnPreview();
+					break;
+			}
 		}
 
 		private bool IsDraggingUnderCastingLine()
@@ -328,7 +344,7 @@ namespace Game.UI
 			{
 				return;
 			}
-			
+
 			GUIUtils.Property[] properties = {
 				new ("_state", _state.ToString()),
 				//	new ("_castingLine", _castingLinePosition),
