@@ -45,7 +45,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		
 		public bool HasTarget => _target != null;
 
-		public float Cooldown => _timer.TimeLeft;
+		public float Cooldown => _timer?.TimeLeft ?? 0f;
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
