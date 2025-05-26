@@ -4,15 +4,27 @@ using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.UI
 {
+	[ExecuteInEditMode]
 	public class CardSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 	{
-		public Action<CardSlot, CardData> OnClick;
+		private enum State
+		{
+			NotSelected,
+			Selected,
+			DraggingCard,
+			CastPreview,
+		}
+
+
+		public Action<CardSlot, CardData> OnSelected;
+		public Action<CardSlot, CardData> OnEndDragEvent;
 
 		[SerializeField] private RectTransform _cardView;
 		[SerializeField] private Image _cardPicture;
@@ -22,13 +34,14 @@ namespace Game.UI
 		[SerializeField] private CardData _cardData;
 
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
-		[ShowInInspector, Unity.Collections.ReadOnly] private bool _selected = false;
+		[ShowInInspector, Unity.Collections.ReadOnly]
+		private State _state = State.NotSelected;
 
 		private UIFollower _mouseFollower;
 		private RectTransform _cardRectTransform;
 		private RectTransform _slotRectTransform;
 		private Vector2 _cardOriginalAnchor;
-		private bool _isDragging = false;
+
 		private Camera _camera;
 
 		private float _castingLinePosition;
@@ -38,6 +51,11 @@ namespace Game.UI
 		private float _slotDistanceToLine;
 		private float _scale;
 		private bool _debugInitialized = false;
+
+
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[SerializeField]
+		private bool _showDebugPosition = true;
 
 		// dynamic values depending on camera or scene context
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
@@ -113,74 +131,139 @@ namespace Game.UI
 			}
 		}
 
-		public void OnPointerDown(PointerEventData eventData)
+		void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
 		{
 			Debug.Log($"click on card - {_cardData.CardName}");
-			OnClick?.Invoke(this, _cardData);
+			switch (_state)
+			{
+				case State.NotSelected:
+					SetState(State.Selected);
+					OnSelected?.Invoke(this, _cardData);
+					break;
+
+				case State.Selected:
+				case State.DraggingCard:
+				case State.CastPreview:
+					Debug.LogError($"The player shouldn't be able to click on a card in this state ({_state})");
+					break;
+
+				default:
+					Debug.LogError($"Unknown state {_state}");
+					break;
+			}
 		}
 
-		public void OnBeginDrag(PointerEventData eventData)
+		void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
 		{
 			StartDragging();
 		}
 
-		public void OnDrag(PointerEventData eventData)
+		void IDragHandler.OnDrag(PointerEventData eventData)
 		{
 			// Do nothing
 		}
 
-		public void OnEndDrag(PointerEventData eventData)
+		void IEndDragHandler.OnEndDrag(PointerEventData eventData)
 		{
-			StopDragging();
+			OnEndDragEvent?.Invoke(this, _cardData);
 		}
 
-		public void OnPointerUp(PointerEventData eventData)
+		void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
 		{
 			// Do nothing
 		}
 
-		public void SetSelected(bool selected)
+		public void Deselect()
 		{
-			_selected = selected;
-			UpdatePosition();
+			Debug.Assert(_state == State.Selected || _state == State.NotSelected, $"Cannot deselect a slot in state - {_state}");
+			SetState(State.NotSelected);
 		}
 
 		public void StartDragging()
 		{
-			_isDragging = true;
-			UpdatePosition();
+			Debug.Assert(_state == State.Selected, $"Cannot start dragging a slot in state - {_state}");
+			Debug.Log("card - Selected");
+			SetState(State.DraggingCard);
 		}
 
 		public void StopDragging()
 		{
-			_isDragging = false;
-			UpdatePosition();
+			Debug.Log("card - StopDragging");
+			Debug.Log("card - Selected");
+			SetState(State.Selected);
 		}
 
-		private void UpdatePosition()
+		private void SetState(State newState)
 		{
-			if (_isDragging)
+			if (_state == newState)
 			{
-				_mouseFollower.enabled = true;
+				return;
 			}
-			else
-			{
-				_mouseFollower.enabled = false;
 
-				if (_selected)
-				{
-					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
-				}
-				else
-				{
+			// On Exit State
+			switch (_state)
+			{
+				case State.NotSelected:
+					break;
+				case State.Selected:
+					break;
+				case State.DraggingCard:
+					_mouseFollower.enabled = false;
+					break;
+				case State.CastPreview:
+					_cardView.gameObject.SetActive(true);
+					break;
+			}
+
+			_state = newState;
+
+			// On Enter State
+			switch (newState)
+			{
+				case State.NotSelected:
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor;
-				}
+					break;
+				case State.Selected:
+					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
+					break;
+				case State.DraggingCard:
+					_mouseFollower.enabled = true;
+					break;
+				case State.CastPreview:
+					_cardView.gameObject.SetActive(false);
+					break;
 			}
 		}
 
 		private void Update()
 		{
-			ReduceSizeWhenApproachingCastingLine();
+			// Update state
+			switch (_state)
+			{
+				case State.DraggingCard:
+					if (IsDraggingAboveCastingLine())
+					{
+						SetState(State.CastPreview);
+					}
+					break;
+
+				case State.CastPreview:
+					if (IsDraggingUnderCastingLine())
+					{
+						SetState(State.DraggingCard);
+					}
+					break;
+			}
+		}
+
+		private bool IsDraggingUnderCastingLine()
+		{
+			return Input.mousePosition.y <= CastingLinePosition;
+		}
+
+		private bool IsDraggingAboveCastingLine()
+		{
+			return Input.mousePosition.y < CastingLinePosition;
 		}
 
 		private void ReduceSizeWhenApproachingCastingLine()
@@ -190,11 +273,31 @@ namespace Game.UI
 
 			float margin = SlotHeigh * 0.5f;
 			float ratio = _cardDistanceToLine / (_slotDistanceToLine - margin);
-			_scale = Mathf.Lerp(0.3f, 1f,ratio);
+			_scale = Mathf.Lerp(0.3f, 1f, ratio);
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 		}
 
+		private void UpdateSpawnPreview()
 		{
+			if (_cardData == null)
+			{
+				Debug.LogError("CardSlot - UpdateSpawnPreview: _cardData is null");
+				return;
+			}
+
+
+			/*
+			switch (_cardData.CardType)
+			{
+				case CardType.Character:
+					break;
+				case CardType.Spell:
+					break;
+				case CardType.Building:
+					break;
+			}
+			*/
+		}
 
 		private void OnDrawGizmos()
 		{
@@ -202,7 +305,7 @@ namespace Game.UI
 			{
 				DebugInit();
 			}
-			
+
 			//Draw margin line
 			GizmoUtils.DrawHorizontalLineOnScreen(_slotRectTransform.position.y + SlotHeigh * 0.5f, Color.blue);
 			GizmoUtils.DrawHorizontalLineOnScreen(_slotRectTransform.position.y, Color.white);
@@ -215,6 +318,11 @@ namespace Game.UI
 
 		private void DrawDebugGUI()
 		{
+			if (!_showDebugPosition)
+			{
+				return;
+			}
+			
 			GUIUtils.Property[] properties = {
 				new ("_state", _state.ToString()),
 				//	new ("_castingLine", _castingLinePosition),

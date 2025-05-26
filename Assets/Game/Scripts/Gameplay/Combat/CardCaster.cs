@@ -2,6 +2,7 @@ using ForestLib.Utils;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Systems;
 using Game.UI;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -13,11 +14,17 @@ namespace ForestRoyale.Gameplay.Combat
 		[SerializeField, Range(0f, 1f)]
 		private float _castingLinePosition = 0.3f;
 
+		[SerializeField, Required]
+		private Transform _castingArea;
+
 		[SerializeField]
 		private List<CardSlot> _cardSlots;
 
 		[Inject]
 		private ApplicationEvents _applicationEvents;
+
+		//[Inject]
+		//private CharacterFactory _characterFactory;
 
 		private Hand _hand;
 		private Deck _deck;
@@ -25,7 +32,6 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void Awake()
 		{
-			Debug.Log($"CardCaster - Awake ({_applicationEvents})");
 		}
 
 		private void Start()
@@ -43,7 +49,8 @@ namespace ForestRoyale.Gameplay.Combat
 			_applicationEvents.OnBattleStarted += OnBattleStarted;
 			foreach (CardSlot cardView in _cardSlots)
 			{
-				cardView.OnClick += OnCardClicked;
+				cardView.OnSelected += OnCardSelected;
+				cardView.OnEndDragEvent += OnCardEndDrag;
 			}
 		}
 
@@ -66,13 +73,37 @@ namespace ForestRoyale.Gameplay.Combat
 
 		}
 
-		private void OnCardClicked(CardSlot cardSlot, CardData cardData)
+		private void OnCardSelected(CardSlot cardSlot, CardData cardData)
 		{
-			Debug.Log($"CardCaster - OnCardClicked ({cardSlot})");
+			Debug.Log($"CardCaster - OnCardSelected ({cardSlot})");
 			foreach (CardSlot otherCardView in _cardSlots)
 			{
-				otherCardView.SetSelected(otherCardView == cardSlot);
+				if (otherCardView != cardSlot)
+				{
+					otherCardView.Deselect();
+				}
 			}
+		}
+
+		private void OnCardEndDrag(CardSlot cardSlot, CardData cardData)
+		{
+			Debug.Log($"CardCaster - OnCardEndDrag ({cardSlot})");
+
+			// If card can be casted, cast it
+			// If card can't be casted, move it back to the hand
+			if (CanCastCard(cardData))
+			{
+				//TODO: Cast card
+			}
+			else
+			{
+				cardSlot.StopDragging();
+			}
+		}
+
+		private bool CanCastCard(CardData cardData)
+		{
+			return false; //TODO: Implement
 		}
 
 		// ------------------------------------------------
