@@ -326,12 +326,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private void CreateCannonCard()
 		{
 			var cannonSO = CreateCannonUnit(UNITS_DIRECTORY);
-			BuildingCardData card = BuildingCardData.Build(
+			TroopCardData card = TroopCardData.Build(
 				cardName: "Cannon",
 				description: "Defensive building that attacks ground units. Cannot attack flying enemies.",
 				portrait: null,
 				elixirCost: 3,
 				rarity: CardRarity.Common,
+				unitCount: 1,
 				unitSO: cannonSO
 			);
 
