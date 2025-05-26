@@ -162,62 +162,137 @@ namespace ForestRoyale.Gui
 			return (size, maxLabelWidth, maxValueWidth);
 		}
 
-		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPlacement panelPosition)
+		public static Vector3 CalcPanelPosition(Transform transform, Vector2 size, PanelPlacement panelPosition, float margin = 0f)
 		{
+			const float CAMERA_ANGLE = 55f;
+			float TAN_CAMERA_ANGLE = (float)Math.Tan((90f - CAMERA_ANGLE) * MathConst.Deg2Rad);
 			var characterBounds = MeshUtils.GetBoundingBox(transform);
 
-			float verticalOffset = characterBounds.size.z * 0.5f;
-			float horizontalOffset = characterBounds.size.x * 0.5f;
+			float objectDepth = characterBounds.size.y;
+			float objectHeight = characterBounds.size.z;
+			float objectWidth = characterBounds.size.x;
 			Vector2 screenOffset = Vector2.zero;
 			Vector3 worldOffset = Vector3.zero;
 
 			switch (panelPosition)
 			{
 				case PanelPlacement.Top:
-					screenOffset = Vector2.down * (size.y * 0.5f);
-					worldOffset = Vector3.forward * verticalOffset;
+					screenOffset = Vector2.down * (size.y * 0.5f + margin);
+					worldOffset = Vector3.up * (objectDepth * 0.5f + objectHeight * TAN_CAMERA_ANGLE);
 					break;
 				case PanelPlacement.Bottom:
-					screenOffset = Vector2.up * (size.y * 0.5f);
-					worldOffset = Vector3.back * verticalOffset;
+					screenOffset = Vector2.up * (size.y * 0.5f + margin);
+					worldOffset = Vector3.down * objectDepth * 0.5f;
 					break;
 				case PanelPlacement.Left:
-					screenOffset = Vector2.left * (size.x * 0.5f);
-					worldOffset = Vector3.left * horizontalOffset;
+					screenOffset = Vector2.left * (size.x * 0.5f + margin);
+					worldOffset = Vector3.left * objectWidth * 0.5f;
 					break;
 				case PanelPlacement.Right:
-					screenOffset = Vector2.right * (size.x * 0.5f);
-					worldOffset = Vector3.right * horizontalOffset;
+					screenOffset = Vector2.right * (size.x * 0.5f + margin);
+					worldOffset = Vector3.right * objectWidth * 0.5f;
 					break;
 			}
 
 			Vector3 worldPosition = transform.position + worldOffset;
-			Vector2 screenPoint = HandleUtility.WorldToGUIPoint(worldPosition);
-			Vector3 labelPosition = screenPoint + screenOffset;
+			Vector2 guiPoint = WorldToGUIPoint(Camera.main, worldPosition);
+			Vector3 labelPosition = guiPoint + screenOffset;
 			return labelPosition;
 		}
 
-		public static void DrawDebugPanel(Property[] properties, Transform transform, PanelPlacement panelPlacement)
+		public static Vector3 CalcPanelPositionOnUI(RectTransform target, Vector2 panelSize, PanelPlacement panelPlacement, float margin = 0f)
+		{
+			Vector2 panelOffset = Vector2.zero;
+			Vector2 targetOffset = Vector2.zero;
+
+			Rect rect = target.rect;
+			float targetHeight = rect.height * 0.5f;
+			float targetWidth = rect.width * 0.5f;
+
+			switch (panelPlacement)
+			{
+				case PanelPlacement.Top:
+					panelOffset = Vector2.up * (panelSize.y * 0.5f + margin);
+					targetOffset = Vector2.up * targetHeight;
+					break;
+				case PanelPlacement.Bottom:
+					panelOffset = Vector2.down * (panelSize.y * 0.5f + margin);
+					targetOffset = Vector2.down * targetHeight;
+					break;
+				case PanelPlacement.Left:
+					panelOffset = Vector2.left * (panelSize.x * 0.5f + margin);
+					targetOffset = Vector2.left * targetWidth;
+					break;
+				case PanelPlacement.Right:
+					panelOffset = Vector2.right * (panelSize.x * 0.5f + margin);
+					targetOffset = Vector2.right * targetWidth;
+					break;
+			}
+
+			Vector2 targetPosition = target.position;
+			Vector2 screenPosition = targetPosition + targetOffset + panelOffset;
+			Vector3 guiPoint = ScreenToGUIPoint(Camera.main, screenPosition);
+			return guiPoint;
+		}
+
+		public static void DrawDebugPanel(Property[] properties, Transform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
 		{
 			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
 			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
-			Vector3 panelPosition = CalcPanelPosition(transform, panelSize, panelPlacement);
+			Vector3 panelPosition = CalcPanelPosition(target, panelSize, panelPlacement, margin);
 
-			Handles.BeginGUI();
-			{
-				// Create rect centered on the panel's position
-				Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
-
-				GUI.Box(rect, GUIContent.none, panelStyle);
-
-				for (int i = 0; i < properties.Length; i++)
-				{
-					GUIUtils.DrawTextField(i, properties[i], rect, panelStyle, labelWidth, valueWidth);
-				}
-			}
-			Handles.EndGUI();
+			DrawDebugPanel(properties, panelPosition, panelSize, panelStyle, labelWidth, valueWidth, onClose);
 		}
 
+		public static void DrawDebugPanel(Property[] properties, RectTransform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
+		{
+			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
+
+			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
+			Vector3 panelPosition = CalcPanelPositionOnUI(target, panelSize, panelPlacement, margin);
+
+			DrawDebugPanel(properties, panelPosition, panelSize, panelStyle, labelWidth, valueWidth, onClose);
+		}
+
+		private static void DrawDebugPanel(Property[] properties, Vector3 panelPosition, Vector2 panelSize, GUIStyle style, float labelWidth, float valueWidth, Action onClose)
+		{
+			// Create rect centered on the panel's position
+			Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
+
+			GUI.Box(rect, GUIContent.none, style);
+
+			for (int i = 0; i < properties.Length; i++)
+			{
+				DrawTextField(i, properties[i], rect, style, labelWidth, valueWidth);
+			}
+
+			if (onClose != null)
+			{
+				// Get size of the button
+				GUIContent closeButtonContent = new GUIContent("Close");
+				Vector2 buttonSize = GUI.skin.button.CalcSize(closeButtonContent);
+				bool pressed = GUI.Button(new Rect(rect.x + rect.width + 2, rect.y, buttonSize.x, buttonSize.y), closeButtonContent);
+				if (pressed)
+				{
+					onClose?.Invoke();
+				}
+			}
+		}
+
+		public static Vector3 ScreenToGUIPoint(Camera camera, Vector3 screenPoint)
+		{
+			screenPoint.y = camera.pixelHeight - screenPoint.y;
+			Vector2 points = EditorGUIUtility.PixelsToPoints((Vector2)screenPoint);
+			return new Vector3(points.x, points.y, screenPoint.z);
+		}
+
+		public static Vector3 WorldToGUIPoint(Camera camera, Vector3 worldPoint)
+		{
+			Vector3 vector = camera.WorldToScreenPoint(worldPoint);
+			vector.y = (float)camera.pixelHeight - vector.y;
+			Vector2 vector2 = EditorGUIUtility.PixelsToPoints(vector);
+			return new Vector3(vector2.x, vector2.y, vector.z);
+		}
 	}
 }

@@ -37,6 +37,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		private GUIUtils.PanelPlacement _panelPosition;
 
+		[SerializeField]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		private float _panelMargin = 0f;
+
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
@@ -140,7 +144,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 
 #if UNITY_EDITOR
-		void OnDrawGizmos()
+		void OnGUI()
 		{
 			if (!_showDebugPanel)
 			{
@@ -172,7 +176,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				}
 			}
 
-			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition);
+			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin
+			, () => _showDebugPanel = false);
 		}
 #endif //UNITY_EDITOR
 	}
