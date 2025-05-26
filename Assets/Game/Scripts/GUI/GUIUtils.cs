@@ -237,7 +237,7 @@ namespace ForestRoyale.Gui
 
 		public static void DrawDebugPanel(Property[] properties, Transform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
 		{
-			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
+			GUIStyle panelStyle = GuiStylesCatalog.BlackBoxStyle;
 
 			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
 			Vector3 panelPosition = CalcPanelPosition(target, panelSize, panelPlacement, margin);
@@ -247,7 +247,7 @@ namespace ForestRoyale.Gui
 
 		public static void DrawDebugPanel(Property[] properties, RectTransform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
 		{
-			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
+			GUIStyle panelStyle = GuiStylesCatalog.BlackBoxStyle;
 
 			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
 			Vector3 panelPosition = CalcPanelPositionOnUI(target, panelSize, panelPlacement, margin);

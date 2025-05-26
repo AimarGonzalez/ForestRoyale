@@ -34,11 +34,8 @@ namespace ForestRoyale.Gui
 			// Lazy initialization because GUIStyle can only be initialized during OnGUI
 			get
 			{
-				InitializeTexture();
-
 				s_blackBoxStyle ??= new GUIStyle(GUI.skin.box)
 				{
-					normal = { background = s_blackTransparentTexture }
 				};
 				return s_blackBoxStyle;
 			}

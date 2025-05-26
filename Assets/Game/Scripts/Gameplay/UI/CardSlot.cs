@@ -194,31 +194,36 @@ namespace Game.UI
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 		}
 
+		{
+
 		private void OnDrawGizmos()
 		{
-			//if (!_isDragging)
-			//{
-			//	return;
-			//}
-
 			if (!Application.isPlaying)
 			{
 				DebugInit();
 			}
-
-			GUIUtils.Property[] properties = {
-					new ("_castingLine", _castingLinePosition),
-					new ("_scale", _scale),
-					new ("_slotDistanceToLine", _slotDistanceToLine),
-					new ("_cardDistanceToLine", _cardDistanceToLine),
-			};
-
-			GUIUtils.DrawDebugPanel(properties, transform, GUIUtils.PanelPlacement.Top);
-
-
+			
 			//Draw margin line
 			GizmoUtils.DrawHorizontalLineOnScreen(_slotRectTransform.position.y + SlotHeigh * 0.5f, Color.blue);
 			GizmoUtils.DrawHorizontalLineOnScreen(_slotRectTransform.position.y, Color.white);
+		}
+
+		void OnGUI()
+		{
+			DrawDebugGUI();
+		}
+
+		private void DrawDebugGUI()
+		{
+			GUIUtils.Property[] properties = {
+				new ("_state", _state.ToString()),
+				//	new ("_castingLine", _castingLinePosition),
+				//	new ("_scale", _scale),
+				//	new ("_slotDistanceToLine", _slotDistanceToLine),
+				//	new ("_cardDistanceToLine", _cardDistanceToLine),
+			};
+
+			GUIUtils.DrawDebugPanel(properties, _cardView, GUIUtils.PanelPlacement.Top);
 		}
 	}
 }

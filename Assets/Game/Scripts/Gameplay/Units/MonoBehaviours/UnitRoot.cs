@@ -11,10 +11,12 @@ using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine.Rendering.VirtualTexturing;
 #endif
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
+	[ExecuteInEditMode]
 	public class UnitRoot : MonoBehaviour
 	{
 		public Action<Unit> OnUnitChanged;
@@ -144,7 +146,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 
 #if UNITY_EDITOR
+		void OnDrawGizmos()
+		{
+			// Handles.BeginGUI();
+			// DrawDebugGUI();
+			// Handles.EndGUI();
+		}
+		
 		void OnGUI()
+		{
+			DrawDebugGUI();
+		}
+
+		private void DrawDebugGUI()
 		{
 			if (!_showDebugPanel)
 			{
@@ -161,7 +175,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				properties = new[] {
 					new GUIUtils.Property ("Id", _unit.Id),
 					new GUIUtils.Property ("Target", _unit.Target?.Id ?? "None"),
-					_unit.IsTargetInCombatRange ?
+					_unit.IsTargetInCombatRange && Application.isPlaying?
 						new GUIUtils.Property ("In Range", "Yes", GuiStylesCatalog.LabelGreenStyle) :
 						new GUIUtils.Property ("In Range", "No", GuiStylesCatalog.LabelRedStyle),
 					new GUIUtils.Property ("State", _unit.State)
@@ -176,8 +190,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				}
 			}
 
-			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin
-			, () => _showDebugPanel = false);
+			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin, () => _showDebugPanel = false);
 		}
 #endif //UNITY_EDITOR
 	}
