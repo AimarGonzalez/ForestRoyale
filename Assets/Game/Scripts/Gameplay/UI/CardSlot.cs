@@ -134,6 +134,12 @@ namespace Game.UI
 		void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
 		{
 			Debug.Log($"click on card - {_cardData.CardName}");
+
+			if (_state == State.Selected)
+			{
+				return;
+			}
+			
 			switch (_state)
 			{
 				case State.NotSelected:
