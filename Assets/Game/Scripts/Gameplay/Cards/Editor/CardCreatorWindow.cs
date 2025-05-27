@@ -15,9 +15,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 	{
 		private const string PREFABS_DIRECTORY = "Assets/Game/Prefabs/Characters";
 		private const string CARDS_DIRECTORY = "Assets/Game/Data/Cards";
-		private const string UNITS_DIRECTORY = "Assets/Game/Data/Troops";
+		private const string UNITS_DIRECTORY = "Assets/Game/Data/Units/Troops";
 		private const string SPELLS_DIRECTORY = "Assets/Game/Data/Spells";
-		private const string TOWERS_DIRECTORY = "Assets/Game/Data/Towers";
+		private const string TOWERS_DIRECTORY = "Assets/Game/Data/Units/Towers";
 
 		[MenuItem("ForestRoyale/Open Card Creator Window")]
 		public static void ShowWindow()

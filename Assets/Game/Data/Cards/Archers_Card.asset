@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e424d4619c2f74dbd64d01ad266fce, type: 3}
+  m_Name: Archers_Card
+  m_EditorClassIdentifier: 
+  _cardName: Archers
+  _description: A pair of unarmored ranged attackers. They'll help you take down
+    ground and air units, but you're on your own with color-coordinating your outfits!
+  _portrait: {fileID: 0}
+  _elixirCost: 3
+  _rarity: 0
+  _unitCount: 2
+  _prefab: {fileID: 6194438867680783421, guid: 2011f0a8eee819646baf774fbebdb8d6, type: 3}
+  _unitSO: {fileID: 11400000, guid: e5c316758271bbe47ad06b1987c99be6, type: 2}
