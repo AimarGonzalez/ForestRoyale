@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 8136533048380653187}
   - component: {fileID: 6992422927419618498}
   m_Layer: 0
-  m_Name: character_base
+  m_Name: troop_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
