@@ -8,10 +8,16 @@ namespace ForestRoyale.Gameplay.Cards
 	public class TroopCardData : CardData, IUnitCard
 	{
 		[Tooltip("Number of units in this card")]
+		[BoxGroup("Troop")]
 		[SerializeField]
 		private int _unitCount = 1;
+		
+		[SerializeField, Required]
+		[BoxGroup("Troop")]
+		private GameObject _prefab = null;
 
 		[SerializeField, InlineEditor]
+		[BoxGroup("Troop")]
 		private UnitSO _unitSO;
 
 		public int UnitCount => _unitCount;

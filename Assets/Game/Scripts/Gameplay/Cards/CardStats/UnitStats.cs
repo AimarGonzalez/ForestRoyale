@@ -14,17 +14,14 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		[SerializeField]
 		private UnitType _type;
 
-		[BoxGroup("Troop Stats")]
 		[Tooltip("Base health points")]
 		[SerializeField]
 		private float _hitPoints;
 
-		[BoxGroup("Troop Properties")]
 		[Tooltip("Is this troop an air unit?")]
 		[SerializeField]
 		private TransportType _transport;
 
-		[BoxGroup("Troop Properties")]
 		[Tooltip("Speed of movement")]
 		[SerializeField]
 		private float _movementSpeed;
