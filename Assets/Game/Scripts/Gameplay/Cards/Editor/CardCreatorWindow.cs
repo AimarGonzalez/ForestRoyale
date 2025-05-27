@@ -13,11 +13,11 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 {
 	public class CardCreatorWindow : EditorWindow
 	{
-		private const string CARDS_DIRECTORY = "Assets/Resources/Cards";
-		private const string UNITS_DIRECTORY = "Assets/Resources/Troops";
-		private const string SPELLS_DIRECTORY = "Assets/Resources/Spells";
-		private const string BUILDINGS_DIRECTORY = "Assets/Resources/Buildings";
-		private const string TOWERS_DIRECTORY = "Assets/Resources/Towers";
+		private const string PREFABS_DIRECTORY = "Assets/Game/Prefabs/Characters";
+		private const string CARDS_DIRECTORY = "Assets/Game/Data/Cards";
+		private const string UNITS_DIRECTORY = "Assets/Game/Data/Troops";
+		private const string SPELLS_DIRECTORY = "Assets/Game/Data/Spells";
+		private const string TOWERS_DIRECTORY = "Assets/Game/Data/Towers";
 
 		[MenuItem("ForestRoyale/Open Card Creator Window")]
 		public static void ShowWindow()
@@ -51,9 +51,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			EditorGUILayout.EndHorizontal();
 
 			EditorGUILayout.Space(10);
-			if (GUILayout.Button("Create 10 Iconic Cards", GUILayout.Height(40)))
+			if (GUILayout.Button("Create All Cards", GUILayout.Height(40)))
 			{
-				CreateIconicCards();
+				CreateAllCards();
 			}
 
 			EditorGUILayout.Space(10);
@@ -85,8 +85,6 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateMinionsCard()
 		{
-			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
-
 			var minionsSO = CreateMinionsUnit(UNITS_DIRECTORY);
 			TroopCardData minionsCard = TroopCardData.Build(
 				cardName: "Minions",
@@ -95,9 +93,11 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				unitSO: minionsSO
+				unitSO: minionsSO,
+				prefab: LoadUnitPrefab("Minions")
 			);
 
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
 			string cardAssetPath = $"{CARDS_DIRECTORY}/Minions_Card.asset";
 			AssetDatabase.CreateAsset(minionsCard, cardAssetPath);
 			AssetDatabase.SaveAssets();
@@ -117,7 +117,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 5,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: giantSO
+				unitSO: giantSO,
+				prefab: LoadUnitPrefab("Giant")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -172,7 +173,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		}
 
 
-		private void CreateIconicCards()
+		private void CreateAllCards()
 		{
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
 
@@ -239,12 +240,17 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				createdCount++;
 			}
 
-			Debug.Log($"Created {createdCount} new iconic cards. Skipped {10 - createdCount} existing cards.");
+			if (!File.Exists($"{CARDS_DIRECTORY}/Archers_Card.asset"))
+			{
+				CreateArchersCard();
+				createdCount++;
+			}
+
+			Debug.Log($"Created {createdCount} new iconic cards. Skipped {11 - createdCount} existing cards.");
 		}
 
 		private void CreateGoblinCard()
 		{
-
 			var goblinSO = CreateGoblinUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
 				cardName: "Goblin",
@@ -253,7 +259,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 2,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				unitSO: goblinSO
+				unitSO: goblinSO,
+				prefab: LoadUnitPrefab("Goblin")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -273,7 +280,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				unitSO: knightSO
+				unitSO: knightSO,
+				prefab: LoadUnitPrefab("Knight")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -293,7 +301,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: musketeerSO
+				unitSO: musketeerSO,
+				prefab: LoadUnitPrefab("Musketeer")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -313,7 +322,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 1,
 				rarity: CardRarity.Common,
 				unitCount: 4,
-				unitSO: skeletonSO
+				unitSO: skeletonSO,
+				prefab: LoadUnitPrefab("Skeleton")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -333,7 +343,8 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				unitSO: cannonSO
+				unitSO: cannonSO,
+				prefab: LoadUnitPrefab("Cannon")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -347,13 +358,14 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			var hogRiderSO = CreateHogRiderUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
-				cardName: "Hog Rider",
+				cardName: "HogRider",
 				description: "Fast unit that targets buildings. He jumps over rivers and can push other units aside.",
 				portrait: null,
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: hogRiderSO
+				unitSO: hogRiderSO,
+				prefab: LoadUnitPrefab("HogRider")
 			);
 
 			string cardAssetPath = $"{CARDS_DIRECTORY}/HogRider_Card.asset";
@@ -362,6 +374,26 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetDatabase.Refresh();
 		}
 
+		private void CreateArchersCard()
+		{
+			var archersSO = CreateArchersUnit(UNITS_DIRECTORY);
+			TroopCardData card = TroopCardData.Build(
+				cardName: "Archers",
+				description: "A pair of unarmored ranged attackers. They'll help you take down ground and air units, but you're on your own with color-coordinating your outfits!",
+				portrait: null,
+				elixirCost: 3,
+				rarity: CardRarity.Common,
+				unitCount: 2,
+				unitSO: archersSO,
+				prefab: LoadUnitPrefab("Archers")
+			);
+
+			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
+			string cardAssetPath = $"{CARDS_DIRECTORY}/Archers_Card.asset";
+			AssetDatabase.CreateAsset(card, cardAssetPath);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh();
+		}
 
 		#region Unit Creation Methods
 		private UnitSO CreateMinionsUnit(string directory)
@@ -539,6 +571,28 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
 		}
+
+		private UnitSO CreateArchersUnit(string directory)
+		{
+			AssetUtils.CreateDirectory(directory);
+			string assetPath = $"{directory}/Archers_Unit.asset";
+			var unitStats = UnitStats.Build(
+				name: "Archers",
+				type: UnitType.Troop,
+				hitPoints: 125f,
+				transport: TransportType.Ground,
+				movementSpeed: 1.2f
+			);
+			var combatStats = CombatStats.Build(
+				damage: 92f,
+				attackSpeed: 1.2f,
+				attackRange: 5.0f,
+				areaDamageRadius: 0f,
+				sightRange: 6.0f,
+				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+		}
 		#endregion // Unit Creation Methods
 
 		#region Spell Creation Methods
@@ -585,6 +639,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				CreateHogRiderUnit(UNITS_DIRECTORY),
 				CreateGoblinUnit(UNITS_DIRECTORY),
 				CreateSkeletonUnit(UNITS_DIRECTORY),
+				CreateArchersUnit(UNITS_DIRECTORY)
 			};
 
 			int createdCount = createdUnits.Where(unit => unit != null).Count();
@@ -617,11 +672,11 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private void CreateAllBuildings()
 		{
-			AssetUtils.CreateDirectory(BUILDINGS_DIRECTORY);
+			AssetUtils.CreateDirectory(UNITS_DIRECTORY);
 
 			var createdBuildings = new List<UnitSO>
 			{
-				CreateCannonUnit(BUILDINGS_DIRECTORY)
+				CreateCannonUnit(UNITS_DIRECTORY)
 			};
 
 			int createdCount = createdBuildings.Where(building => building != null).Count();
@@ -720,6 +775,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			var spellSO = SpellSO.Build(spellStats: spellStats);
 			AssetDatabase.CreateAsset(spellSO, assetPath);
 			return spellSO;
+		}
+
+		private GameObject LoadUnitPrefab(string cardName)
+		{
+			string prefabName = $"ut_{cardName.ToLower()}";
+			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
+			return AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
 		}
 		#endregion // Helper Methods
 	}

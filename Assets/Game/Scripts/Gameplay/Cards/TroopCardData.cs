@@ -11,7 +11,7 @@ namespace ForestRoyale.Gameplay.Cards
 		[BoxGroup("Troop")]
 		[SerializeField]
 		private int _unitCount = 1;
-		
+
 		[SerializeField, Required]
 		[BoxGroup("Troop")]
 		private GameObject _prefab = null;
@@ -33,13 +33,15 @@ namespace ForestRoyale.Gameplay.Cards
 			int elixirCost,
 			CardRarity rarity,
 			int unitCount,
-			UnitSO unitSO)
+			UnitSO unitSO,
+			GameObject prefab)
 		{
 			TroopCardData card = CreateInstance<TroopCardData>();
 			card.SetCardData(cardName, description, portrait, elixirCost, rarity);
 
 			card._unitCount = unitCount;
 			card._unitSO = unitSO;
+			card._prefab = prefab;
 
 			return card;
 		}
