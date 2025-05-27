@@ -44,7 +44,7 @@ namespace ForestRoyale.Gameplay.Units
 		}
 
 		[ShowInInspector] 
-		public bool IsTargetInCombatRange => _combatComponent.IsTargetInCombatRange;
+		public bool IsTargetInCombatRange => Application.isPlaying ? _combatComponent.IsTargetInCombatRange : false;
 
 		public string Id => _id;
 		public bool CanMove => _movementComponent != null;
