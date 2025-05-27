@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 4271624312287767974}
   - component: {fileID: 2409022889668569135}
   m_Layer: 0
-  m_Name: king_tower
+  m_Name: ub_king_tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

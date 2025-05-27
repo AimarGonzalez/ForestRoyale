@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 7195433430455351051}
   - component: {fileID: 5101226238229130232}
   m_Layer: 0
-  m_Name: princess_tower
+  m_Name: ub_princess_tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
