@@ -1,14 +1,16 @@
+using ForestLib.ExtensionMethods;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class MovementComponent : UnitComponent
 	{
 		[SerializeField]
+		[InfoBox("Error: NavMeshAgent not found in root. Consider enabling 'followChildren''", InfoMessageType.Error, nameof(HasNoFollowChildrenNorMovementComponentInTheRoot))]
+		[InfoBox("FollowChildren will update the character position to follow the corresponding child components (Ex: NavMeshAgent, Collider or Rigidbody) ")]
 		private bool _followChildren = true;
 
 		[SerializeField]
@@ -25,6 +27,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public Collider2D Body => _body;
 		public NavMeshAgent Agent => _agent;
+
+#if UNITY_EDITOR
+		private bool HasAnyMovementComponentInTheRoot => this.HasComponent<NavMeshAgent>() || this.HasComponent<Collider2D>() || this.HasComponent<Rigidbody2D>();
+		private bool HasNoFollowChildrenNorMovementComponentInTheRoot => !_followChildren && !HasAnyMovementComponentInTheRoot ;
+#endif
 
 		protected override void Awake()
 		{
