@@ -139,7 +139,7 @@ namespace ForestRoyale.Gameplay.Units
 
 			foreach (IReseteable resetable in _unitRoot.GetComponentsInChildren<IReseteable>())
 			{
-					resetable.Reset();
+				resetable.Reset();
 			}
 		}
 	}
