@@ -95,6 +95,7 @@ namespace ForestRoyale.Gui
 		private static Stack<Color> _colorStack = new Stack<Color>();
 		private static Stack<Color> _bgColorStack = new Stack<Color>();
 		private static Stack<Color> _contentColorStack = new Stack<Color>();
+		
 
 		public static void PushColor(Color col)
 		{

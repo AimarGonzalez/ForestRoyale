@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ForestRoyale
+namespace ForestRoyale.Core
 {
 	public class TimeController : MonoBehaviour
 	{
