@@ -28,7 +28,7 @@ namespace ForestRoyale.Gui
 			public Vector2 valueSize;
 
 			public Property(string label)
-				: this(label, "", GUI.skin.label, GUI.skin.label)
+				: this(label, "")
 			{
 			}
 
@@ -53,17 +53,20 @@ namespace ForestRoyale.Gui
 			}
 
 			public Property(string label, string value)
-				: this(label, value, GUI.skin.label, GUI.skin.textField)
+				: this(label, value, GuiStylesCatalog.DebugLabelStyle, GuiStylesCatalog.DebugTextFieldStyle)
 			{
 			}
 
 			public Property(string label, string value, GUIStyle valueStyle)
-				: this(label, value, GUI.skin.label, valueStyle)
+				: this(label, value, GuiStylesCatalog.DebugLabelStyle, valueStyle)
 			{
 			}
 
 			public Property(string label, string value, GUIStyle labelStyle, GUIStyle valueStyle)
 			{
+				labelStyle ??= GUI.skin.label;
+				valueStyle ??= GUI.skin.textField;
+
 				this.label = label;
 				this.value = value;
 				this.labelStyle = labelStyle;
@@ -146,6 +149,8 @@ namespace ForestRoyale.Gui
 
 		public static (Vector2 size, float labelWidth, float valueWidth) CalcPanelSize(GUIStyle panelStyle, GUIUtils.Property[] properties)
 		{
+			panelStyle ??= GUI.skin.box;
+
 			float maxRowHeight = 0f;
 			float maxLabelWidth = 0f;
 			float maxValueWidth = 0f;
@@ -237,7 +242,7 @@ namespace ForestRoyale.Gui
 
 		public static void DrawDebugPanel(Property[] properties, Transform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
 		{
-			GUIStyle panelStyle = GuiStylesCatalog.BlackBoxStyle;
+			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
 			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
 			Vector3 panelPosition = CalcPanelPosition(target, panelSize, panelPlacement, margin);
@@ -247,7 +252,7 @@ namespace ForestRoyale.Gui
 
 		public static void DrawDebugPanel(Property[] properties, RectTransform target, PanelPlacement panelPlacement, float margin = 0f, Action onClose = null)
 		{
-			GUIStyle panelStyle = GuiStylesCatalog.BlackBoxStyle;
+			GUIStyle panelStyle = GuiStylesCatalog.DebugPanelStyle;
 
 			(Vector2 panelSize, float labelWidth, float valueWidth) = CalcPanelSize(panelStyle, properties);
 			Vector3 panelPosition = CalcPanelPositionOnUI(target, panelSize, panelPlacement, margin);
@@ -257,6 +262,8 @@ namespace ForestRoyale.Gui
 
 		private static void DrawDebugPanel(Property[] properties, Vector3 panelPosition, Vector2 panelSize, GUIStyle style, float labelWidth, float valueWidth, Action onClose)
 		{
+			style ??= GUI.skin.box;
+
 			// Create rect centered on the panel's position
 			Rect rect = new Rect(panelPosition.x - panelSize.x * 0.5f, panelPosition.y - panelSize.y * 0.5f, panelSize.x, panelSize.y);
 
@@ -270,7 +277,7 @@ namespace ForestRoyale.Gui
 			if (onClose != null)
 			{
 				// Get size of the button
-				GUIContent closeButtonContent = new GUIContent("Close");
+				GUIContent closeButtonContent = new GUIContent("X");
 				Vector2 buttonSize = GUI.skin.button.CalcSize(closeButtonContent);
 				bool pressed = GUI.Button(new Rect(rect.x + rect.width + 2, rect.y, buttonSize.x, buttonSize.y), closeButtonContent);
 				if (pressed)
