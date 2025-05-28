@@ -34,12 +34,19 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			// Work on cloned list to avoid invalidating iterator
 			Unit[] allUnits = _allUnits.ToArray();
-			
+
 			foreach (Unit troop in allUnits)
 			{
 				switch (troop.State)
-				{
-					case UnitState.Moving:
+				{	
+					case UnitState.Idle:
+						if (troop.HasTarget)
+						{
+							troop.State = UnitState.MovingToTarget;
+						}
+						break;
+					
+					case UnitState.MovingToTarget:
 						if (troop.HasTarget && troop.IsTargetInCombatRange)
 						{
 							troop.State = UnitState.Attacking;
@@ -52,27 +59,27 @@ namespace ForestRoyale.Gameplay.Systems
 							// Don't interrupt the attack animation
 							break;
 						}
-						
-						if (!troop.Target.IsAlive)
+
+						if (!troop.HasTarget || !troop.Target.IsAlive)
 						{
 							troop.Target = null;
-							troop.State = UnitState.Moving;
+							troop.State = UnitState.Idle;
 							break;
 						}
-						
-						if(!troop.IsTargetInCombatRange)
+
+						if (!troop.IsTargetInCombatRange)
 						{
-							troop.State = UnitState.Moving;
+							troop.State = UnitState.MovingToTarget;
 							break;
 						}
-						
+
 						break;
 
 					default:
 						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
 						break;
 				}
-				
+
 				if (troop.IsAlive && troop.CurrentHealth <= 0)
 				{
 					//TODO: Implement death effects

@@ -1,9 +1,9 @@
-using System;
+using ForestRoyale.Core;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-	public class DeathComponent : MonoBehaviour, IDeathComponent
+	public class DeathComponent : MonoBehaviour, IDeathComponent, IReseteable
 	{
 		[SerializeField]
 		private GameObject _aliveRoot;
@@ -21,6 +21,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		{
 			_aliveRoot.SetActive(false);
 			_deadRoot.SetActive(true);
+		}
+		
+		void IReseteable.Reset()
+		{
+			_aliveRoot.SetActive(true);
+			_deadRoot.SetActive(false);
 		}
 	}
 }

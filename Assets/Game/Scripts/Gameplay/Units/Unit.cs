@@ -1,9 +1,11 @@
+using ForestRoyale.Core;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
+using Game.Scripts.Gameplay.Cards.CardStats;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,16 +25,16 @@ namespace ForestRoyale.Gameplay.Units
 		[ShowInInspector, ReadOnly] private CardData _cardOrigin;
 		[ShowInInspector, ReadOnly] private UnitStats _unitStats;
 		[ShowInInspector, ReadOnly] private CombatStats _combatStats;
-		
+
 		private UnitRoot _unitRoot;
 		private UnitSO _unitSO;
-		
+
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
 		private IDeathComponent _deathComponent;
 
 		[Header("State")]
-		[ShowInInspector, ReadOnly] 
+		[ShowInInspector, ReadOnly]
 		private UnitState _state;
 
 		[Header("Target")]
@@ -43,7 +45,7 @@ namespace ForestRoyale.Gameplay.Units
 			set => _combatComponent.Target = value;
 		}
 
-		[ShowInInspector] 
+		[ShowInInspector]
 		public bool IsTargetInCombatRange => Application.isPlaying ? _combatComponent.IsTargetInCombatRange : false;
 
 		public string Id => _id;
@@ -51,6 +53,8 @@ namespace ForestRoyale.Gameplay.Units
 		public bool CanFight => _combatComponent != null;
 
 		public bool IsAlive => _state != UnitState.Dying && _state != UnitState.Dead;
+
+		public UnitType UnitType => _unitStats.UnitType;
 
 		public UnitState State
 		{
@@ -125,6 +129,18 @@ namespace ForestRoyale.Gameplay.Units
 			_health -= hitData.Damage;
 
 			//TODO: play damage effects
+		}
+
+		public void Reset()
+		{
+			_health = _unitStats.HitPoints;
+			State = UnitState.Idle;
+			Target = null;
+
+			foreach (IReseteable resetable in _unitRoot.GetComponentsInChildren<IReseteable>())
+			{
+					resetable.Reset();
+			}
 		}
 	}
 }

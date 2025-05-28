@@ -55,7 +55,7 @@ namespace ForestRoyale.Gameplay.UI
 				return;
 			}
 
-			if (Unit.CurrentHealth < _lastHealth)
+			if (Unit.CurrentHealth != _lastHealth)
 			{
 				UpdateFillRatio();
 				PlayHighlightEffect();

@@ -38,16 +38,12 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				switch (troop.State)
 				{
-					case UnitState.Moving:
-						if (troop.HasTarget)
-						{
-							_ = troop.MovementComponent.MoveToTarget();
-						}
-						else
-						{
-							troop.MovementComponent.Stop();
-						}
-
+					case UnitState.Idle:
+						troop.MovementComponent.Stop();
+						break;
+					
+					case UnitState.MovingToTarget:
+						_ = troop.MovementComponent.MoveToTarget();
 						break;
 
 					case UnitState.Attacking:

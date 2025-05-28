@@ -39,7 +39,7 @@ namespace ForestRoyale.Gameplay.Systems
 			foreach (Unit troop in _activeUnits)
 			{
 				// If troop doesn't have a target, find a new target
-				if (troop.State == UnitState.Moving)
+				if (troop.State is UnitState.Idle or UnitState.MovingToTarget)
 				{
 					SetTarget(troop, FindBestTarget(troop));
 				}

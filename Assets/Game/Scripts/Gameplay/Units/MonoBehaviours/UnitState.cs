@@ -2,7 +2,8 @@ namespace ForestRoyale.Gameplay.Units
 {
 	public enum UnitState
 	{
-		Moving,
+		Idle,
+		MovingToTarget,
 		Attacking,
 		Dying,
 		Dead

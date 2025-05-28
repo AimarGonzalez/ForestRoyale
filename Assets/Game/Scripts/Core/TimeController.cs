@@ -124,8 +124,6 @@ namespace ForestRoyale.Core
 			{
 				Time.timeScale = _timeScale;
 			}
-		
-			Debug.Log($"Time scale: {Time.timeScale}");
 		}
 
 		private void TogglePause()
