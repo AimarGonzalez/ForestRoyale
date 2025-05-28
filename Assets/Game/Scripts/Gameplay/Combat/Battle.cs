@@ -60,5 +60,10 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			_isBattleActive = true;
 		}
+
+		private void ResetTowers()
+		{
+			// TODO: Implement tower reset logic
+		}
 	}
 }

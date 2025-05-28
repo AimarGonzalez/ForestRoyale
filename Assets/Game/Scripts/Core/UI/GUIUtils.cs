@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using System;
 
-namespace ForestRoyale.Gui
+namespace ForestRoyale.Core.UI
 {
 	public static class GUIUtils
 	{
@@ -95,7 +95,74 @@ namespace ForestRoyale.Gui
 		private static Stack<Color> _colorStack = new Stack<Color>();
 		private static Stack<Color> _bgColorStack = new Stack<Color>();
 		private static Stack<Color> _contentColorStack = new Stack<Color>();
-		
+		private static Stack<GUIFontSizes> _fontSizeStack = new Stack<GUIFontSizes>();
+
+		public struct GUIFontSizes
+		{
+			public int label;
+			public int button;
+			public int textField;
+			public int textArea;
+			public int toggle;
+			public int window;
+			public int box;
+
+			public GUIFontSizes(int defaultSize = 12)
+			{
+				label = defaultSize;
+				button = defaultSize;
+				textField = defaultSize;
+				textArea = defaultSize;
+				toggle = defaultSize;
+				window = defaultSize;
+				box = defaultSize;
+				
+			}
+
+			public static GUIFontSizes FromCurrentGUI()
+			{
+				return new GUIFontSizes
+				{
+					label = GUI.skin.label.fontSize,
+					button = GUI.skin.button.fontSize,
+					textField = GUI.skin.textField.fontSize,
+					textArea = GUI.skin.textArea.fontSize,
+					toggle = GUI.skin.toggle.fontSize,
+					window = GUI.skin.window.fontSize,
+					box = GUI.skin.box.fontSize
+				};
+			}
+
+			public void ApplyToGUI()
+			{
+				GUI.skin.label.fontSize = label;
+				GUI.skin.button.fontSize = button;
+				GUI.skin.textField.fontSize = textField;
+				GUI.skin.textArea.fontSize = textArea;
+				GUI.skin.toggle.fontSize = toggle;
+				GUI.skin.window.fontSize = window;
+				GUI.skin.box.fontSize = box;
+			}
+		}
+
+		public static void PushFontSize(int uniformSize)
+		{
+			PushFontSize(new GUIFontSizes(uniformSize));
+		}
+
+		public static void PushFontSize(GUIFontSizes sizes)
+		{
+			_fontSizeStack.Push(GUIFontSizes.FromCurrentGUI());
+			sizes.ApplyToGUI();
+		}
+
+		public static void PopFontSize()
+		{
+			if (_fontSizeStack.Count > 0)
+			{
+				_fontSizeStack.Pop().ApplyToGUI();
+			}
+		}
 
 		public static void PushColor(Color col)
 		{

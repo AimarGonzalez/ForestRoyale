@@ -1,7 +1,7 @@
 ﻿using ForestLib.Utils;
 using UnityEngine;
 
-namespace ForestRoyale.Gui
+namespace ForestRoyale.Core.UI
 {
 	public class GuiStylesCatalog
 	{

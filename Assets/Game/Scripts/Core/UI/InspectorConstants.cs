@@ -1,4 +1,5 @@
-namespace ForestRoyale.Gui
+
+namespace ForestRoyale.Core.UI
 {
 	public static class InspectorConstants
 	{

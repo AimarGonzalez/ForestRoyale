@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace ForestRoyale.Gui
+namespace ForestRoyale.Core.UI
 {
 	[DefaultExecutionOrder(-1000)]
 	[ExecuteInEditMode]

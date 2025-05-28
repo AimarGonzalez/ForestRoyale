@@ -1,4 +1,4 @@
-﻿using ForestRoyale.Gui;
+﻿using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;

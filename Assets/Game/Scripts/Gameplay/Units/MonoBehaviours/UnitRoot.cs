@@ -1,20 +1,13 @@
-﻿using ForestRoyale.Gameplay.Cards.ScriptableObjects;
+﻿using ForestRoyale.Core.UI;
+using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using Sirenix.OdinInspector;
 using System;
-using UnityEngine;
-using VContainer;
-using ForestRoyale.Gui;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
-using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
-using System.Collections.Generic;
-
-
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEngine.Rendering.VirtualTexturing;
-#endif
+using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {

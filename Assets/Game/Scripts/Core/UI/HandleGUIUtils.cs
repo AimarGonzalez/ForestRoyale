@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace ForestRoyale.Gui
+namespace ForestRoyale.Core.UI
 {
 	public static class HandleGUIUtils
 	{

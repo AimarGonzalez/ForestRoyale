@@ -1,6 +1,6 @@
 using ForestLib.Utils;
+using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards;
-using ForestRoyale.Gui;
 using Sirenix.OdinInspector;
 using System;
 using TMPro;
