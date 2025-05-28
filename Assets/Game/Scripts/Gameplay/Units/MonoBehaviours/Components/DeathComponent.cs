@@ -13,8 +13,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		private void Start()
 		{
-			_aliveRoot.SetActive(true);
 			_deadRoot.SetActive(false);
+			_aliveRoot.SetActive(true);
 		}
 
 		public void OnDeath()
@@ -25,8 +25,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		
 		void IReseteable.Reset()
 		{
-			_aliveRoot.SetActive(true);
 			_deadRoot.SetActive(false);
+			_aliveRoot.SetActive(true);
 		}
 	}
 }
