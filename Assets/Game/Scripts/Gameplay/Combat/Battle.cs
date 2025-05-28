@@ -89,8 +89,8 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void DrawGUI()
 		{
-			GUILayout.Label("Battle");
-			GUILayout.Label($"Remaining Time: {RemainingTime}");
+			GUILayoutUtils.Label("Battle");
+			GUILayoutUtils.Label($"Remaining Time: {RemainingTime}");
 
 			GUILayout.BeginHorizontal();
 

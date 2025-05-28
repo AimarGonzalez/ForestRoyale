@@ -51,17 +51,22 @@ namespace ForestRoyale.Core.UI
 		public static float LabelWidth = 100f;
 		public static float LabelHeight = 20f;
 
-		public static void Label(string label)
+		public static void FieldLabel(string label)
 		{
 			GUILayout.BeginHorizontal(GUILayoutOptions.Width(LabelWidth));
 			GUILayout.Label(label, GUILayoutOptions.Height(LabelHeight));
 			GUILayout.EndHorizontal();
 		}
+		
+		public static void Label(string label)
+		{
+			GUILayout.Label(label, GUILayoutOptions.Height(LabelHeight));
+		}
 
 		public static string TextField(string label, string text)
 		{
 			GUILayout.BeginHorizontal();
-			Label(label);
+			FieldLabel(label);
 			text = GUILayout.TextField(text);
 			GUILayout.EndHorizontal();
 			return text;
@@ -70,7 +75,7 @@ namespace ForestRoyale.Core.UI
 		public static int IntField(string label, int value)
 		{
 			GUILayout.BeginHorizontal();
-			Label(label);
+			FieldLabel(label);
 			value = ToInt(GUILayout.TextField(value.ToString()));
 			GUILayout.EndHorizontal();
 			return value;
@@ -79,7 +84,7 @@ namespace ForestRoyale.Core.UI
 		public static float FloatField(string label, float value)
 		{
 			GUILayout.BeginHorizontal();
-			Label(label);
+			FieldLabel(label);
 			value = ToFloat(GUILayout.TextField(value.ToString()));
 			GUILayout.EndHorizontal();
 			return value;
@@ -88,7 +93,7 @@ namespace ForestRoyale.Core.UI
 		public static float Slider(string label, float value, float min, float max)
 		{
 			GUILayout.BeginHorizontal();
-			Label(label);
+			FieldLabel(label);
 			value = ToFloat(GUILayout.TextField(value.ToString("F1"), GUILayoutOptions.MaxWidth(50)));
 			//GUILayout.Label(min.ToString("F1"));
 			value = GUILayout.HorizontalSlider(value, min, max);
@@ -104,7 +109,7 @@ namespace ForestRoyale.Core.UI
 			float logCurrent = Mathf.Log10(value);
 			
 			GUILayout.BeginHorizontal();
-			Label(label);
+			FieldLabel(label);
 			value = ToFloat(GUILayout.TextField(value.ToString("F1"), GUILayoutOptions.MaxWidth(50)));
 			float newLogValue = GUILayout.HorizontalSlider(logCurrent, logMin, logMax);
 			value = Mathf.Pow(10f, newLogValue);
