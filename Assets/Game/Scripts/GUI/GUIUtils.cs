@@ -71,9 +71,25 @@ namespace ForestRoyale.Gui
 				this.value = value;
 				this.labelStyle = labelStyle;
 				this.valueStyle = valueStyle;
-				this.labelSize = labelStyle.CalcSize(new GUIContent(label));
-				this.valueSize = valueStyle.CalcSize(new GUIContent(value));
+				this.labelSize = CalculatedSize(label, labelStyle);
+				this.valueSize = CalculatedSize(value, valueStyle);
 			}
+		}
+
+		private static Vector2 CalculatedSize(string value, GUIStyle style)
+		{
+			if (value.IsNullOrEmpty())
+			{
+				return Vector2.zero;
+			}
+
+			Vector2 extraPixelToAvoidWorldWrappingGlitches = new Vector2(1f, 0f);
+			return style.CalcSize(new GUIContent(value)) + GetMarginOffset(style) + extraPixelToAvoidWorldWrappingGlitches;
+		}
+
+		private static Vector2 GetMarginOffset(GUIStyle style)
+		{
+			return new Vector2(style.margin.horizontal, style.margin.vertical);
 		}
 
 		private static Stack<Color> _colorStack = new Stack<Color>();
@@ -123,28 +139,32 @@ namespace ForestRoyale.Gui
 		{
 
 			float rowHeigh = Mathf.Max(property.labelSize.y, property.valueSize.y);
+			labelWidth = labelWidth > 0f ? labelWidth : property.labelSize.x;
 			valueWidth = valueWidth > 0f ? valueWidth : property.valueSize.x;
 
-			GUI.Label(
-				new Rect(
-					panelStyle.padding.left + rect.xMin,
-					panelStyle.padding.top + rect.yMin + index * rowHeigh,
-					labelWidth,
-					rowHeigh),
-				property.label,
-				property.labelStyle);
+			if (property.label.IsNotEmpty())
+			{
+				GUI.Label(
+					new Rect(
+					rect.xMin + panelStyle.padding.left + property.labelStyle.margin.left, // + (rowHeigh - property.labelSize.y) * 0.5f,
+					rect.yMin + panelStyle.padding.top + property.labelStyle.margin.top + index * rowHeigh,
+					labelWidth - property.labelStyle.margin.horizontal,
+					rowHeigh - property.labelStyle.margin.vertical),
+					property.label,
+					property.labelStyle);
+			}
 
-			PushBackgroundColor(new Color(0f, 0f, 0f, 0.8f));
-			GUI.TextField(
-				new Rect(
-					panelStyle.padding.left + labelWidth + rect.xMin,
-					panelStyle.padding.top + rect.yMin + index * rowHeigh,
-					valueWidth,
-					rowHeigh),
-				property.value,
-				property.valueStyle);
-
-			PopBackgroundColor();
+			if (property.value.IsNotEmpty())
+			{
+				GUI.TextField(
+					new Rect(
+						rect.xMin + panelStyle.padding.left + labelWidth + property.valueStyle.margin.left,
+						rect.yMin + panelStyle.padding.top + property.valueStyle.margin.top + index * rowHeigh,
+						valueWidth - property.valueStyle.margin.horizontal,
+						rowHeigh - property.valueStyle.margin.vertical),
+					property.value,
+					property.valueStyle);
+			}
 		}
 
 		public static (Vector2 size, float labelWidth, float valueWidth) CalcPanelSize(GUIStyle panelStyle, GUIUtils.Property[] properties)
@@ -160,6 +180,7 @@ namespace ForestRoyale.Gui
 				maxRowHeight = Mathf.Max(maxRowHeight, Mathf.Max(property.labelSize.y, property.valueSize.y));
 
 				maxLabelWidth = Mathf.Max(maxLabelWidth, property.labelSize.x);
+
 				maxValueWidth = Mathf.Max(maxValueWidth, property.valueSize.x);
 			}
 
