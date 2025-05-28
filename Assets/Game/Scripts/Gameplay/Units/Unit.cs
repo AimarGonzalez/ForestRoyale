@@ -16,8 +16,8 @@ namespace ForestRoyale.Gameplay.Units
 		private static Dictionary<string, uint> s_unitCount = new Dictionary<string, uint>();
 
 		[Header("Stats")]
-		[ShowInInspector, ReadOnly] private ArenaTeam _team;
-		[ShowInInspector, ReadOnly] private float _health;
+		[ShowInInspector, DisableInEditorMode] private ArenaTeam _team;
+		[ShowInInspector, DisableInEditorMode] private float _health;
 
 		[ShowInInspector, ReadOnly] private string _id;
 		[ShowInInspector, ReadOnly] private CardData _cardOrigin;

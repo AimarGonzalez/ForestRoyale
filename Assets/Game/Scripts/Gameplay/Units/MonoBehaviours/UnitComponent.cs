@@ -24,6 +24,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		protected virtual void Awake()
 		{
 			_root ??= GetComponentInParent<UnitRoot>();
+			Debug.Assert(_root != null, "UnitComponent can't find a parent UnitRoot!");
 
 			_root.OnUnitChanged += OnUnitChanged_Internal;
 
@@ -32,19 +33,43 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		protected virtual void OnDestroy()
 		{
-			_root.OnUnitChanged -= OnUnitChanged_Internal;
+			if (_root)
+			{
+				_root.OnUnitChanged -= OnUnitChanged_Internal;
+			}
 		}
 
 		private void OnUnitChanged_Internal(Unit newUnit)
 		{
+			Unit oldUnit = _unit;
 			_unit = newUnit;
-
+			
+			OnUnitChanged(oldUnit, newUnit);
 			OnUnitChanged();
+		}
+		
+		protected virtual void OnUnitChanged(Unit oldUnit, Unit newUnit)
+		{
+			// implement in children
 		}
 
 		protected virtual void OnUnitChanged()
 		{
 			// implement in children
 		}
+		
+#if UNITY_EDITOR
+		public void ForceAwake(UnitRoot root)
+		{
+			_root = root;
+
+			Awake();
+		}
+
+		public void ForceOnDestroy()
+		{
+			OnDestroy();
+		}
+#endif
 	}
 }

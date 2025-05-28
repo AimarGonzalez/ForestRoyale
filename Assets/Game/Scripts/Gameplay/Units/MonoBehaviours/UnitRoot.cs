@@ -8,6 +8,8 @@ using ForestRoyale.Gui;
 using System.Linq;
 using UnityEngine.Assertions;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
+using System.Collections.Generic;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,6 +18,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
+	// Add ExecuteInEditMode so OnGUI draws the debug panel in the editor
 	[ExecuteInEditMode]
 	public class UnitRoot : MonoBehaviour
 	{
@@ -26,7 +29,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		private UnitSO _startingUnitSO;
 
-		[ShowInInspector, ReadOnly]
+		[ShowInInspector, DisableInEditorMode]
 		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
 		[NonSerialized]
 		private Unit _unit;
@@ -75,6 +78,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_colliderListener = _movementComponent.Body.GetComponent<Collider2DListener>();
 				Assert.IsNotNull(_colliderListener);
 			}
+
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				ForceAwakeSubComponents();
+			}
+#endif
 		}
 
 		private void Start()
@@ -84,7 +94,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			Subscribe();
 		}
 
-		[Button]
 		private void InitializeUnit()
 		{
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
@@ -138,6 +147,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void OnDestroy()
 		{
 			Unsubscribe();
+
+#if UNITY_EDITOR
+			ForceOnDestroySubComponents();
+#endif
 		}
 
 		private void OnMouseDown()
@@ -152,7 +165,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			// DrawDebugGUI();
 			// Handles.EndGUI();
 		}
-		
+
 		void OnGUI()
 		{
 			DrawDebugGUI();
@@ -191,6 +204,32 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 
 			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin, () => _showDebugPanel = false);
+		}
+		
+		[Button]
+		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder-1)]
+		private void ForceInitializeUnit()
+		{
+			ForceAwakeSubComponents();
+			InitializeUnit();
+		}
+
+		private void ForceAwakeSubComponents()
+		{
+			var unitComponents = GetComponentsInChildren<UnitComponent>();
+			foreach (var component in unitComponents)
+			{
+				component.ForceAwake(this);
+			}
+		}
+
+		private void ForceOnDestroySubComponents()
+		{
+			var unitComponents = GetComponentsInChildren<UnitComponent>();
+			foreach (var component in unitComponents)
+			{
+				component.ForceOnDestroy();
+			}
 		}
 #endif //UNITY_EDITOR
 	}
