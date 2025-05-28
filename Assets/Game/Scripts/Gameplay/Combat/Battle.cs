@@ -1,11 +1,13 @@
 using ForestRoyale.Core;
 using ForestRoyale.Core.UI;
+using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Game.Scripts.Gameplay.Cards.CardStats;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 namespace ForestRoyale.Gameplay.Combat
 {
@@ -19,6 +21,9 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private float _currentTime;
 		private bool _isBattleActive;
+
+		[Inject]
+		private ArenaEvents _arenaEvents;
 
 		public Player Player => _player;
 		public Player Bot => _bot;
@@ -78,6 +83,7 @@ namespace ForestRoyale.Gameplay.Combat
 			foreach (var tower in towers)
 			{
 				tower.Reset();
+				_arenaEvents.TriggerUnitCreated(tower);
 			}
 		}
 
