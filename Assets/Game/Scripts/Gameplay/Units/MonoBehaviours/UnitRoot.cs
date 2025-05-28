@@ -23,20 +23,20 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private UnitSO _startingUnitSO;
 
 		[ShowInInspector, DisableInEditorMode]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[NonSerialized]
 		private Unit _unit;
 
 		[SerializeField]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private bool _showDebugPanel = false;
 
 		[SerializeField]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private GUIUtils.PanelPlacement _panelPosition;
 
 		[SerializeField]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private float _panelMargin = 0f;
 
 
@@ -200,7 +200,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 		
 		[Button]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder-1)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-1)]
 		private void ForceInitializeUnit()
 		{
 			ForceAwakeSubComponents();

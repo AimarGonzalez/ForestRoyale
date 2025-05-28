@@ -33,7 +33,7 @@ namespace Game.UI
 
 		[SerializeField] private CardData _cardData;
 
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[ShowInInspector, Unity.Collections.ReadOnly]
 		private State _state = State.NotSelected;
 
@@ -53,7 +53,7 @@ namespace Game.UI
 		private bool _debugInitialized = false;
 
 
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[SerializeField]
 		private bool _showDebugPosition = true;
 

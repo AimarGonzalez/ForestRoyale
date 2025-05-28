@@ -9,12 +9,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 	{
 
 		[SerializeField]
-		[BoxGroup(InspectorConstants.DebugGroup)]
-		[FoldoutGroup(InspectorConstants.DebugGroupUnitComponent), PropertyOrder(InspectorConstants.DebugGroupUnitComponentOrder)]
+		[BoxGroup(DebugUI.Group)]
+		[FoldoutGroup(DebugUI.GroupUnitComponent), PropertyOrder(DebugUI.OrderUnitComponent)]
 		[SuffixLabel("auto populated")]
 		private UnitRoot _root;
 
-		[FoldoutGroup(InspectorConstants.DebugGroupUnitComponent), PropertyOrder(InspectorConstants.DebugGroupUnitComponentOrder)]
+		[FoldoutGroup(DebugUI.GroupUnitComponent), PropertyOrder(DebugUI.OrderUnitComponent)]
 		[ShowInInspector, ReadOnly]
 		[NonSerialized]
 		private Unit _unit;

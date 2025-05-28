@@ -15,10 +15,10 @@ namespace ForestRoyale.Gameplay.UI
 		[Tooltip("The UI Image component that represents the health bar frame")]
 		[SerializeField] private Image _healthBarFrame;
 
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[SerializeField] private ArenaTeam _team = ArenaTeam.Player;
 
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[Range(0f, 1f)]
 		[SerializeField] private float _healthRatio = 1f;
 

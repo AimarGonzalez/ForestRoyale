@@ -16,11 +16,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private CircleCollider2D _attackCollider;
 
 		[ShowInInspector]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private Unit _target;
 
 		[ShowInInspector]
-		[BoxGroup(InspectorConstants.DebugGroup), PropertyOrder(InspectorConstants.DebugGroupOrder)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private bool _isTargetInCombatRange = false;
 
 		private Collider2DListener _targetListener;
