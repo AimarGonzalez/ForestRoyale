@@ -2715,11 +2715,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skin: {fileID: 0}
-  _fontSize: 20
-  _labelWidth: 145
-  _slinderHeigh: 54
-  _width: 0.327
-  _height: 0.357
+  _panelSettings:
+  - _aspectRatio:
+      Width: 3
+      Height: 4
+    FontSize: 21
+    LabelWidth: 0.5
+    Width: 0.3
+    Height: 0.3
+  - _aspectRatio:
+      Width: 1080
+      Height: 2400
+    FontSize: 35
+    LabelWidth: 0.5
+    Width: 0.6
+    Height: 0.5
 --- !u!1001 &1002342359
 PrefabInstance:
   m_ObjectHideFlags: 0
