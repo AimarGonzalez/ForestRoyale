@@ -1,3 +1,5 @@
+using ForestRoyale.Core;
+using ForestRoyale.Gameplay.Combat;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -17,6 +19,13 @@ namespace ForestRoyale.Gameplay.Systems
 			builder.Register<TargetingSystem>(Lifetime.Scoped);
 			builder.Register<CombatSystem>(Lifetime.Scoped);
 			builder.Register<UnitStateMachine>(Lifetime.Scoped);
+			
+			// Register MonoBehaviours
+			builder.UseComponents(components =>
+			{
+				components.AddInHierarchy<TimeController>();
+				components.AddInHierarchy<CardCaster>();
+			});
 		}
 	}
 }

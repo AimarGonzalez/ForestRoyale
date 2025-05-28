@@ -1,4 +1,5 @@
 using Sirenix.Utilities;
+using System;
 using System.Reflection.Emit;
 using UnityEngine;
 
@@ -14,6 +15,18 @@ namespace ForestRoyale.Core.UI
 		public static void BeginHorizontalBox()
 		{
 			GUILayout.BeginVertical(GUI.skin.box);
+		}
+
+		public static void BeginVerticalBox(IGUIDrawer drawer)
+		{
+			if (drawer == null)
+			{
+				return;
+			}
+			
+			GUILayout.BeginVertical(GUI.skin.box);
+			drawer.DrawGUI();
+			GUILayout.EndVertical();
 		}
 
 		public static void BeginVertical(GUIStyle style, Color backgroundColor)
@@ -72,11 +85,29 @@ namespace ForestRoyale.Core.UI
 			return value;
 		}
 
-		public static int Slider(string label, int value, int min, int max, int height)
+		public static float Slider(string label, float value, float min, float max)
 		{
 			GUILayout.BeginHorizontal();
 			Label(label);
-			value = (int)GUILayout.HorizontalSlider(value, min, max);
+			value = ToFloat(GUILayout.TextField(value.ToString("F1"), GUILayoutOptions.MaxWidth(50)));
+			//GUILayout.Label(min.ToString("F1"));
+			value = GUILayout.HorizontalSlider(value, min, max);
+			//GUILayout.Label(max.ToString("F1"));
+			GUILayout.EndHorizontal();
+			return value;
+		}
+		
+		public static float LogSlider(string label, float value, float min, float max)
+		{
+			float logMin = Mathf.Log10(min);
+			float logMax = Mathf.Log10(max);
+			float logCurrent = Mathf.Log10(value);
+			
+			GUILayout.BeginHorizontal();
+			Label(label);
+			value = ToFloat(GUILayout.TextField(value.ToString("F1"), GUILayoutOptions.MaxWidth(50)));
+			float newLogValue = GUILayout.HorizontalSlider(logCurrent, logMin, logMax);
+			value = Mathf.Pow(10f, newLogValue);
 			GUILayout.EndHorizontal();
 			return value;
 		}

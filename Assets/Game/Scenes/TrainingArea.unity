@@ -318,7 +318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45926023}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2624,6 +2624,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8814071115090319185, guid: ea5ee9e988cef2649afad51c97b78a4e, type: 3}
   m_PrefabInstance: {fileID: 1692407936}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &944559666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 944559667}
+  - component: {fileID: 944559668}
+  m_Layer: 0
+  m_Name: CheatsMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &944559667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944559666}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1400931071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &944559668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944559666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023a59e9bd29ca94886d9ba1640c9c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 0}
+  _fontSize: 20
+  _labelWidth: 145
+  _slinderHeigh: 54
+  _width: 0.327
+  _height: 0.357
 --- !u!1001 &1002342359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3619,7 +3669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeScale: 1
   _minTimeScale: 0.001
-  _maxTimeScale: 100
+  _maxTimeScale: 10
 --- !u!1 &1176700497
 GameObject:
   m_ObjectHideFlags: 0
@@ -4768,10 +4818,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 910884320}
   - {fileID: 45926024}
   - {fileID: 1163184644}
-  - {fileID: 910884320}
   - {fileID: 820112653}
+  - {fileID: 944559667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1416509738

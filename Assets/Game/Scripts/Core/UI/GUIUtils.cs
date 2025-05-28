@@ -96,6 +96,7 @@ namespace ForestRoyale.Core.UI
 		private static Stack<Color> _bgColorStack = new Stack<Color>();
 		private static Stack<Color> _contentColorStack = new Stack<Color>();
 		private static Stack<GUIFontSizes> _fontSizeStack = new Stack<GUIFontSizes>();
+		private static Stack<GUISkin> _skinStack = new Stack<GUISkin>();
 
 		public struct GUIFontSizes
 		{
@@ -144,6 +145,20 @@ namespace ForestRoyale.Core.UI
 				GUI.skin.box.fontSize = box;
 			}
 		}
+
+		public static void PushSkin(GUISkin skin)
+		{
+			_skinStack.Push(GUI.skin);
+			GUI.skin = skin;
+		}
+
+		public static void PopSkin()
+		{
+			GUI.skin = _skinStack.Pop();
+		}	
+
+		
+		
 
 		public static void PushFontSize(int uniformSize)
 		{
