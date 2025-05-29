@@ -1,20 +1,23 @@
 using ForestRoyale.Gameplay.Cards;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
 namespace ForestRoyale.Gameplay.Combat
 {
-	public class CardCastingViewFactory
+	public class CardCastingViewFactory : MonoBehaviour
 	{
+		[SerializeField, Required]
+		private Transform _castingArea;
+		
 		[SerializeField]
-		private GameObject _troopCastingUIPrefab;
+		private GameObject _troopCastingViewPrefab;
 
 		[Inject]
 		private IObjectResolver _container;
 
-
-		public GameObject BuildCastingPreview(CardData cardData)
+		public ICastingView BuildCastingPreview(CardData cardData)
 		{
 			switch (cardData)
 			{
@@ -32,14 +35,14 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		private GameObject BuildTroopCastingPreview(TroopCardData troopCard)
+		private ICastingView BuildTroopCastingPreview(TroopCardData troopCard)
 		{
 			GameObject troopInstance = _container.Instantiate(troopCard.UnitPrefab);
-			GameObject castingView = _container.Instantiate(_troopCastingUIPrefab);
+			GameObject castingView = _container.Instantiate(_troopCastingViewPrefab, _castingArea);
 			TroopCastingView troopCastingView = castingView.GetComponent<TroopCastingView>();
 			troopCastingView.SetTroop(troopCard, troopInstance);
 
-			return castingView;
+			return troopCastingView;
 		}
 	}
 }

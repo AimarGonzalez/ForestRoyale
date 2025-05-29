@@ -15,16 +15,13 @@ namespace ForestRoyale.Gameplay.Combat
 		private float _castingLinePosition = 0.3f;
 
 		[SerializeField, Required]
-		private Transform _castingArea;
+		private Transform _charactersRoot;
 
 		[SerializeField]
 		private List<CardSlot> _cardSlots;
 
 		[Inject]
 		private ApplicationEvents _applicationEvents;
-
-		[Inject]
-		private CardCastingViewFactory _cardCastingViewFactory;
 
 		private Hand _hand;
 		private Deck _deck;
@@ -91,10 +88,9 @@ namespace ForestRoyale.Gameplay.Combat
 
 			// If card can be casted, cast it
 			// If card can't be casted, move it back to the hand
-			if (CanCastCard(cardData))
+			if (CanCastCard(cardSlot))
 			{
-				GameObject castingPreview = _cardCastingViewFactory.BuildCastingPreview(cardData);
-				// TODO: store in dictionary
+				Cast(cardSlot);
 			}
 			else
 			{
@@ -102,14 +98,41 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		private bool CanCastCard(CardData cardData)
+		private bool CanCastCard(CardSlot cardSlot)
 		{
-			return false; //TODO: Implement
+			//TODO: Implement
+			// - check elixir
+			
+			return cardSlot.IsCastPreviewVisible;
 		}
 
-		public void BuildCastingPreview(CardData cardData)
+		private void Cast(CardSlot cardSlot)
 		{
+			switch (cardSlot.CardData)
+			{
+				case TroopCardData troopCardData:
+					CastTroop(cardSlot);
+					break;
 
+				case SpellCardData spellCardData:
+					//TODO: Implement
+					break;
+					
+				default:
+					Debug.LogError($"{nameof(CardCaster)} - Cast: Unknown card type {cardSlot.CardData.GetType().Name}");
+					break;
+			}
+		}
+
+		private void CastTroop(CardSlot cardSlot)
+		{
+			Debug.Log($"CastingTroop - ({cardSlot.CardData.CardName})");
+			if (cardSlot.CastingView is TroopCastingView troopCastingView)
+			{
+				troopCastingView.Troop.transform.SetParent(_charactersRoot);	
+			}
+
+			cardSlot.CastComplete();
 		}
 
 		// -------- GIZMOS----------------------------------------

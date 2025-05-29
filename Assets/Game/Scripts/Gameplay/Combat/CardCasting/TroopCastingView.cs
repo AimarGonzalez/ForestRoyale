@@ -1,5 +1,7 @@
 using ForestRoyale.Gameplay.Cards;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace ForestRoyale.Gameplay.Combat
 {
@@ -11,25 +13,28 @@ namespace ForestRoyale.Gameplay.Combat
 	///  - display the deploying clock
 	///  - provide the troop instance
 	/// </summary>
-	public class TroopCastingView : MonoBehaviour
+	public class TroopCastingView : MonoBehaviour, ICastingView
 	{
-		public enum State
+		public enum CastingState
 		{
-			Hidden,
 			Preview,
 			Deploying,
 			Deployed,
 		}
 
 		[ShowInInspector, ReadOnly]
-		private State _state;
+		private CastingState _castingState;
 
 		[ShowInInspector, ReadOnly]
 		private TroopCardData _cardData;
+		
+		// maxDistance is how far to check for a walkable position from the given position
+		[ShowInInspector]
+		private float _maxDistance = 10.0f;
 
 		private GameObject _troop;
 
-		public State State => _state;
+		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
 		public GameObject Troop => _troop;
 
@@ -40,50 +45,41 @@ namespace ForestRoyale.Gameplay.Combat
 
 			_troop.transform.SetParent(this.transform, false);
 
-			SetState(State.Hidden);
+			SetState(CastingState.Preview);
 		}
 
-		private void SetState(State newState)
+		private void SetState(CastingState newCastingState)
 		{
-			if (_state == newState)
+			if (_castingState == newCastingState)
 			{
 				return;
 			}
 
 			// On Exit State
-			switch (_state)
+			switch (_castingState)
 			{
-				case State.Hidden:
+				case CastingState.Preview:
 					break;
-				case State.Preview:
+				case CastingState.Deploying:
 					break;
-				case State.Deploying:
-					break;
-				case State.Deployed:
+				case CastingState.Deployed:
 					break;
 			}
 
-			_state = newState;
+			_castingState = newCastingState;
 
 			// On Enter State
-			switch (newState)
+			switch (newCastingState)
 			{
-				case State.Hidden:
-					_troop.SetActive(false);
+				case CastingState.Preview:
 					break;
 
-				case State.Preview:
-					_troop.SetActive(true);
-					break;
-
-				case State.Deploying:
-					_troop.SetActive(true);
-
+				case CastingState.Deploying:
 					// play deploy animation
 					// play clock animation
 					break;
 
-				case State.Deployed:
+				case CastingState.Deployed:
 					// hide clock
 					// reparent troop to the battlefield
 					break;
@@ -92,9 +88,30 @@ namespace ForestRoyale.Gameplay.Combat
 
 		protected void Update()
 		{
-			if (_state == State.Deploying)
+			if (_castingState == CastingState.Preview)
 			{
-				UpdateDeploying();
+			}
+
+			if (_castingState == CastingState.Deploying)
+			{
+				// TODO: Implement
+			}
+		}
+
+		protected void OnDrawGizmos()
+		{
+			Vector3 mousePosition = Input.mousePosition;
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+			Gizmos.color = Color.blue;
+			Gizmos.DrawSphere(worldPosition, 1f);
+
+			Vector3 position;
+			if (GetClosestWalkablePosition(worldPosition, out position))
+			{
+				Gizmos.color = Color.red;
+				Gizmos.DrawSphere(position, 1f);
+				Gizmos.DrawLine(worldPosition, position);
 			}
 		}
 
@@ -105,10 +122,33 @@ namespace ForestRoyale.Gameplay.Combat
 		/// </summary>
 		protected Vector3 GetClosestTilePosition()
 		{
+			Vector3 mousePosition = Input.mousePosition;
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
+			Vector3 position;
+			if (GetClosestWalkablePosition(worldPosition, out position))
+			{
+				return position;
+			}
 
+			return worldPosition;
+		}
 
+		public bool GetClosestWalkablePosition(Vector3 worldPosition, out Vector3 position)
+		{
+			NavMeshHit hit;
 
+			// SamplePosition finds the nearest point on NavMesh within maxDistance
+			// If a point is found, hit.hit will be true and hit.position will contain the nearest valid position
+			bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.GetAreaFromName("Walkable"));
+
+			position = hit.position;
+			return hasWalkablePosition;
+		}
+
+		public void SetActive(bool value)
+		{
+			gameObject.SetActive(value);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using ForestLib.Utils;
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards;
+using ForestRoyale.Gameplay.Combat;
 using Sirenix.OdinInspector;
 using System;
 using TMPro;
@@ -8,6 +9,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using VContainer;
+using Object = System.Object;
 
 namespace Game.UI
 {
@@ -20,12 +23,14 @@ namespace Game.UI
 			Selected,
 			DraggingCard,
 			CastPreview,
+			Empty,
 		}
 
 
 		public Action<CardSlot, CardData> OnSelected;
 		public Action<CardSlot, CardData> OnEndDragEvent;
 
+		// TODO: Refactor - move picture, name and elixir into a new component CardView.
 		[SerializeField] private RectTransform _cardView;
 		[SerializeField] private Image _cardPicture;
 		[SerializeField] private TMP_Text _cardName;
@@ -36,21 +41,29 @@ namespace Game.UI
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[ShowInInspector, Unity.Collections.ReadOnly]
 		private State _state = State.NotSelected;
-
+		
+		private Camera _camera;
+		
+		// Card scaling
 		private UIFollower _mouseFollower;
 		private RectTransform _cardRectTransform;
 		private RectTransform _slotRectTransform;
 		private Vector2 _cardOriginalAnchor;
 
-		private Camera _camera;
-
+		// Card casting
 		private float _castingLinePosition;
+		
+		[Inject]
+		private CardCastingViewFactory _cardCastingViewFactory;
+		private ICastingView _castingView;
 
-		// internal values for gizmo drawing
+		// Gizmo: internal values for gizmo drawing
 		private float _cardDistanceToLine;
 		private float _slotDistanceToLine;
 		private float _scale;
 		private bool _debugInitialized = false;
+
+		public ICastingView CastingView => _castingView;
 
 
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
@@ -60,6 +73,8 @@ namespace Game.UI
 		// dynamic values depending on camera or scene context
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
 		private float SlotHeigh => _slotRectTransform.rect.height * _slotRectTransform.lossyScale.y;
+		
+		public bool IsCastPreviewVisible => _state == State.CastPreview;
 
 		public CardData CardData
 		{
@@ -67,7 +82,7 @@ namespace Game.UI
 			set
 			{
 				_cardData = value;
-				UpdateView();
+				PopulateCardView();
 			}
 		}
 
@@ -99,22 +114,24 @@ namespace Game.UI
 
 		private void Start()
 		{
-			UpdateView();
-
+			PopulateCardView();
 		}
 
 		private void OnValidate()
 		{
-			UpdateView();
+			PopulateCardView();
 		}
 
-		private void UpdateView()
+		private void PopulateCardView()
 		{
 			if (_cardData == null)
 			{
+				_cardView.gameObject.SetActive(false);
 				return;
 			}
 
+			_cardView.gameObject.SetActive(true);
+			
 			if (_cardPicture != null)
 			{
 				_cardPicture.sprite = _cardData.Portrait;
@@ -133,10 +150,13 @@ namespace Game.UI
 
 		void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
 		{
-			Debug.Log($"click on card - {_cardData.CardName}");
-
-			if (_state == State.Selected)
+			if (_cardData)
 			{
+				Debug.Log($"click on card - {_cardData.CardName}");
+			}
+			else
+			{
+				Debug.Log("click on empty slot");
 				return;
 			}
 
@@ -148,6 +168,10 @@ namespace Game.UI
 					break;
 
 				case State.Selected:
+				case State.Empty:
+					// do nothing
+					return;		
+					
 				case State.DraggingCard:
 				case State.CastPreview:
 					Debug.LogError($"The player shouldn't be able to click on a card in this state ({_state})");
@@ -187,9 +211,11 @@ namespace Game.UI
 
 		public void StartDragging()
 		{
-			Debug.Assert(_state == State.Selected, $"Cannot start dragging a slot in state - {_state}");
-			Debug.Log("card - Selected");
-			SetState(State.DraggingCard);
+			if (_state == State.Selected)
+			{
+				Debug.Log("card - StartDragging");
+				SetState(State.DraggingCard);
+			}
 		}
 
 		public void StopDragging()
@@ -205,10 +231,14 @@ namespace Game.UI
 			{
 				return;
 			}
+			
+			State oldState = _state;
+			_state = newState;
 
 			// On Exit State
-			switch (_state)
-			{
+			switch (oldState)
+			{	case State.Empty:
+					break;
 				case State.NotSelected:
 					break;
 				case State.Selected:
@@ -217,26 +247,38 @@ namespace Game.UI
 					_mouseFollower.enabled = false;
 					break;
 				case State.CastPreview:
+					_castingView.SetActive(false);
 					_cardView.gameObject.SetActive(true);
 					break;
 			}
 
-			_state = newState;
+			
 
 			// On Enter State
 			switch (newState)
 			{
 				case State.NotSelected:
+					_cardView.gameObject.SetActive(true);
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor;
 					break;
+				
 				case State.Selected:
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
 					break;
+				
 				case State.DraggingCard:
 					_mouseFollower.enabled = true;
 					break;
+				
 				case State.CastPreview:
 					_cardView.gameObject.SetActive(false);
+					_castingView ??= _cardCastingViewFactory.BuildCastingPreview(_cardData);
+					_castingView.SetActive(true);
+					break;
+				
+				case State.Empty:
+					_cardView.gameObject.SetActive(false);
+					_castingView.SetActive(false);
 					break;
 			}
 		}
@@ -297,6 +339,12 @@ namespace Game.UI
 			float ratio = _cardDistanceToLine / (_slotDistanceToLine - margin);
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
+		}
+
+		public void CastComplete()
+		{
+			SetState(State.Empty);
+			CardData = null;
 		}
 
 		private void UpdateSpawnPreview()
