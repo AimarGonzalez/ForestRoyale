@@ -19,5 +19,5 @@ MonoBehaviour:
   _elixirCost: 3
   _rarity: 0
   _unitCount: 2
-  _prefab: {fileID: 6194438867680783421, guid: 2011f0a8eee819646baf774fbebdb8d6, type: 3}
+  _prefab: {fileID: 2058212665263622368, guid: c8263da6aa27d7749ab94bafba8fa12f, type: 3}
   _unitSO: {fileID: 11400000, guid: e5c316758271bbe47ad06b1987c99be6, type: 2}
