@@ -40,7 +40,7 @@ namespace ForestRoyale.Gameplay.Combat
 			GameObject troopInstance = _container.Instantiate(troopCard.UnitPrefab);
 			GameObject castingView = _container.Instantiate(_troopCastingViewPrefab, _castingArea);
 			TroopCastingView troopCastingView = castingView.GetComponent<TroopCastingView>();
-			troopCastingView.SetTroop(troopCard, troopInstance);
+			troopCastingView.SetTroop(troopCard, troopInstance.transform);
 
 			return troopCastingView;
 		}

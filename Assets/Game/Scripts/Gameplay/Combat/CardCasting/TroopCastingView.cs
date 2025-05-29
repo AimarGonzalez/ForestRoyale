@@ -1,4 +1,6 @@
+using ForestLib.ExtensionMethods;
 using ForestRoyale.Gameplay.Cards;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,28 +24,31 @@ namespace ForestRoyale.Gameplay.Combat
 			Deployed,
 		}
 
+		[SerializeField]
+		private Transform _castingMarker;
+
 		[ShowInInspector, ReadOnly]
 		private CastingState _castingState;
 
 		[ShowInInspector, ReadOnly]
 		private TroopCardData _cardData;
-		
+
 		// maxDistance is how far to check for a walkable position from the given position
 		[ShowInInspector]
 		private float _maxDistance = 10.0f;
 
-		private GameObject _troop;
+		private Transform _troop;
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
-		public GameObject Troop => _troop;
+		public Transform Troop => _troop;
 
-		public void SetTroop(TroopCardData cardData, GameObject troop)
+		public void SetTroop(TroopCardData cardData, Transform troop)
 		{
 			_cardData = cardData;
 			_troop = troop;
 
-			_troop.transform.SetParent(this.transform, false);
+			_troop.SetParent(this.transform, false);
 
 			SetState(CastingState.Preview);
 		}
@@ -90,12 +95,39 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			if (_castingState == CastingState.Preview)
 			{
+				Vector3 tilePosition = GetClosestTilePosition();
+				_castingMarker.position = tilePosition;
+				_troop.position = tilePosition;
 			}
 
 			if (_castingState == CastingState.Deploying)
 			{
 				// TODO: Implement
 			}
+		}
+
+		public void Cast(Transform charactersRoot)
+		{
+			Debug.Log($"CastingTroop - ({_cardData.CardName})");
+			if (_troop.HasComponent<UnitRoot>())
+			{
+				// Single unit
+				_troop.SetParent(charactersRoot);
+			}
+			else
+			{
+				// Multiple units
+				foreach (Transform child in _troop)
+				{
+					child.SetParent(charactersRoot);
+				}
+				
+				Destroy(_troop.gameObject);
+			}
+
+			// TODO: implement states
+			SetState(CastingState.Deploying);
+			SetState(CastingState.Deployed);
 		}
 
 		protected void OnDrawGizmos()

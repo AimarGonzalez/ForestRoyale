@@ -41,9 +41,9 @@ namespace Game.UI
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[ShowInInspector, Unity.Collections.ReadOnly]
 		private State _state = State.NotSelected;
-		
+
 		private Camera _camera;
-		
+
 		// Card scaling
 		private UIFollower _mouseFollower;
 		private RectTransform _cardRectTransform;
@@ -52,7 +52,7 @@ namespace Game.UI
 
 		// Card casting
 		private float _castingLinePosition;
-		
+
 		[Inject]
 		private CardCastingViewFactory _cardCastingViewFactory;
 		private ICastingView _castingView;
@@ -73,7 +73,7 @@ namespace Game.UI
 		// dynamic values depending on camera or scene context
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
 		private float SlotHeigh => _slotRectTransform.rect.height * _slotRectTransform.lossyScale.y;
-		
+
 		public bool IsCastPreviewVisible => _state == State.CastPreview;
 
 		public CardData CardData
@@ -131,7 +131,7 @@ namespace Game.UI
 			}
 
 			_cardView.gameObject.SetActive(true);
-			
+
 			if (_cardPicture != null)
 			{
 				_cardPicture.sprite = _cardData.Portrait;
@@ -170,8 +170,8 @@ namespace Game.UI
 				case State.Selected:
 				case State.Empty:
 					// do nothing
-					return;		
-					
+					return;
+
 				case State.DraggingCard:
 				case State.CastPreview:
 					Debug.LogError($"The player shouldn't be able to click on a card in this state ({_state})");
@@ -231,13 +231,14 @@ namespace Game.UI
 			{
 				return;
 			}
-			
+
 			State oldState = _state;
 			_state = newState;
 
 			// On Exit State
 			switch (oldState)
-			{	case State.Empty:
+			{
+				case State.Empty:
 					break;
 				case State.NotSelected:
 					break;
@@ -252,7 +253,7 @@ namespace Game.UI
 					break;
 			}
 
-			
+
 
 			// On Enter State
 			switch (newState)
@@ -261,21 +262,21 @@ namespace Game.UI
 					_cardView.gameObject.SetActive(true);
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor;
 					break;
-				
+
 				case State.Selected:
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
 					break;
-				
+
 				case State.DraggingCard:
 					_mouseFollower.enabled = true;
 					break;
-				
+
 				case State.CastPreview:
 					_cardView.gameObject.SetActive(false);
 					_castingView ??= _cardCastingViewFactory.BuildCastingPreview(_cardData);
 					_castingView.SetActive(true);
 					break;
-				
+
 				case State.Empty:
 					_cardView.gameObject.SetActive(false);
 					_castingView.SetActive(false);
@@ -315,7 +316,7 @@ namespace Game.UI
 					ReduceSizeWhenApproachingCastingLine();
 					break;
 				case State.CastPreview:
-					UpdateSpawnPreview();
+					// managed in ICastingView
 					break;
 			}
 		}
@@ -341,32 +342,12 @@ namespace Game.UI
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 		}
 
-		public void CastComplete()
+		public void Cast(Transform _charactersRoot)
 		{
+			_castingView.Cast(_charactersRoot);
+			
 			SetState(State.Empty);
 			CardData = null;
-		}
-
-		private void UpdateSpawnPreview()
-		{
-			if (_cardData == null)
-			{
-				Debug.LogError("CardSlot - UpdateSpawnPreview: _cardData is null");
-				return;
-			}
-
-
-			/*
-			switch (_cardData.CardType)
-			{
-				case CardType.Character:
-					break;
-				case CardType.Spell:
-					break;
-				case CardType.Building:
-					break;
-			}
-			*/
 		}
 
 		private void OnDrawGizmos()

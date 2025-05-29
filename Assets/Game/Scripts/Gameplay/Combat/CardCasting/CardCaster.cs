@@ -1,6 +1,8 @@
+using ForestLib.ExtensionMethods;
 using ForestLib.Utils;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Systems;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Game.UI;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
@@ -102,7 +104,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			//TODO: Implement
 			// - check elixir
-			
+
 			return cardSlot.IsCastPreviewVisible;
 		}
 
@@ -117,7 +119,7 @@ namespace ForestRoyale.Gameplay.Combat
 				case SpellCardData spellCardData:
 					//TODO: Implement
 					break;
-					
+
 				default:
 					Debug.LogError($"{nameof(CardCaster)} - Cast: Unknown card type {cardSlot.CardData.GetType().Name}");
 					break;
@@ -126,13 +128,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void CastTroop(CardSlot cardSlot)
 		{
-			Debug.Log($"CastingTroop - ({cardSlot.CardData.CardName})");
-			if (cardSlot.CastingView is TroopCastingView troopCastingView)
-			{
-				troopCastingView.Troop.transform.SetParent(_charactersRoot);	
-			}
-
-			cardSlot.CastComplete();
+			cardSlot.Cast(_charactersRoot);
 		}
 
 		// -------- GIZMOS----------------------------------------
