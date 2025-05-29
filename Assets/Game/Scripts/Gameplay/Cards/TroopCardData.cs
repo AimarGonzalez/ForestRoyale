@@ -24,6 +24,7 @@ namespace ForestRoyale.Gameplay.Cards
 
 		// Implement IUnitCard interface
 		public UnitSO UnitSO => _unitSO;
+		public GameObject UnitPrefab => _prefab;
 
 #if UNITY_EDITOR
 		public static TroopCardData Build(

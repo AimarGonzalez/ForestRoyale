@@ -23,8 +23,8 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private ApplicationEvents _applicationEvents;
 
-		//[Inject]
-		//private CharacterFactory _characterFactory;
+		[Inject]
+		private CardCastingViewFactory _cardCastingViewFactory;
 
 		private Hand _hand;
 		private Deck _deck;
@@ -93,7 +93,8 @@ namespace ForestRoyale.Gameplay.Combat
 			// If card can't be casted, move it back to the hand
 			if (CanCastCard(cardData))
 			{
-				//TODO: Cast card
+				GameObject castingPreview = _cardCastingViewFactory.BuildCastingPreview(cardData);
+				// TODO: store in dictionary
 			}
 			else
 			{
@@ -106,9 +107,19 @@ namespace ForestRoyale.Gameplay.Combat
 			return false; //TODO: Implement
 		}
 
-		// ------------------------------------------------
+		public void BuildCastingPreview(CardData cardData)
+		{
+
+		}
+
+		// -------- GIZMOS----------------------------------------
 
 		private void OnDrawGizmos()
+		{
+			DrawCastingLineGizmo();
+		}
+
+		private void DrawCastingLineGizmo()
 		{
 			Camera camera = Camera.main;
 			if (camera == null)
@@ -118,5 +129,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 			GizmoUtils.DrawHorizontalLineOnScreen(_castingLinePosition * camera.pixelHeight, Color.red);
 		}
+
+		// ------------------------------------------------
 	}
 }
