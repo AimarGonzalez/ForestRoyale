@@ -51,6 +51,7 @@ namespace ForestRoyale.Gameplay.Systems
 			if (troop.Target != newTarget)
 			{
 				troop.Target = newTarget;
+				troop.MovementComponent.UpdateTarget();
 				OnTargetChanged?.Invoke(troop);
 			}
 		}

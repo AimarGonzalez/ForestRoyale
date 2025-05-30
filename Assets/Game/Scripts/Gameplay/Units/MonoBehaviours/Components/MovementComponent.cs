@@ -1,6 +1,8 @@
 using ForestLib.ExtensionMethods;
+using ForestLib.Utils;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +26,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[SerializeField]
 		[Required]
 		private NavMeshObstacle _obstacle;
+		
+		private bool _deferredTargetUpdate = false;
 
 		public Collider2D Body => _body;
 		public NavMeshAgent Agent => _agent;
@@ -69,21 +73,33 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			await Move();
 
 			Assert.NotNull(Unit.Target);
-			_agent.destination = Unit.Target.Position;
+			UpdateTarget();
 		}
 
 		public async Awaitable Move()
 		{
-			if (_obstacle.enabled)
+			if (_obstacle.enabled && !_agent.enabled)
 			{
 				_obstacle.enabled = false;
 
 				// BUGFIX: Wait next frame to let the navmesh remove the hole carved by the obstacle.
 				// Otherwise the agent glitches out of the hole instantly and looks terrible.
 				await Awaitable.NextFrameAsync();
+				
+				_agent.enabled = true;
 			}
-
-			_agent.enabled = true;
+		}
+		
+		public void UpdateTarget()
+		{
+			if (_agent.enabled)
+			{
+				_agent.destination = Unit.Target.Position;
+			}
+			else
+			{
+				_deferredTargetUpdate = true;
+			}
 		}
 
 		public void Stop()
@@ -91,6 +107,15 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_agent.enabled = false;
 
 			_obstacle.enabled = true;
+		}
+
+		public void Update()
+		{
+			if (_deferredTargetUpdate)
+			{
+				UpdateTarget();
+				_deferredTargetUpdate = false;
+			}
 		}
 
 		public void LateUpdate()
