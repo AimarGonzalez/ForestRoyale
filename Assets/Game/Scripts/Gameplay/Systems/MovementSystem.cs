@@ -43,7 +43,8 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 					
 					case UnitState.MovingToTarget:
-						_ = troop.MovementComponent.MoveToTarget();
+						troop.MovementComponent.Move();
+						troop.MovementComponent.UpdateMoveDestination();
 						break;
 
 					case UnitState.Attacking:

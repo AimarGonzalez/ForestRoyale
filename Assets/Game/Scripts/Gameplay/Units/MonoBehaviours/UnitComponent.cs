@@ -20,6 +20,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private Unit _unit;
 
 		public Unit Unit => _unit;
+		public UnitRoot Root => _root;
 
 		protected virtual void Awake()
 		{

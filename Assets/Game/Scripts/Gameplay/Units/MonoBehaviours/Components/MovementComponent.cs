@@ -27,8 +27,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[Required]
 		private NavMeshObstacle _obstacle;
 		
-		private bool _deferredTargetUpdate = false;
-
 		public Collider2D Body => _body;
 		public NavMeshAgent Agent => _agent;
 
@@ -45,7 +43,22 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_agent ??= GetComponentInChildren<NavMeshAgent>();
 			_obstacle ??= GetComponentInChildren<NavMeshObstacle>();
 
+			Subscribe();
+
 			Stop();
+		}
+
+		private void Subscribe()
+		{
+		}
+
+		private void Unsubscribe()
+		{
+		}
+
+		protected override void OnDestroy()
+		{
+			Unsubscribe();
 		}
 
 		protected override void OnUnitChanged()
@@ -68,15 +81,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 		}
 
-		public async Awaitable MoveToTarget()
+		public void UpdateMoveDestination()
 		{
-			await Move();
+			if (!_agent.enabled)
+			{
+				// DEFERRED:The target update is just deferred. It will be updated on next call to Move().
+				// This protects a warning that triggers if you set a destination to a disabled agent.
+				return;
+			}
 
-			Assert.NotNull(Unit.Target);
-			UpdateTarget();
+			_agent.destination = Unit.Target.Position;
 		}
 
-		public async Awaitable Move()
+		public async void Move()
 		{
 			if (_obstacle.enabled && !_agent.enabled)
 			{
@@ -85,37 +102,18 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				// BUGFIX: Wait next frame to let the navmesh remove the hole carved by the obstacle.
 				// Otherwise the agent glitches out of the hole instantly and looks terrible.
 				await Awaitable.NextFrameAsync();
-				
+
 				_agent.enabled = true;
+
+				UpdateMoveDestination();
 			}
 		}
 		
-		public void UpdateTarget()
-		{
-			if (_agent.enabled)
-			{
-				_agent.destination = Unit.Target.Position;
-			}
-			else
-			{
-				_deferredTargetUpdate = true;
-			}
-		}
-
 		public void Stop()
 		{
 			_agent.enabled = false;
 
 			_obstacle.enabled = true;
-		}
-
-		public void Update()
-		{
-			if (_deferredTargetUpdate)
-			{
-				UpdateTarget();
-				_deferredTargetUpdate = false;
-			}
 		}
 
 		public void LateUpdate()

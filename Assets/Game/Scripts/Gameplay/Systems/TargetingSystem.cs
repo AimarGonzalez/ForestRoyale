@@ -10,8 +10,6 @@ namespace ForestRoyale.Gameplay.Systems
 {
 	public class TargetingSystem
 	{
-		public event Action<Unit> OnTargetChanged;
-
 		private readonly ArenaEvents _arenaEvents;
 		private readonly HashSet<Unit> _activeUnits;
 
@@ -51,8 +49,6 @@ namespace ForestRoyale.Gameplay.Systems
 			if (troop.Target != newTarget)
 			{
 				troop.Target = newTarget;
-				troop.MovementComponent.UpdateTarget();
-				OnTargetChanged?.Invoke(troop);
 			}
 		}
 
