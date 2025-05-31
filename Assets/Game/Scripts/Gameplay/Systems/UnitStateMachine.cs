@@ -39,6 +39,12 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				switch (troop.State)
 				{	
+					case UnitState.CastingPreview:
+					case UnitState.Dying:
+					case UnitState.Dead:
+						// Do nothing
+						break;
+					
 					case UnitState.Idle:
 						if (troop.HasTarget)
 						{
