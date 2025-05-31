@@ -40,30 +40,28 @@ namespace ForestRoyale.Gameplay.Combat
 		[ShowInInspector]
 		private float _maxDistance = 10.0f;
 
-		private Transform _squadTransform;
+		private Transform squadTransform;
 		
 		private List<UnitRoot> _chars = new List<UnitRoot>();
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
-		public Transform SquadTransform => _squadTransform;
 
 		public void SetTroop(TroopCardData cardData, Transform troop, ArenaTeam team, UnitState state)
 		{
 			_cardData = cardData;
-			_squadTransform = troop;
 
 			SetState(CastingState.Preview);
 
-			SetParentAndCacheTroops();
+			SetParentAndCacheTroops(troop);
 			SetStartingProperties(team, state);
 		}
 
-		private void SetParentAndCacheTroops()
+		private void SetParentAndCacheTroops(Transform squadTransform)
 		{
 			_chars.Clear();
 
-			if (_squadTransform.TryGetComponent(out UnitRoot singleCharacter))
+			if (squadTransform.TryGetComponent(out UnitRoot singleCharacter))
 			{
 				// Single unit
 				_chars.Add(singleCharacter);
@@ -72,14 +70,14 @@ namespace ForestRoyale.Gameplay.Combat
 			else
 			{
 				// Multiple units
-				foreach (UnitRoot squadCharacter in _squadTransform)
+				foreach (UnitRoot squadCharacter in squadTransform)
 				{
 					_chars.Add(squadCharacter);
 					squadCharacter.transform.SetParent(transform, false);
 				}
 				
 				// Get rid of the squad root object
-				Destroy(_squadTransform.gameObject);
+				Destroy(squadTransform.gameObject);
 			}
 		}
 
@@ -135,8 +133,7 @@ namespace ForestRoyale.Gameplay.Combat
 			if (_castingState == CastingState.Preview)
 			{
 				Vector3 tilePosition = GetClosestTilePosition();
-				_castingMarker.position = tilePosition;
-				_squadTransform.position = tilePosition;
+				transform.position = tilePosition;
 			}
 
 			if (_castingState == CastingState.Deploying)
@@ -182,7 +179,7 @@ namespace ForestRoyale.Gameplay.Combat
 		protected Vector3 GetClosestTilePosition()
 		{
 			Vector3 mousePosition = Input.mousePosition;
-			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x,mousePosition.y, 20f));
 
 			Vector3 position;
 			if (GetClosestWalkablePosition(worldPosition, out position))
