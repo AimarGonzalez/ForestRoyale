@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
-using System;
-using System.Diagnostics;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -38,7 +36,11 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				switch (troop.State)
 				{
+					case UnitState.CastingPreview:
 					case UnitState.Idle:
+					case UnitState.Attacking:
+					case UnitState.Dying:
+					case UnitState.Dead:
 						troop.MovementComponent.Stop();
 						break;
 					
@@ -46,13 +48,7 @@ namespace ForestRoyale.Gameplay.Systems
 						troop.MovementComponent.Move();
 						troop.MovementComponent.UpdateMoveDestination();
 						break;
-
-					case UnitState.Attacking:
-					case UnitState.Dying:
-					case UnitState.Dead:
-						troop.MovementComponent.Stop();
-						break;
-
+					
 					default:
 						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
 						break;

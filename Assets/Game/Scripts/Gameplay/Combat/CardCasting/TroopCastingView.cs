@@ -1,7 +1,10 @@
 using ForestLib.ExtensionMethods;
 using ForestRoyale.Gameplay.Cards;
+using ForestRoyale.Gameplay.Cards.CardStats;
+using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,20 +40,56 @@ namespace ForestRoyale.Gameplay.Combat
 		[ShowInInspector]
 		private float _maxDistance = 10.0f;
 
-		private Transform _troop;
+		private Transform _squadTransform;
+		
+		private List<UnitRoot> _chars = new List<UnitRoot>();
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
-		public Transform Troop => _troop;
+		public Transform SquadTransform => _squadTransform;
 
-		public void SetTroop(TroopCardData cardData, Transform troop)
+		public void SetTroop(TroopCardData cardData, Transform troop, ArenaTeam team, UnitState state)
 		{
 			_cardData = cardData;
-			_troop = troop;
-
-			_troop.SetParent(this.transform, false);
+			_squadTransform = troop;
 
 			SetState(CastingState.Preview);
+
+			SetParentAndCacheTroops();
+			SetStartingProperties(team, state);
+		}
+
+		private void SetParentAndCacheTroops()
+		{
+			_chars.Clear();
+
+			if (_squadTransform.TryGetComponent(out UnitRoot singleCharacter))
+			{
+				// Single unit
+				_chars.Add(singleCharacter);
+				singleCharacter.transform.SetParent(transform, false);
+			}
+			else
+			{
+				// Multiple units
+				foreach (UnitRoot squadCharacter in _squadTransform)
+				{
+					_chars.Add(squadCharacter);
+					squadCharacter.transform.SetParent(transform, false);
+				}
+				
+				// Get rid of the squad root object
+				Destroy(_squadTransform.gameObject);
+			}
+		}
+
+		private void SetStartingProperties(ArenaTeam team, UnitState state)
+		{
+			foreach (UnitRoot character in _chars)
+			{
+				character.StartingTeam = team;
+				character.StartingState = state;
+			}
 		}
 
 		private void SetState(CastingState newCastingState)
@@ -97,7 +136,7 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				Vector3 tilePosition = GetClosestTilePosition();
 				_castingMarker.position = tilePosition;
-				_troop.position = tilePosition;
+				_squadTransform.position = tilePosition;
 			}
 
 			if (_castingState == CastingState.Deploying)
@@ -108,21 +147,9 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void Cast(Transform charactersRoot)
 		{
-			Debug.Log($"CastingTroop - ({_cardData.CardName})");
-			if (_troop.HasComponent<UnitRoot>())
+			foreach (UnitRoot character in _chars)
 			{
-				// Single unit
-				_troop.SetParent(charactersRoot);
-			}
-			else
-			{
-				// Multiple units
-				foreach (Transform child in _troop)
-				{
-					child.SetParent(charactersRoot);
-				}
-				
-				Destroy(_troop.gameObject);
+				character.transform.SetParent(charactersRoot);
 			}
 
 			// TODO: implement states
@@ -133,16 +160,16 @@ namespace ForestRoyale.Gameplay.Combat
 		protected void OnDrawGizmos()
 		{
 			Vector3 mousePosition = Input.mousePosition;
-			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x,mousePosition.y, 20f));
 
 			Gizmos.color = Color.blue;
-			Gizmos.DrawSphere(worldPosition, 1f);
+			Gizmos.DrawSphere(worldPosition, 0.5f);
 
 			Vector3 position;
 			if (GetClosestWalkablePosition(worldPosition, out position))
 			{
 				Gizmos.color = Color.red;
-				Gizmos.DrawSphere(position, 1f);
+				Gizmos.DrawSphere(position, 2f);
 				Gizmos.DrawLine(worldPosition, position);
 			}
 		}

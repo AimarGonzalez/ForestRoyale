@@ -3732,7 +3732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b675085bf02ce49acac3a1d85cda08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeScale: 1
+  _timeScale: 0.06
   _minTimeScale: 0.001
   _maxTimeScale: 100
 --- !u!1 &1176700497
@@ -6327,7 +6327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castingArea: {fileID: 1763779633}
-  _troopCastingViewPrefab: {fileID: 1999095385133728814, guid: da931e84f4e814342a81592850a3175e, type: 3}
+  _troopCastingViewPrefab: {fileID: 43962531971720863, guid: da931e84f4e814342a81592850a3175e, type: 3}
 --- !u!1 &1964693515
 GameObject:
   m_ObjectHideFlags: 0

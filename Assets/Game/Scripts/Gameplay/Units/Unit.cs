@@ -92,7 +92,7 @@ namespace ForestRoyale.Gameplay.Units
 		}
 		*/
 
-		public Unit(CardData cardOrigin, UnitRoot root, ArenaTeam team, UnitSO unitSO)
+		public Unit(CardData cardOrigin, UnitRoot root, ArenaTeam team, UnitSO unitSO, UnitState initialState)
 		{
 			_cardOrigin = cardOrigin;
 			_unitRoot = root;
@@ -104,6 +104,7 @@ namespace ForestRoyale.Gameplay.Units
 			_unitStats = unitSO.UnitStats;
 			_combatStats = unitSO.CombatStats;
 			_health = _unitStats.HitPoints;
+			_state = initialState;
 
 			_id = _unitRoot.name;
 		}

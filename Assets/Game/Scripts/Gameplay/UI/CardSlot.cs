@@ -52,11 +52,11 @@ namespace Game.UI
 
 		// Card casting
 		private float _castingLinePosition;
-
+		
 		[Inject]
 		private CardCastingViewFactory _cardCastingViewFactory;
 		private ICastingView _castingView;
-
+		
 		// Gizmo: internal values for gizmo drawing
 		private float _cardDistanceToLine;
 		private float _slotDistanceToLine;
@@ -273,7 +273,9 @@ namespace Game.UI
 
 				case State.CastPreview:
 					_cardView.gameObject.SetActive(false);
-					_castingView ??= _cardCastingViewFactory.BuildCastingPreview(_cardData);
+					
+					//TODO: pool casting views, instead of caching them
+					_castingView ??= _cardCastingViewFactory.BuildCastingPreview(_cardData, ArenaTeam.Player, _castingView);
 					_castingView.SetActive(true);
 					break;
 
@@ -309,6 +311,7 @@ namespace Game.UI
 			{
 				case State.NotSelected:
 				case State.Selected:
+					_scale = 1f;
 					// do nothing
 					break;
 
@@ -335,9 +338,10 @@ namespace Game.UI
 		{
 			_cardDistanceToLine = CastingLinePosition - _cardRectTransform.position.y;
 			_slotDistanceToLine = CastingLinePosition - _slotRectTransform.position.y;
+			_slotDistanceToLine = Mathf.Max(_slotDistanceToLine, 0.001f);
 
 			float margin = SlotHeigh * 0.5f;
-			float ratio = _cardDistanceToLine / (_slotDistanceToLine - margin);
+			float ratio = (_cardDistanceToLine + margin) / _slotDistanceToLine;
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 		}

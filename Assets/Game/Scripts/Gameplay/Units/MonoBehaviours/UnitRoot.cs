@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
@@ -18,9 +19,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		public Action<Unit> OnUnitChanged;
 
 		[SerializeField]
-		private ArenaTeam _team;
+		private ArenaTeam _startingTeam;
 		[SerializeField]
 		private UnitSO _startingUnitSO;
+		[SerializeField]
+		private UnitState _startingState = UnitState.Idle;
 
 		[ShowInInspector, DisableInEditorMode]
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
@@ -53,7 +56,26 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		// Properties
 		//--------------------------------
 
-		public ArenaTeam Team => _team;
+		public ArenaTeam StartingTeam
+		{
+			get => _startingTeam;
+			set
+			{
+				// can be set from the TroopCastingView
+				_startingTeam = value;
+			}
+		}
+
+		public UnitState StartingState
+		{
+			get => _startingState;
+			set
+			{
+				// can be set from the TroopCastingView
+				_startingState = value;
+			}
+		}
+		
 		public Unit Unit => _unit;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
@@ -93,7 +115,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
-				Unit unit = new Unit(null, this, _team, _startingUnitSO);
+				Unit unit = new Unit(null, this, _startingTeam, _startingUnitSO, _startingState);
 				SetUnit(unit);
 			}
 		}
