@@ -1,3 +1,4 @@
+using ForestLib.ExtensionMethods;
 using ForestLib.Utils;
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards;
@@ -5,12 +6,10 @@ using ForestRoyale.Gameplay.Combat;
 using Sirenix.OdinInspector;
 using System;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using VContainer;
-using Object = System.Object;
 
 namespace Game.UI
 {
@@ -69,6 +68,9 @@ namespace Game.UI
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[SerializeField]
 		private bool _showDebugPosition = true;
+
+		private const float SELECTION_OFFSET = 40;
+		private Vector2 _touchOffset;
 
 		// dynamic values depending on camera or scene context
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
@@ -163,11 +165,15 @@ namespace Game.UI
 			switch (_state)
 			{
 				case State.NotSelected:
+					_touchOffset = eventData.pressPosition - _cardView.position.xy();
 					SetState(State.Selected);
 					OnSelected?.Invoke(this, _cardData);
 					break;
 
 				case State.Selected:
+					_touchOffset = eventData.pressPosition - _cardView.position.xy();
+					break;
+				
 				case State.Empty:
 					// do nothing
 					return;
@@ -185,7 +191,23 @@ namespace Game.UI
 
 		void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
 		{
-			StartDragging();
+			switch (_state)
+			{
+				case State.Selected:
+				case State.DraggingCard:
+				case State.CastPreview:
+					StartDragging();
+					break;
+
+				case State.Empty:
+				case State.NotSelected:
+					Debug.LogError($"The player shouldn't be able to drag a card in this state ({_state})");
+					break;
+
+				default:
+					Debug.LogError($"Unknown state {_state}");
+					break;
+			}
 		}
 
 		void IDragHandler.OnDrag(PointerEventData eventData)
@@ -264,10 +286,11 @@ namespace Game.UI
 					break;
 
 				case State.Selected:
-					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, 40);
+					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, SELECTION_OFFSET);
 					break;
 
 				case State.DraggingCard:
+					_mouseFollower.Offset = -_touchOffset.xy();
 					_mouseFollower.enabled = true;
 					break;
 
