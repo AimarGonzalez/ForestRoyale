@@ -20,7 +20,7 @@ namespace ForestLib.Utils
 
 		[Tooltip("How quickly to move toward the target")]
 		[Range(1f, 100f)]
-		[SerializeField] private float _easing = 20f;
+		[SerializeField] private float _easing = 6f;
 
 		// TimeToTarget is a gentle approximation of the time it takes to reach the target. 
 		// On the estimation time the follower will be at 99.9% of the distance.

@@ -24,8 +24,7 @@ namespace ForestLib.Utils
 		[BoxGroup("Easing settings"), PropertyOrder(3)]
 		[Tooltip("How quickly to move toward the target")]
 		[Range(1f, 100f)]
-		[SuffixLabel("sec.")]
-		[SerializeField] private float _easing = 1f;
+		[SerializeField] private float _easing = 6f;
 
 		// TimeToTarget is a gentle approximation of the time it takes to reach the target. 
 		// On the estimation time the follower will be at 99.9% of the distance.
@@ -46,7 +45,7 @@ namespace ForestLib.Utils
 		[BoxGroup("Easing settings"), PropertyOrder(6)]
 		[Tooltip("Whether to follow on the Y axis")]
 		[SerializeField] private bool _followY = true;
-		
+
 		[BoxGroup("Easing settings"), PropertyOrder(7)]
 		[Tooltip("Offset from the target position")]
 		[SerializeField] private Vector2 _offset = Vector2.zero;
@@ -55,20 +54,20 @@ namespace ForestLib.Utils
 		[Tooltip("Minimum distance to keep from target")]
 		[SerializeField] private float _keepDistanceToTarget = 0f;
 
-		[BoxGroup("Update mode")]
+		[BoxGroup("Update mode"), PropertyOrder(20)]
 		[Tooltip("When to run the follow logic")]
 		[SerializeField] private UpdateType _updateType = UpdateType.Update;
 
 		[Tooltip("Whether the movement is affected by time scale")]
-		[BoxGroup("Update mode")]
+		[BoxGroup("Update mode"), PropertyOrder(21)]
 		[SerializeField] private bool _affectedByTimeScale = true;
 
-		
-		[BoxGroup("Advanced")]
+
+		[BoxGroup("Advanced"), PropertyOrder(30)]
 		[Tooltip("Camera used for UI canvas calculations (defaults to canvas camera or main camera)")]
 		[SerializeField] private Camera _canvasCamera;
 
-		[BoxGroup("Advanced")]
+		[BoxGroup("Advanced"), PropertyOrder(31)]
 		[Tooltip("Show debug information in game view")]
 		[SerializeField]
 		[OnValueChanged("SetupDebugUI")]
