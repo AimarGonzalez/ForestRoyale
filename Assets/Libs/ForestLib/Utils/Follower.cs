@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace ForestLib.Utils
@@ -12,94 +13,107 @@ namespace ForestLib.Utils
 	public class Follower : MonoBehaviour
 	{
 		[Tooltip("The target to follow")]
-		[SerializeField] private Transform target;
+		[SerializeField] private Transform _target;
 
 		[Tooltip("Whether to follow the cursor position instead of a target transform")]
-		[SerializeField] private bool targetCursor = false;
+		[SerializeField] private bool _targetCursor = false;
 
-		[Tooltip("How quickly to move toward the target (0-1, higher values = faster movement)")]
-		[Range(0.01f, 1f)]
-		[SerializeField] private float easing = 0.1f;
+		[Tooltip("How quickly to move toward the target")]
+		[Range(1f, 100f)]
+		[SerializeField] private float _easing = 20f;
+
+		// TimeToTarget is a gentle approximation of the time it takes to reach the target. 
+		// On the estimation time the follower will be at 99.9% of the distance.
+		// Consider implementing a snapping mechanism if this is not sufficient.
+		[ShowInInspector, ReadOnly]
+		[Tooltip("$" + nameof(TimeToTargetTooltip))]
+		public float TimeToTarget => 6f / _easing;
+		private string TimeToTargetTooltip => $"{TimeToTarget} is an aproximation.\n" +
+			$"The follower reaches 99% of the total distance in {TimeToTarget} seconds, " +
+			$"but it will really take {12f / _easing} seconds to completely reach the target.";
 
 		[Tooltip("Whether to follow on the X axis")]
-		[SerializeField] private bool followX = true;
+		[SerializeField] private bool _followX = true;
 
 		[Tooltip("Whether to follow on the Y axis")]
-		[SerializeField] private bool followY = true;
+		[SerializeField] private bool _followY = true;
 
 		[Tooltip("Whether to follow on the Z axis")]
-		[SerializeField] private bool followZ = true;
+		[SerializeField] private bool _followZ = true;
 
 		[Tooltip("Minimum distance to keep from target")]
-		[SerializeField] private float keepDistanceToTarget = 0f;
+		[SerializeField] private float _keepDistanceToTarget = 0f;
 
 		[Tooltip("When to run the follow logic")]
-		[SerializeField] private UpdateType updateType = UpdateType.Update;
+		[SerializeField] private UpdateType _updateType = UpdateType.Update;
+
+		[Tooltip("Whether the movement is affected by time scale")]
+		[SerializeField] private bool _affectedByTimeScale = true;
 
 		[Tooltip("Offset from the target position")]
-		[SerializeField] private Vector3 offset = Vector3.zero;
+		[SerializeField] private Vector3 _offset = Vector3.zero;
 
 		[Tooltip("Camera used for cursor position calculation (uses main camera if null)")]
-		[SerializeField] private Camera cursorCamera;
+		[SerializeField] private Camera _cursorCamera;
 
 		public Transform Target
 		{
-			get => target;
-			set => target = value;
+			get => _target;
+			set => _target = value;
 		}
 
 		public float Easing
 		{
-			get => easing;
-			set => easing = Mathf.Clamp01(value);
+			get => _easing;
+			set => _easing = Mathf.Clamp01(value);
 		}
 
 		public Vector3 Offset
 		{
-			get => offset;
-			set => offset = value;
+			get => _offset;
+			set => _offset = value;
 		}
 
 		public bool TargetCursor
 		{
-			get => targetCursor;
-			set => targetCursor = value;
+			get => _targetCursor;
+			set => _targetCursor = value;
 		}
 
 		private Camera _camera;
 
 		private void Awake()
 		{
-			_camera = cursorCamera != null ? cursorCamera : Camera.main;
+			_camera = _cursorCamera != null ? _cursorCamera : Camera.main;
 		}
 
 		private void Update()
 		{
-			if (updateType == UpdateType.Update)
+			if (_updateType == UpdateType.Update)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
 
 		private void LateUpdate()
 		{
-			if (updateType == UpdateType.LateUpdate)
+			if (_updateType == UpdateType.LateUpdate)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
 
 		private void FixedUpdate()
 		{
-			if (updateType == UpdateType.FixedUpdate)
+			if (_updateType == UpdateType.FixedUpdate)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
 
-		private void FollowTarget()
+		private void FollowTarget(float easing)
 		{
-			if (target == null && !targetCursor)
+			if (_target == null && !_targetCursor)
 			{
 				return;
 			}
@@ -107,40 +121,45 @@ namespace ForestLib.Utils
 			Vector3 currentPosition = transform.position;
 			Vector3 targetPosition;
 
-			if (targetCursor)
+			if (_targetCursor)
 			{
 				targetPosition = GetCursorWorldPosition();
 			}
 			else
 			{
-				targetPosition = target.position;
+				targetPosition = _target.position;
 			}
 
-			targetPosition += offset;
+			targetPosition += _offset;
 			Vector3 newPosition = currentPosition;
 
-			if (followX)
+			float deltaTime = _affectedByTimeScale ? Time.deltaTime : Time.unscaledDeltaTime;
+
+			// This formula ensures the movement is consistent regardless of the frame rate
+			float consistentEasing = 1f - Mathf.Exp(-deltaTime * easing);
+
+			if (_followX)
 			{
-				newPosition.x = Mathf.Lerp(currentPosition.x, targetPosition.x, easing);
+				newPosition.x = Mathf.Lerp(currentPosition.x, targetPosition.x, consistentEasing);
 			}
 
-			if (followY)
+			if (_followY)
 			{
-				newPosition.y = Mathf.Lerp(currentPosition.y, targetPosition.y, easing);
+				newPosition.y = Mathf.Lerp(currentPosition.y, targetPosition.y, consistentEasing);
 			}
 
-			if (followZ)
+			if (_followZ)
 			{
-				newPosition.z = Mathf.Lerp(currentPosition.z, targetPosition.z, easing);
+				newPosition.z = Mathf.Lerp(currentPosition.z, targetPosition.z, consistentEasing);
 			}
 
-			if (keepDistanceToTarget > 0)
+			if (_keepDistanceToTarget > 0)
 			{
 				float distance = Vector3.Distance(newPosition, targetPosition);
-				if (distance < keepDistanceToTarget)
+				if (distance < _keepDistanceToTarget)
 				{
 					Vector3 direction = (newPosition - targetPosition).normalized;
-					newPosition = targetPosition + (direction * keepDistanceToTarget);
+					newPosition = targetPosition + (direction * _keepDistanceToTarget);
 				}
 			}
 
@@ -158,6 +177,11 @@ namespace ForestLib.Utils
 			Vector3 mousePos = Input.mousePosition;
 			mousePos.z = transform.position.z - _camera.transform.position.z;
 			return _camera.ScreenToWorldPoint(mousePos);
+		}
+
+		public void JumpToTargetPosition()
+		{
+			FollowTarget(9999f);
 		}
 	}
 }

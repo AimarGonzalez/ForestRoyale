@@ -14,34 +14,61 @@ namespace ForestLib.Utils
 			Object,
 		}
 
+		[Header("Target")]
 		[Tooltip("Whether to follow the mouse/touch position instead of a target transform")]
 		[SerializeField] private TargetMode _targetMode = TargetMode.Mouse;
 
-		[Tooltip("The target to follow")]
+		[Tooltip("The target to follow"), ShowIf("_targetMode", TargetMode.Object)]
 		[SerializeField] private Transform _targetObject;
 
-		[Tooltip("How quickly to move toward the target (0-1, higher values = faster movement)")]
-		[Range(0.01f, 1f)]
-		[SerializeField] private float _easing = 0.1f;
+		[BoxGroup("Easing settings"), PropertyOrder(3)]
+		[Tooltip("How quickly to move toward the target")]
+		[Range(1f, 100f)]
+		[SuffixLabel("sec.")]
+		[SerializeField] private float _easing = 1f;
 
+		// TimeToTarget is a gentle approximation of the time it takes to reach the target. 
+		// On the estimation time the follower will be at 99.9% of the distance.
+		// Consider implementing a snapping mechanism if this is not sufficient.
+		[BoxGroup("Easing settings"), PropertyOrder(4)]
+		[ShowInInspector, ReadOnly]
+		[SuffixLabel("sec.")]
+		[Tooltip("$" + nameof(TimeToTargetTooltip))]
+		public float TimeToTarget => 6f / _easing;
+		private string TimeToTargetTooltip => $"{TimeToTarget} is an aproximation.\n" +
+											  $"The follower reaches 99% of the total distance in {TimeToTarget} seconds, " +
+											  $"but it will really take {12f / _easing} seconds to completely reach the target.";
+
+		[BoxGroup("Easing settings"), PropertyOrder(5)]
 		[Tooltip("Whether to follow on the X axis")]
 		[SerializeField] private bool _followX = true;
 
+		[BoxGroup("Easing settings"), PropertyOrder(6)]
 		[Tooltip("Whether to follow on the Y axis")]
 		[SerializeField] private bool _followY = true;
-
-		[Tooltip("Minimum distance to keep from target")]
-		[SerializeField] private float _keepDistanceToTarget = 0f;
-
-		[Tooltip("When to run the follow logic")]
-		[SerializeField] private UpdateType _updateType = UpdateType.Update;
-
+		
+		[BoxGroup("Easing settings"), PropertyOrder(7)]
 		[Tooltip("Offset from the target position")]
 		[SerializeField] private Vector2 _offset = Vector2.zero;
 
+		[BoxGroup("Easing settings"), PropertyOrder(8)]
+		[Tooltip("Minimum distance to keep from target")]
+		[SerializeField] private float _keepDistanceToTarget = 0f;
+
+		[BoxGroup("Update mode")]
+		[Tooltip("When to run the follow logic")]
+		[SerializeField] private UpdateType _updateType = UpdateType.Update;
+
+		[Tooltip("Whether the movement is affected by time scale")]
+		[BoxGroup("Update mode")]
+		[SerializeField] private bool _affectedByTimeScale = true;
+
+		
+		[BoxGroup("Advanced")]
 		[Tooltip("Camera used for UI canvas calculations (defaults to canvas camera or main camera)")]
 		[SerializeField] private Camera _canvasCamera;
 
+		[BoxGroup("Advanced")]
 		[Tooltip("Show debug information in game view")]
 		[SerializeField]
 		[OnValueChanged("SetupDebugUI")]
@@ -160,14 +187,20 @@ namespace ForestLib.Utils
 			// Interpolate to target position
 			Vector2 originPosition = _rectTransform.position;
 			Vector2 newPosition = originPosition;
+
+			float deltaTime = _affectedByTimeScale ? Time.deltaTime : Time.unscaledDeltaTime;
+
+			// This formula ensures the movement is consistent regardless of the frame rate
+			float consistentEasing = 1f - Mathf.Exp(-deltaTime * easing);
+
 			if (_followX)
 			{
-				newPosition.x = Mathf.Lerp(originPosition.x, _targetScreenPos.x, easing);
+				newPosition.x = Mathf.Lerp(originPosition.x, _targetScreenPos.x, consistentEasing);
 			}
 
 			if (_followY)
 			{
-				newPosition.y = Mathf.Lerp(originPosition.y, _targetScreenPos.y, easing);
+				newPosition.y = Mathf.Lerp(originPosition.y, _targetScreenPos.y, consistentEasing);
 			}
 
 			// Keep distance to target
@@ -300,7 +333,7 @@ namespace ForestLib.Utils
 
 		public void JumpToTargetPosition()
 		{
-			FollowTarget(1f);
+			FollowTarget(9999f);
 		}
 	}
 }

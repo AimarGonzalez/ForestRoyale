@@ -196,16 +196,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565ab40fde8f9824e862eda78c283cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  targetMouse: 1
-  easing: 0.1
-  followX: 1
-  followY: 1
-  keepDistanceToTarget: 0
-  updateType: 0
-  offset: {x: 0, y: 0}
-  canvasCamera: {fileID: 0}
-  showDebugInfo: 0
+  _targetMode: 0
+  _targetObject: {fileID: 0}
+  _easing: 20
+  _followX: 1
+  _followY: 1
+  _offset: {x: 0, y: 0}
+  _keepDistanceToTarget: 0
+  _updateType: 0
+  _affectedByTimeScale: 0
+  _canvasCamera: {fileID: 0}
+  _showDebugInfo: 0
 --- !u!1 &7456295135048037836
 GameObject:
   m_ObjectHideFlags: 0
