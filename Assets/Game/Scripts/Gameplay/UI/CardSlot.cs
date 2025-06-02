@@ -201,6 +201,9 @@ namespace Game.UI
 					break;
 
 				case State.Empty:
+					// do nothing
+					break;
+				
 				case State.NotSelected:
 					Debug.LogError($"The player shouldn't be able to drag a card in this state ({_state})");
 					break;
@@ -372,7 +375,8 @@ namespace Game.UI
 			_slotDistanceToLine = Mathf.Max(_slotDistanceToLine, 0.001f);
 
 			float margin = SlotHeigh * 0.5f;
-			float ratio = (_mouseDistanceToLine + margin) / _slotDistanceToLine;
+			float safeSlotDistance = Mathf.Max(Mathf.Epsilon, _slotDistanceToLine - margin);
+			float ratio = (_mouseDistanceToLine) / safeSlotDistance;
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
 
 			ApplyScale();
