@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace ForestLib.Gameplay.Units
+namespace ForestLib.ExtensionMethods
 {
 	public static class Vector3ExtensionMethods
 	{

@@ -1,4 +1,4 @@
-﻿namespace ForestRoyale
+﻿namespace ForestLib.ExtensionMethods
 {
 	public static class StringExtensionMethods
 	{

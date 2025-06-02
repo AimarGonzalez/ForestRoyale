@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿/*
+ *  Vector Swizzle Extensions by Tyler Glaiel
+ *  Version 1.0
+ *  Sample Usage: 
+        Vector2 a = new Vector2(1, 2);
+        Vector4 b = a.yxxy();
+        Debug.Log(b); //outputs (2.0, 1.0, 1.0, 2.0)
+*/
+
+using UnityEngine;
 
 namespace ForestLib.ExtensionMethods
 {
@@ -36,7 +45,7 @@ namespace ForestLib.ExtensionMethods
         public static Vector4 yyyy(this Vector2 a) { return new Vector4(a.y, a.y, a.y, a.y); }
     }
  
-    static class Vector3Swizzles {
+    public static class Vector3Swizzles {
         //swizzles of size 2
         public static Vector2 xx(this Vector3 a) { return new Vector2(a.x, a.x); }
         public static Vector2 yx(this Vector3 a) { return new Vector2(a.y, a.x); }
@@ -159,7 +168,7 @@ namespace ForestLib.ExtensionMethods
         public static Vector4 zzzz(this Vector3 a) { return new Vector4(a.z, a.z, a.z, a.z); }
     }
  
-    static class Vector4Swizzles {
+    public static class Vector4Swizzles {
         //swizzles of size 2
         public static Vector2 xx(this Vector4 a) { return new Vector2(a.x, a.x); }
         public static Vector2 yx(this Vector4 a) { return new Vector2(a.y, a.x); }
