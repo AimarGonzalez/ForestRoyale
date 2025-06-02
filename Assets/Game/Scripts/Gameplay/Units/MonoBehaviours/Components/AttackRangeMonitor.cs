@@ -119,6 +119,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		private void HandleTriggerExit(Collider2D other)
 		{
+			if (!_isTargetInCombatRange)
+			{
+				return;
+			}
+			
 			if (_target == null)
 			{
 				return;
@@ -126,7 +131,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			
 			if (other == _bodyCollider)
 			{
-				// ignore own colliders
+				// ignore my own colliders
 				return;
 			}
 
