@@ -196,7 +196,8 @@ namespace ForestRoyale.Gameplay.Combat
 
 			// SamplePosition finds the nearest point on NavMesh within maxDistance
 			// If a point is found, hit.hit will be true and hit.position will contain the nearest valid position
-			bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.GetAreaFromName("Walkable"));
+			//bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.GetAreaFromName("Walkable"));
+			bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.AllAreas);
 
 			position = hit.position;
 			return hasWalkablePosition;

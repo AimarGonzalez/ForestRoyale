@@ -59,7 +59,12 @@ namespace ForestRoyale.Gameplay.Units
 		public UnitState State
 		{
 			get => _state;
-			set => _state = value;
+			set
+			{
+				UnitState oldState = _state;
+				_state = value;
+				_unitRoot.PublishStateChanged(oldState, _state);
+			}
 		}
 
 		public ArenaTeam Team => _team;

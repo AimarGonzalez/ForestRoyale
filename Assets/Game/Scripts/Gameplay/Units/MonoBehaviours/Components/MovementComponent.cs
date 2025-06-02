@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-	public class MovementComponent : UnitComponent
+	public class MovementComponent : UnitComponent, IUnitChangeListener
 	{
 		[SerializeField]
 		[InfoBox("Error: NavMeshAgent not found in root. Consider enabling 'followChildren''", InfoMessageType.Error, nameof(HasNoFollowChildrenNorMovementComponentInTheRoot))]
@@ -61,7 +61,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			Unsubscribe();
 		}
 
-		protected override void OnUnitChanged()
+		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
 		{
 			if (_agent == null)
 			{

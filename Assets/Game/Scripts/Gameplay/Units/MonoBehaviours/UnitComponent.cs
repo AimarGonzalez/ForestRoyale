@@ -8,7 +8,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 	public abstract class UnitComponent : MonoBehaviour
 	{
 
-		[SerializeField]
+		[SerializeField, ReadOnly]
 		[BoxGroup(DebugUI.Group)]
 		[FoldoutGroup(DebugUI.GroupUnitComponent), PropertyOrder(DebugUI.OrderUnitComponent)]
 		[SuffixLabel("auto populated")]
@@ -27,37 +27,24 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			_root ??= GetComponentInParent<UnitRoot>();
 			Debug.Assert(_root != null, "UnitComponent can't find a parent UnitRoot!");
 
-			_root.OnUnitChanged += OnUnitChanged_Internal;
-
 			_unit = _root.Unit;
+
+			_root.OnUnitChanged += OnUnitChanged;
 		}
 
 		protected virtual void OnDestroy()
 		{
 			if (_root)
 			{
-				_root.OnUnitChanged -= OnUnitChanged_Internal;
+				_root.OnUnitChanged -= OnUnitChanged;
 			}
 		}
 
-		private void OnUnitChanged_Internal(Unit newUnit)
+		private void OnUnitChanged(Unit oldUnit, Unit newUnit)
 		{
-			Unit oldUnit = _unit;
 			_unit = newUnit;
-			
-			OnUnitChanged(oldUnit, newUnit);
-			OnUnitChanged();
 		}
 		
-		protected virtual void OnUnitChanged(Unit oldUnit, Unit newUnit)
-		{
-			// implement in children
-		}
-
-		protected virtual void OnUnitChanged()
-		{
-			// implement in children
-		}
 		
 #if UNITY_EDITOR
 		public void ForceAwake(UnitRoot root)

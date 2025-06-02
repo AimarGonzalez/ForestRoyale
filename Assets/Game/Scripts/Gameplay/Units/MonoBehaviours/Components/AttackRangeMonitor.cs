@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-	public class AttackRangeMonitor : UnitComponent
+	public class AttackRangeMonitor : UnitComponent, IUnitChangeListener
 	{
 		[SerializeField]
 		[Required]
@@ -64,7 +64,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 		}
 
-		protected override void OnUnitChanged()
+		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
 		{
 			if (Unit != null)
 			{

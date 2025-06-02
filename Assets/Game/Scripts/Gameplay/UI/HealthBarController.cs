@@ -1,4 +1,5 @@
 using ForestRoyale.Core.UI;
+using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ForestRoyale.Gameplay.UI
 {
-	public class HealthBarController : UnitComponent
+	public class HealthBarController : UnitComponent, IUnitChangeListener
 	{
 		[Header("UI References")]
 		[Tooltip("The UI Image component that represents the health bar fill")]
@@ -29,10 +30,8 @@ namespace ForestRoyale.Gameplay.UI
 			SetupHealthBar();
 		}
 
-		protected override void OnUnitChanged()
+		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
 		{
-			base.OnUnitChanged();
-
 			SetupHealthBar();
 		}
 

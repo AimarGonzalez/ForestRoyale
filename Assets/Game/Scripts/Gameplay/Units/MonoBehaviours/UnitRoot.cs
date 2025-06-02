@@ -4,10 +4,10 @@ using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
@@ -16,7 +16,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 	[ExecuteInEditMode]
 	public class UnitRoot : MonoBehaviour
 	{
-		public Action<Unit> OnUnitChanged;
+		public Action<Unit, Unit> OnUnitChanged;
 
 		[SerializeField]
 		private ArenaTeam _startingTeam;
@@ -51,6 +51,52 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private IDeathComponent _deathComponent;
 		private Collider2DListener _colliderListener;
 
+		[NonSerialized]
+		private List<UnitComponent> _unitComponents = null;
+
+		[NonSerialized]
+		private List<IUnitChangeListener> _unitChangeListeners = null;
+
+		[NonSerialized]
+		private List<IUnitStateChangeListener> _unitStateListeners = null;
+
+		private List<UnitComponent> UnitComponents
+		{
+			get
+			{
+				if (_unitComponents == null)
+				{
+					_unitComponents = GetComponentsInChildren<UnitComponent>().ToList();
+				}
+				return _unitComponents;
+			}
+		}
+
+		private List<IUnitChangeListener> UnitListeners
+		{
+			get
+			{
+				if (_unitChangeListeners == null)
+				{
+					_unitChangeListeners = GetComponentsInChildren<IUnitChangeListener>().ToList();
+				}
+				return _unitChangeListeners;
+			}
+		}
+
+
+		private List<IUnitStateChangeListener> UnitStateListeners
+		{
+			get
+			{
+				if (_unitStateListeners == null)
+				{
+					_unitStateListeners = GetComponentsInChildren<IUnitStateChangeListener>().ToList();
+				}
+				return _unitStateListeners;
+			}
+		}
+
 
 		//--------------------------------
 		// Properties
@@ -75,7 +121,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_startingState = value;
 			}
 		}
-		
+
 		public Unit Unit => _unit;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
@@ -132,9 +178,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_arenaEvents.TriggerUnitDestroyed(_unit);
 			}
 
+			Unit oldUnit = _unit;
 			_unit = unit;
 
-			OnUnitChanged?.Invoke(Unit);
+			OnUnitChanged?.Invoke(oldUnit, unit);
+			PublishUnitChanged(oldUnit, unit);
 
 			if (_unit != null && Application.isPlaying)
 			{
@@ -220,9 +268,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin, () => _showDebugPanel = false);
 		}
-		
+
 		[Button]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-1)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order - 1)]
 		private void ForceInitializeUnit()
 		{
 			ForceAwakeSubComponents();
@@ -231,21 +279,38 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		private void ForceAwakeSubComponents()
 		{
-			var unitComponents = GetComponentsInChildren<UnitComponent>();
-			foreach (var component in unitComponents)
+			foreach (var component in UnitComponents)
 			{
 				component.ForceAwake(this);
+				PublishUnitChanged(null, _unit);
+				PublishStateChanged(UnitState.Idle, UnitState.Idle);
 			}
 		}
 
 		private void ForceOnDestroySubComponents()
 		{
-			var unitComponents = GetComponentsInChildren<UnitComponent>();
-			foreach (var component in unitComponents)
+			foreach (var component in UnitComponents)
 			{
 				component.ForceOnDestroy();
 			}
 		}
+
+		private void PublishUnitChanged(Unit oldUnit, Unit newUnit)
+		{
+			foreach (var listener in UnitListeners)
+			{
+				listener.OnUnitChanged(oldUnit, newUnit);
+			}
+		}
+
+		public void PublishStateChanged(UnitState oldState, UnitState newState)
+		{
+			foreach (var listener in UnitStateListeners)
+			{
+				listener.OnUnitStateChanged(oldState, newState);
+			}
+		}
+
 #endif //UNITY_EDITOR
 	}
 }

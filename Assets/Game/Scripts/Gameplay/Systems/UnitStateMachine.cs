@@ -89,7 +89,7 @@ namespace ForestRoyale.Gameplay.Systems
 				if (troop.IsAlive && troop.CurrentHealth <= 0)
 				{
 					//TODO: Implement death effects
-					//troop.State = UnitState.Dying;
+						troop.State = UnitState.Dying;
 					troop.State = UnitState.Dead;
 				}
 
@@ -97,14 +97,8 @@ namespace ForestRoyale.Gameplay.Systems
 				{
 					_arenaEvents.TriggerUnitDestroyed(troop);
 
-					if (troop.DeathComponent is IDeathComponent deathComponent)
-					{
-						deathComponent.OnDeath();
-					}
-					else
-					{
-						Object.Destroy(troop.UnitRoot.gameObject);
-					}
+					//TODO: Destroy object when death animation finishes
+					//TODO: play death particles outside the dead gameObject
 				}
 			}
 		}
