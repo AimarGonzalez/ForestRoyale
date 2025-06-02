@@ -65,12 +65,24 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Speed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Radius
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_StoppingDistance
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594647741101799874, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4775287443633296396, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
@@ -88,6 +100,18 @@ PrefabInstance:
       propertyPath: _startingUnitSO
       value: 
       objectReference: {fileID: 11400000, guid: b17213ef2c664b649bcf1ad59d62599b, type: 2}
+    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Extents.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Extents.z
+      value: 0.07
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
