@@ -71,6 +71,7 @@ namespace Game.UI
 
 		private const float SELECTION_OFFSET = 40;
 		private Vector2 _touchOffset;
+		private bool _forceJumpToMousePosition;
 
 		// dynamic values depending on camera or scene context
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
@@ -268,6 +269,8 @@ namespace Game.UI
 					break;
 				case State.DraggingCard:
 					_mouseFollower.enabled = false;
+					_scale = 1f;
+					ApplyScale();
 					break;
 				case State.CastPreview:
 					_castingView.SetActive(false);
@@ -291,7 +294,7 @@ namespace Game.UI
 
 				case State.DraggingCard:
 					_mouseFollower.enabled = true;
-					_mouseFollower.JumpToTargetPosition();
+					_forceJumpToMousePosition = true;
 					break;
 
 				case State.CastPreview:
@@ -334,13 +337,18 @@ namespace Game.UI
 			{
 				case State.NotSelected:
 				case State.Selected:
-					_scale = 1f;
 					// do nothing
 					break;
 
 				case State.DraggingCard:
 					ReduceSizeWhenApproachingCastingLine();
+					if (_forceJumpToMousePosition)
+					{
+						_mouseFollower.JumpToTargetPosition();
+						_forceJumpToMousePosition = false;
+					}
 					break;
+				
 				case State.CastPreview:
 					// managed in ICastingView
 					break;
@@ -366,13 +374,18 @@ namespace Game.UI
 			float margin = SlotHeigh * 0.5f;
 			float ratio = (_mouseDistanceToLine + margin) / _slotDistanceToLine;
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
-			
-			
+
+			ApplyScale();
+		}
+
+		private void ApplyScale()
+		{
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
 			
 			// apply scale to follower to keep the card centered on the mouse position
 			_mouseFollower.Offset = -_touchOffset.xy() * _scale;
 		}
+		
 
 		public void Cast(Transform _charactersRoot)
 		{
