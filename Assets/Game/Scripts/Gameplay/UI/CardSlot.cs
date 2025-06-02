@@ -42,6 +42,7 @@ namespace Game.UI
 		private State _state = State.NotSelected;
 
 		private Camera _camera;
+		private Canvas _canvas;
 
 		// Card scaling
 		private UIFollower _mouseFollower;
@@ -70,11 +71,35 @@ namespace Game.UI
 		private bool _showDebugPosition = true;
 
 		private const float SELECTION_OFFSET = 40;
+		private const int DRAG_SORTING_ORDER = 1;
 		private Vector2 _touchOffset;
 		private bool _forceJumpToMousePosition;
+		private bool _renderOnTop;
+
+		private bool RenderOnTop
+		{
+			get => _renderOnTop;
+			set
+			{
+				_renderOnTop = value;
+				if (value)
+				{
+					_canvas.overrideSorting = true;
+					_canvas.sortingOrder = DRAG_SORTING_ORDER;
+				}
+				else
+				{
+					_canvas.sortingOrder = 0;
+					_canvas.overrideSorting = false;
+				}
+			}
+		}
+
 
 		// dynamic values depending on camera or scene context
+
 		private float CastingLinePosition => _castingLinePosition * _camera.pixelHeight;
+
 		private float SlotHeigh => _slotRectTransform.rect.height * _slotRectTransform.lossyScale.y;
 
 		public bool IsCastPreviewVisible => _state == State.CastPreview;
@@ -91,11 +116,13 @@ namespace Game.UI
 
 		private void Awake()
 		{
-			_mouseFollower = _cardView.GetComponent<UIFollower>();
+			_canvas = GetComponent<Canvas>();
 			_slotRectTransform = GetComponent<RectTransform>();
+			_camera = Camera.main;
+			
+			_mouseFollower = _cardView.GetComponent<UIFollower>();
 			_cardRectTransform = _cardView.GetComponent<RectTransform>();
 			_cardOriginalAnchor = _cardRectTransform.anchoredPosition;
-			_camera = Camera.main;
 		}
 
 		public void Init(float castingLinePosition)
@@ -271,6 +298,7 @@ namespace Game.UI
 				case State.Selected:
 					break;
 				case State.DraggingCard:
+					RenderOnTop = false;
 					_mouseFollower.enabled = false;
 					_scale = 1f;
 					ApplyScale();
@@ -287,15 +315,18 @@ namespace Game.UI
 			switch (newState)
 			{
 				case State.NotSelected:
+					
 					_cardView.gameObject.SetActive(true);
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor;
 					break;
 
 				case State.Selected:
+					// TODO: replace offset with a PlaySelectFX 
 					_cardRectTransform.anchoredPosition = _cardOriginalAnchor + new Vector2(0, SELECTION_OFFSET);
 					break;
 
 				case State.DraggingCard:
+					RenderOnTop = true;
 					_mouseFollower.enabled = true;
 					_forceJumpToMousePosition = true;
 					break;
