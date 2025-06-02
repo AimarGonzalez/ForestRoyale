@@ -28,24 +28,18 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			Debug.Assert(_root != null, "UnitComponent can't find a parent UnitRoot!");
 
 			_unit = _root.Unit;
-
-			_root.OnUnitChanged += OnUnitChanged;
 		}
 
 		protected virtual void OnDestroy()
 		{
-			if (_root)
-			{
-				_root.OnUnitChanged -= OnUnitChanged;
-			}
 		}
 
-		private void OnUnitChanged(Unit oldUnit, Unit newUnit)
+		public void SetUnit(Unit newUnit)
 		{
 			_unit = newUnit;
 		}
-		
-		
+
+
 #if UNITY_EDITOR
 		public void ForceAwake(UnitRoot root)
 		{

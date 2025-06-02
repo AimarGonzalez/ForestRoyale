@@ -16,6 +16,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 	[ExecuteInEditMode]
 	public class UnitRoot : MonoBehaviour
 	{
+		// public event for external entities
 		public Action<Unit, Unit> OnUnitChanged;
 
 		[SerializeField]
@@ -25,7 +26,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		private UnitState _startingState = UnitState.Idle;
 
-		[ShowInInspector, DisableInEditorMode]
+		[ShowInInspector, ReadOnly]
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[NonSerialized]
 		private Unit _unit;
@@ -179,10 +180,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 
 			Unit oldUnit = _unit;
+			UnitState oldUnitState = oldUnit?.State ?? UnitState.None;
 			_unit = unit;
 
-			OnUnitChanged?.Invoke(oldUnit, unit);
+			UpdateUnitComponents(unit);
 			PublishUnitChanged(oldUnit, unit);
+			PublishStateChanged(oldUnitState, unit.State);
+			OnUnitChanged?.Invoke(oldUnit, unit);
 
 			if (_unit != null && Application.isPlaying)
 			{
@@ -292,6 +296,14 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			foreach (var component in UnitComponents)
 			{
 				component.ForceOnDestroy();
+			}
+		}
+
+		private void UpdateUnitComponents(Unit newUnit)
+		{
+			foreach (var component in UnitComponents)
+			{
+				component.SetUnit( newUnit);
 			}
 		}
 

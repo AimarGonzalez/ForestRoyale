@@ -56,7 +56,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			{
 				GameObject go = pair.Key;
 				UnitState state = pair.Value;
-				go.SetActive(state.HasFlag(newState));
+				bool active = state.HasFlag(newState); 
+				go.SetActive(active);
 			}
 		}
 
