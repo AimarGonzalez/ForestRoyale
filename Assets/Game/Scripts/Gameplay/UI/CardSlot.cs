@@ -290,7 +290,6 @@ namespace Game.UI
 					break;
 
 				case State.DraggingCard:
-					_mouseFollower.Offset = -_touchOffset.xy();
 					_mouseFollower.enabled = true;
 					break;
 
@@ -366,7 +365,12 @@ namespace Game.UI
 			float margin = SlotHeigh * 0.5f;
 			float ratio = (_cardDistanceToLine + margin) / _slotDistanceToLine;
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
+			
+			
 			_cardRectTransform.localScale = new Vector3(_scale, _scale, 1f);
+			
+			// apply scale to follower to keep the card centered on the mouse position
+			_mouseFollower.Offset = -_touchOffset.xy() * _scale;
 		}
 
 		public void Cast(Transform _charactersRoot)
