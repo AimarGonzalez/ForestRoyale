@@ -22,7 +22,6 @@ namespace ForestRoyale.Gameplay.Units
 
 		public static UnitRoot GetUnitComponent(this Behaviour other)
 		{
-			UnitRoot unitRoot = other.transform.GetComponentInParent<UnitRoot>();
 
 #if UNITY_EDITOR
 			if (EditorApplication.isPlayingOrWillChangePlaymode)
