@@ -15,13 +15,14 @@ namespace ForestRoyale.Gameplay.Units
 			return other.gameObject.layer == DEFAULT_LAYER;
 		}
 
-		public static bool IsCombatCollider(this Collider2D other)
+		public static bool IsCombatCollider(this Collider2D me)
 		{
-			return other.gameObject.layer == COMBAT_LAYER;
+			return me.gameObject.layer == COMBAT_LAYER;
 		}
 
-		public static UnitRoot GetUnitComponent(this Behaviour other)
+		public static UnitRoot GetUnitComponent(this Behaviour me)
 		{
+			UnitRoot unitRoot = me.transform.GetComponentInParent<UnitRoot>(includeInactive: true);
 
 #if UNITY_EDITOR
 			if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -33,14 +34,14 @@ namespace ForestRoyale.Gameplay.Units
 			return unitRoot;
 		}
 		
-		public static Unit GetUnit(this UnitComponent other)
+		public static Unit GetUnit(this UnitComponent me)
 		{
-			return other.Unit;
+			return me.Unit;
 		}
 
-		public static Unit GetUnit(this Behaviour other)
+		public static Unit GetUnit(this Behaviour me)
 		{
-			UnitRoot unitRoot = other.GetUnitComponent();
+			UnitRoot unitRoot = me.GetUnitComponent();
 			return unitRoot != null ? unitRoot.Unit : null;
 		}
 	}
