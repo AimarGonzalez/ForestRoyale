@@ -18,35 +18,34 @@ namespace ForestLib.Utils
 		[SerializeField] private TargetMode _targetMode = TargetMode.Mouse;
 
 		[Tooltip("The target to follow")]
-		[SerializeField] private Transform targetObject;
-
+		[SerializeField] private Transform _targetObject;
 
 		[Tooltip("How quickly to move toward the target (0-1, higher values = faster movement)")]
 		[Range(0.01f, 1f)]
-		[SerializeField] private float easing = 0.1f;
+		[SerializeField] private float _easing = 0.1f;
 
 		[Tooltip("Whether to follow on the X axis")]
-		[SerializeField] private bool followX = true;
+		[SerializeField] private bool _followX = true;
 
 		[Tooltip("Whether to follow on the Y axis")]
-		[SerializeField] private bool followY = true;
+		[SerializeField] private bool _followY = true;
 
 		[Tooltip("Minimum distance to keep from target")]
-		[SerializeField] private float keepDistanceToTarget = 0f;
+		[SerializeField] private float _keepDistanceToTarget = 0f;
 
 		[Tooltip("When to run the follow logic")]
-		[SerializeField] private UpdateType updateType = UpdateType.Update;
+		[SerializeField] private UpdateType _updateType = UpdateType.Update;
 
 		[Tooltip("Offset from the target position")]
-		[SerializeField] private Vector2 offset = Vector2.zero;
+		[SerializeField] private Vector2 _offset = Vector2.zero;
 
 		[Tooltip("Camera used for UI canvas calculations (defaults to canvas camera or main camera)")]
-		[SerializeField] private Camera canvasCamera;
+		[SerializeField] private Camera _canvasCamera;
 
 		[Tooltip("Show debug information in game view")]
 		[SerializeField]
 		[OnValueChanged("SetupDebugUI")]
-		private bool showDebugInfo = false;
+		private bool _showDebugInfo = false;
 
 		private RectTransform _rectTransform;
 		private Canvas _canvas;
@@ -58,20 +57,20 @@ namespace ForestLib.Utils
 
 		public Transform Target
 		{
-			get => targetObject;
-			set => targetObject = value;
+			get => _targetObject;
+			set => _targetObject = value;
 		}
 
 		public float Easing
 		{
-			get => easing;
-			set => easing = Mathf.Clamp01(value);
+			get => _easing;
+			set => _easing = Mathf.Clamp01(value);
 		}
 
 		public Vector2 Offset
 		{
-			get => offset;
-			set => offset = value;
+			get => _offset;
+			set => _offset = value;
 		}
 
 		private void Awake()
@@ -109,45 +108,45 @@ namespace ForestLib.Utils
 			_isCanvasOverlay = _canvas.renderMode == RenderMode.ScreenSpaceOverlay;
 
 			// If in a ScreenSpace Camera mode and no camera is specified, use the canvas's camera
-			if (!_isCanvasOverlay && _canvas.renderMode == RenderMode.ScreenSpaceCamera && canvasCamera == null)
+			if (!_isCanvasOverlay && _canvas.renderMode == RenderMode.ScreenSpaceCamera && _canvasCamera == null)
 			{
-				canvasCamera = _canvas.worldCamera;
+				_canvasCamera = _canvas.worldCamera;
 			}
 
 			// Ensure we have a camera reference for calculations
-			_camera = canvasCamera != null ? canvasCamera : Camera.main;
+			_camera = _canvasCamera != null ? _canvasCamera : Camera.main;
 		}
 
 		private void Update()
 		{
-			if (updateType == UpdateType.Update)
+			if (_updateType == UpdateType.Update)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
 
 		private void LateUpdate()
 		{
-			if (updateType == UpdateType.LateUpdate)
+			if (_updateType == UpdateType.LateUpdate)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
 
 		private void FixedUpdate()
 		{
-			if (updateType == UpdateType.FixedUpdate)
+			if (_updateType == UpdateType.FixedUpdate)
 			{
-				FollowTarget();
+				FollowTarget(_easing);
 			}
 		}
-		
+
 		private bool HasValidTarget()
 		{
-			return _targetMode == TargetMode.Mouse || targetObject != null;
+			return _targetMode == TargetMode.Mouse || _targetObject != null;
 		}
 
-		private void FollowTarget()
+		private void FollowTarget(float easing)
 		{
 			if (!HasValidTarget())
 			{
@@ -156,36 +155,36 @@ namespace ForestLib.Utils
 
 			_targetScreenPos = GetTargetScreenPosition();
 
-			_targetScreenPos += offset;
+			_targetScreenPos += _offset;
 
 			// Interpolate to target position
 			Vector2 originPosition = _rectTransform.position;
 			Vector2 newPosition = originPosition;
-			if (followX)
+			if (_followX)
 			{
 				newPosition.x = Mathf.Lerp(originPosition.x, _targetScreenPos.x, easing);
 			}
 
-			if (followY)
+			if (_followY)
 			{
 				newPosition.y = Mathf.Lerp(originPosition.y, _targetScreenPos.y, easing);
 			}
 
 			// Keep distance to target
-			if (keepDistanceToTarget > 0)
+			if (_keepDistanceToTarget > 0)
 			{
 				float distance = Vector2.Distance(newPosition, _targetScreenPos);
-				if (distance < keepDistanceToTarget)
+				if (distance < _keepDistanceToTarget)
 				{
 					Vector2 direction = (originPosition - _targetScreenPos).normalized;
-					newPosition = _targetScreenPos + (direction * keepDistanceToTarget);
+					newPosition = _targetScreenPos + (direction * _keepDistanceToTarget);
 				}
 			}
 
 			_rectTransform.position = newPosition;
 
 			// Update debug text
-			if (showDebugInfo && _debugText != null)
+			if (_showDebugInfo && _debugText != null)
 			{
 				_debugText.text = $"Mouse: {Input.mousePosition:F0}\n" +
 								  $"Target: {_targetScreenPos:F0}\n" +
@@ -201,17 +200,17 @@ namespace ForestLib.Utils
 				// For mouse, we already have screen coordinates
 				targetScreenPos = Input.mousePosition;
 			}
-			else if (targetObject != null)
+			else if (_targetObject != null)
 			{
 				// If target is another UI element
-				RectTransform targetRect = targetObject.GetComponent<RectTransform>();
+				RectTransform targetRect = _targetObject.GetComponent<RectTransform>();
 				if (targetRect != null)
 				{
 					targetScreenPos = targetRect.position; // screen space
 				}
 				else
 				{
-					targetScreenPos = _camera.WorldToScreenPoint(targetObject.position);
+					targetScreenPos = _camera.WorldToScreenPoint(_targetObject.position);
 				}
 			}
 
@@ -237,7 +236,7 @@ namespace ForestLib.Utils
 
 		private void SetupDebugUI()
 		{
-			if (!showDebugInfo || _debugText != null)
+			if (!_showDebugInfo || _debugText != null)
 			{
 				return;
 			}
@@ -297,6 +296,11 @@ namespace ForestLib.Utils
 		private Vector3 ScreenToGizmoPosition(Vector3 screenPosition)
 		{
 			return _camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, _camera.nearClipPlane + 1));
+		}
+
+		public void JumpToTargetPosition()
+		{
+			FollowTarget(1f);
 		}
 	}
 }

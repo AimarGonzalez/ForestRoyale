@@ -57,7 +57,7 @@ namespace Game.UI
 		private ICastingView _castingView;
 		
 		// Gizmo: internal values for gizmo drawing
-		private float _cardDistanceToLine;
+		private float _mouseDistanceToLine;
 		private float _slotDistanceToLine;
 		private float _scale;
 		private bool _debugInitialized = false;
@@ -291,6 +291,7 @@ namespace Game.UI
 
 				case State.DraggingCard:
 					_mouseFollower.enabled = true;
+					_mouseFollower.JumpToTargetPosition();
 					break;
 
 				case State.CastPreview:
@@ -358,12 +359,12 @@ namespace Game.UI
 
 		private void ReduceSizeWhenApproachingCastingLine()
 		{
-			_cardDistanceToLine = CastingLinePosition - _cardRectTransform.position.y;
+			_mouseDistanceToLine = CastingLinePosition - Input.mousePosition.y;
 			_slotDistanceToLine = CastingLinePosition - _slotRectTransform.position.y;
 			_slotDistanceToLine = Mathf.Max(_slotDistanceToLine, 0.001f);
 
 			float margin = SlotHeigh * 0.5f;
-			float ratio = (_cardDistanceToLine + margin) / _slotDistanceToLine;
+			float ratio = (_mouseDistanceToLine + margin) / _slotDistanceToLine;
 			_scale = Mathf.Lerp(0.3f, 1f, ratio);
 			
 			
