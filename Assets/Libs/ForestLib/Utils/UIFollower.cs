@@ -213,7 +213,7 @@ namespace ForestLib.Utils
 				}
 			}
 
-			_rectTransform.position = newPosition;
+			_rectTransform.position = new Vector3(newPosition.x, newPosition.y, _rectTransform.position.z);
 
 			// Update debug text
 			if (_showDebugInfo && _debugText != null)
