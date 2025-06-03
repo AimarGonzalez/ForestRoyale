@@ -392,6 +392,22 @@ PrefabInstance:
       value: 4.19
       objectReference: {fileID: 0}
     - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000000041688292
+      objectReference: {fileID: 0}
+    - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000013144269
+      objectReference: {fileID: 0}
+    - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.95371693
+      objectReference: {fileID: 0}
+    - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30070582
+      objectReference: {fileID: 0}
+    - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 4.78
       objectReference: {fileID: 0}
@@ -399,10 +415,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: ub_king_tower
       objectReference: {fileID: 0}
+    - target: {fileID: 2181136140134312466, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181136140134312466, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181136140134312466, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317016507024891178, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2317016507024891178, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2605472542282998423, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: _startingUnitSO
       value: 
       objectReference: {fileID: 11400000, guid: fd1979804d3b84c4ab104154e1febcee, type: 2}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Shape
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Extents.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Extents.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Extents.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701217520455559881, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Radius
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

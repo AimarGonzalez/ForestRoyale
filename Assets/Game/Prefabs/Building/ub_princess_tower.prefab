@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ub_princess_tower
       objectReference: {fileID: 0}
+    - target: {fileID: 6111025527631803095, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701217520455559881, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Radius
+      value: 7.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
