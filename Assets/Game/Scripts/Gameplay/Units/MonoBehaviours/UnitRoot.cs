@@ -43,6 +43,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
+		
+		[Inject]
+		private IObjectResolver _objectResolver;
 
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
@@ -128,6 +131,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		private void Awake()
 		{
+#if UNITY_EDITOR
+			// Needed to initialize prefabs added from the editor.
+			AutoInject();
+#endif
+
 			_movementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 			_deathComponent = GetComponent<IDeathComponent>();
@@ -242,6 +250,22 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 
 #if UNITY_EDITOR
+		private void AutoInject()
+		{
+			if (!Application.isPlaying)
+			{
+				// Inject only in playMode
+				return;
+			}
+
+			if (_objectResolver == null)
+			{
+				_objectResolver = FindFirstObjectByType<GameBootstrap>().Container;
+			}
+
+			_objectResolver.Inject(gameObject);
+		}
+
 		void OnDrawGizmos()
 		{
 			// Handles.BeginGUI();
