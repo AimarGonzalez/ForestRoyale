@@ -859,6 +859,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ut_giant
       objectReference: {fileID: 0}
+    - target: {fileID: 7640297357188143395, guid: a48d75f5fac9df84ea1301c2b123a16e, type: 3}
+      propertyPath: m_Extents.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7640297357188143395, guid: a48d75f5fac9df84ea1301c2b123a16e, type: 3}
+      propertyPath: m_Extents.z
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1453,7 +1461,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7640297357188143395, guid: 9ac08438d8ae7d94e9b0acc5b732c651, type: 3}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -2194,7 +2202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3940810825792585983, guid: b86788ab508c1fa47925be791ec45227, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.8
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 3940810825792585983, guid: b86788ab508c1fa47925be791ec45227, type: 3}
       propertyPath: m_LocalRotation.w

@@ -92,6 +92,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ut_cannon
       objectReference: {fileID: 0}
+    - target: {fileID: 6666391089510737563, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _obstacle
+      value: 
+      objectReference: {fileID: 6303946278323923043}
+    - target: {fileID: 6666391089510737563, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _isObstacleWhenStatic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8068233149362356199, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: _startingUnitSO
       value: 
@@ -102,13 +110,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1369662808626639127, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       insertIndex: 0
       addedObject: {fileID: 8222324271517007506}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7223196587414029065, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6303946278323923043}
   m_SourcePrefab: {fileID: 100100000, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
 --- !u!4 &695397280745499075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1369662808626639127, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
   m_PrefabInstance: {fileID: 1919810202611914964}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9122456881916943325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7223196587414029065, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+  m_PrefabInstance: {fileID: 1919810202611914964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &6303946278323923043
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9122456881916943325}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.2, y: 0.25, z: 0.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.1
 --- !u!1001 &8471597595929254265
 PrefabInstance:
   m_ObjectHideFlags: 0

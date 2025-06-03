@@ -1,8 +1,10 @@
 using ForestLib.ExtensionMethods;
 using ForestLib.Utils;
+using ForestRoyale.Core.UI;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,32 +18,57 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private bool _followChildren = true;
 
 		[SerializeField]
-		[Required]
+		private bool _isObstacleWhenStatic = false;
+
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[HideInEditorMode, ShowInInspector, ReadOnly]
+		[NonSerialized]
 		private Rigidbody2D _body;
 
-		[SerializeField]
-		[Required]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[HideInEditorMode, ShowInInspector, ReadOnly]
+		[NonSerialized]
 		private NavMeshAgent _agent;
 
-		[SerializeField]
-		[Required]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[HideInEditorMode, ShowInInspector, ReadOnly]
+		[NonSerialized]
 		private NavMeshObstacle _obstacle;
-		
-		public Rigidbody2D Body => _body;
-		public NavMeshAgent Agent => _agent;
+
+		public Rigidbody2D Body => _body ??= GetComponentInChildren<Rigidbody2D>(includeInactive: true);
+		public NavMeshAgent Agent => _agent ??= GetComponentInChildren<NavMeshAgent>(includeInactive: true);
 
 #if UNITY_EDITOR
 		private bool HasAnyMovementComponentInTheRoot => this.HasComponent<NavMeshAgent>() || this.HasComponent<Collider2D>() || this.HasComponent<Rigidbody2D>();
-		private bool HasNoFollowChildrenNorMovementComponentInTheRoot => !_followChildren && !HasAnyMovementComponentInTheRoot ;
+		private bool HasNoFollowChildrenNorMovementComponentInTheRoot => !_followChildren && !HasAnyMovementComponentInTheRoot;
 #endif
+
+		private bool _isMoving = false;
+		private bool IsMoving
+		{
+			get => _isMoving;
+			set => _isMoving = value;
+		}
+
+		private bool IsStopped
+		{
+			get => !_isMoving;
+			set => _isMoving = !value;
+		}
+
+		private CancellationTokenSource _disableObstacleTokenSource = new();
 
 		protected override void Awake()
 		{
 			base.Awake();
 
 			// look for component fallbacks
-			_agent ??= GetComponentInChildren<NavMeshAgent>();
-			_obstacle ??= GetComponentInChildren<NavMeshObstacle>();
+			_body ??= GetComponentInChildren<Rigidbody2D>(includeInactive: true);
+			_agent ??= GetComponentInChildren<NavMeshAgent>(includeInactive: true);
+			if (_isObstacleWhenStatic)
+			{
+				_obstacle ??= GetComponentInChildren<NavMeshObstacle>();
+			}
 
 			Subscribe();
 
@@ -95,26 +122,73 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public async void Move()
 		{
-			if (_obstacle.enabled && !_agent.enabled)
+			if (IsMoving)
 			{
-				_obstacle.enabled = false;
+				UpdateMoveDestination();
+			}
+			else
+			{
+				IsMoving = true;
 
-				// BUGFIX: Wait next frame to let the navmesh remove the hole carved by the obstacle.
+				// BUGFIX: Wait for the navmesh to remove the hole carved by the obstacle.
 				// Otherwise the agent glitches out of the hole instantly and looks terrible.
-				await Awaitable.NextFrameAsync();
+				if (!await DisableObstacleAndWaitNavmeshToHeal())
+				{
+					// Abort the Move(). Continuing would cause warning: 
+					// "NavMeshAgent and NavMeshObstacle components are active at the same time. This can lead to erroneous behavior."
+					return;
+				}
 
 				_agent.enabled = true;
 
 				UpdateMoveDestination();
 			}
 		}
-		
+
 		public void Stop()
 		{
+			if (IsStopped)
+			{
+				return;
+			}
+
+			IsStopped = true;
+
 			_agent.enabled = false;
 
-			_obstacle.enabled = true;
+			if (_isObstacleWhenStatic && _obstacle)
+			{
+				_obstacle.enabled = true;
+
+				// Cancel the ongoing call to Move()
+				_disableObstacleTokenSource.Cancel();
+				_disableObstacleTokenSource = new CancellationTokenSource();
+			}
 		}
+
+		private async Awaitable<bool> DisableObstacleAndWaitNavmeshToHeal()
+		{
+			if (!_isObstacleWhenStatic || !_obstacle)
+			{
+				return true;
+			}
+
+			_obstacle.enabled = false;
+
+			try
+			{
+				// Wait next frame to let the navmesh remove the hole carved by the obstacle.
+				await Awaitable.NextFrameAsync(_disableObstacleTokenSource.Token);
+			}
+			catch (OperationCanceledException)
+			{
+				// Failed to disable obstacle: we got a call to Stop() while waiting for the navmesh to heal.
+				return false;
+			}
+
+			return true;
+		}
+
 
 		public void LateUpdate()
 		{
