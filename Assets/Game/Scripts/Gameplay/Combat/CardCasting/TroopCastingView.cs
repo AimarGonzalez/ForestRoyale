@@ -5,8 +5,11 @@ using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
+using Plane = UnityEngine.Plane;
+using Vector3 = UnityEngine.Vector3;
 
 namespace ForestRoyale.Gameplay.Combat
 {
@@ -41,11 +44,16 @@ namespace ForestRoyale.Gameplay.Combat
 		private float _maxDistance = 10.0f;
 
 		private Transform squadTransform;
-		
+
 		private List<UnitRoot> _chars = new List<UnitRoot>();
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
+
+		// Gizmos
+		private Vector3 _projectedTouchPosition;
+		private Vector3 _walkablePosition;
+		private Vector3 _walkableTilePosition;
 
 		public void SetTroop(TroopCardData cardData, Transform troop, ArenaTeam team, UnitState state)
 		{
@@ -75,7 +83,7 @@ namespace ForestRoyale.Gameplay.Combat
 					_chars.Add(squadCharacter);
 					squadCharacter.transform.SetParent(transform, false);
 				}
-				
+
 				// Get rid of the squad root object
 				Destroy(squadTransform.gameObject);
 			}
@@ -161,19 +169,12 @@ namespace ForestRoyale.Gameplay.Combat
 
 		protected void OnDrawGizmos()
 		{
-			Vector3 mousePosition = Input.mousePosition;
-			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x,mousePosition.y, 20f));
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine(_projectedTouchPosition, _walkablePosition);
+			Gizmos.DrawSphere(_walkablePosition, 0.3f);
 
 			Gizmos.color = Color.blue;
-			Gizmos.DrawSphere(worldPosition, 0.5f);
-
-			Vector3 position;
-			if (GetClosestWalkablePosition(worldPosition, out position))
-			{
-				Gizmos.color = Color.red;
-				//Gizmos.DrawSphere(position, 0.8f);
-				Gizmos.DrawLine(worldPosition, position);
-			}
+			Gizmos.DrawSphere(_projectedTouchPosition, 0.2f);
 		}
 
 		/// <summary>
@@ -183,28 +184,33 @@ namespace ForestRoyale.Gameplay.Combat
 		/// </summary>
 		protected Vector3 GetClosestTilePosition()
 		{
-			Vector3 mousePosition = Input.mousePosition;
-			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x,mousePosition.y, 20f));
-
-			Vector3 position;
-			if (GetClosestWalkablePosition(worldPosition, out position))
+			Ray rayFromTouch = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Plane terrainPlain = new Plane(transform.up, 0);
+			if (!terrainPlain.Raycast(rayFromTouch, out float distance))
 			{
-				return position;
+				Debug.LogError("Character preview - can't find tile under touch");
+				return Vector3.zero;
 			}
 
-			return worldPosition;
+			_projectedTouchPosition = rayFromTouch.GetPoint(distance);
+			_projectedTouchPosition = _projectedTouchPosition + transform.up * 1f;
+
+			if (GetClosestWalkablePosition(_projectedTouchPosition, out _walkablePosition))
+			{
+				return _walkablePosition;
+			}
+
+			return Vector3.zero;
 		}
 
 		public bool GetClosestWalkablePosition(Vector3 worldPosition, out Vector3 position)
 		{
-			NavMeshHit hit;
-
 			// SamplePosition finds the nearest point on NavMesh within maxDistance
 			// If a point is found, hit.hit will be true and hit.position will contain the nearest valid position
 			//bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.GetAreaFromName("Walkable"));
-			bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out hit, _maxDistance, NavMesh.AllAreas);
+			bool hasWalkablePosition = NavMesh.SamplePosition(worldPosition, out NavMeshHit navHit, _maxDistance, NavMesh.AllAreas);
 
-			position = hit.position;
+			position = navHit.position;
 			return hasWalkablePosition;
 		}
 
