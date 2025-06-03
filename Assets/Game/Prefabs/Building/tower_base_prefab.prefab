@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8814391726874564350}
   - component: {fileID: 1613170641201754754}
   - component: {fileID: 3076332861752553910}
+  - component: {fileID: 8916620696730196596}
   m_Layer: 0
   m_Name: body_collider
   m_TagString: Untagged
@@ -136,6 +137,26 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0
+--- !u!114 &8916620696730196596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673017344494104390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f27447dcb0c29b4f8e55fef12b62cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _notes:
+  - Component: {fileID: 3076332861752553910}
+    NotesText: "The NavMeshObstacle needs to be Capsule so attackiers stop in the
+      correct position. \n\nIf we make it a Box the attackers always stop in the
+      middle of a side, cause the distance is closer to the target."
+  - Component: {fileID: 2181136140134312466}
+    NotesText: The collider needs to be a box, so attackers stop at the correct distance
+      when coming from a diagonal.
 --- !u!1 &1751002429891844267
 GameObject:
   m_ObjectHideFlags: 0
