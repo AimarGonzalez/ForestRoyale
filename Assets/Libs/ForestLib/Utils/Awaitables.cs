@@ -7,7 +7,8 @@ namespace ForestLib.Utils
 	{
 		public static async Awaitable WaitUntil(Func<bool> condition)
 		{
-			while(!condition()){
+			while (!condition())
+			{
 				await Awaitable.NextFrameAsync();
 			}
 		}
