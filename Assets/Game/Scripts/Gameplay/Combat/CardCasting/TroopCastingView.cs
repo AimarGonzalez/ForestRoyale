@@ -144,14 +144,19 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void Cast(Transform charactersRoot)
 		{
+			// TODO: implement states
+			SetState(CastingState.Deploying);
 			foreach (UnitRoot character in _chars)
 			{
 				character.transform.SetParent(charactersRoot);
 			}
 
 			// TODO: implement states
-			SetState(CastingState.Deploying);
 			SetState(CastingState.Deployed);
+			foreach (UnitRoot character in _chars)
+			{
+				character.CastUnit(UnitState.Idle);
+			}
 		}
 
 		protected void OnDrawGizmos()
@@ -166,7 +171,7 @@ namespace ForestRoyale.Gameplay.Combat
 			if (GetClosestWalkablePosition(worldPosition, out position))
 			{
 				Gizmos.color = Color.red;
-				Gizmos.DrawSphere(position, 2f);
+				//Gizmos.DrawSphere(position, 0.8f);
 				Gizmos.DrawLine(worldPosition, position);
 			}
 		}

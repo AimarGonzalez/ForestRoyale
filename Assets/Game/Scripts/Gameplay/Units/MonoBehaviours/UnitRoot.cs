@@ -16,9 +16,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 	[ExecuteInEditMode]
 	public class UnitRoot : MonoBehaviour
 	{
-		// public event for external entities
-		public Action<Unit, Unit> OnUnitChanged;
-
 		[SerializeField]
 		private ArenaTeam _startingTeam;
 		[SerializeField]
@@ -162,21 +159,34 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
-				Unit unit = new Unit(null, this, _startingTeam, _startingUnitSO, _startingState);
-				SetUnit(unit);
+				Unit unit = new (null, this, _startingTeam, _startingUnitSO, _startingState);
+				if (_startingState == UnitState.CastingPreview)
+				{
+					SetUnitForPreview(unit);
+				}
+				else
+				{
+					SetUnit(unit);
+				}
 			}
 		}
 
 		public void SetUnit(Unit unit)
+		{
+			SetUnitForPreview(unit);
+			CastUnit(unit.State);
+		}
+
+		private void SetUnitForPreview(Unit unit)
 		{
 			if (_unit == unit)
 			{
 				return;
 			}
 
-			if (_unit != null && Application.isPlaying)
+			if (_unit != null)
 			{
-				_arenaEvents.TriggerUnitDestroyed(_unit);
+				_arenaEvents?.TriggerUnitDestroyed(_unit);
 			}
 
 			Unit oldUnit = _unit;
@@ -184,14 +194,20 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			_unit = unit;
 
 			UpdateUnitComponents(unit);
-			PublishUnitChanged(oldUnit, unit);
-			PublishStateChanged(oldUnitState, unit.State);
-			OnUnitChanged?.Invoke(oldUnit, unit);
+			PropagateUnitChanged(oldUnit, unit);
+			PropagateStateChanged(oldUnitState, unit.State);
+		}
 
-			if (_unit != null && Application.isPlaying)
+		public void CastUnit(UnitState state)
+		{
+			if (_unit == null)
 			{
-				_arenaEvents.TriggerUnitCreated(_unit);
+				return;
 			}
+			
+			_unit.State = state;
+			
+			_arenaEvents?.TriggerUnitCreated(_unit);
 		}
 
 
@@ -286,8 +302,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			foreach (var component in UnitComponents)
 			{
 				component.ForceAwake(this);
-				PublishUnitChanged(null, _unit);
-				PublishStateChanged(UnitState.Idle, UnitState.Idle);
+				PropagateUnitChanged(null, _unit);
+				PropagateStateChanged(UnitState.Idle, UnitState.Idle);
 			}
 		}
 
@@ -307,7 +323,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 		}
 
-		private void PublishUnitChanged(Unit oldUnit, Unit newUnit)
+		private void PropagateUnitChanged(Unit oldUnit, Unit newUnit)
 		{
 			foreach (var listener in UnitListeners)
 			{
@@ -315,7 +331,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 		}
 
-		public void PublishStateChanged(UnitState oldState, UnitState newState)
+		public void PropagateStateChanged(UnitState oldState, UnitState newState)
 		{
 			foreach (var listener in UnitStateListeners)
 			{
