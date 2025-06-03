@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using VContainer;
+using VContainer.Unity;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
@@ -23,7 +24,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		private UnitState _startingState = UnitState.Idle;
 
-		[ShowInInspector, ReadOnly]
+		[ShowInInspector]
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[NonSerialized]
 		private Unit _unit;
@@ -263,7 +264,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_objectResolver = FindFirstObjectByType<GameBootstrap>().Container;
 			}
 
-			_objectResolver.Inject(gameObject);
+			_objectResolver.InjectGameObject(gameObject);
 		}
 
 		void OnDrawGizmos()

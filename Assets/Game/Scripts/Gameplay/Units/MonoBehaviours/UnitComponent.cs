@@ -15,7 +15,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private UnitRoot _root;
 
 		[FoldoutGroup(DebugUI.GroupUnitComponent), PropertyOrder(DebugUI.OrderUnitComponent)]
-		[ShowInInspector, ReadOnly]
+		[ShowInInspector]
 		[NonSerialized]
 		private Unit _unit;
 
