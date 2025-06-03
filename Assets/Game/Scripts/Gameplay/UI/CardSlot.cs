@@ -258,8 +258,11 @@ namespace Game.UI
 
 		public void Deselect()
 		{
-			Debug.Assert(_state == State.Selected || _state == State.NotSelected, $"Cannot deselect a slot in state - {_state}");
-			SetState(State.NotSelected);
+			Debug.Assert(_state == State.Selected || _state == State.NotSelected || _state == State.Empty, $"Cannot deselect a slot in state - {_state}");
+			if (_state == State.Selected)
+			{
+				SetState(State.NotSelected);
+			}
 		}
 
 		public void StartDragging()
