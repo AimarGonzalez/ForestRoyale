@@ -420,17 +420,18 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private UnitSO CreateGiantUnit(string directory)
 		{
+			// https://clashroyale.fandom.com/wiki/Giant (lvl15)
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Giant_Unit.asset";
 			var unitStats = UnitStats.Build(
 				name: "Giant",
 				type: UnitType.Troop,
-				hitPoints: 3344f,
+				hitPoints: 5944f,
 				transport: TransportType.Ground,
 				movementSpeed: 1.0f
 			);
 			var combatStats = CombatStats.Build(
-				damage: 188f,
+				damage: 368f,
 				attackSpeed: 1.5f,
 				attackRange: 1.0f,
 				areaDamageRadius: 0f,
@@ -464,19 +465,20 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private UnitSO CreateKnightUnit(string directory)
 		{
+			// https://clashroyale.fandom.com/wiki/Knight  (lvl15)
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Knight_Unit.asset";
 			var unitStats = UnitStats.Build(
 				name: "Knight",
 				type: UnitType.Troop,
-				hitPoints: 1450f,
+				hitPoints: 2566,
 				transport: TransportType.Ground,
 				movementSpeed: 1.2f
 			);
 			var combatStats = CombatStats.Build(
-				damage: 159f,
+				damage: 293,
 				attackSpeed: 1.2f,
-				attackRange: 1.0f,
+				attackRange: 0.6f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
@@ -530,18 +532,19 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private UnitSO CreateCannonUnit(string directory)
 		{
+			// https://clashroyale.fandom.com/wiki/Cannon
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Cannon_Unit.asset";
 			var unitStats = UnitStats.Build(
 				name: "Cannon",
 				type: UnitType.Building,
-				hitPoints: 824f,
+				hitPoints: 322f,
 				transport: TransportType.Ground,
 				movementSpeed: 0f
 			);
 			var combatStats = CombatStats.Build(
-				damage: 127f,
-				attackSpeed: 0.8f,
+				damage: 83f,
+				attackSpeed: 1f,
 				attackRange: 5.5f,
 				areaDamageRadius: 0f,
 				sightRange: 7.0f,
@@ -552,19 +555,20 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 
 		private UnitSO CreateSkeletonUnit(string directory)
 		{
+			// https://clashroyale.fandom.com/wiki/Skeletons (lvl 15)
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Skeleton_Unit.asset";
 			var unitStats = UnitStats.Build(
 				name: "Skeleton",
 				type: UnitType.Troop,
-				hitPoints: 100f,
+				hitPoints: 119,
 				transport: TransportType.Ground,
 				movementSpeed: 2.5f
 			);
 			var combatStats = CombatStats.Build(
-				damage: 100f,
+				damage: 119,
 				attackSpeed: 1.0f,
-				attackRange: 1.0f,
+				attackRange: 0.2f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
