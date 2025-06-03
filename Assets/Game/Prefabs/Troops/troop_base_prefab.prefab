@@ -201,7 +201,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1
+  m_Radius: 0.6
 --- !u!114 &3091478756103730715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,8 +475,8 @@ NavMeshObstacle:
   m_Shape: 0
   m_Extents: {x: 0.3, y: 1, z: 0.3}
   m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 0
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.1
 --- !u!1001 &32971438265311699
@@ -537,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000038772477
+      value: -0.00000003877248
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_LocalRotation.x
@@ -549,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.46174863
+      value: 0.4617486
       objectReference: {fileID: 0}
     - target: {fileID: 3409267227412617947, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_AnchoredPosition.x
