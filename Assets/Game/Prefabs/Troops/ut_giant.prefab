@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 656265601681155323, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2540786542082298166, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -58,19 +62,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000041688292
+      value: -0.00000003877248
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000013144269
+      value: -0.000000020183673
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.95371693
+      value: 0.8870109
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.30070582
+      value: 0.4617486
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -85,6 +89,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Height
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Radius
       value: 0.5
       objectReference: {fileID: 0}
@@ -92,9 +100,17 @@ PrefabInstance:
       propertyPath: avoidancePriority
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4594647741101799874, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4775287443633296396, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893382435126565578, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Mass
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 5716079896726795497, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Name

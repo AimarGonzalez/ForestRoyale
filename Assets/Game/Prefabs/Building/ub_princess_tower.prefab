@@ -54,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.46174863
+      value: -0.4617486
       objectReference: {fileID: 0}
     - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000038772477
+      value: 0.00000003877248
       objectReference: {fileID: 0}
     - target: {fileID: 351461400031597047, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_LocalRotation.z
@@ -91,6 +91,18 @@ PrefabInstance:
     - target: {fileID: 6701217520455559881, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_Radius
       value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396636242238907329, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Size.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396636242238907329, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Size.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396636242238907329, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4143630614599284110, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}

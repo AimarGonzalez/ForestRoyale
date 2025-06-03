@@ -15,11 +15,11 @@ MonoBehaviour:
   _unitStats:
     _name: King Tower
     _type: 2
-    _hitPoints: 4008
+    _hitPoints: 7032
     _transport: 0
     _movementSpeed: 0
   _combatStats:
-    _damage: 120
+    _damage: 158
     _attackSpeed: 1
     _attackRange: 7
     _areaDamageRadius: 0

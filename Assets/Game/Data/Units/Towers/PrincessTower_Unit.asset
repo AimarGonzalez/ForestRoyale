@@ -15,11 +15,11 @@ MonoBehaviour:
   _unitStats:
     _name: Princess Tower
     _type: 2
-    _hitPoints: 2534
+    _hitPoints: 4424
     _transport: 0
     _movementSpeed: 0
   _combatStats:
-    _damage: 90
+    _damage: 158
     _attackSpeed: 0.8
     _attackRange: 7.5
     _areaDamageRadius: 0

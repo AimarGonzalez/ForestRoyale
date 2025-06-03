@@ -15,11 +15,11 @@ MonoBehaviour:
   _unitStats:
     _name: Giant
     _type: 0
-    _hitPoints: 3344
+    _hitPoints: 5944
     _transport: 0
     _movementSpeed: 1
   _combatStats:
-    _damage: 188
+    _damage: 368
     _attackSpeed: 1.5
     _attackRange: 1
     _areaDamageRadius: 0

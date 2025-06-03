@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 656265601681155323, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3176194029410523179, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -90,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Radius
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Enabled
