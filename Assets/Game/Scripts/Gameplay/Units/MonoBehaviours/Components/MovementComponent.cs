@@ -17,7 +17,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		[SerializeField]
 		[Required]
-		private Collider2D _body;
+		private Rigidbody2D _body;
 
 		[SerializeField]
 		[Required]
@@ -27,7 +27,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[Required]
 		private NavMeshObstacle _obstacle;
 		
-		public Collider2D Body => _body;
+		public Rigidbody2D Body => _body;
 		public NavMeshAgent Agent => _agent;
 
 #if UNITY_EDITOR
