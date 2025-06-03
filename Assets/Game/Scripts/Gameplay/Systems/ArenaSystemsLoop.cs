@@ -20,9 +20,12 @@ namespace ForestRoyale.Gameplay.Systems
 		public void Update()
 		{
 			_targetingSystem.UpdateTargets();
+			_unitStateMachine.UpdateState();
+			
 			_movementSystem.UpdateMovement();
+			_unitStateMachine.UpdateState();
+			
 			_combatSystem.UpdateCombat();
-
 			_unitStateMachine.UpdateState();
 		}
 	}
