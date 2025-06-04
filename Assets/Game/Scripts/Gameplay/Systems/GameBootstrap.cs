@@ -27,6 +27,7 @@ namespace ForestRoyale.Gameplay.Systems
 				components.AddInHierarchy<CardCaster>();
 				components.AddInHierarchy<CardCastingViewFactory>();
 				components.AddInHierarchy<Battle>();
+				components.AddInHierarchy<Arena>();
 			});
 		}
 	}
