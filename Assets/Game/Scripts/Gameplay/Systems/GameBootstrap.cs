@@ -14,7 +14,7 @@ namespace ForestRoyale.Gameplay.Systems
 			Debug.Log("Boostrap");
 			builder.Register<ApplicationEvents>(Lifetime.Singleton);
 			builder.Register<ArenaSystemsLoop>(Lifetime.Scoped);
-			builder.Register<ArenaEvents>(Lifetime.Scoped);
+			builder.RegisterEntryPoint<ArenaEvents>(Lifetime.Scoped).AsSelf();
 			builder.Register<MovementSystem>(Lifetime.Scoped);
 			builder.Register<TargetingSystem>(Lifetime.Scoped);
 			builder.Register<CombatSystem>(Lifetime.Scoped);

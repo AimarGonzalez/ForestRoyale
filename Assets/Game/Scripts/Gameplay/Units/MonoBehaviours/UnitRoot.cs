@@ -140,7 +140,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			_movementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 			_deathComponent = GetComponent<IDeathComponent>();
-
+			
 			if (_movementComponent)
 			{
 				_colliderListener = _movementComponent.Body.GetComponent<Collider2DListener>();
@@ -157,13 +157,15 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		private void Start()
 		{
-			InitializeUnit();
-
+			AutoUnitInitialization();
+			
 			Subscribe();
 		}
 
-		private void InitializeUnit()
+		private void AutoUnitInitialization()
 		{
+			// To be used by units originally in the scene (like towers)
+			
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{
@@ -319,7 +321,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void ForceInitializeUnit()
 		{
 			ForceAwakeSubComponents();
-			InitializeUnit();
+			AutoUnitInitialization();
 		}
 
 		private void ForceAwakeSubComponents()

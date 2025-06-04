@@ -1,38 +1,27 @@
-using ForestRoyale.Core;
 using ForestRoyale.Core.UI;
-using ForestRoyale.Gameplay.Systems;
-using ForestRoyale.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviours;
-using Game.Scripts.Gameplay.Cards.CardStats;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 using VContainer;
 
 namespace ForestRoyale.Gameplay.Combat
 {
+	[DefaultExecutionOrder(-1000)]
 	public class Battle : MonoBehaviour, IGUIDrawer
 	{
 		[SerializeField] private Player _player;
 		[SerializeField] private Player _bot;
 		[SerializeField] private float _battleDuration = 180f; // 3 minutes
 
-		[SerializeField] private GameObject _arena;
-
 		private float _currentTime;
 		private bool _isBattleActive;
 
 		[Inject]
-		private ArenaEvents _arenaEvents;
+		private Arena _arena;
 
 		public Player Player => _player;
 		public Player Bot => _bot;
 		public float RemainingTime => Mathf.Max(0, _battleDuration - _currentTime);
 		public bool IsBattleActive => _isBattleActive;
-
-		private void Start()
-		{
-		}
 
 		private void Update()
 		{
@@ -74,19 +63,6 @@ namespace ForestRoyale.Gameplay.Combat
 			_isBattleActive = true;
 		}
 
-		private void ResetTowers()
-		{
-			List<Unit> towers = _arena.GetComponentsInChildren<UnitRoot>()
-										.Where(root => root.Unit.UnitType == UnitType.ArenaTower)
-										.Select(root => root.Unit).ToList();
-
-			foreach (var tower in towers)
-			{
-				tower.Reset();
-				_arenaEvents.TriggerUnitCreated(tower);
-			}
-		}
-
 		public void DrawGUI()
 		{
 			GUILayoutUtils.Label("Battle");
@@ -109,7 +85,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 			if (GUILayout.Button("Respawn towers"))
 			{
-				ResetTowers();
+				_arena.ResetTowers();
 			}
 		}
 	}

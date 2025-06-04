@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
+using VContainer;
 using Plane = UnityEngine.Plane;
 using Vector3 = UnityEngine.Vector3;
 
@@ -42,8 +43,9 @@ namespace ForestRoyale.Gameplay.Combat
 		// maxDistance is how far to check for a walkable position from the given position
 		[ShowInInspector]
 		private float _maxDistance = 10.0f;
-
-		private Transform squadTransform;
+		
+		[Inject]
+		private Arena _arena;
 
 		private List<UnitRoot> _chars = new List<UnitRoot>();
 
@@ -53,7 +55,7 @@ namespace ForestRoyale.Gameplay.Combat
 		// Gizmos
 		private Vector3 _projectedTouchPosition;
 		private Vector3 _walkablePosition;
-		private Vector3 _walkableTilePosition;
+		private Vector3 _targetTilePosition;
 
 		public void SetTroop(TroopCardData cardData, Transform troop, ArenaTeam team, UnitState state)
 		{
@@ -169,6 +171,10 @@ namespace ForestRoyale.Gameplay.Combat
 
 		protected void OnDrawGizmos()
 		{
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawSphere(_targetTilePosition, 0.3f);
+			Gizmos.DrawLine(_walkablePosition, _targetTilePosition);
+			
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(_projectedTouchPosition, _walkablePosition);
 			Gizmos.DrawSphere(_walkablePosition, 0.3f);
@@ -195,12 +201,14 @@ namespace ForestRoyale.Gameplay.Combat
 			_projectedTouchPosition = rayFromTouch.GetPoint(distance);
 			_projectedTouchPosition = _projectedTouchPosition + transform.up * 1f;
 
-			if (GetClosestWalkablePosition(_projectedTouchPosition, out _walkablePosition))
+			if (!GetClosestWalkablePosition(_projectedTouchPosition, out _walkablePosition))
 			{
-				return _walkablePosition;
+				return Vector3.zero;
 			}
+			
+			_targetTilePosition = _arena.Grid.WorldToTileCenterPosition(_walkablePosition);
 
-			return Vector3.zero;
+			return _targetTilePosition;
 		}
 
 		public bool GetClosestWalkablePosition(Vector3 worldPosition, out Vector3 position)
