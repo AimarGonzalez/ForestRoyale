@@ -1,9 +1,8 @@
+using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ForestRoyale.Core.UI;
-using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities;
 
 namespace ForestRoyale.Core
 {
