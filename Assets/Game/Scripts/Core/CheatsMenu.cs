@@ -57,6 +57,8 @@ namespace ForestRoyale.Core
 
 		[SerializeField]
 		[TableList]
+		[Tooltip("List of panel settings for different aspect ratios.\n" +
+				 "The settings are interpolated to get the best fit for the current aspect ratio.")]
 		[BoxGroup(PANEL_SETTINGS), PropertyOrder(DebugUI.Order)]
 		private List<PanelSettings> _panelSettings;
 
@@ -68,6 +70,8 @@ namespace ForestRoyale.Core
 		[Inject]
 		private Battle _battle;
 
+		private bool _showDebugPanel = false;
+
 		private void OnGUI()
 		{
 			PanelSettings panelSettings = CalcInterpolatedPanelSettings();
@@ -76,15 +80,60 @@ namespace ForestRoyale.Core
 			GUIUtils.PushSkin(_skin);
 			GUIUtils.PushFontSize(panelSettings.FontSize);
 
+			if (_showDebugPanel)
+			{
+				DrawCheatPanel(panelSettings);
+			}
+			else
+			{
+				DrawOpenButton(panelSettings);
+			}
+
+			GUIUtils.PopFontSize();
+			GUIUtils.PopSkin();
+		}
+
+		private void DrawCheatPanel(PanelSettings panelSettings)
+		{
 			GUILayoutUtils.LabelWidth = panelSettings.LabelWidth * panelSettings.Width * Screen.width;
 			GUILayoutUtils.LabelHeight = GUI.skin.label.CalcHeight(new GUIContent("X"), 100);
 
 			GUILayout.BeginArea(new Rect(10, 10, panelSettings.Width * Screen.width, panelSettings.Height * Screen.height), GUI.skin.box);
-			DrawCheatsGUI();
-			GUILayout.EndArea();
+			GUILayout.BeginVertical();
 
-			GUIUtils.PopFontSize();
-			GUIUtils.PopSkin();
+			DrawSubPanels();
+
+			GUILayout.FlexibleSpace();
+
+			if (GUILayout.Button("CLOSE"))
+			{
+				_showDebugPanel = false;
+			}
+			
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+		}
+
+		private void DrawOpenButton(PanelSettings panelSettings)
+		{
+			Vector2 buttonSize = GUI.skin.button.CalcSize(new GUIContent("CHEATS"));
+			float margin = 10;
+			GUILayout.BeginArea(new Rect(10, 10, buttonSize.x + margin, buttonSize.y + margin), GUI.skin.box);
+			GUILayout.BeginVertical();
+
+			if (GUILayout.Button("CHEATS"))
+			{
+				_showDebugPanel = true;
+			}
+
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+		}
+
+		private void DrawSubPanels()
+		{
+			GUILayoutUtils.BeginVerticalBox(_timeController);
+			GUILayoutUtils.BeginVerticalBox(_battle);
 		}
 
 		private PanelSettings CalcInterpolatedPanelSettings()
@@ -125,16 +174,6 @@ namespace ForestRoyale.Core
 			);
 
 			return interpolatedSettings;
-		}
-
-		private void DrawCheatsGUI()
-		{
-			GUILayout.BeginVertical();
-
-			GUILayoutUtils.BeginVerticalBox(_timeController);
-			GUILayoutUtils.BeginVerticalBox(_battle);
-
-			GUILayout.EndVertical();
 		}
 	}
 }
