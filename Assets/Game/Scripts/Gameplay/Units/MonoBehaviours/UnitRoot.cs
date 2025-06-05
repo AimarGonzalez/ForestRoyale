@@ -24,8 +24,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[SerializeField]
 		private UnitState _startingState = UnitState.Idle;
 
-		[ShowInInspector]
+		// --- DEGUG BOX ---------------
+
+		
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[ShowInInspector, ReadOnly]
+		private UnitState State => _unit.State;
+
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[ShowInInspector, ReadOnly]
+		private string TargetId => _unit.Target?.Id;
+
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[ShowInInspector]
 		[NonSerialized]
 		private Unit _unit;
 
