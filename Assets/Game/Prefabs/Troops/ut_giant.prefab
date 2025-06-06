@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: avoidancePriority
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4588034851413924146, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _bodyRenderer
+      value: 
+      objectReference: {fileID: 3563147844566604930}
     - target: {fileID: 4594647741101799874, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Radius
       value: 1
@@ -289,5 +293,10 @@ PrefabInstance:
 --- !u!4 &2394213828457441261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f2c4a06b231a2e54b9a7210ba47c3a55, type: 3}
+  m_PrefabInstance: {fileID: 2788658045989011462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3563147844566604930 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: f2c4a06b231a2e54b9a7210ba47c3a55, type: 3}
   m_PrefabInstance: {fileID: 2788658045989011462}
   m_PrefabAsset: {fileID: 0}

@@ -286,9 +286,6 @@ MonoBehaviour:
   _root: {fileID: 8068233149362356199}
   _followChildren: 1
   _isObstacleWhenStatic: 0
-  _body: {fileID: 4893382435126565578}
-  _agent: {fileID: 3960739159654457305}
-  _obstacle: {fileID: 0}
 --- !u!114 &1670998887246637220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,26 +343,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _root: {fileID: 8068233149362356199}
+  _bodyRenderer: {fileID: 0}
   _stateDictionary:
-    keyData: 010000000200000010000000
+    keyData: 010000000e00000030000000
     valueData:
-    - Objects:
+    - Material: {fileID: 2100000, guid: e5609d7b080881748af8a2beca1a2ece, type: 2}
+      ActiveGameObjects:
       - {fileID: 4775287443633296396}
-    - Objects:
+    - Material: {fileID: 2100000, guid: 4191b29bc0e96ed4d97cbcf5a35540bd, type: 2}
+      ActiveGameObjects:
       - {fileID: 4775287443633296396}
       - {fileID: 3877779757066929361}
       - {fileID: 7223196587414029065}
-      - {fileID: 5176292649494134153}
-    - Objects:
+    - Material: {fileID: 2100000, guid: 4191b29bc0e96ed4d97cbcf5a35540bd, type: 2}
+      ActiveGameObjects:
       - {fileID: 316264199113032634}
   _goDictionary:
     keyData:
     - {fileID: 4775287443633296396}
     - {fileID: 3877779757066929361}
     - {fileID: 7223196587414029065}
-    - {fileID: 5176292649494134153}
     - {fileID: 316264199113032634}
-    valueData: 0300000002000000020000000200000010000000
+    valueData: 0f0000000e0000000e00000030000000
 --- !u!1 &7223196587414029065
 GameObject:
   m_ObjectHideFlags: 0

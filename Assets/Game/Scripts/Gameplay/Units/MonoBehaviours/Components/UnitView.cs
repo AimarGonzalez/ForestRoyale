@@ -1,9 +1,12 @@
-﻿using ForestLib.Utils;
+﻿using ForestLib.ExtensionMethods;
+using ForestLib.Utils;
 using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
@@ -13,25 +16,39 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		// We need GameObjects cause List<GameObject> failt to serialize in the UnitySerializedDictionary
 		[Serializable]
-		private class GameObjects
+		private class ViewSettings
 		{
-			public List<GameObject> Objects = new List<GameObject>();
+			public Material Material;
+
+			[FormerlySerializedAs("Objects")]
+			public List<GameObject> ActiveGameObjects = new List<GameObject>();
 		}
 
 		[Serializable]
-		private class UnitStateToGameObjectDictionary : UnitySerializedDictionary<UnitState, GameObjects> { }
+		private class UnitStateToViewSettingsDictionary : UnitySerializedDictionary<UnitState, ViewSettings>
+		{
+			private static UnitStateFlagEqualityComparer s_comparer = new UnitStateFlagEqualityComparer();
+			public UnitStateToViewSettingsDictionary() : base(s_comparer)
+			{
+			}
+		}
 
 		[Serializable]
 		private class GameObjectToUnitStateDictionary : UnitySerializedDictionary<GameObject, UnitState> { }
 
 		// ---------------------------
 
+		[SerializeField]
+		private Renderer _bodyRenderer;
+
 		[SerializeField, OnValueChanged(nameof(PopulateGoDictionary))]
 		[LabelText("Visibility Map")]
-		private UnitStateToGameObjectDictionary _stateDictionary = new UnitStateToGameObjectDictionary();
+		private UnitStateToViewSettingsDictionary _stateDictionary = new UnitStateToViewSettingsDictionary();
 
 		[SerializeField, ReadOnly]
 		private GameObjectToUnitStateDictionary _goDictionary = new GameObjectToUnitStateDictionary();
+
+		
 
 		// ---------------------------
 
@@ -51,13 +68,37 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				// Don't react unknown states
 				return;
 			}
-			
+
+			UpdateMaterial(newState);
+			UpdateVisibleObjects(newState);
+		}
+
+		private void UpdateVisibleObjects(UnitState newState)
+		{
 			foreach (KeyValuePair<GameObject, UnitState> pair in _goDictionary)
 			{
 				GameObject go = pair.Key;
 				UnitState state = pair.Value;
-				bool active = state.HasFlag(newState); 
+				bool active = state.HasFlag(newState);
 				go.SetActive(active);
+			}
+		}
+
+		private void UpdateMaterial(UnitState newState)
+		{
+			if (!_bodyRenderer)
+			{
+				return;
+			}
+			
+			foreach(KeyValuePair<UnitState, ViewSettings> pair in _stateDictionary)
+			{
+				UnitState accpetedFlags = pair.Key;
+				ViewSettings settings = pair.Value;
+				if (settings.Material && newState.HasAnyFlag(accpetedFlags))
+				{
+					_bodyRenderer.material = settings.Material;
+				}
 			}
 		}
 
@@ -74,9 +115,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private void PopulateGoDictionary()
 		{
 			_goDictionary.Clear();
-			foreach (KeyValuePair<UnitState, GameObjects> pair in _stateDictionary)
+			foreach (KeyValuePair<UnitState, ViewSettings> pair in _stateDictionary)
 			{
-				foreach (GameObject go in pair.Value.Objects)
+				foreach (GameObject go in pair.Value.ActiveGameObjects)
 				{
 					if (_goDictionary.ContainsKey(go))
 					{

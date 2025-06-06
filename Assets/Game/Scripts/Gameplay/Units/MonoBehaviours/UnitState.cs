@@ -1,4 +1,6 @@
+using ForestLib.ExtensionMethods;
 using System;
+using System.Collections.Generic;
 
 namespace ForestRoyale.Gameplay.Units
 {
@@ -13,5 +15,18 @@ namespace ForestRoyale.Gameplay.Units
 		Dying = 1 << 4,
 		Dead = 1 << 5,
 		All = CastingPreview | Idle | MovingToTarget | Attacking | Dying | Dead
+	}
+	
+	public sealed class UnitStateFlagEqualityComparer : IEqualityComparer<UnitState>
+	{
+		public bool Equals(UnitState flags, UnitState testFlag)
+		{
+			return flags.HasAllFlags(testFlag);
+		}
+
+		public int GetHashCode(UnitState obj)
+		{
+			return 0;
+		}
 	}
 }

@@ -27,13 +27,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		// --- DEGUG BOX ---------------
 
 		
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
-		[ShowInInspector, ReadOnly]
-		private UnitState State => _unit.State;
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-2)]
+		[ShowInInspector]
+		private UnitState State => _unit?.State ?? UnitState.None;
 
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
-		[ShowInInspector, ReadOnly]
-		private string TargetId => _unit.Target?.Id;
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-2)]
+		[ShowInInspector]
+		private string TargetId => _unit == null ? "<no unit>" : (_unit.Target?.Id ?? "<no target>");
 
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[ShowInInspector]
@@ -41,15 +41,15 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private Unit _unit;
 
 		[SerializeField]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[BoxGroup("Debug Panel"), PropertyOrder(9999)]
 		private bool _showDebugPanel = false;
 
 		[SerializeField]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[BoxGroup("Debug Panel"), PropertyOrder(9999)]
 		private GUIUtils.PanelPlacement _panelPosition;
 
 		[SerializeField]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[BoxGroup("Debug Panel"), PropertyOrder(9999)]
 		private float _panelMargin = 0f;
 
 

@@ -347,6 +347,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 61127466162446212, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: _goDictionary.keyData.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 61127466162446212, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: _goDictionary.valueData.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 61127466162446212, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: '_goDictionary.keyData.Array.data[3]'
+      value: 
+      objectReference: {fileID: 7948159211837798399}
+    - target: {fileID: 61127466162446212, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: '_goDictionary.valueData.Array.data[3]'
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 61127466162446212, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: _stateDictionary.valueData.Array.data[1].ActiveGameObjects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 284940213684403444, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -436,6 +456,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2605472542282998423, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2605472542282998423, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: _startingUnitSO
       value: 
       objectReference: {fileID: 11400000, guid: fd1979804d3b84c4ab104154e1febcee, type: 2}
@@ -469,7 +493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701217520455559881, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_Radius
-      value: 7
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 7396636242238907329, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
       propertyPath: m_EdgeRadius
@@ -486,6 +510,11 @@ PrefabInstance:
 --- !u!4 &2965375918593496954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7401602113970101347, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
+  m_PrefabInstance: {fileID: 5733333321630649113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7948159211837798399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2440226379764317414, guid: 2a1d3fa8567f32d40a2711a1bbdad744, type: 3}
   m_PrefabInstance: {fileID: 5733333321630649113}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7217840766576101476
