@@ -67,7 +67,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_agent ??= GetComponentInChildren<NavMeshAgent>(includeInactive: true);
 			if (_isObstacleWhenStatic)
 			{
-				_obstacle ??= GetComponentInChildren<NavMeshObstacle>();
+				_obstacle ??= GetComponentInChildren<NavMeshObstacle>(includeInactive: true);
 			}
 
 			Subscribe();
