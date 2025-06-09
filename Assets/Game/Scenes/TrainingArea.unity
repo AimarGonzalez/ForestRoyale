@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 366402696}
   - component: {fileID: 366402697}
   m_Layer: 0
-  m_Name: BattleCheats
+  m_Name: GameState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -758,12 +758,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366402695}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1369798546}
+  m_Father: {fileID: 1400931071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &366402697
 MonoBehaviour:
@@ -4528,7 +4528,6 @@ Transform:
   - {fileID: 1961463508}
   - {fileID: 1827248512}
   - {fileID: 1042534373}
-  - {fileID: 366402696}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400931070
@@ -4566,6 +4565,7 @@ Transform:
   - {fileID: 820112653}
   - {fileID: 944559667}
   - {fileID: 1362526488}
+  - {fileID: 366402696}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1483322244
