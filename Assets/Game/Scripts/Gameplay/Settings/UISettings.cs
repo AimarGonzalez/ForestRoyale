@@ -8,8 +8,8 @@ using FilePathAttribute = UnityEditor.FilePathAttribute;
 namespace ForestRoyale.Gameplay.UI
 {
 	[FilePath("Assets/Game/Settings/UISettings.asset", FilePathAttribute.Location.ProjectFolder)]
-	[CreateAssetMenu(fileName = "New Unit", menuName = "Forest Royale/Settings/UISettings")]
-	public class UISettings : ScriptableSingleton<UISettings>
+	[CreateAssetMenu(fileName = "UISettings", menuName = "Forest Royale/Settings/UISettings")]
+	public class UISettings : ScriptableObject
 	{
 		[Serializable]
 		public class HealthBarColors
@@ -22,34 +22,30 @@ namespace ForestRoyale.Gameplay.UI
 
 		[BoxGroup("Unit Colors")]
 		[SerializeField]
-		[OnValueChanged(nameof(SaveMe))]
 		private HealthBarColors _allyHealthBarColors;
 
 		[BoxGroup("Unit Colors")]
 		[SerializeField]
-		[OnValueChanged(nameof(SaveMe))]
 		private HealthBarColors _enemyHealthBarColors;
 
 		public HealthBarColors AllyHealthBarColors => _allyHealthBarColors;
 		public HealthBarColors EnemyHealthBarColors => _enemyHealthBarColors;
-
-		private void SaveMe()
-		{
-			Save(true);
-		}
 	}
 
-	public class UISettingsWindow : OdinEditorWindow
+	public class GameSettingsWindow : OdinMenuEditorWindow
 	{
-		[MenuItem("ForestRoyale/Settings/UI Settings")]
+		[MenuItem("ForestRoyale/Settings/Game Settings")]
 		private static void OpenWindow()
 		{
-			GetWindow<UISettingsWindow>("UI Settings").Show();
+			GetWindow<GameSettingsWindow>("Game Settings").Show();
 		}
 
-		protected override object GetTarget()
+		protected override OdinMenuTree BuildMenuTree()
 		{
-			return UISettings.instance;
+			var tree = new OdinMenuTree();
+			//tree.AddAssetAtPath("UI Settings", "Assets/Game/Settings/UISettings.asset");
+			tree.AddAllAssetsAtPath("Settings", "Assets/Game/Settings", typeof(ScriptableObject), includeSubDirectories: true);
+			return tree;
 		}
 	}
 }

@@ -23,6 +23,8 @@ namespace ForestRoyale.Gameplay.UI
 		[Range(0f, 1f)]
 		[SerializeField] private float _healthRatio = 1f;
 
+		private UISettings UISettings => GameSettings.Instance.UISettings;
+
 		private float _lastHealth;
 
 		private void Start()
@@ -43,6 +45,13 @@ namespace ForestRoyale.Gameplay.UI
 
 		void OnValidate()
 		{
+			// PATCH: Obort. GameSettings.Instance can't be obtained if the scene is not loaded.
+			// TODO: I need a reliable way to load the settings at any moment.
+			if (!gameObject.scene.isLoaded)
+			{
+				return;
+			}
+			
 			SetColor(_team);
 			SetFillRatio(_healthRatio);
 		}
@@ -76,11 +85,11 @@ namespace ForestRoyale.Gameplay.UI
 			UISettings.HealthBarColors healthBarColors;
 			if (team == ArenaTeam.Forest)
 			{
-				healthBarColors = UISettings.instance.EnemyHealthBarColors;
+				healthBarColors = UISettings.EnemyHealthBarColors;
 			}
 			else
 			{
-				healthBarColors = UISettings.instance.AllyHealthBarColors;
+				healthBarColors = UISettings.AllyHealthBarColors;
 			}
 
 			_healthBarFrame.color = healthBarColors.FrameColor;
