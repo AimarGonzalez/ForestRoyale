@@ -174,6 +174,7 @@ namespace Game.UI
 
 			if (_cardName != null)
 			{
+				_cardName.gameObject.SetActive(_cardPicture.sprite != null);
 				_cardName.text = _cardData.CardName;
 			}
 

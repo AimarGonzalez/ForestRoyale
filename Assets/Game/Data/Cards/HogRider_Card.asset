@@ -15,7 +15,7 @@ MonoBehaviour:
   _cardName: Hog Rider
   _description: Fast unit that targets buildings. He jumps over rivers and can push
     other units aside.
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 3999acf791d87ba4d9e9fd4588e59bf8, type: 3}
   _elixirCost: 4
   _rarity: 1
   _unitCount: 1

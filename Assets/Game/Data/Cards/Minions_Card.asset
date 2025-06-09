@@ -15,7 +15,7 @@ MonoBehaviour:
   _cardName: Minions
   _description: Three fast, unarmored flying attackers. Weak to arrows, fireballs,
     dragons, and anything else that targets air units.
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 3999acf791d87ba4d9e9fd4588e59bf8, type: 3}
   _elixirCost: 3
   _rarity: 0
   _unitCount: 3

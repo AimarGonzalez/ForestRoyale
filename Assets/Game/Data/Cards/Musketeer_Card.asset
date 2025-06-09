@@ -15,7 +15,7 @@ MonoBehaviour:
   _cardName: Musketeer
   _description: Don't be fooled by her delicate appearance. She can take out a tower
     from a mile away.
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 3999acf791d87ba4d9e9fd4588e59bf8, type: 3}
   _elixirCost: 4
   _rarity: 1
   _unitCount: 1
