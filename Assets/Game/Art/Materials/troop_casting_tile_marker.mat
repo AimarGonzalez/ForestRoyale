@@ -55,7 +55,7 @@ Material:
     - _QueueOffset: 0
     - _corner_radious: 0.5
     - _margin: 0
-    - _thickness: 0.3
+    - _thickness: 0.34
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
