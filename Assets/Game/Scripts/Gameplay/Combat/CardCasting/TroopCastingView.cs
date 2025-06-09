@@ -78,10 +78,17 @@ namespace ForestRoyale.Gameplay.Combat
 			else
 			{
 				// Multiple units
-				foreach (UnitRoot squadCharacter in squadTransform)
+				foreach (Transform characterTransform in squadTransform)
 				{
-					_chars.Add(squadCharacter);
-					squadCharacter.transform.SetParent(transform, false);
+					if (characterTransform.TryGetComponent(out UnitRoot characterUnit))
+					{
+						_chars.Add(characterUnit);
+						characterUnit.transform.SetParent(transform, false);
+					}
+					else
+					{
+						Debug.LogError($"TroopCastingView - {characterTransform.name} is not a UnitRoot");
+					}
 				}
 
 				// Get rid of the squad root object
