@@ -10,8 +10,6 @@ namespace ForestRoyale.Gameplay.Systems
 	{
 		public event Action OnSceneUnitsInitialized;
 
-		public event Action<Battle> OnBattleCreated;
-		
 		public event Action<Unit> OnUnitCreated;
 		public event Action<Unit> OnUnitDestroyed;
 		public event Action<Unit> OnUnitDamaged;
@@ -37,12 +35,6 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			OnUnitAttacked?.Invoke(attacker, target);
 		}
-
-		public void TriggerBattleCreated(Battle battle)
-		{
-			OnBattleCreated?.Invoke(battle);
-		}
-		
 
 		// ----- 
 		

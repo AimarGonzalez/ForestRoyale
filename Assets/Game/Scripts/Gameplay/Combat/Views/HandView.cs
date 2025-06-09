@@ -11,7 +11,7 @@ namespace ForestRoyale.Gameplay.Combat.Views
 	public class HandView : MonoBehaviour
 	{
 		[Inject]
-		private ArenaEvents _arenaEvents;
+		private ApplicationEvents _appEvents;
 
 		private Battle _battle;
 
@@ -21,7 +21,7 @@ namespace ForestRoyale.Gameplay.Combat.Views
 
 		private void Awake()
 		{
-			_arenaEvents.OnBattleCreated += HandleBattleCreated;
+			_appEvents.OnBattleCreated += HandleBattleCreated;
 
 			_cardSlots = GetComponentsInChildren<CardSlot>();
 		}

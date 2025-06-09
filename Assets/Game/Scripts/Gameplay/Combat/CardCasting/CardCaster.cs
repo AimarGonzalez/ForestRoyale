@@ -27,9 +27,10 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private ApplicationEvents _applicationEvents;
 
+		private Battle _battle;
+		private Player _player;
 		private Hand _hand;
 		private Deck _deck;
-		private Player _player;
 
 		private void Awake()
 		{
@@ -49,7 +50,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void Subscribe()
 		{
-			_applicationEvents.OnBattleStarted += OnBattleStarted;
+			_applicationEvents.OnBattleCreated += OnBattleCreated;
 			foreach (CardSlot cardView in _cardSlots)
 			{
 				cardView.OnSelected += OnCardSelected;
@@ -59,7 +60,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void Unsubscribe()
 		{
-			_applicationEvents.OnBattleStarted -= OnBattleStarted;
+			_applicationEvents.OnBattleCreated -= OnBattleCreated;
 		}
 
 		private void OnDestroy()
@@ -67,9 +68,10 @@ namespace ForestRoyale.Gameplay.Combat
 			Unsubscribe();
 		}
 
-		private void OnBattleStarted(Battle battle)
+		private void OnBattleCreated(Battle battle)
 		{
-			Debug.Log($"CardCaster - OnBattleStarted");
+			Debug.Log($"CardCaster - OnBattleCreated");
+			_battle = battle;
 			_player = battle.Player;
 			_hand = battle.Player.Hand;
 			_deck = battle.Player.Deck;
@@ -108,8 +110,10 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			//TODO: Implement
 			// - check elixir
+			bool isBattleActive = _battle != null && _battle.IsBattleActive;
+			bool isCardSlotInPreviewState = cardSlot.IsCastPreviewVisible;
 
-			return cardSlot.IsCastPreviewVisible;
+			return isBattleActive && isCardSlotInPreviewState;
 		}
 
 		private void Cast(CardSlot cardSlot)

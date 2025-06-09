@@ -11,17 +11,17 @@ namespace ForestRoyale.Gameplay.Combat
 		[SerializeField] private DeckDataSO _playerDeck;
 		[SerializeField] private DeckDataSO _botDeck;
 		[SerializeField] private float _battleDuration = 180f; // 3 minutes
-		
+
 
 		[Inject]
 		private Arena _arena;
 
 		[Inject]
-		private ArenaEvents _arenaEvents;
-		
+		private ApplicationEvents _appEvents;
+
 
 		private Battle _battle;
-		
+
 		public bool HasActiveBattle => _battle != null && _battle.IsBattleActive;
 
 		private void Start()
@@ -34,10 +34,27 @@ namespace ForestRoyale.Gameplay.Combat
 			_battle = new Battle(_battleDuration);
 			_battle.Player.Deck.Initialize(_playerDeck.Cards);
 			_battle.Bot.Deck.Initialize(_botDeck.Cards);
-			
+
 			_battle.ResetBattle();
-			
-			_arenaEvents.TriggerBattleCreated(_battle);
+			_appEvents.TriggerBattleCreated(_battle);
+		}
+
+		private void StartBattle()
+		{
+			_battle.StartBattle();
+			_appEvents.TriggerBattleStarted(_battle);
+		}
+
+		public void EndBattle()
+		{
+			_battle.EndBattle();
+			_appEvents.TriggerBattleEnded(_battle);
+		}
+
+		public void ResetBattle()
+		{
+			_battle.ResetBattle();
+			_appEvents.TriggerBattleCreated(_battle);
 		}
 
 		public void DrawGUI()
@@ -50,18 +67,17 @@ namespace ForestRoyale.Gameplay.Combat
 
 			if (GUILayout.Button("Start Battle"))
 			{
-				_battle.StartBattle();
+				StartBattle();
 			}
 
 			if (GUILayout.Button("End Battle"))
 			{
-				_battle.EndBattle();
+				EndBattle();
 			}
-			
+
 			if (GUILayout.Button("Reset Battle"))
 			{
-				_battle.ResetBattle();
-				_arenaEvents.TriggerBattleCreated(_battle);
+				ResetBattle();
 			}
 
 			GUILayout.EndHorizontal();
