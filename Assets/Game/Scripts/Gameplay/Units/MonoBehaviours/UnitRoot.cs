@@ -1,4 +1,5 @@
-﻿using ForestRoyale.Core.UI;
+﻿using ForestLib.ExtensionMethods;
+using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
@@ -317,7 +318,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 					new GUIUtils.Property ("State", _unit.State)
 				};
 
-				if (_unit.CanFight)
+				if (_unit.CanFight && _unit.State == UnitState.Attacking)
 				{
 					properties = properties
 						.Append(new GUIUtils.Property("CombatState", _unit.CombatComponent.State.ToString()))
