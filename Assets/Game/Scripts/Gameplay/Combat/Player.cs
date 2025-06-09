@@ -64,7 +64,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void DrawCard()
 		{
-			if (_deck.CanDraw && _hand.CanDrawMore)
+			if (_hand.CanDrawMore)
 			{
 				var card = _deck.DrawCard();
 				_hand.AddCard(card);
