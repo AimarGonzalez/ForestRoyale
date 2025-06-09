@@ -15,7 +15,7 @@ MonoBehaviour:
   _cardName: Skeleton
   _description: Four fast, very weak melee fighters. Generate positive elixir trades.
   _portrait: {fileID: 21300000, guid: 3999acf791d87ba4d9e9fd4588e59bf8, type: 3}
-  _elixirCost: 1
+  _elixirCost: 3
   _rarity: 0
   _unitCount: 4
   _prefab: {fileID: 3360633588996386929, guid: 60758d3ab9677334ca19d7241c5430f0, type: 3}

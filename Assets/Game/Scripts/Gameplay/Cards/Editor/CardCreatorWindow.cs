@@ -87,14 +87,14 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		{
 			var minionsSO = CreateMinionsUnit(UNITS_DIRECTORY);
 			TroopCardData minionsCard = TroopCardData.Build(
-				cardName: "Minions",
-				description: "Three fast, unarmored flying attackers. Weak to arrows, fireballs, dragons, and anything else that targets air units.",
+				cardName: "Minion Horde",
+				description: "Six fast, unarmored flying attackers. Three's a crowd, six is a horde!",
 				portrait: null,
-				elixirCost: 3,
+				elixirCost: 5,
 				rarity: CardRarity.Common,
-				unitCount: 3,
+				unitCount: 6,
 				unitSO: minionsSO,
-				prefab: LoadUnitPrefab("Minions")
+				prefab: LoadSquadPrefab("Minions")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -222,9 +222,9 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				createdCount++;
 			}
 
-			if (!File.Exists($"{CARDS_DIRECTORY}/Skeleton_Card.asset"))
+			if (!File.Exists($"{CARDS_DIRECTORY}/SkeletonArmy_Card.asset"))
 			{
-				CreateSkeletonCard();
+				CreateSkeletonArmyCard();
 				createdCount++;
 			}
 
@@ -260,7 +260,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				rarity: CardRarity.Common,
 				unitCount: 3,
 				unitSO: goblinSO,
-				prefab: LoadUnitPrefab("Goblin")
+				prefab: LoadSquadPrefab("Goblin")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -312,18 +312,18 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 			AssetDatabase.Refresh();
 		}
 
-		private void CreateSkeletonCard()
+		private void CreateSkeletonArmyCard()
 		{
 			var skeletonSO = CreateSkeletonUnit(UNITS_DIRECTORY);
 			TroopCardData card = TroopCardData.Build(
-				cardName: "Skeleton",
-				description: "Four fast, very weak melee fighters. Generate positive elixir trades.",
+				cardName: "Skeleton Army",
+				description: "Spawns an army of Skeletons. Meet Larry and his friends Harry, Terry, Gerry, Mary, etc.",
 				portrait: null,
-				elixirCost: 1,
-				rarity: CardRarity.Common,
-				unitCount: 4,
+				elixirCost: 3,
+				rarity: CardRarity.Epic,
+				unitCount: 15,
 				unitSO: skeletonSO,
-				prefab: LoadUnitPrefab("Skeleton")
+				prefab: LoadSquadPrefab("SkeletonArmy")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -385,7 +385,7 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 				rarity: CardRarity.Common,
 				unitCount: 2,
 				unitSO: archersSO,
-				prefab: LoadUnitPrefab("Archers")
+				prefab: LoadSquadPrefab("Archers")
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -784,6 +784,13 @@ namespace ForestRoyale.Editor.Gameplay.Cards
 		private GameObject LoadUnitPrefab(string cardName)
 		{
 			string prefabName = $"ut_{cardName.ToLower()}";
+			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
+			return AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+		}
+
+		private GameObject LoadSquadPrefab(string cardName)
+		{
+			string prefabName = $"spawnable_{cardName.ToLower()}";
 			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
 			return AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
 		}
