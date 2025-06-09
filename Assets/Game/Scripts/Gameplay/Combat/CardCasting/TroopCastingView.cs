@@ -1,11 +1,9 @@
 using ForestLib.ExtensionMethods;
 using ForestRoyale.Gameplay.Cards;
-using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
@@ -165,7 +163,7 @@ namespace ForestRoyale.Gameplay.Combat
 			SetState(CastingState.Deployed);
 			foreach (UnitRoot character in _chars)
 			{
-				character.CastUnit(UnitState.Idle);
+				character.SetState(UnitState.Idle);
 			}
 		}
 

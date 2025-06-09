@@ -182,56 +182,58 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
 				Unit unit = new (null, this, _startingTeam, _startingUnitSO, _startingState);
-				if (_startingState == UnitState.CastingPreview)
-				{
-					SetUnitForPreview(unit);
-				}
-				else
-				{
-					SetUnit(unit);
-				}
+				SetUnit(unit);
 			}
 		}
 
 		public void SetUnit(Unit unit)
-		{
-			SetUnitForPreview(unit);
-			CastUnit(unit.State);
-		}
-
-		private void SetUnitForPreview(Unit unit)
 		{
 			if (_unit == unit)
 			{
 				return;
 			}
 
-			if (_unit != null)
-			{
-				_arenaEvents?.TriggerUnitDestroyed(_unit);
-			}
-
 			Unit oldUnit = _unit;
 			UnitState oldUnitState = oldUnit?.State ?? UnitState.None;
+			
+			DestroyUnit(oldUnit);
+
 			_unit = unit;
 
 			UpdateUnitComponents(unit);
 			PropagateUnitChanged(oldUnit, unit);
 			PropagateStateChanged(oldUnitState, unit.State);
+			
+			if (unit.State == UnitState.Idle)
+			{
+				_arenaEvents?.TriggerUnitCreated(_unit);
+			}
 		}
 
-		public void CastUnit(UnitState state)
+		public void SetState(UnitState newState)
 		{
 			if (_unit == null)
 			{
 				return;
 			}
 			
-			_unit.State = state;
+			UnitState oldState = _unit.State;
 			
-			_arenaEvents?.TriggerUnitCreated(_unit);
-		}
+			_unit.State = newState;
 
+			if (oldState == UnitState.CastingPreview && newState == UnitState.Idle)
+			{
+				_arenaEvents?.TriggerUnitCreated(_unit);
+			}
+		}
+		
+		private void DestroyUnit(Unit unit)
+		{
+			if (unit != null)
+			{
+				_arenaEvents?.TriggerUnitDestroyed(unit);
+			}
+		}
 
 		private void Subscribe()
 		{
@@ -340,8 +342,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			foreach (var component in UnitComponents)
 			{
 				component.ForceAwake(this);
-				PropagateUnitChanged(null, _unit);
-				PropagateStateChanged(UnitState.Idle, UnitState.Idle);
 			}
 		}
 
