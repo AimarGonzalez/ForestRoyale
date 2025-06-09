@@ -36,12 +36,12 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			_handView = FindAnyObjectByType<HandView>();
 			_cardSlots = _handView.CardSlots;
+			
+			Subscribe();
 		}
 
 		private void Start()
 		{
-			Subscribe();
-
 			foreach (CardSlot cardView in _cardSlots)
 			{
 				cardView.Init(_castingLinePosition);
@@ -75,7 +75,6 @@ namespace ForestRoyale.Gameplay.Combat
 			_player = battle.Player;
 			_hand = battle.Player.Hand;
 			_deck = battle.Player.Deck;
-
 		}
 
 		private void OnCardSelected(CardSlot cardSlot, CardData cardData)
