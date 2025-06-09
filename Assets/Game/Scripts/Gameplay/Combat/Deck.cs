@@ -28,6 +28,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			if (!CanDraw)
 			{
+				Debug.LogError("Can't draw card. The drawPile is empty. Likely an initialization error");
 				return null;
 			}
 
@@ -41,7 +42,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void Shuffle()
 		{
-			var cardArray = _drawPile.ToArray();
+			var cardArray = _cards.ToArray();
 			// Fisher-Yates shuffle
 			for (int i = cardArray.Length - 1; i > 0; i--)
 			{
