@@ -1,14 +1,12 @@
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Systems;
-using System;
 using UnityEngine;
 using VContainer;
 
 
 namespace ForestRoyale.Gameplay.Combat
 {
-	// IMPROVE: Split between BattleTools and Battle
-	public class BattleCheats : MonoBehaviour, IGUIDrawer
+	public class GameState : MonoBehaviour, IGUIDrawer
 	{
 		[SerializeField] private DeckDataSO _playerDeck;
 		[SerializeField] private DeckDataSO _botDeck;
@@ -21,9 +19,10 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private ArenaEvents _arenaEvents;
 		
-		
 
 		private Battle _battle;
+		
+		public bool HasActiveBattle => _battle != null && _battle.IsBattleActive;
 
 		private void Start()
 		{
