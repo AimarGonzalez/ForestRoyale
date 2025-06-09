@@ -4,6 +4,7 @@ using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
+using ForestRoyale.Gameplay.Settings;
 
 namespace ForestRoyale.Gameplay.UI
 {
@@ -29,15 +30,15 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void Start()
 		{
-			SetupHealthBar();
+			UpdateView();
 		}
 
 		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
 		{
-			SetupHealthBar();
+			UpdateView();
 		}
 
-		private void SetupHealthBar()
+		private void UpdateView()
 		{
 			UpdateColor();
 			UpdateFillRatio();
@@ -72,7 +73,7 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void UpdateColor()
 		{
-			if(Unit == null)
+			if (Unit == null)
 			{
 				return;
 			}
@@ -99,16 +100,16 @@ namespace ForestRoyale.Gameplay.UI
 
 		private void UpdateFillRatio()
 		{
-			if(Unit == null)
+			if (Unit == null)
 			{
 				return;
 			}
-			
+
 			SetFillRatio(Unit.CurrentHealth / Unit.MaxHealth);
 
 			_lastHealth = Unit.CurrentHealth;
 		}
-		
+
 		private void SetFillRatio(float healthRatio)
 		{
 			_healthBarFill.fillAmount = healthRatio;
