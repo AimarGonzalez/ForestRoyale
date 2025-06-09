@@ -1,6 +1,7 @@
 using ForestLib.ExtensionMethods;
 using ForestLib.Utils;
 using ForestRoyale.Gameplay.Cards;
+using ForestRoyale.Gameplay.Combat.Views;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Game.UI;
@@ -19,8 +20,9 @@ namespace ForestRoyale.Gameplay.Combat
 		[SerializeField, Required]
 		private Transform _charactersRoot;
 
-		[SerializeField]
-		private List<CardSlot> _cardSlots;
+
+		private HandView _handView;
+		private IEnumerable<CardSlot> _cardSlots;
 
 		[Inject]
 		private ApplicationEvents _applicationEvents;
@@ -31,6 +33,8 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void Awake()
 		{
+			_handView = FindAnyObjectByType<HandView>();
+			_cardSlots = _handView.CardSlots;
 		}
 
 		private void Start()
@@ -128,7 +132,12 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void CastTroop(CardSlot cardSlot)
 		{
-			cardSlot.Cast(_charactersRoot);
+			if (_player.PlayCard(cardSlot.CardData))
+			{
+				cardSlot.Cast(_charactersRoot);
+				// TODO: await;
+				_player.DrawCard();
+			}
 		}
 
 		// -------- GIZMOS----------------------------------------

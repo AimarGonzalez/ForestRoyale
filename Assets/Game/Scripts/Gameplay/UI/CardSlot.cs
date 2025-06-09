@@ -113,13 +113,18 @@ namespace Game.UI
 				PopulateCardView();
 			}
 		}
+		
+		public void Clear()
+		{
+			CardData = null;
+		}
 
 		private void Awake()
 		{
 			_canvas = GetComponent<Canvas>();
 			_slotRectTransform = GetComponent<RectTransform>();
 			_camera = Camera.main;
-			
+
 			_mouseFollower = _cardView.GetComponent<UIFollower>();
 			_cardRectTransform = _cardView.GetComponent<RectTransform>();
 			_cardOriginalAnchor = _cardRectTransform.anchoredPosition;
@@ -428,7 +433,9 @@ namespace Game.UI
 		public void Cast(Transform _charactersRoot)
 		{
 			_castingView.Cast(_charactersRoot);
-			
+
+			// TODO: change State to State.Casting
+			// TODO: make async to wait for casting to finish
 			SetState(State.Empty);
 			CardData = null;
 		}

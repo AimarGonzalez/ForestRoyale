@@ -45,10 +45,20 @@ namespace ForestRoyale.Gameplay.Settings
 
 		private void Awake()
 		{
-			if (_instance != this)
+			if (_instance != null && _instance != this)
 			{
-				Debug.LogError("GameSettings already initialized with invalid asset references");
+				Debug.LogError("GaneSettings.Instance initialized with a different instance. Critical error, investigate");
+				if (Application.isPlaying)
+				{
+					Destroy(_instance);
+				}
+				else
+				{
+					DestroyImmediate(_instance);
+				}
 			}
+
+			_instance = this;
 		}
 
 		[SerializeField]

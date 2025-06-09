@@ -1,10 +1,17 @@
 using ForestRoyale.Gameplay.Cards;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Combat
 {
 	public class Player
 	{
+
+		public event Action<List<CardData>> OnHandChanged;
+		public event Action<CardData> OnCardDrawn;
+		public event Action<CardData> OnCardPlayed;
+
 		private float _maxElixir = 10f;
 		private float _elixirRegenRate = 1f;
 		private float _initialElixir = 5f;
@@ -36,7 +43,7 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		public bool CanPlayCard(CardData card)
+		public bool CanPayElixirCost(CardData card)
 		{
 			return _currentElixir >= card.ElixirCost;
 		}
@@ -52,6 +59,7 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				DrawCard();
 			}
+			OnHandChanged?.Invoke(_hand.Cards);
 		}
 
 		public void DrawCard()
@@ -60,6 +68,7 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				var card = _deck.DrawCard();
 				_hand.AddCard(card);
+				OnCardDrawn?.Invoke(card);
 			}
 		}
 
@@ -69,19 +78,23 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				_deck.ReturnCard(card);
 			}
+			OnCardPlayed?.Invoke(card);
 		}
 
-		public bool PlayCard(CardData card, Vector3 position)
+		public bool PlayCard(CardData card)
 		{
 			if (!_hand.Cards.Contains(card))
 			{
 				return false;
 			}
 
-			if (!CanPlayCard(card))
+			/*
+			//check if player has enough elixir to play the card
+			if (!CanPayElixirCost(card))
 			{
 				return false;
 			}
+			*/
 
 			SpendElixir(card.ElixirCost);
 

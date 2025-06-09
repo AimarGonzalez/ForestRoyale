@@ -6,30 +6,22 @@ namespace ForestRoyale.Gameplay.Combat
 {
 	public class Deck
 	{
-		private const int MAX_CARDS = 8;
 		private readonly List<CardData> _cards = new();
 		private readonly Queue<CardData> _drawPile = new();
 
 		public IReadOnlyList<CardData> Cards => _cards;
 		public bool CanDraw => _drawPile.Count > 0;
-		public bool IsFull => _cards.Count >= MAX_CARDS;
 
-		public bool AddCard(CardData card)
+		public void Initialize(IEnumerable<CardData> cards)
 		{
-			if (IsFull)
+			_cards.Clear();
+			_drawPile.Clear();
+			foreach (var card in cards)
 			{
-				return false;
+				_cards.Add(card);
 			}
-
-			_cards.Add(card);
-			_drawPile.Enqueue(card);
-			return true;
-		}
-
-		public void RemoveCard(CardData card)
-		{
-			_cards.Remove(card);
-			// Note: We don't remove from draw pile as it's a queue
+			
+			Shuffle();
 		}
 
 		public CardData DrawCard()
@@ -64,18 +56,6 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				_drawPile.Enqueue(card);
 			}
-		}
-
-		public void Initialize(IEnumerable<CardData> cards)
-		{
-			_cards.Clear();
-			_drawPile.Clear();
-			foreach (var card in cards)
-			{
-				AddCard(card);
-			}
-
-			Shuffle();
 		}
 	}
 }

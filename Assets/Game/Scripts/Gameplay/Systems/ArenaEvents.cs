@@ -1,3 +1,4 @@
+using ForestRoyale.Gameplay.Combat;
 using System;
 using ForestRoyale.Gameplay.Units;
 using UnityEngine;
@@ -8,6 +9,9 @@ namespace ForestRoyale.Gameplay.Systems
 	public class ArenaEvents : IPostStartable
 	{
 		public event Action OnSceneUnitsInitialized;
+
+		public event Action<Battle> OnBattleCreated;
+		
 		public event Action<Unit> OnUnitCreated;
 		public event Action<Unit> OnUnitDestroyed;
 		public event Action<Unit> OnUnitDamaged;
@@ -34,10 +38,18 @@ namespace ForestRoyale.Gameplay.Systems
 			OnUnitAttacked?.Invoke(attacker, target);
 		}
 
+		public void TriggerBattleCreated(Battle battle)
+		{
+			OnBattleCreated?.Invoke(battle);
+		}
+		
+
+		// ----- 
+		
 		/// <summary>
 		/// We know Units do AutoInitialization during Start() so its safe to assume they are initialized.
 		/// </summary>
-		public void PostStart()
+		void IPostStartable.PostStart()
 		{
 			Debug.Log("ArenaEvents - SceneUnitsInitialized!");
 			OnSceneUnitsInitialized?.Invoke();

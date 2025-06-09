@@ -3,27 +3,32 @@ using System;
 using UnityEngine;
 using VContainer;
 
+
 namespace ForestRoyale.Gameplay.Combat
 {
-	[DefaultExecutionOrder(-1000)]
-	public class Battle : MonoBehaviour, IGUIDrawer
+	// IMPROVE: Split between BattleTools and Battle
+	public class Battle
 	{
-		[SerializeField] private Player _player;
-		[SerializeField] private Player _bot;
-		[SerializeField] private float _battleDuration = 180f; // 3 minutes
-
+		private float _battleDuration = 180f;
 		private float _currentTime;
 		private bool _isBattleActive;
 
-		[Inject]
-		private Arena _arena;
+		private Player _player;
+		private Player _bot;
 
 		public Player Player => _player;
 		public Player Bot => _bot;
 		public float RemainingTime => Mathf.Max(0, _battleDuration - _currentTime);
 		public bool IsBattleActive => _isBattleActive;
 
-		private void Update()
+		public Battle(float duration)
+		{
+			_battleDuration = duration;
+			_player = new Player();
+			_bot = new Player();
+		}
+
+		public void Update()
 		{
 			if (!_isBattleActive)
 			{
@@ -37,56 +42,28 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		private void InitializeBattle()
+		public void ResetBattle()
 		{
 			_currentTime = 0f;
-			_isBattleActive = true;
+			_isBattleActive = false;
+			
+			_player.Hand.Clear();
+			_bot.Hand.Clear();
+		}
 
+		public void StartBattle()
+		{
+			_isBattleActive = true;
+			
 			// Initialize player and bot hands
 			_player.PopulateInitialHand();
 			_bot.PopulateInitialHand();
 		}
 
-		private void EndBattle()
+		public void EndBattle()
 		{
 			_isBattleActive = false;
 			// TODO: Implement battle end logic (determine winner, show results, etc.)
-		}
-
-		public void PauseBattle()
-		{
-			_isBattleActive = false;
-		}
-
-		public void ResumeBattle()
-		{
-			_isBattleActive = true;
-		}
-
-		public void DrawGUI()
-		{
-			GUILayoutUtils.Label("Battle");
-			GUILayoutUtils.Label($"Remaining Time: {RemainingTime}");
-
-			GUILayout.BeginHorizontal();
-
-
-			if (GUILayout.Button("Start Battle"))
-			{
-				InitializeBattle();
-			}
-
-			if (GUILayout.Button("End Battle"))
-			{
-				EndBattle();
-			}
-
-			GUILayout.EndHorizontal();
-
-			if (GUILayout.Button("Respawn towers"))
-			{
-				_arena.ResetTowers();
-			}
 		}
 	}
 }

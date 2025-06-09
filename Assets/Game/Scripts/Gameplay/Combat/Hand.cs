@@ -1,4 +1,5 @@
 using ForestRoyale.Gameplay.Cards;
+using System;
 using System.Collections.Generic;
 
 namespace ForestRoyale.Gameplay.Combat
@@ -11,6 +12,7 @@ namespace ForestRoyale.Gameplay.Combat
 		public List<CardData> Cards => _cards;
 		public bool CanDrawMore => _cards.Count < MAX_CARDS;
 		public bool IsFull => _cards.Count >= MAX_CARDS;
+
 
 		public bool AddCard(CardData card)
 		{
@@ -25,7 +27,12 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public bool RemoveCard(CardData card)
 		{
-			return _cards.Remove(card);
+			if (!_cards.Remove(card))
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		public void Clear()

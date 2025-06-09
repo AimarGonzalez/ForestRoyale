@@ -54,7 +54,7 @@ namespace ForestRoyale.Core
 				Height = height;
 			}
 		}
-
+		
 		[SerializeField]
 		[TableList]
 		[Tooltip("List of panel settings for different aspect ratios.\n" +
@@ -68,7 +68,7 @@ namespace ForestRoyale.Core
 		private TimeController _timeController;
 
 		[Inject]
-		private Battle _battle;
+		private BattleCheats _battleCheats;
 
 		private bool _showDebugPanel = false;
 
@@ -133,7 +133,7 @@ namespace ForestRoyale.Core
 		private void DrawSubPanels()
 		{
 			GUILayoutUtils.BeginVerticalBox(_timeController);
-			GUILayoutUtils.BeginVerticalBox(_battle);
+			GUILayoutUtils.BeginVerticalBox(_battleCheats);
 		}
 
 		private PanelSettings CalcInterpolatedPanelSettings()
