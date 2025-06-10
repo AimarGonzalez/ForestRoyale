@@ -80,8 +80,10 @@ namespace ForestRoyale.Gameplay.Combat
 			else
 			{
 				// Multiple units
-				foreach (Transform characterTransform in squadTransform)
+				// Iterate backwards, to avoid skipping units when reparenting them
+				for (int i = squadTransform.childCount - 1; i >= 0; i--)
 				{
+					Transform characterTransform = squadTransform.GetChild(i);
 					if (characterTransform.TryGetComponent(out UnitRoot characterUnit))
 					{
 						_chars.Add(characterUnit);
