@@ -188,18 +188,11 @@ namespace Game.UI
 		{
 			if (_state == State.Empty)
 			{
-				return;
-			}
-			
-			if (_cardData)
-			{
-				Debug.Log($"click on card - {_cardData.CardName}");
-			}
-			else
-			{
 				Debug.Log("click on empty slot");
 				return;
 			}
+			
+			Debug.Log($"card {_cardData.CardName} - click");
 
 			switch (_state)
 			{
@@ -219,7 +212,7 @@ namespace Game.UI
 
 				case State.DraggingCard:
 				case State.CastPreview:
-					Debug.LogError($"The player shouldn't be able to click on a card in this state ({_state})");
+					Debug.LogError($"card {_cardData.CardName} - The player shouldn't be able to click on a card in this state ({_state})");
 					break;
 
 				default:
@@ -248,7 +241,7 @@ namespace Game.UI
 					break;
 				
 				case State.NotSelected:
-					Debug.LogError($"The player shouldn't be able to drag a card in this state ({_state})");
+					Debug.LogError($"card {_cardData.CardName} - The player shouldn't be able to drag a card in this state ({_state})");
 					break;
 
 				default:
@@ -295,15 +288,15 @@ namespace Game.UI
 		{
 			if (_state == State.Selected)
 			{
-				Debug.Log("card - StartDragging");
+				Debug.Log($"card {_cardData.CardName} - StartDragging");
 				SetState(State.DraggingCard);
 			}
 		}
 
 		public void StopDragging()
 		{
-			Debug.Log("card - StopDragging");
-			Debug.Log("card - Selected");
+			Debug.Log($"card {_cardData.CardName} - StopDragging");
+			Debug.Log($"card {_cardData.CardName} - Selected");
 			SetState(State.Selected);
 		}
 

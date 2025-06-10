@@ -38,8 +38,8 @@ namespace ForestRoyale.Gameplay.Combat
 		[ShowInInspector, ReadOnly]
 		private TroopCardData _cardData;
 
-		// maxDistance is how far to check for a walkable position from the given position
 		[ShowInInspector]
+		[Tooltip("Max Distance is how far to check for a walkable position from the touch position")]
 		private float _maxDistance = 10.0f;
 		
 		[Inject]

@@ -79,7 +79,6 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void OnCardSelected(CardSlot cardSlot, CardData cardData)
 		{
-			Debug.Log($"CardCaster - OnCardSelected ({cardSlot})");
 			foreach (CardSlot otherCardView in _cardSlots)
 			{
 				if (otherCardView != cardSlot)
