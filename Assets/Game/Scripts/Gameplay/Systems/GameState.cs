@@ -18,12 +18,14 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private ApplicationEvents _appEvents;
 
+		[Flags]
 		public enum State
 		{
-			Meta,
-			BattleIntro,
-			Battle,
-			BattlePaused,
+			Meta = 1 << 0,
+			BattleIntro = 1 << 1,
+			Battle = 1 << 2,
+			BattlePaused = 1 << 3,
+			Any = Meta | BattleIntro | Battle | BattlePaused
 		}
 
 		private State _state;
@@ -39,12 +41,12 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void InitializeBattle()
 		{
-			_state = State.BattleIntro;
 
 			_battle = new Battle();
 			_battle.Player.Deck.Initialize(_playerDeck.Cards);
 			_battle.Bot.Deck.Initialize(_botDeck.Cards);
 
+			SetState(State.BattleIntro);
 			_appEvents.TriggerBattleCreated(_battle);
 			
 			_battle.ResetBattle();
@@ -52,16 +54,17 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void StartBattle()
 		{
-			_state = State.Battle;
-
 			_battle.StartBattle();
+
+			SetState(State.Battle);
 			_appEvents.TriggerBattleStarted(_battle);
 		}
 
 		public void PauseBattle()
 		{
-			_state = State.BattlePaused;
 			_battle.PauseBattle();
+			
+			SetState(State.BattlePaused);
 			_appEvents.TriggerBattlePaused(_battle);
 		}
 
@@ -77,6 +80,18 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				_battle.Update();
 			}
+		}
+
+		private void SetState(State newState)
+		{
+			if (_state == newState)
+			{
+				return;
+			}
+
+			State oldState = _state;
+			_state = newState;
+			_appEvents.TriggerGameStateChanged(oldState, newState);
 		}
 
 		public void DrawGUI()

@@ -1,4 +1,5 @@
 using ForestLib.ExtensionMethods;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 
@@ -8,12 +9,12 @@ namespace ForestRoyale.Gameplay.Units
 	public enum UnitState
 	{
 		None = 0,
-		CastingPreview = 1 << 0,
-		Idle = 1 << 1,
-		MovingToTarget = 1 << 2,
-		Attacking = 1 << 3,
-		Dying = 1 << 4,
-		Dead = 1 << 5,
+		[LabelText(SdfIconType.CloudDownloadFill, IconColor = "blue")]  CastingPreview = 1 << 0,
+		[LabelText(SdfIconType.PauseCircleFill, IconColor = "green")]  Idle = 1 << 1,
+		[LabelText(SdfIconType.ArrowRightCircleFill, IconColor = "green")]	MovingToTarget = 1 << 2,
+		[LabelText(SdfIconType.ExclamationCircleFill, IconColor = "red")]	Attacking = 1 << 3,
+		[LabelText(SdfIconType.XCircleFill, IconColor = "purple")]	Dying = 1 << 4,
+		[LabelText(SdfIconType.XCircleFill, IconColor = "purple")]	Dead = 1 << 5,
 		All = CastingPreview | Idle | MovingToTarget | Attacking | Dying | Dead
 	}
 	

@@ -10,6 +10,8 @@ namespace ForestRoyale.Gameplay.Systems
 		public event Action<Battle> OnBattleStarted;
 		public event Action<Battle> OnBattleEnded;
 
+		public event Action<GameState.State, GameState.State> OnGameStateChanged;
+
 		public void TriggerBattleCreated(Battle battle)
 		{
 			OnBattleCreated?.Invoke(battle);
@@ -24,5 +26,11 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			OnBattleEnded?.Invoke(battle);
 		}
+
+		public void TriggerGameStateChanged(GameState.State oldState, GameState.State newState)
+		{
+			OnGameStateChanged?.Invoke(oldState, newState);
+		}
+
 	}
 }

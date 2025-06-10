@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,6 +7,13 @@ namespace ForestLib.ExtensionMethods
 {
 	public static class EnumExtensionMethods
 	{
+		
+		public static bool IsSameFlag<TEnum>(this TEnum flagsA, TEnum flagsB) where TEnum : struct, Enum
+		{
+			// Non-boxing alternative to flagsA.Equals(flagsB)
+			return EqualityComparer<TEnum>.Default.Equals(flagsA, flagsB);
+		}
+		
 		/// <summary>
 		/// Returns true if all the bit fields in <c>requiredFlags</c> are also set in <c>existingFlags</c>, following boolean expression:
 		/// <br/><c>(existingFlags &amp; requiredFlags) == requiredFlags</c>
