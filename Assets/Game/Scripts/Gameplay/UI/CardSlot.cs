@@ -161,11 +161,11 @@ namespace Game.UI
 		{
 			if (_cardData == null)
 			{
-				_cardView.gameObject.SetActive(false);
+				SetState(State.Empty);
 				return;
 			}
-
-			_cardView.gameObject.SetActive(true);
+			
+			SetState(State.NotSelected);
 
 			if (_cardPicture != null)
 			{
@@ -186,6 +186,11 @@ namespace Game.UI
 
 		void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
 		{
+			if (_state == State.Empty)
+			{
+				return;
+			}
+			
 			if (_cardData)
 			{
 				Debug.Log($"click on card - {_cardData.CardName}");
@@ -225,6 +230,11 @@ namespace Game.UI
 
 		void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
 		{
+			if (_state == State.Empty)
+			{
+				return;
+			}
+			
 			switch (_state)
 			{
 				case State.Selected:
@@ -249,11 +259,21 @@ namespace Game.UI
 
 		void IDragHandler.OnDrag(PointerEventData eventData)
 		{
+			if (_state == State.Empty)
+			{
+				return;
+			}
+			
 			// Do nothing
 		}
 
 		void IEndDragHandler.OnEndDrag(PointerEventData eventData)
 		{
+			if (_state == State.Empty)
+			{
+				return;
+			}
+			
 			OnEndDragEvent?.Invoke(this, _cardData);
 		}
 
@@ -350,7 +370,7 @@ namespace Game.UI
 
 				case State.Empty:
 					_cardView.gameObject.SetActive(false);
-					_castingView.SetActive(false);
+					_castingView?.SetActive(false);
 					break;
 			}
 		}
