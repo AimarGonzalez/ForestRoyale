@@ -364,7 +364,7 @@ namespace Game.UI
 					_cardView.gameObject.SetActive(false);
 					
 					//TODO: pool casting views, instead of caching them
-					_castingView ??= _cardCastingViewFactory.BuildCastingPreview(_cardData, ArenaTeam.Player, _castingView);
+					_castingView = _cardCastingViewFactory.BuildCastingPreview(_cardData, ArenaTeam.Player, _castingView);
 					_castingView.SetActive(true);
 					break;
 
