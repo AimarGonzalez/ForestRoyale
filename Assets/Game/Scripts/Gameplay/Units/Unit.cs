@@ -61,6 +61,11 @@ namespace ForestRoyale.Gameplay.Units
 			get => _state;
 			set
 			{
+				if (_state == value)
+				{
+					return;
+				}
+				
 				UnitState oldState = _state;
 				_state = value;
 				_unitRoot.PropagateStateChanged(oldState, _state);

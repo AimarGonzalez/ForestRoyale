@@ -53,10 +53,22 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 					
 					case UnitState.MovingToTarget:
-						if (troop.HasTarget && troop.IsTargetInCombatRange)
+						if (troop.HasTarget)
 						{
-							troop.State = UnitState.Attacking;
+							if (troop.IsTargetInCombatRange)
+							{
+								troop.State = UnitState.Attacking;
+							}
+							else
+							{
+								troop.State = UnitState.MovingToTarget;
+							}
 						}
+						else
+						{
+							troop.State = UnitState.Idle;
+						}
+						
 						break;
 
 					case UnitState.Attacking:
