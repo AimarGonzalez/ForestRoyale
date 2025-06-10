@@ -10,16 +10,16 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	public class UIView<TState> : MonoBehaviour where TState : struct, Enum
 	{
 		[Flags]
-		private enum UIAction
+		private enum UIActionType
 		{
 			Hide = 1 << 0,
 			Show = 1 << 1,
 		}
-		
+
 		// ---------------------------
 
 		[Serializable]
-		private class ViewSettings
+		private class Transition
 		{
 			[EnumToggleButtons]
 			[TableColumnWidth(width: 100, resizable: false)]
@@ -28,10 +28,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			[EnumToggleButtons]
 			[TableColumnWidth(width: 100, resizable: false)]
 			public TState ToState;
-			
+
+			public Action Action;
+		}
+
+		[Serializable]
+		private class Action
+		{
 			[EnumToggleButtons]
-			public UIAction Action;
-			public List<GameObject> ActiveGameObjects = new List<GameObject>();
+			[HideLabel]
+			public UIActionType ActionType;
+
+			[HideLabel]
+			public List<GameObject> Targets = new List<GameObject>();
 		}
 
 		// ---------------------------
@@ -39,7 +48,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[SerializeField]
 		[LabelText("Visibility Map")]
 		[TableList]
-		private List<ViewSettings> _settinbsByState = new List<ViewSettings>();
+		private List<Transition> _transitions = new List<Transition>();
 
 		private List<GameObject> _objectsToHide= new List<GameObject>();
 		private List<GameObject> _objectsToShow= new List<GameObject>();
@@ -76,28 +85,25 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			_objectsToHide.Clear();
 			_objectsToShow.Clear();
 
-			foreach (ViewSettings settings in _settinbsByState)
+			foreach (Transition transition in _transitions)
 			{
-				if (!settings.FromState.HasAnyFlag(oldState) || !settings.ToState.HasAnyFlag(newState))
+				if (transition.FromState.HasAnyFlag(oldState) && transition.ToState.HasAnyFlag(newState))
 				{
-					foreach (GameObject go in settings.ActiveGameObjects)
+					switch (transition.Action.ActionType)
 					{
-						_objectsToHide.Add(go);
+						case UIActionType.Hide:
+							_objectsToHide.AddRange(transition.Action.Targets);
+							break;
+						case UIActionType.Show:
+							_objectsToShow.AddRange(transition.Action.Targets);
+							break;
 					}
 				}
 			}
 
-			foreach (ViewSettings settings in _settinbsByState)
-			{
-				if (settings.FromState.HasAnyFlag(oldState) && settings.ToState.HasAnyFlag(newState))
-				{
-					foreach (GameObject go in settings.ActiveGameObjects)
-					{
-						_objectsToHide.Remove(go);
-						_objectsToShow.Add(go);
-					}
-				}
-			}
+			//Remove duplicates
+			_objectsToHide.RemoveAll(go => _objectsToShow.Contains(go));
+			_objectsToShow.RemoveAll(go => _objectsToHide.Contains(go));
 
 			foreach (GameObject go in _objectsToHide)
 			{
