@@ -38,7 +38,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		// ---------------------------
 
-		[SerializeField]
+		[SerializeField, Required]
 		private Renderer _bodyRenderer;
 
 		[SerializeField, OnValueChanged(nameof(PopulateGoDictionary))]

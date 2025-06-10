@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 316264199113032634, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3176194029410523179, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,13 +52,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000000041688292
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000013144269
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.95371693
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30070582
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Speed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588034851413924146, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _bodyRenderer
+      value: 
+      objectReference: {fileID: 7084369475482945021}
+    - target: {fileID: 4594647741101799874, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4775287443633296396, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5707897015884327054, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707897015884327054, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707897015884327054, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
     - target: {fileID: 5716079896726795497, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Name
-      value: ut_hog_rider
+      value: ut_hogrider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164203989177702582, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164203989177702582, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.70980394
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164203989177702582, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.34509805
       objectReference: {fileID: 0}
     - target: {fileID: 8068233149362356199, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: _startingUnitSO
@@ -127,7 +179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6196f602725837c408c8b399cb36b63f, type: 3}
       propertyPath: m_Name
-      value: knight
+      value: model
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6196f602725837c408c8b399cb36b63f, type: 3}
       propertyPath: m_IsActive
@@ -138,6 +190,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6196f602725837c408c8b399cb36b63f, type: 3}
+--- !u!23 &7084369475482945021 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6196f602725837c408c8b399cb36b63f, type: 3}
+  m_PrefabInstance: {fileID: 8471597595929254265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8222324271517007506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6196f602725837c408c8b399cb36b63f, type: 3}
