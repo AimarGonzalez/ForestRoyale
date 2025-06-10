@@ -55,5 +55,13 @@ namespace ForestRoyale.Gameplay.Systems
 				}
 			}
 		}
+
+		public void Pause()
+		{
+			foreach (Unit troop in _activeUnits)
+			{
+				troop.MovementComponent.Stop();
+			}
+		}
 	}
 }

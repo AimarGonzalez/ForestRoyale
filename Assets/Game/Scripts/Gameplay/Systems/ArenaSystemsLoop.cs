@@ -8,34 +8,43 @@ namespace ForestRoyale.Gameplay.Systems
 	{
 		[Inject]
 		private readonly GameState _gameState;
-		
+
 		[Inject]
 		private readonly MovementSystem _movementSystem;
 
 		[Inject]
 		private readonly TargetingSystem _targetingSystem;
-		
+
 		[Inject]
 		private readonly UnitStateMachine _unitStateMachine;
 
 		[Inject]
 		private readonly CombatSystem _combatSystem;
-		
+
+		private void HandleBattlePaused(Battle battle)
+		{
+			// Movement system has autonomous components we need to pause
+			_movementSystem.Pause();
+		}
+
 		public void Update()
 		{
-			if (!_gameState.HasActiveBattle)
+			if (_gameState.HasActiveBattle)
 			{
-				return;
+				_targetingSystem.UpdateTargets();
+				_unitStateMachine.UpdateState();
+
+				_movementSystem.UpdateMovement();
+				_unitStateMachine.UpdateState();
+
+				_combatSystem.UpdateCombat();
+				_unitStateMachine.UpdateState();
 			}
-			
-			_targetingSystem.UpdateTargets();
-			_unitStateMachine.UpdateState();
-			
-			_movementSystem.UpdateMovement();
-			_unitStateMachine.UpdateState();
-			
-			_combatSystem.UpdateCombat();
-			_unitStateMachine.UpdateState();
+			else
+			{
+				// Movement system has autonomous components we need to pause
+				_movementSystem.Pause();
+			}
 		}
 	}
 }
