@@ -24,9 +24,9 @@ namespace ForestRoyale.Gameplay.Combat
 	{
 		public enum CastingState
 		{
+			Empty,
 			Preview,
 			Deploying,
-			Deployed,
 		}
 
 		[SerializeField]
@@ -46,6 +46,8 @@ namespace ForestRoyale.Gameplay.Combat
 		private Arena _arena;
 
 		private List<UnitRoot> _chars = new List<UnitRoot>();
+		
+		private Transform _charactersRoot;
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
@@ -119,7 +121,7 @@ namespace ForestRoyale.Gameplay.Combat
 					break;
 				case CastingState.Deploying:
 					break;
-				case CastingState.Deployed:
+				case CastingState.Empty:
 					break;
 			}
 
@@ -132,13 +134,23 @@ namespace ForestRoyale.Gameplay.Combat
 					break;
 
 				case CastingState.Deploying:
+					// reparent troop to the battlefield
+					foreach (UnitRoot character in _chars)
+					{
+						character.transform.SetParent(_charactersRoot);
+						character.SetState(UnitState.Idle);
+					}
+					
 					// play deploy animation
 					// play clock animation
+					
 					break;
 
-				case CastingState.Deployed:
+				case CastingState.Empty:
 					// hide clock
-					// reparent troop to the battlefield
+					_chars.Clear();
+					_cardData = null;
+					
 					break;
 			}
 		}
@@ -154,24 +166,22 @@ namespace ForestRoyale.Gameplay.Combat
 			if (_castingState == CastingState.Deploying)
 			{
 				// TODO: Implement
+				// play deploy animation
+				// play clock animation
 			}
 		}
 
 		public void Cast(Transform charactersRoot)
 		{
-			// TODO: implement states
+			_charactersRoot = charactersRoot;
+			
 			SetState(CastingState.Deploying);
-			foreach (UnitRoot character in _chars)
-			{
-				character.transform.SetParent(charactersRoot);
-			}
-
-			// TODO: implement states
-			SetState(CastingState.Deployed);
-			foreach (UnitRoot character in _chars)
-			{
-				character.SetState(UnitState.Idle);
-			}
+			
+			// TODO: Wait for
+			// deploy animation
+			// clock animation
+			
+			SetState(CastingState.Empty);
 		}
 
 		protected void OnDrawGizmos()
