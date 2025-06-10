@@ -779,7 +779,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDeck: {fileID: 11400000, guid: 28b8f296515374f48b99080e4bc5fd54, type: 2}
   _botDeck: {fileID: 11400000, guid: 28b8f296515374f48b99080e4bc5fd54, type: 2}
-  _battleDuration: 180
 --- !u!1001 &369691720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2170,7 +2169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023a59e9bd29ca94886d9ba1640c9c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skin: {fileID: 0}
+  _skin: {fileID: 11400000, guid: fb5d2b8f0e92ba54285e18c47e63f7d3, type: 2}
+  _showDebugPanel: 1
   _panelSettings:
   - _aspectRatio:
       Width: 3

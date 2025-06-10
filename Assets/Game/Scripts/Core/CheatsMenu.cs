@@ -54,6 +54,9 @@ namespace ForestRoyale.Core
 				Height = height;
 			}
 		}
+		
+		[SerializeField]
+		private bool _showDebugPanel = false;
 
 		[SerializeField]
 		[TableList]
@@ -70,8 +73,7 @@ namespace ForestRoyale.Core
 		[Inject]
 		private GameState _battleCheats;
 
-		private bool _showDebugPanel = false;
-
+		
 		private void OnGUI()
 		{
 			PanelSettings panelSettings = CalcInterpolatedPanelSettings();

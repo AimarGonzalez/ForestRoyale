@@ -1,5 +1,6 @@
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Systems;
+using System;
 using UnityEngine;
 using VContainer;
 
@@ -10,8 +11,6 @@ namespace ForestRoyale.Gameplay.Combat
 	{
 		[SerializeField] private DeckDataSO _playerDeck;
 		[SerializeField] private DeckDataSO _botDeck;
-		[SerializeField] private float _battleDuration = 180f; // 3 minutes
-
 
 		[Inject]
 		private Arena _arena;
@@ -19,10 +18,19 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private ApplicationEvents _appEvents;
 
+		public enum State
+		{
+			Meta,
+			BattleIntro,
+			Battle,
+			BattlePaused,
+		}
+
+		private State _state;
 
 		private Battle _battle;
 
-		public bool HasActiveBattle => _battle != null && _battle.IsBattleActive;
+		public bool HasActiveBattle => _state == State.Battle;
 
 		private void Start()
 		{
@@ -31,7 +39,9 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void InitializeBattle()
 		{
-			_battle = new Battle(_battleDuration);
+			_state = State.BattleIntro;
+
+			_battle = new Battle();
 			_battle.Player.Deck.Initialize(_playerDeck.Cards);
 			_battle.Bot.Deck.Initialize(_botDeck.Cards);
 
@@ -41,13 +51,16 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private void StartBattle()
 		{
+			_state = State.Battle;
+
 			_battle.StartBattle();
 			_appEvents.TriggerBattleStarted(_battle);
 		}
 
-		public void EndBattle()
+		public void PauseBattle()
 		{
-			_battle.EndBattle();
+			_state = State.BattlePaused;
+			_battle.PauseBattle();
 			_appEvents.TriggerBattleEnded(_battle);
 		}
 
@@ -57,25 +70,36 @@ namespace ForestRoyale.Gameplay.Combat
 			_appEvents.TriggerBattleCreated(_battle);
 		}
 
+		public void Update()
+		{
+			if (_state == State.Battle)
+			{
+				_battle.Update();
+			}
+		}
+
 		public void DrawGUI()
 		{
 			GUILayoutUtils.Label("Battle");
-			GUILayoutUtils.Label($"Remaining Time: {_battle.RemainingTime}");
+			GUILayoutUtils.Label($"Timer: {_battle.Timer}");
 
 			GUILayout.BeginHorizontal();
 
 
-			if (GUILayout.Button("Start Battle"))
+			GUI.enabled = !HasActiveBattle;
+			if (GUILayout.Button("Start"))
 			{
 				StartBattle();
 			}
 
-			if (GUILayout.Button("End Battle"))
+			GUI.enabled = _battle?.IsBattleActive ?? false;
+			if (GUILayout.Button("Pause"))
 			{
-				EndBattle();
+				PauseBattle();
 			}
 
-			if (GUILayout.Button("Reset Battle"))
+			GUI.enabled = _battle != null;
+			if (GUILayout.Button("Reset"))
 			{
 				ResetBattle();
 			}
