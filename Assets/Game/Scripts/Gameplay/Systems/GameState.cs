@@ -45,8 +45,9 @@ namespace ForestRoyale.Gameplay.Combat
 			_battle.Player.Deck.Initialize(_playerDeck.Cards);
 			_battle.Bot.Deck.Initialize(_botDeck.Cards);
 
-			_battle.ResetBattle();
 			_appEvents.TriggerBattleCreated(_battle);
+			
+			_battle.ResetBattle();
 		}
 
 		private void StartBattle()
@@ -61,7 +62,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			_state = State.BattlePaused;
 			_battle.PauseBattle();
-			_appEvents.TriggerBattleEnded(_battle);
+			_appEvents.TriggerBattlePaused(_battle);
 		}
 
 		public void ResetBattle()

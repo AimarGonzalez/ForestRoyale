@@ -20,7 +20,7 @@ namespace ForestRoyale.Gameplay.Systems
 			OnBattleStarted?.Invoke(battle);
 		}
 
-		public void TriggerBattleEnded(Battle battle)
+		public void TriggerBattlePaused(Battle battle)
 		{
 			OnBattleEnded?.Invoke(battle);
 		}
