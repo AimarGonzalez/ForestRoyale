@@ -1,0 +1,183 @@
+{
+    "friendlyName": "Google Pixel 6a",
+    "version": 1,
+    "screens": [
+        {
+            "width": 1080,
+            "height": 2400,
+            "navigationBarHeight": 132,
+            "dpi": 429.0,
+            "orientations": [
+                {
+                    "orientation": 1,
+                    "safeArea": {
+						"_comment": "portrait-up",
+                        "serializedVersion": "2",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "width": 1080.0,
+                        "height": 2290.0
+                    },
+                    "cutouts": [
+                        {
+                            "serializedVersion": "2",
+                            "x": 490.0,
+                            "y": 2290.0,
+                            "width": 100.0,
+                            "height": 110.0
+                        }
+                    ]
+                },
+                {
+                    "orientation": 2,
+                    "safeArea": {
+						
+						"_comment": "portrait-down",
+                        "serializedVersion": "2",
+                        "x": 0.0,
+                        "y": 110.0,
+                        "width": 1080.0,
+                        "height": 2290.0
+                    },
+                    "cutouts": [
+                        {
+                            "serializedVersion": "2",
+                            "x": 952.0,
+                            "y": 0.0,
+                            "width": 100.0,
+                            "height": 110.0
+                        }
+                    ]
+                },
+                {
+                    "orientation": 3,
+                    "safeArea": {
+						"_comment": "landscape-left",
+                        "serializedVersion": "2",
+                        "x": 110.0,
+                        "y": 0.0,
+                        "width": 2290.0,
+                        "height": 1080.0
+                    },
+                    "cutouts": [
+                        {
+                            "serializedVersion": "2",
+                            "x": 0.0,
+                            "y": 490.0,
+                            "width": 110.0,
+                            "height": 100.0
+                        }
+                    ]
+                },
+                {
+                    "orientation": 4,
+                    "safeArea": {
+						"_comment": "landscape-right",
+                        "serializedVersion": "2",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "width": 2290.0,
+                        "height": 1080.0
+                    },
+                    "cutouts": [
+                        {
+                            "serializedVersion": "2",
+                            "x": 2290.0,
+                            "y": 490.0,
+                            "width": 110.0,
+                            "height": 100.0
+                        }
+                    ]
+                }
+            ],
+            "presentation": {
+                "overlayPath": "Google Pixel 6a_Overlay.png",
+                "borderSize": {
+                    "x": 65.0,
+                    "y": 76.0,
+                    "z": 65.0,
+                    "w": 91.0
+                },
+                "cornerRadius": 93.0
+            }
+        }
+    ],
+    "systemInfo": {
+        "deviceModel": "Google Pixel 6a",
+        "deviceType": 1,
+        "operatingSystem": "Android OS 15",
+        "operatingSystemFamily": 0,
+        "processorCount": 8,
+        "processorFrequency": 2800,
+        "processorType": "Google Tensor",
+        "supportsAccelerometer": true,
+        "supportsAudio": true,
+        "supportsGyroscope": true,
+        "supportsLocationService": true,
+        "supportsVibration": true,
+        "systemMemorySize": 6144,
+        "graphicsDependentData": [
+            {
+                "graphicsDeviceType": 21,
+                "graphicsMemorySize": 6144,
+                "graphicsDeviceName": "Mali-G78 MP20",
+                "graphicsDeviceVendor": "Google",
+                "graphicsDeviceID": 100794368,
+                "graphicsDeviceVendorID": 20803,
+                "graphicsUVStartsAtTop": true,
+                "graphicsDeviceVersion": "OpenGL ES 3.2",
+                "graphicsShaderLevel": 50,
+                "graphicsMultiThreaded": true,
+                "renderingThreadingMode": 0,
+                "hasHiddenSurfaceRemovalOnGPU": true,
+                "hasDynamicUniformArrayIndexingInFragmentShaders": true,
+                "supportsShadows": true,
+                "supportsRawShadowDepthSampling": true,
+                "supportsMotionVectors": true,
+                "supports3DTextures": true,
+                "supports2DArrayTextures": true,
+                "supports3DRenderTextures": true,
+                "supportsCubemapArrayTextures": true,
+                "copyTextureSupport": 31,
+                "supportsComputeShaders": true,
+                "supportsGeometryShaders": true,
+                "supportsTessellationShaders": true,
+                "supportsInstancing": true,
+                "supportsHardwareQuadTopology": false,
+                "supports32bitsIndexBuffer": true,
+                "supportsSparseTextures": false,
+                "supportedRenderTargetCount": 8,
+                "supportsSeparatedRenderTargetsBlend": true,
+                "supportedRandomWriteTargetCount": 8,
+                "supportsMultisampledTextures": 1,
+                "supportsMultisampleAutoResolve": true,
+                "supportsTextureWrapMirrorOnce": 1,
+                "usesReversedZBuffer": true,
+                "npotSupport": 2,
+                "maxTextureSize": 16384,
+                "maxCubemapSize": 16384,
+                "maxComputeBufferInputsVertex": 524288,
+                "maxComputeBufferInputsFragment": 524288,
+                "maxComputeBufferInputsGeometry": 524288,
+                "maxComputeBufferInputsDomain": 524288,
+                "maxComputeBufferInputsHull": 524288,
+                "maxComputeBufferInputsCompute": 524288,
+                "maxComputeWorkGroupSize": 1024,
+                "maxComputeWorkGroupSizeX": 1024,
+                "maxComputeWorkGroupSizeY": 1024,
+                "maxComputeWorkGroupSizeZ": 64,
+                "supportsAsyncCompute": false,
+                "supportsGraphicsFence": true,
+                "supportsAsyncGPUReadback": true,
+                "supportsRayTracing": false,
+                "supportsSetConstantBuffer": true,
+                "minConstantBufferOffsetAlignment": false,
+                "hasMipMaxLevel": true,
+                "supportsMipStreaming": true,
+                "usesLoadStoreActions": true,
+                "ldrGraphicsFormat": 8,
+                "hdrGraphicsFormat": 74
+            }
+        ]
+    }
+}
