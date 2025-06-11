@@ -1,0 +1,19 @@
+{
+    "name": "raven_inspector.editor",
+    "rootNamespace": "Raven.Edtr",
+    "references": [
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:42ef53037703bed4798e0c9a83c762e1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

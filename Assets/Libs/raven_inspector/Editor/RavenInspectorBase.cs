@@ -6,7 +6,7 @@ using Raven.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Raven.editor
+namespace Raven.Edtr
 {
 	/// <summary>
 	/// Base inspector class that handles custom ordering of properties based on PropertyOrderAttribute.

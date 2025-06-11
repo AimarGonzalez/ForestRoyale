@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Reflection;
 using System;
 
-namespace Raven.editor
+namespace Raven.Editr
 {
 	/// <summary>
 	/// Utility class containing common functions used by the Raven Inspector drawers.

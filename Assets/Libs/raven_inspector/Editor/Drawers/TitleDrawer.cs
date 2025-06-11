@@ -2,7 +2,7 @@ using Raven.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Raven.Drawers
+namespace Raven.Edtr.Drawers
 {
 	[CustomPropertyDrawer(typeof(TitleAttribute))]
 	public class TitleDrawer : PropertyDrawer

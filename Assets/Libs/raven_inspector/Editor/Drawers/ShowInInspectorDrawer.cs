@@ -1,9 +1,9 @@
-using Raven.editor;
 using UnityEngine;
 using UnityEditor;
 using Raven.Attributes;
+using Raven.Editr;
 
-namespace Raven.Drawers
+namespace Raven.Edtr.Drawers
 {
 	[CustomPropertyDrawer(typeof(ShowInInspectorAttribute))]
 	public class ShowInInspectorDrawer : PropertyDrawer

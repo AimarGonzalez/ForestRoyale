@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using Raven.Attributes;
 
-namespace Raven.Drawers
+namespace Raven.Edtr.Drawers
 {
 	[CustomPropertyDrawer(typeof(RequiredAttribute))]
 	public class RequiredDrawer : PropertyDrawer

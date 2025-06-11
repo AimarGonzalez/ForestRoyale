@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Raven.editor
+namespace Raven.Edtr
 {
 	/// <summary>
 	/// Custom editor for MonoBehaviours that supports property grouping using the BoxGroup attribute.
