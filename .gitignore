@@ -13,6 +13,9 @@
 /[Ss]erializedBuildInfo/
 /.idea/
 
+# Android build temp files
+/.utmp/
+
 # This folder is used to store recordings created with the Webcam Display feature.
 /Recordings/
 
