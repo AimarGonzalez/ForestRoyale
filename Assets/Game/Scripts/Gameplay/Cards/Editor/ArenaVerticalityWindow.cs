@@ -3,7 +3,7 @@ using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace ForestRoyale.Game.Editor
+namespace ForestRoyale.Gameplay.Editor
 {
 	public class ArenaVerticalityWindow : OdinEditorWindow
 	{

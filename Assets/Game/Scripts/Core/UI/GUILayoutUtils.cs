@@ -1,6 +1,4 @@
 using Sirenix.Utilities;
-using System;
-using System.Reflection.Emit;
 using UnityEngine;
 
 namespace ForestRoyale.Core.UI

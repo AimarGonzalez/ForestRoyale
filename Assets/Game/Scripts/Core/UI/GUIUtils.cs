@@ -1,9 +1,11 @@
 ﻿using ForestLib.ExtensionMethods;
 using System.Collections.Generic;
 using ForestLib.Utils;
-using UnityEditor;
 using UnityEngine;
 using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ForestRoyale.Core.UI
 {
@@ -395,16 +397,29 @@ namespace ForestRoyale.Core.UI
 		public static Vector3 ScreenToGUIPoint(Camera camera, Vector3 screenPoint)
 		{
 			screenPoint.y = camera.pixelHeight - screenPoint.y;
-			Vector2 points = EditorGUIUtility.PixelsToPoints((Vector2)screenPoint);
-			return new Vector3(points.x, points.y, screenPoint.z);
+			Vector3 guiPoint = PixelsToPoints((Vector2)screenPoint);
+			return guiPoint;
 		}
 
 		public static Vector3 WorldToGUIPoint(Camera camera, Vector3 worldPoint)
 		{
 			Vector3 vector = camera.WorldToScreenPoint(worldPoint);
 			vector.y = (float)camera.pixelHeight - vector.y;
-			Vector2 vector2 = EditorGUIUtility.PixelsToPoints(vector);
-			return new Vector3(vector2.x, vector2.y, vector.z);
+			Vector3 guiPoint = PixelsToPoints(vector);
+			return guiPoint;
 		}
+		
+		public static Vector3 PixelsToPoints(Vector3 position)
+		{
+#if UNITY_EDITOR
+			float num = 1f / EditorGUIUtility.pixelsPerPoint;
+#else
+			float num = 1f;
+#endif
+			position.x *= num;
+			position.y *= num;
+			return position;
+		}
+
 	}
 }

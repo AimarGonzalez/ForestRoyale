@@ -2,8 +2,8 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using Sirenix.OdinInspector;
-using UnityEditor.AI;
 #if UNITY_EDITOR
+using UnityEditor.AI;
 using Unity.AI.Navigation.Editor;
 #endif
 

@@ -1,13 +1,16 @@
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
 using System;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
 using FilePathAttribute = UnityEditor.FilePathAttribute;
+#endif
 
 namespace ForestRoyale.Gameplay.UI
 {
+	
+#if UNITY_EDITOR
 	[FilePath("Assets/Game/Settings/UISettings.asset", FilePathAttribute.Location.ProjectFolder)]
+#endif
 	[CreateAssetMenu(fileName = "UISettings", menuName = "Forest Royale/Settings/UISettings")]
 	public class UISettings : ScriptableObject
 	{
@@ -30,22 +33,5 @@ namespace ForestRoyale.Gameplay.UI
 
 		public HealthBarColors AllyHealthBarColors => _allyHealthBarColors;
 		public HealthBarColors EnemyHealthBarColors => _enemyHealthBarColors;
-	}
-
-	public class GameSettingsWindow : OdinMenuEditorWindow
-	{
-		[MenuItem("ForestRoyale/Settings/Game Settings")]
-		private static void OpenWindow()
-		{
-			GetWindow<GameSettingsWindow>("Game Settings").Show();
-		}
-
-		protected override OdinMenuTree BuildMenuTree()
-		{
-			var tree = new OdinMenuTree();
-			//tree.AddAssetAtPath("UI Settings", "Assets/Game/Settings/UISettings.asset");
-			tree.AddAllAssetsAtPath("Settings", "Assets/Game/Settings", typeof(ScriptableObject), includeSubDirectories: true);
-			return tree;
-		}
 	}
 }

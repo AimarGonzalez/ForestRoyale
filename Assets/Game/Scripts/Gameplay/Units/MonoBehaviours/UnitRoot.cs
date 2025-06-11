@@ -145,7 +145,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void Awake()
 		{
 #if UNITY_EDITOR
-			// Needed to initialize prefabs added from the editor.
+			// VContainer injection for prefabs added from the editor.
 			AutoInject();
 #endif
 
@@ -260,6 +260,31 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			ForceOnDestroySubComponents();
 #endif
 		}
+		
+		
+		private void UpdateUnitComponents(Unit newUnit)
+		{
+			foreach (var component in UnitComponents)
+			{
+				component.SetUnit( newUnit);
+			}
+		}
+
+		private void PropagateUnitChanged(Unit oldUnit, Unit newUnit)
+		{
+			foreach (var listener in UnitListeners)
+			{
+				listener.OnUnitChanged(oldUnit, newUnit);
+			}
+		}
+
+		public void PropagateStateChanged(UnitState oldState, UnitState newState)
+		{
+			foreach (var listener in UnitStateListeners)
+			{
+				listener.OnUnitStateChanged(oldState, newState);
+			}
+		}
 
 		private void OnMouseDown()
 		{
@@ -267,6 +292,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 
 #if UNITY_EDITOR
+		// VContainer injection for prefabs added from the editor.
 		private void AutoInject()
 		{
 			if (!Application.isPlaying)
@@ -282,6 +308,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			_objectResolver.InjectGameObject(gameObject);
 		}
+#endif
 
 		void OnDrawGizmos()
 		{
@@ -330,6 +357,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			GUIUtils.DrawDebugPanel(properties, transform, _panelPosition, _panelMargin, () => _showDebugPanel = false);
 		}
 
+#if UNITY_EDITOR
 		[Button]
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order - 1)]
 		private void ForceInitializeUnit()
@@ -353,31 +381,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				component.ForceOnDestroy();
 			}
 		}
-
-		private void UpdateUnitComponents(Unit newUnit)
-		{
-			foreach (var component in UnitComponents)
-			{
-				component.SetUnit( newUnit);
-			}
-		}
-
-		private void PropagateUnitChanged(Unit oldUnit, Unit newUnit)
-		{
-			foreach (var listener in UnitListeners)
-			{
-				listener.OnUnitChanged(oldUnit, newUnit);
-			}
-		}
-
-		public void PropagateStateChanged(UnitState oldState, UnitState newState)
-		{
-			foreach (var listener in UnitStateListeners)
-			{
-				listener.OnUnitStateChanged(oldState, newState);
-			}
-		}
-
 #endif //UNITY_EDITOR
 	}
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,13 +21,19 @@ namespace ForestRoyale.VFX
 		private Ease _flashEase = Ease.Linear;
 
 		[SerializeField]
+		[ColorPalette]
 		private Color _damageColor = Color.red;
 
 #if UNITY_EDITOR
 		// Use this param to previsualize the effect in EditMode
 		[SerializeField, Range(0, 1)]
+		[OnValueChanged(nameof(OnPreviewIntensityChanged))]
 		private float _previewIntensity = 0f;
 
+		private void OnPreviewIntensityChanged()
+		{
+			UpdateMaterial(_previewIntensity, _damageColor);
+		}
 #endif
 
 		private Material _material;
@@ -77,13 +84,6 @@ namespace ForestRoyale.VFX
 			}
 		}
 
-#if UNITY_EDITOR
-		void OnValidate()
-		{
-			UpdateMaterial(_previewIntensity, _damageColor);
-		}
-#endif
-
 		private void UpdateMaterial(float currentIntensity, Color color)
 		{
 			if (_material != null)
@@ -93,6 +93,7 @@ namespace ForestRoyale.VFX
 			}
 		}
 
+		[Button("Flash Damage")]
 		public void FlashDamage()
 		{
 			if (_material == null)

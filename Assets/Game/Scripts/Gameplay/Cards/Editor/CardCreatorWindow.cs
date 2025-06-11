@@ -9,7 +9,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ForestRoyale.Editor.Gameplay.Cards
+namespace ForestRoyale.Gameplay.Editor
 {
 	public class CardCreatorWindow : EditorWindow
 	{

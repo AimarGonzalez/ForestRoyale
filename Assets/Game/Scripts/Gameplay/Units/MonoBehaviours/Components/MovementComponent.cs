@@ -38,10 +38,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		public Rigidbody2D Body => _body ??= GetComponentInChildren<Rigidbody2D>(includeInactive: true);
 		public NavMeshAgent Agent => _agent ??= GetComponentInChildren<NavMeshAgent>(includeInactive: true);
 
-#if UNITY_EDITOR
 		private bool HasAnyMovementComponentInTheRoot => this.HasComponent<NavMeshAgent>() || this.HasComponent<Collider2D>() || this.HasComponent<Rigidbody2D>();
 		private bool HasNoFollowChildrenNorMovementComponentInTheRoot => !_followChildren && !HasAnyMovementComponentInTheRoot;
-#endif
 
 		private bool _isMoving = false;
 		private bool IsMoving
