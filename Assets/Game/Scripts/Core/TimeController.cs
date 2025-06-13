@@ -1,22 +1,32 @@
 using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace ForestRoyale.Core
 {
 	public class TimeController : MonoBehaviour, IGUIDrawer
 	{
 		[SerializeField] private float _timeScale = 1f;
-		[SerializeField, MinValue(0.00001)] private float _minTimeScale = 0.25f;
-		[SerializeField, MaxValue(100)] private float _maxTimeScale = 4f;
 		[ShowInInspector, ReadOnly] private bool _paused = false;
+
+		[SerializeField]
+		private List<float> _timeScales = new() { 0.0f, 0.25f, 0.5f, 1f, 2f, 4f, 10f };
+
+		[Inject]
+		private CheatsStyleProvider _cheatsStyleProvider;
 
 		private InputAction _increaseAction;
 		private InputAction _decreaseAction;
 		private InputAction _pauseTime;
 		private InputAction _resetTimeScale;
+		private GUIStyle _buttonStyle;
+
+		private int _timeScaleIndex = 3;
 
 		private void Awake()
 		{
@@ -30,22 +40,22 @@ namespace ForestRoyale.Core
 		{
 			if (_increaseAction != null)
 			{
-				_increaseAction.performed += OnIncreaseTimeScale;
+				_increaseAction.performed += OnIncreaseTimeScaleKey;
 			}
 
 			if (_decreaseAction != null)
 			{
-				_decreaseAction.performed += OnDecreaseTimeScale;
+				_decreaseAction.performed += OnDecreaseTimeScaleKey;
 			}
 
 			if (_pauseTime != null)
 			{
-				_pauseTime.performed += OnPauseTime;
+				_pauseTime.performed += OnPauseTimeKey;
 			}
 
 			if (_resetTimeScale != null)
 			{
-				_resetTimeScale.performed += OnResetTimeScale;
+				_resetTimeScale.performed += OnResetTimeScaleKey;
 			}
 		}
 
@@ -53,22 +63,22 @@ namespace ForestRoyale.Core
 		{
 			if (_increaseAction != null)
 			{
-				_increaseAction.performed -= OnIncreaseTimeScale;
+				_increaseAction.performed -= OnIncreaseTimeScaleKey;
 			}
 
 			if (_decreaseAction != null)
 			{
-				_decreaseAction.performed -= OnDecreaseTimeScale;
+				_decreaseAction.performed -= OnDecreaseTimeScaleKey;
 			}
 
 			if (_pauseTime != null)
 			{
-				_pauseTime.performed -= OnPauseTime;
+				_pauseTime.performed -= OnPauseTimeKey;
 			}
 
 			if (_resetTimeScale != null)
 			{
-				_resetTimeScale.performed -= OnResetTimeScale;
+				_resetTimeScale.performed -= OnResetTimeScaleKey;
 			}
 		}
 
@@ -77,41 +87,50 @@ namespace ForestRoyale.Core
 			ApplyTimeScale();
 		}
 
-		private void OnIncreaseTimeScale(InputAction.CallbackContext context)
+		private void OnIncreaseTimeScaleKey(InputAction.CallbackContext context)
 		{
-			_timeScale = IncreaseTimeScale(_timeScale);
-			ApplyTimeScale();
+			IncreaseTimeScale();
 		}
 
-		private void OnDecreaseTimeScale(InputAction.CallbackContext context)
+		private void OnDecreaseTimeScaleKey(InputAction.CallbackContext context)
 		{
-			_timeScale = DecreaseTimeScale(_timeScale);
-			ApplyTimeScale();
+			DecreaseTimeScale();
 		}
 
-		private void OnPauseTime(InputAction.CallbackContext obj)
+		private void OnPauseTimeKey(InputAction.CallbackContext obj)
 		{
 			TogglePause();
-			ApplyTimeScale();
 		}
 
-		private void OnResetTimeScale(InputAction.CallbackContext obj)
+		private void OnResetTimeScaleKey(InputAction.CallbackContext obj)
 		{
 			_timeScale = 1f;
 			ApplyTimeScale();
 		}
 
-		private float DecreaseTimeScale(float scale)
+		private void DecreaseTimeScale()
 		{
-			scale = Mathf.Max(_timeScale * 0.5f, _minTimeScale);
-			return scale;
+			_timeScaleIndex = Math.Max(_timeScaleIndex - 1, 0);
+			_timeScale = _timeScales[_timeScaleIndex];
+
+			ApplyTimeScale();
 		}
 
-		private float IncreaseTimeScale(float scale)
+		private void IncreaseTimeScale()
 		{
-			scale = Mathf.Min(_timeScale * 2f, _maxTimeScale);
-			return scale;
+			_timeScaleIndex = Math.Min(_timeScaleIndex + 1, _timeScales.Count - 1);
+			_timeScale = _timeScales[_timeScaleIndex];
+
+			ApplyTimeScale();
 		}
+
+		private void TogglePause()
+		{
+			_paused = !_paused;
+
+			ApplyTimeScale();
+		}
+
 
 		private void ApplyTimeScale()
 		{
@@ -125,13 +144,46 @@ namespace ForestRoyale.Core
 			}
 		}
 
-		private void TogglePause()
+		private void OnGUI()
 		{
-			_paused = !_paused;
+			_cheatsStyleProvider.PushButtonStyle();
+
+			const float margin = 10f;
+			GUILayout.BeginArea(new Rect(GUIUtils.HalfScreenW + margin, margin, GUIUtils.HalfScreenW, GUIUtils.HalfScreenH), new GUIStyle());
+
+			GUILayout.BeginHorizontal();
+			{
+				GUILayout.FlexibleSpace();
+
+				GUILayout.BeginVertical();
+				{
+					float size = Screen.width * 0.2f;
+
+					GUI.enabled = _timeScaleIndex < _timeScales.Count - 1;
+					if (GUILayout.Button("+", GUILayout.Width(size), GUILayout.Height(size)))
+					{
+						IncreaseTimeScale();
+					}
+
+					GUI.enabled = _timeScaleIndex > 0;
+					if (GUILayout.Button("-", GUILayout.Width(size), GUILayout.Height(size)))
+					{
+						DecreaseTimeScale();
+					}
+				}
+				GUILayout.EndVertical();
+			}
+			GUILayout.EndHorizontal();
+
+			GUILayout.EndArea();
+
+			_cheatsStyleProvider.PopButtonStyle();
 		}
 
+		
 		void IGUIDrawer.DrawGUI()
 		{
+			/*
 			// Show slider in logarithmic space
 			_timeScale = GUILayoutUtils.LogSlider("Time Scale", _timeScale, 0.01f, 100f);
 
@@ -139,16 +191,14 @@ namespace ForestRoyale.Core
 			{
 				if (GUILayout.Button("-", GUILayoutOptions.ExpandWidth()))
 				{
-					_timeScale = DecreaseTimeScale(_timeScale);
-					ApplyTimeScale();
+					DecreaseTimeScale();
 				}
 
 				GUILayout.TextField(_timeScale.ToString("F2"));
 
 				if (GUILayout.Button("+", GUILayoutOptions.ExpandWidth()))
 				{
-					_timeScale = IncreaseTimeScale(_timeScale);
-					ApplyTimeScale();
+					IncreaseTimeScale();
 				}
 			}
 			GUILayout.EndHorizontal();
@@ -161,8 +211,7 @@ namespace ForestRoyale.Core
 				TogglePause();
 			}
 			GUIUtils.PopBackgroundColor();
-			
-			ApplyTimeScale();
+			*/
 		}
 	}
 }

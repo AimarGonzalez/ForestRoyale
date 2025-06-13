@@ -11,6 +11,10 @@ namespace ForestRoyale.Core.UI
 {
 	public static class GUIUtils
 	{
+		
+		public static float HalfScreenW => Screen.width * 0.5f;
+		public static float HalfScreenH => Screen.height * 0.5f;
+
 		public enum PanelPlacement
 		{
 			Bottom,

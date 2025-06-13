@@ -468,7 +468,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45926023}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42a07858e4a584a4e95449eb14ed0bc8, type: 3}
   m_Name: 
@@ -2691,6 +2691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 944559667}
   - component: {fileID: 944559668}
+  - component: {fileID: 944559669}
   m_Layer: 0
   m_Name: CheatsMenu
   m_TagString: Untagged
@@ -2725,20 +2726,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023a59e9bd29ca94886d9ba1640c9c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skin: {fileID: 11400000, guid: fb5d2b8f0e92ba54285e18c47e63f7d3, type: 2}
   _showDebugPanel: 0
-  _panelSettings:
+--- !u!114 &944559669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944559666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88846170fdd4f2949bca4b9ab13c66d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 11400000, guid: fb5d2b8f0e92ba54285e18c47e63f7d3, type: 2}
+  _panelFontSize: 70
+  _buttonFontSize: 100
+  _cheatPanelSettings:
   - _aspectRatio:
       Width: 3
       Height: 4
-    FontSize: 21
     LabelWidth: 0.5
     Width: 0.3
     Height: 0.3
   - _aspectRatio:
       Width: 1080
       Height: 2400
-    FontSize: 35
     LabelWidth: 0.5
     Width: 0.6
     Height: 0.5
