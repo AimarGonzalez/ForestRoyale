@@ -21,11 +21,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[Serializable]
 		private class Transition
 		{
-			[EnumToggleButtons]
 			[TableColumnWidth(width: 100, resizable: false)]
 			public TState FromState;
 
-			[EnumToggleButtons]
 			[TableColumnWidth(width: 100, resizable: false)]
 			public TState ToState;
 

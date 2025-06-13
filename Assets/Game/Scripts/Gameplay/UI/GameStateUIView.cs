@@ -1,12 +1,14 @@
 using ForestRoyale.Gameplay.Combat;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
+
 
 namespace ForestRoyale.Gameplay.UI
 {
-	public class UIGameStateView : UIView<GameState.State>
+	public class GameStateUIView : UIView<GameState.State>
 	{
 		[Inject]
 		private ApplicationEvents _appEvents;

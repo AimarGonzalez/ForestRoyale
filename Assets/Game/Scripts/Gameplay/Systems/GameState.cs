@@ -43,16 +43,15 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 
 			_battle = new Battle();
+
+			// IMPROVE: Refactor to Initialize(BattleSettings)
 			_battle.Player.Deck.Initialize(_playerDeck.Cards);
 			_battle.Bot.Deck.Initialize(_botDeck.Cards);
 
-			SetState(State.BattleIntro);
-			_appEvents.TriggerBattleCreated(_battle);
-			
-			_battle.ResetBattle();
+			ResetBattle();
 		}
 
-		private void StartBattle()
+		public void StartBattle()
 		{
 			_battle.StartBattle();
 
@@ -71,6 +70,8 @@ namespace ForestRoyale.Gameplay.Combat
 		public void ResetBattle()
 		{
 			_battle.ResetBattle();
+
+			SetState(State.BattleIntro);
 			_appEvents.TriggerBattleCreated(_battle);
 		}
 
@@ -108,7 +109,7 @@ namespace ForestRoyale.Gameplay.Combat
 				StartBattle();
 			}
 
-			GUI.enabled = _battle?.IsBattleActive ?? false;
+			GUI.enabled = HasActiveBattle;
 			if (GUILayout.Button("Pause"))
 			{
 				PauseBattle();
