@@ -4449,8 +4449,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeScale: 1
-  _minTimeScale: 0.001
-  _maxTimeScale: 100
+  _timeScales:
+  - 0
+  - 0.25
+  - 0.5
+  - 1
+  - 2
+  - 4
+  - 10
+  _timeScaleIndex: 3
+  _debugControlsSettings:
+    _width: 0.45
+    _height: 0.16
+    _margin: 0.01
+    _labelWidth: 0.14
+    _labelMargin: 0.01
 --- !u!1 &1176700497
 GameObject:
   m_ObjectHideFlags: 0

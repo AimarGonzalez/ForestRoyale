@@ -165,7 +165,7 @@ namespace ForestRoyale.Core.UI
 		}	
 
 		
-		
+		public static int FontSize => GUI.skin.label.fontSize;
 
 		public static void PushFontSize(int uniformSize)
 		{
@@ -184,6 +184,19 @@ namespace ForestRoyale.Core.UI
 			{
 				_fontSizeStack.Pop().ApplyToGUI();
 			}
+		}
+
+		public static int CalcAutoFontSize(string text, float availableWidth)
+		{
+			GUIContent content = new(text);
+			float labelWidth = GUI.skin.label.CalcSize(content).x;
+			float scaledFontSize = FontSize * availableWidth / labelWidth;
+			return (int)scaledFontSize;
+		}
+
+		public static void PushAutoFontSize(string text, float availableWidth)
+		{
+			PushFontSize(CalcAutoFontSize(text, availableWidth));
 		}
 
 		public static void PushColor(Color col)

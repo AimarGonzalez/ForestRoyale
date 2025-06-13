@@ -21,7 +21,7 @@ namespace ForestRoyale.Core.UI
 			{
 				return;
 			}
-			
+
 			GUILayout.BeginVertical(GUI.skin.box);
 			drawer.DrawGUI();
 			GUILayout.EndVertical();
@@ -55,7 +55,7 @@ namespace ForestRoyale.Core.UI
 			GUILayout.Label(label, GUILayoutOptions.Height(LabelHeight));
 			GUILayout.EndHorizontal();
 		}
-		
+
 		public static void Label(string label)
 		{
 			GUILayout.Label(label, GUILayoutOptions.Height(LabelHeight));
@@ -99,13 +99,13 @@ namespace ForestRoyale.Core.UI
 			GUILayout.EndHorizontal();
 			return value;
 		}
-		
+
 		public static float LogSlider(string label, float value, float min, float max)
 		{
 			float logMin = Mathf.Log10(min);
 			float logMax = Mathf.Log10(max);
 			float logCurrent = Mathf.Log10(value);
-			
+
 			GUILayout.BeginHorizontal();
 			FieldLabel(label);
 			value = ToFloat(GUILayout.TextField(value.ToString("F1"), GUILayoutOptions.MaxWidth(50)));
