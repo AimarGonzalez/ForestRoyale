@@ -43,7 +43,10 @@ namespace ForestRoyale.Gameplay.Combat
 
 			_player.Hand.Clear();
 			_bot.Hand.Clear();
+		}
 
+		public void PopulateInitialHand()
+		{
 			// Initialize player and bot hands
 			_player.PopulateInitialHand();
 			_bot.PopulateInitialHand();

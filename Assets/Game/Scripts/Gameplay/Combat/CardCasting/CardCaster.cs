@@ -29,8 +29,6 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private Battle _battle;
 		private Player _player;
-		private Hand _hand;
-		private Deck _deck;
 
 		private void Awake()
 		{
@@ -73,8 +71,6 @@ namespace ForestRoyale.Gameplay.Combat
 			Debug.Log($"CardCaster - OnBattleCreated");
 			_battle = battle;
 			_player = battle.Player;
-			_hand = battle.Player.Hand;
-			_deck = battle.Player.Deck;
 		}
 
 		private void OnCardSelected(CardSlot cardSlot, CardData cardData)

@@ -93,6 +93,11 @@ namespace ForestRoyale.Gameplay.Combat
 			State oldState = _state;
 			_state = newState;
 			_appEvents.TriggerGameStateChanged(oldState, newState);
+
+			if (oldState == State.BattleIntro)
+			{
+				_battle.PopulateInitialHand();
+			}
 		}
 
 		public void DrawGUI()
