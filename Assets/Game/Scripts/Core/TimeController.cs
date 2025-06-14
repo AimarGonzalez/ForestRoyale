@@ -1,12 +1,10 @@
 using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.tvOS;
 using VContainer;
 
 namespace ForestRoyale.Core
