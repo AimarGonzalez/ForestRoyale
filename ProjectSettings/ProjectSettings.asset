@@ -142,7 +142,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0.2
+  bundleVersion: 1.0.3
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
@@ -169,9 +169,9 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.UnityTechnologies.Mobile3DTemplate
-    Standalone: com.UnityTechnologies.Mobile3DTemplate
-    iPhone: com.UnityTechnologies.Mobile3DTemplate
+    Android: com.TinyForestGames.TinyForest
+    Standalone: com.TinyForestGames.TinyForest
+    iPhone: com.TinyForestGames.TinyForest
   buildNumber:
     Standalone: 0
     VisionOS: 0
