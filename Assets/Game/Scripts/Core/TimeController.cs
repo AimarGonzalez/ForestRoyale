@@ -4,7 +4,6 @@ using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
 namespace ForestRoyale.Core
@@ -45,10 +44,12 @@ namespace ForestRoyale.Core
 		[Inject]
 		private CheatsStyleProvider _cheatsStyleProvider;
 
+		/* ROLLBACK: disabled new Input System Package in favour of the old Input Manager
 		private InputAction _increaseAction;
 		private InputAction _decreaseAction;
 		private InputAction _pauseTime;
 		private InputAction _resetTimeScale;
+		*/
 
 		private GUIStyle _labelStyle;
 		private GUIStyle LabelStyle => _labelStyle ??= new GUIStyle(GUI.skin.label)
@@ -61,14 +62,17 @@ namespace ForestRoyale.Core
 
 		private void Awake()
 		{
+			/*
 			_increaseAction = InputSystem.actions.FindAction("TimeScale.Increase");
 			_decreaseAction = InputSystem.actions.FindAction("TimeScale.Decrease");
 			_pauseTime = InputSystem.actions.FindAction("TimeScale.Pause");
 			_resetTimeScale = InputSystem.actions.FindAction("TimeScale.Reset");
+			*/
 		}
 
 		private void OnEnable()
 		{
+			/*
 			if (_increaseAction != null)
 			{
 				_increaseAction.performed += OnIncreaseTimeScaleKey;
@@ -88,10 +92,12 @@ namespace ForestRoyale.Core
 			{
 				_resetTimeScale.performed += OnResetTimeScaleKey;
 			}
+			*/
 		}
 
 		private void OnDisable()
 		{
+			/*
 			if (_increaseAction != null)
 			{
 				_increaseAction.performed -= OnIncreaseTimeScaleKey;
@@ -111,6 +117,7 @@ namespace ForestRoyale.Core
 			{
 				_resetTimeScale.performed -= OnResetTimeScaleKey;
 			}
+			*/
 		}
 
 		private void Start()
@@ -118,6 +125,7 @@ namespace ForestRoyale.Core
 			ApplyTimeScale();
 		}
 
+		/* ROLLBACK: disabled new Input System Package in favour of the old Input Manager
 		private void OnIncreaseTimeScaleKey(InputAction.CallbackContext context)
 		{
 			IncreaseTimeScale();
@@ -138,6 +146,7 @@ namespace ForestRoyale.Core
 			_timeScale = 1f;
 			ApplyTimeScale();
 		}
+		*/
 
 		private void DecreaseTimeScale()
 		{
