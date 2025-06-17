@@ -31,7 +31,7 @@ namespace ForestRoyale.Gameplay.Editor
 		[Button("Refresh Arena Reference")]
 		private void FindAndInitializeArena()
 		{
-			_arena = GameObject.Find("Arena");
+			_arena = GameObject.Find("ArenaRoot");
 			if (_arena != null)
 			{
 				_isVertical = Mathf.Approximately(_arena.transform.rotation.eulerAngles.x, 270f);
