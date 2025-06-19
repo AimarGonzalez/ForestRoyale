@@ -1,38 +1,60 @@
+using ForestLib.Utils.Pool;
 using ForestRoyale.Core;
 using Sirenix.OdinInspector;
-using System;
 using UnityEngine;
+using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-
-	// DEPRECATED: Use UnitView instead
-	[Obsolete("DEPRECATED: Use UnitView instead")]
-	public class DeathComponent : MonoBehaviour, IDeathComponent, IReseteable
+	public class DeathComponent : UnitComponent, IUnitStateChangeListener
 	{
-		[InfoBox("DEPRECATED: Use UnitView instead", InfoMessageType.Warning)]
-		[SerializeField]
-		private GameObject _aliveRoot;
+		private VFXInstance[] _vfxPrefabs;
 
-		[SerializeField]
-		private GameObject _deadRoot;
+		[Inject]
+		private ObjectPoolService _objectPoolService;
 
-		private void Start()
+		protected override void Awake()
 		{
-			_deadRoot.SetActive(false);
-			_aliveRoot.SetActive(true);
+			base.Awake();
+
+			_vfxPrefabs = GetComponentsInChildren<VFXInstance>(includeInactive: true);
 		}
 
-		public void OnDeath()
+		void IUnitStateChangeListener.OnUnitStateChanged(UnitState oldState, UnitState newState)
 		{
-			_aliveRoot.SetActive(false);
-			_deadRoot.SetActive(true);
+			if (newState == UnitState.Dying)
+			{
+				PlayVFXs();
+			}
+
+			if (newState == UnitState.Dead)
+			{
+				if (!Unit.UnitStats.PermanentCorpse)
+				{
+					_objectPoolService.Release(Unit.UnitRoot.gameObject);
+				}
+			}
 		}
 
-		void IReseteable.Reset()
+		private void PlayVFXs()
 		{
-			_deadRoot.SetActive(false);
-			_aliveRoot.SetActive(true);
+			foreach (var vfxPrefab in _vfxPrefabs)
+			{
+				vfxPrefab.Play();
+			}
+		}
+
+		public bool HasFinished()
+		{
+			foreach (VFXInstance vfxPrefab in _vfxPrefabs)
+			{
+				if (!vfxPrefab.HasFinished)
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 }

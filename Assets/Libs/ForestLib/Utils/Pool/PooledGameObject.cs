@@ -1,6 +1,6 @@
-using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
+using UnityEngine;
 
 namespace ForestLib.Utils.Pool
 {
@@ -10,7 +10,7 @@ namespace ForestLib.Utils.Pool
 		[SerializeField]
 		[Tooltip("If true, will log an error if the pool is not set")]
 		private bool _logMissingPool = true;
-		
+
 		[ShowInInspector, ReadOnly]
 		private PooledGameObject _prefab;
 
@@ -43,7 +43,7 @@ namespace ForestLib.Utils.Pool
 				component.OnGetFromPool();
 			}
 		}
-		
+
 		public virtual void OnReturnToPool()
 		{
 			foreach (IPooledComponent component in _subComponents)
@@ -51,7 +51,7 @@ namespace ForestLib.Utils.Pool
 				component.OnReturnToPool();
 			}
 		}
-		
+
 		public virtual void OnDestroyElement()
 		{
 			foreach (IPooledComponent component in _subComponents)
@@ -72,7 +72,7 @@ namespace ForestLib.Utils.Pool
 				return;
 			}
 
-			_pool.Return(this);
+			_pool.Release(this);
 		}
 
 		void IDisposable.Dispose()

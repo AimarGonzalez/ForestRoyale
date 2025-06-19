@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca322105aadfd24d8f4803cc8f75efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _errorMissingPool: 0
+  _logMissingPool: 0
 --- !u!1 &4775287443633296396
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,12 +269,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3176194029410523179}
+  - component: {fileID: 8215675263912254343}
   - component: {fileID: 8068233149362356199}
   - component: {fileID: 6666391089510737563}
   - component: {fileID: 1670998887246637220}
   - component: {fileID: 3752300920016001257}
   - component: {fileID: 8136533048380653187}
   - component: {fileID: 4588034851413924146}
+  - component: {fileID: 1565287719224366450}
   m_Layer: 0
   m_Name: troop_base_prefab
   m_TagString: Untagged
@@ -299,6 +301,19 @@ Transform:
   - {fileID: 1740353308181728621}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8215675263912254343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716079896726795497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logMissingPool: 1
 --- !u!114 &8068233149362356199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +426,18 @@ MonoBehaviour:
     - {fileID: 7223196587414029065}
     - {fileID: 316264199113032634}
     valueData: 0f0000000e0000000e00000030000000
+--- !u!114 &1565287719224366450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716079896726795497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e2e4b59c780cc448ab7fe8ce92bbb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7223196587414029065
 GameObject:
   m_ObjectHideFlags: 0

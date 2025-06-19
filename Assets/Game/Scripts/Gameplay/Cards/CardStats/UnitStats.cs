@@ -26,14 +26,19 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 		[SerializeField]
 		private float _movementSpeed;
 
+		[Tooltip("If true, the unit will not be destroyed when it dies")]
+		[SerializeField]
+		private bool _permanentCorpse;
+
 		public string Name => _name;
 		public UnitType UnitType => _type;
 		public float HitPoints => _hitPoints;
 		public TransportType Transport => _transport;
 		public float MovementSpeed => _movementSpeed;
+		public bool PermanentCorpse => _permanentCorpse;
 
 #if UNITY_EDITOR
-		public static UnitStats Build(string name, UnitType type, float hitPoints, TransportType transport, float movementSpeed)
+		public static UnitStats Build(string name, UnitType type, float hitPoints, TransportType transport, float movementSpeed, bool permanentCorpse)
 		{
 			UnitStats stats = new UnitStats();
 
@@ -43,6 +48,7 @@ namespace ForestRoyale.Gameplay.Cards.CardStats
 			stats._hitPoints = hitPoints;
 			stats._transport = transport;
 			stats._movementSpeed = movementSpeed;
+			stats._permanentCorpse = permanentCorpse;
 
 			return stats;
 		}

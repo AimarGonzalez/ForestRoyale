@@ -1,69 +1,41 @@
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ForestLib.Utils.Pool
 {
-	public class PrefabPool : MonoBehaviour
+	public class PrefabPool
 	{
-		public class Handler : MonoBehaviour, IPoolHandler
-		{
-			[ShowInInspector] private PooledGameObject _prefabInfo;
-			[ShowInInspector] private PrefabPool _pool;
+		private Queue<PooledGameObject> _queue = new();
 
-			public void Init(PooledGameObject prefabInfo, PrefabPool pool)
-			{
-				_prefabInfo = prefabInfo;
-				_pool = pool;
-			}
+		private Transform _parent;
 
-			public void ReturnToPool()
-			{
-				_pool.Return(_prefabInfo);
-			}
-		}
-
-		private Dictionary<PooledGameObject, Queue<PooledGameObject>> _pools = new();
 		private int _numActiveObjects = 0;
 		private int _numPooledObjects = 0;
 
-		public T Get<T>(T prefab, Transform parent = null, bool worldPositionStays = true, bool active = true) where T : MonoBehaviour
+		public int NumActiveObjects => _numActiveObjects;
+		public int NumTotalObjects => _numActiveObjects + _numPooledObjects;
+
+		public PrefabPool(Transform parent)
 		{
-			PooledGameObject pooledGameObject = prefab.GetComponent<PooledGameObject>();
-			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active);
-			return instance.GetComponent<T>();
+			_parent = parent;
 		}
 
-
-		public PooledGameObject Get(PooledGameObject prefab, Transform parent = null, bool worldPositionStays = true, bool active = true)
+		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool worldPositionStays, bool active = true)
 		{
-			if (prefab == null)
+			PooledGameObject instance;
+			if (_queue.Count > 0)
 			{
-				Debug.LogError($"Prefab reference is null");
-				return null;
+				instance = _queue.Dequeue();
 			}
-
-			// Instance from pool
-			PooledGameObject instance = null;
-			if (!_pools.TryGetValue(prefab, out var pool))
+			else
 			{
-				pool = new Queue<PooledGameObject>();
-				_pools[prefab] = pool;
-			}
-			else if (pool.Count > 0)
-			{
-				instance = pool.Dequeue();
-			}
-
-			if (instance == null)
-			{
-				instance = Instantiate(prefab);
+				instance = Object.Instantiate(prefab);
 			}
 
 			_numActiveObjects++;
 
 			instance.Init(prefab, this);
-
+			
 			instance.transform.SetParent(parent, worldPositionStays);
 
 			instance.gameObject.SetActive(active);
@@ -73,8 +45,7 @@ namespace ForestLib.Utils.Pool
 			return instance;
 		}
 
-
-		public void Return(GameObject instance)
+		public void Release(GameObject instance)
 		{
 			if (instance == null)
 			{
@@ -83,10 +54,10 @@ namespace ForestLib.Utils.Pool
 			}
 
 			PooledGameObject prefabInfo = instance.GetComponent<PooledGameObject>();
-			Return(prefabInfo);
+			Release(prefabInfo);
 		}
 
-		public void Return(PooledGameObject instance)
+		public void Release(PooledGameObject instance)
 		{
 			if (instance == null)
 			{
@@ -104,33 +75,15 @@ namespace ForestLib.Utils.Pool
 			instance.OnReturnToPool();
 
 			instance.gameObject.SetActive(false);
-			instance.transform.SetParent(transform);
+			instance.transform.SetParent(_parent);
 
-			if (!_pools.TryGetValue(instance.Prefab, out var queue))
-			{
-				queue = new Queue<PooledGameObject>();
-				_pools[instance.Prefab] = queue;
-			}
-			else if (queue.Contains(instance))
+			if (_queue.Contains(instance))
 			{
 				Debug.LogError($"Prefab reference is already in the pool: {instance.Prefab.name}");
 				return;
 			}
 
-			queue.Enqueue(instance);
-		}
-
-		private void OnGUI()
-		{
-			// area centered on the middle right of the screen
-			GUILayout.BeginArea(new Rect(Screen.width - 200, 10, 200, 100), GUI.skin.box);
-
-			GUILayout.BeginVertical();
-			GUILayout.Label($"Active: {_numActiveObjects}");
-			GUILayout.Label($"Pooled: {_numPooledObjects}");
-			GUILayout.EndVertical();
-
-			GUILayout.EndArea();
+			_queue.Enqueue(instance);
 		}
 	}
 }

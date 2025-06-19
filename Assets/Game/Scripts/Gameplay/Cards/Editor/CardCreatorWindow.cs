@@ -405,7 +405,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 190f,
 				transport: TransportType.Air,
-				movementSpeed: 3.0f
+				movementSpeed: 3.0f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 103f,
@@ -428,7 +429,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 5944f,
 				transport: TransportType.Ground,
-				movementSpeed: 1.0f
+				movementSpeed: 1.0f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 368f,
@@ -450,7 +452,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 80f,
 				transport: TransportType.Ground,
-				movementSpeed: 3.0f
+				movementSpeed: 3.0f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 50f,
@@ -473,7 +476,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 2566,
 				transport: TransportType.Ground,
-				movementSpeed: 1.2f
+				movementSpeed: 1.2f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 293,
@@ -495,7 +499,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 720f,
 				transport: TransportType.Ground,
-				movementSpeed: 1.5f
+				movementSpeed: 1.5f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 176f,
@@ -517,7 +522,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 1696f,
 				transport: TransportType.Ground,
-				movementSpeed: 3.5f
+				movementSpeed: 3.5f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 264f,
@@ -540,7 +546,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Building,
 				hitPoints: 322f,
 				transport: TransportType.Ground,
-				movementSpeed: 0f
+				movementSpeed: 0f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 83f,
@@ -563,7 +570,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 119,
 				transport: TransportType.Ground,
-				movementSpeed: 2.5f
+				movementSpeed: 2.5f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 119,
@@ -585,7 +593,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.Troop,
 				hitPoints: 125f,
 				transport: TransportType.Ground,
-				movementSpeed: 1.2f
+				movementSpeed: 1.2f,
+				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
 				damage: 92f,
@@ -721,7 +730,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.ArenaTower,
 				hitPoints: 2534f,
 				transport: TransportType.Ground,
-				movementSpeed: 0f
+				movementSpeed: 0f,
+				permanentCorpse: true
 			);
 			var combatStats = CombatStats.Build(
 				damage: 90f,
@@ -742,7 +752,8 @@ namespace ForestRoyale.Gameplay.Editor
 				type: UnitType.ArenaTower,
 				hitPoints: 4008f,
 				transport: TransportType.Ground,
-				movementSpeed: 0f
+				movementSpeed: 0f,
+				permanentCorpse: true
 			);
 			var combatStats = CombatStats.Build(
 				damage: 120f,

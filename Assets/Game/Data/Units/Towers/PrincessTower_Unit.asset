@@ -18,6 +18,7 @@ MonoBehaviour:
     _hitPoints: 4424
     _transport: 0
     _movementSpeed: 0
+    _permanentCorpse: 1
   _combatStats:
     _damage: 158
     _attackSpeed: 0.8

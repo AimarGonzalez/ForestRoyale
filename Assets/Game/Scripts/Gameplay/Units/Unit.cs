@@ -31,7 +31,7 @@ namespace ForestRoyale.Gameplay.Units
 
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
-		private IDeathComponent _deathComponent;
+		private DeathComponent _deathComponent;
 
 		[Header("State")]
 		[ShowInInspector, ReadOnly]
@@ -65,7 +65,7 @@ namespace ForestRoyale.Gameplay.Units
 				{
 					return;
 				}
-				
+
 				UnitState oldState = _state;
 				_state = value;
 				_unitRoot.PropagateStateChanged(oldState, _state);
@@ -79,7 +79,7 @@ namespace ForestRoyale.Gameplay.Units
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
-		public IDeathComponent DeathComponent => _deathComponent;
+		public DeathComponent DeathComponent => _deathComponent;
 
 
 		// IDamageable interface implementation
@@ -152,6 +152,11 @@ namespace ForestRoyale.Gameplay.Units
 			{
 				resetable.Reset();
 			}
+		}
+
+		public bool HasFinishedDeathFx()
+		{
+			return _deathComponent?.HasFinished() ?? true;
 		}
 	}
 }

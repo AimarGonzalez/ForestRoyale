@@ -27,12 +27,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		// --- DEGUG BOX ---------------
 
-		
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-2)]
+
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order - 2)]
 		[ShowInInspector]
 		private UnitState State => _unit?.State ?? UnitState.None;
 
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-2)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order - 2)]
 		[ShowInInspector]
 		private string TargetId => _unit == null ? "<no unit>" : (_unit.Target?.Id ?? "<no target>");
 
@@ -56,13 +56,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		[Inject]
 		private ArenaEvents _arenaEvents;
-		
+
 		[Inject]
 		private IObjectResolver _objectResolver;
 
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
-		private IDeathComponent _deathComponent;
+		private DeathComponent _deathComponent;
 		private Collider2DListener _colliderListener;
 
 		[NonSerialized]
@@ -139,7 +139,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		public Unit Unit => _unit;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
-		public IDeathComponent DeathComponent => _deathComponent;
+		public DeathComponent DeathComponent => _deathComponent;
 		public Vector3 Position => transform.position;
 
 		private void Awake()
@@ -151,8 +151,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			_movementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
-			_deathComponent = GetComponent<IDeathComponent>();
-			
+			_deathComponent = GetComponent<DeathComponent>();
+
 			if (_movementComponent)
 			{
 				_colliderListener = _movementComponent.Body.GetComponent<Collider2DListener>();
@@ -170,19 +170,19 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void Start()
 		{
 			AutoUnitInitialization();
-			
+
 			Subscribe();
 		}
 
 		private void AutoUnitInitialization()
 		{
 			// To be used by units originally in the scene (like towers)
-			
+
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
-				Unit unit = new (null, this, _startingTeam, _startingUnitSO, _startingState);
+				Unit unit = new(null, this, _startingTeam, _startingUnitSO, _startingState);
 				SetUnit(unit);
 			}
 		}
@@ -196,7 +196,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			Unit oldUnit = _unit;
 			UnitState oldUnitState = oldUnit?.State ?? UnitState.None;
-			
+
 			DestroyUnit(oldUnit);
 
 			_unit = unit;
@@ -204,7 +204,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			UpdateUnitComponents(unit);
 			PropagateUnitChanged(oldUnit, unit);
 			PropagateStateChanged(oldUnitState, unit.State);
-			
+
 			if (unit.State == UnitState.Idle)
 			{
 				_arenaEvents?.TriggerUnitCreated(_unit);
@@ -217,9 +217,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			{
 				return;
 			}
-			
+
 			UnitState oldState = _unit.State;
-			
+
 			_unit.State = newState;
 
 			if (oldState == UnitState.CastingPreview && newState == UnitState.Idle)
@@ -227,7 +227,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				_arenaEvents?.TriggerUnitCreated(_unit);
 			}
 		}
-		
+
 		private void DestroyUnit(Unit unit)
 		{
 			if (unit != null)
@@ -260,13 +260,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			ForceOnDestroySubComponents();
 #endif
 		}
-		
-		
+
+
 		private void UpdateUnitComponents(Unit newUnit)
 		{
 			foreach (var component in UnitComponents)
 			{
-				component.SetUnit( newUnit);
+				component.SetUnit(newUnit);
 			}
 		}
 

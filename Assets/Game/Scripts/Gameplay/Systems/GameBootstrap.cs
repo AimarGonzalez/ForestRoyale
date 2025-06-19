@@ -1,3 +1,4 @@
+using ForestLib.Utils.Pool;
 using ForestRoyale.Core;
 using ForestRoyale.Gameplay.Combat;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace ForestRoyale.Gameplay.Systems
 				components.AddInHierarchy<GameState>();
 				components.AddInHierarchy<Arena>();
 				components.AddInHierarchy<CheatsStyleProvider>();
+				components.AddInHierarchy<ObjectPoolService>();
 			});
 		}
 	}
