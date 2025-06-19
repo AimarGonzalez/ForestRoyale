@@ -1,18 +1,17 @@
-using ForestLib.Utils.Pool;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ForestLib.Utils
+namespace ForestLib.Utils.Pool
 {
 	public class PrefabPool : MonoBehaviour
 	{
 		public class Handler : MonoBehaviour, IPoolHandler
 		{
-			[ShowInInspector] private PrefabInfo _prefabInfo;
+			[ShowInInspector] private PooledGameObject _prefabInfo;
 			[ShowInInspector] private PrefabPool _pool;
 
-			public void Init(PrefabInfo prefabInfo, PrefabPool pool)
+			public void Init(PooledGameObject prefabInfo, PrefabPool pool)
 			{
 				_prefabInfo = prefabInfo;
 				_pool = pool;
@@ -24,64 +23,52 @@ namespace ForestLib.Utils
 			}
 		}
 
-
-		/// <summary>
-		/// Key: Prefab path
-		/// Value: Queue of instances
-		/// </summary>
-		private Dictionary<string, Queue<GameObject>> _pool = new Dictionary<string, Queue<GameObject>>();
-		private List<GameObject> _activeObjects = new List<GameObject>();
+		private Dictionary<PooledGameObject, Queue<PooledGameObject>> _pools = new();
 		private int _numActiveObjects = 0;
 		private int _numPooledObjects = 0;
 
-
-		public GameObject Get(PrefabInfo prefabReference, Transform parent = null, bool worldPositionStays = true, bool active = true)
+		public T Get<T>(T prefab, Transform parent = null, bool worldPositionStays = true, bool active = true) where T : MonoBehaviour
 		{
-			if (prefabReference == null)
+			PooledGameObject pooledGameObject = prefab.GetComponent<PooledGameObject>();
+			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active);
+			return instance.GetComponent<T>();
+		}
+
+
+		public PooledGameObject Get(PooledGameObject prefab, Transform parent = null, bool worldPositionStays = true, bool active = true)
+		{
+			if (prefab == null)
 			{
 				Debug.LogError($"Prefab reference is null");
 				return null;
 			}
 
 			// Instance from pool
-			string prefabPath = prefabReference.PrefabPath;
-			GameObject instance = null;
-			if (!_pool.TryGetValue(prefabPath, out var queue))
+			PooledGameObject instance = null;
+			if (!_pools.TryGetValue(prefab, out var pool))
 			{
-				queue = new Queue<GameObject>();
-				_pool[prefabPath] = queue;
+				pool = new Queue<PooledGameObject>();
+				_pools[prefab] = pool;
 			}
-			else if (queue.Count > 0)
+			else if (pool.Count > 0)
 			{
-				instance = queue.Dequeue();
+				instance = pool.Dequeue();
 			}
 
 			if (instance == null)
 			{
-				instance = Instantiate(prefabReference.Prefab);
+				instance = Instantiate(prefab);
 			}
 
-			_activeObjects.Add(instance);
 			_numActiveObjects++;
 
-			// Set handler
-			if (!instance.TryGetComponent(out Handler handler))
-			{
-				handler = instance.AddComponent<Handler>();
-				handler.Init(prefabReference, this);
-			}
+			instance.Init(prefab, this);
 
-			// Set parent
 			instance.transform.SetParent(parent, worldPositionStays);
 
-			// Activation
-			instance.SetActive(active);
+			instance.gameObject.SetActive(active);
 
-			var onPoolInstances = instance.GetComponentsInChildren<IOnPoolInstance>();
-			foreach (var onPoolInstance in onPoolInstances)
-			{
-				onPoolInstance.OnPoolInstance();
-			}
+			instance.OnGetFromPool();
 
 			return instance;
 		}
@@ -95,47 +82,42 @@ namespace ForestLib.Utils
 				return;
 			}
 
-			PrefabInfo prefabInfo = instance.GetComponent<PrefabInfo>();
+			PooledGameObject prefabInfo = instance.GetComponent<PooledGameObject>();
 			Return(prefabInfo);
 		}
 
-		public void Return(PrefabInfo instance)
+		public void Return(PooledGameObject instance)
 		{
 			if (instance == null)
 			{
 				Debug.LogError($"Returned instance is null");
 				return;
 			}
-			var go = instance.gameObject;
 
-			if (_activeObjects.Remove(go))
+			if (instance.CreatedOnPool)
 			{
 				_numActiveObjects--;
 			}
 
 			_numPooledObjects++;
 
-			var onPoolReturns = go.GetComponentsInChildren<IOnPoolReturn>();
-			foreach (var onPoolReturn in onPoolReturns)
-			{
-				onPoolReturn.OnPoolReturn();
-			}
+			instance.OnReturnToPool();
 
-			go.SetActive(false);
-			go.transform.SetParent(transform);
+			instance.gameObject.SetActive(false);
+			instance.transform.SetParent(transform);
 
-			if (!_pool.TryGetValue(instance.PrefabPath, out var queue))
+			if (!_pools.TryGetValue(instance.Prefab, out var queue))
 			{
-				queue = new Queue<GameObject>();
-				_pool[instance.PrefabPath] = queue;
+				queue = new Queue<PooledGameObject>();
+				_pools[instance.Prefab] = queue;
 			}
-			else if (queue.Contains(go))
+			else if (queue.Contains(instance))
 			{
-				Debug.LogError($"Prefab reference is already in the pool: {instance.PrefabPath}");
+				Debug.LogError($"Prefab reference is already in the pool: {instance.Prefab.name}");
 				return;
 			}
 
-			queue.Enqueue(go);
+			queue.Enqueue(instance);
 		}
 
 		private void OnGUI()
