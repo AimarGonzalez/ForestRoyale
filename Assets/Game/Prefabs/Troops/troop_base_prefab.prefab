@@ -712,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7579009126370322223, guid: 622decca44983df459bbd168548b06e1, type: 3}
       propertyPath: m_Name
-      value: character_destruction_particles
+      value: chr_destruction_particles
       objectReference: {fileID: 0}
     - target: {fileID: 7579009126370322223, guid: 622decca44983df459bbd168548b06e1, type: 3}
       propertyPath: m_IsActive

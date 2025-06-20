@@ -9,7 +9,6 @@ namespace ForestRoyale.Core.UI
 		public const string GroupUnitComponent = "Debug/Root";
 		public const int OrderUnitComponent = 10000;
 		
-		public const string GroupPool = "Debug/Pool";
 		public const int OrderPool = 10010;
 		
 	}
