@@ -189,20 +189,20 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 		
 		// -------- Poolable ---------------------------------------
-		public void OnBeforeGetFromPool()
+		protected override void OnBeforeGetFromPool()
 		{
 			CreateUnit();
 		}
-		public void OnAfterGetFromPool()
+		protected override void OnAfterGetFromPool()
 		{
 			Subscribe();
 		}
-		public void OnReturnToPool()
+		protected override void OnReturnToPool()
 		{
 			Unsubscribe();
 			NotifyUnitRemoved();
 		}
-		public void OnDestroyFromPool()
+		protected override void OnDestroyFromPool()
 		{
 			OnReturnToPool();
 		}
@@ -222,9 +222,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		public void NotifyUnitRemoved()
 		{
-			if (_unit != null)
+			if (_unit != null && _arenaEvents != null)
 			{
-				_arenaEvents?.TriggerUnitRemoved(_unit);
+				_arenaEvents.TriggerUnitRemoved(_unit);
 				_unit = null;
 			}
 		}
