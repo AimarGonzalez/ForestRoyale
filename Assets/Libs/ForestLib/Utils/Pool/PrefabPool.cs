@@ -79,7 +79,7 @@ namespace ForestLib.Utils.Pool
 
 			if (_queue.Contains(instance))
 			{
-				Debug.LogError($"Prefab reference is already in the pool: {instance.Prefab.name}");
+				Debug.LogError($"Prefab reference is already in the pool: {instance.name}");
 				return;
 			}
 

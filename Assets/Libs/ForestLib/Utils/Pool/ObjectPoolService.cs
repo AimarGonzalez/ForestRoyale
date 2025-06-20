@@ -1,3 +1,4 @@
+using ForestRoyale.Core;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,8 +93,10 @@ namespace ForestLib.Utils.Pool
 
 		private void OnGUI()
 		{
+			CheatPanelSettings panelSettings = CheatsStyleProvider.PushPanelStyle();
+			
 			// area centered on the middle right of the screen
-			GUILayout.BeginArea(new Rect(Screen.width - 200, 10, 200, 500), GUI.skin.box);
+			GUILayout.BeginArea(new Rect(Screen.width - 200, Screen.width*0.5f - 200f, 200, 500), GUI.skin.box);
 
 			GUILayout.BeginVertical();
 			foreach (var pool in _pools)
@@ -103,6 +106,8 @@ namespace ForestLib.Utils.Pool
 			GUILayout.EndVertical();
 
 			GUILayout.EndArea();
+			
+			CheatsStyleProvider.PopPanelStyle();
 		}
 	}
 }

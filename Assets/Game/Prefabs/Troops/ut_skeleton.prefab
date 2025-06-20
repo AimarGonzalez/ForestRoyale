@@ -62,19 +62,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000041688292
+      value: 0.8870109
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000013144269
+      value: -0.4617486
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.95371693
+      value: 0.00000003877248
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.30070582
+      value: -0.000000020183673
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -83,10 +83,6 @@ PrefabInstance:
     - target: {fileID: 3877779757066929361, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3896133586100858330, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
-      propertyPath: m_Radius
-      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Speed
@@ -244,18 +240,6 @@ PrefabInstance:
       propertyPath: _startingUnitSO
       value: 
       objectReference: {fileID: 11400000, guid: b17213ef2c664b649bcf1ad59d62599b, type: 2}
-    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
-      propertyPath: m_Extents.x
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116402156683428343, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
-      propertyPath: m_Extents.z
-      value: 0.07
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -108,10 +108,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284940213684403444}
+  - component: {fileID: 4363130142449966732}
   - component: {fileID: 2605472542282998423}
   - component: {fileID: 1801994249297685205}
   - component: {fileID: 3862759944406526480}
   - component: {fileID: 61127466162446212}
+  - component: {fileID: 1826484244061271364}
   m_Layer: 0
   m_Name: tower_base_prefab
   m_TagString: Untagged
@@ -136,6 +138,20 @@ Transform:
   - {fileID: 8649190093736756895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4363130142449966732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751002429891844267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logMissingPool: 1
+  _prefabFromScene: {fileID: 4363130142449966732}
 --- !u!114 &2605472542282998423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,17 +211,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _root: {fileID: 2605472542282998423}
+  _bodyRenderer: {fileID: 0}
   _stateDictionary:
     keyData: 010000000200000010000000
     valueData:
-    - Objects:
+    - Material: {fileID: 0}
+      ActiveGameObjects:
       - {fileID: 7668884468412783485}
-    - Objects:
+    - Material: {fileID: 0}
+      ActiveGameObjects:
       - {fileID: 7668884468412783485}
       - {fileID: 2167644572242357806}
       - {fileID: 673017344494104390}
       - {fileID: 8406828080621489900}
-    - Objects:
+    - Material: {fileID: 0}
+      ActiveGameObjects:
       - {fileID: 2440226379764317414}
   _goDictionary:
     keyData:
@@ -215,6 +235,19 @@ MonoBehaviour:
     - {fileID: 8406828080621489900}
     - {fileID: 2440226379764317414}
     valueData: 0300000002000000020000000200000010000000
+--- !u!114 &1826484244061271364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751002429891844267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e2e4b59c780cc448ab7fe8ce92bbb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _root: {fileID: 0}
 --- !u!1 &2440226379764317414
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,9 +672,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 5711590451828853085, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.b
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711590451828853085, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.g
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711590451828853085, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
     - target: {fileID: 5886378281699822466, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196536953659341157, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196536953659341157, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.g
+      value: 0.70980394
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196536953659341157, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
+      propertyPath: m_Color.r
+      value: 0.34509805
       objectReference: {fileID: 0}
     - target: {fileID: 6524521939585085941, guid: ffb69cef0c2e5d443a990b8e5768be72, type: 3}
       propertyPath: m_StaticEditorFlags
