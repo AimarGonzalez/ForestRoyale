@@ -64,7 +64,7 @@ namespace ForestRoyale.Gameplay.Combat
 			SetState(CastingState.Preview);
 
 			SetParentAndCacheTroops(troop);
-			SetStartingProperties(team, state);
+			CreateUnits(team, state);
 			
 			MoveToMouseCursor(); //fixes bug with first frame in old position
 		}
@@ -102,15 +102,16 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		private void SetStartingProperties(ArenaTeam team, UnitState state)
+		private void CreateUnits(ArenaTeam team, UnitState state)
 		{
 			foreach (UnitRoot character in _chars)
 			{
 				character.StartingTeam = team;
 				character.StartingState = state;
+				character.CreateUnit();
 			}
 		}
-
+		
 		private void SetState(CastingState newCastingState)
 		{
 			if (_castingState == newCastingState)

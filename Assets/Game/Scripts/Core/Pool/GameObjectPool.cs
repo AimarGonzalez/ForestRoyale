@@ -17,11 +17,14 @@ namespace ForestRoyale.Core.Pool
 		[ShowInInspector, ReadOnly]
 		private int _numPooledObjects = 0;
 		
+		private int _numInstancedObjects = 0;
+		
 		[ShowInInspector, ReadOnly]
 		private Queue<PooledGameObject> _queue = new();
 
 		public int NumActiveObjects => _numActiveObjects;
 		public int NumTotalObjects => _numActiveObjects + _numPooledObjects;
+		 
 
 		public GameObjectPool(IObjectResolver vcontainer, Transform parent)
 		{
@@ -33,7 +36,7 @@ namespace ForestRoyale.Core.Pool
 		{
 			return Get(prefab, parent, worldPositionStays, active: true, Vector3.zero, Quaternion.identity);
 		}
-		
+
 		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool worldPositionStays, Vector3 position, Quaternion rotation)
 		{ 
 			return Get(prefab, parent, worldPositionStays, active: true, position, rotation);
@@ -45,10 +48,13 @@ namespace ForestRoyale.Core.Pool
 			if (_queue.Count > 0)
 			{
 				instance = _queue.Dequeue();
+				_numPooledObjects--;
 			}
 			else
 			{
+				_numInstancedObjects++;
 				instance = _vcontainer.Instantiate(prefab);
+				instance.name = $"{prefab.name}-{_numInstancedObjects}";
 			}
 
 			_numActiveObjects++;
@@ -92,7 +98,6 @@ namespace ForestRoyale.Core.Pool
 				_numActiveObjects--;
 			}
 
-			_numPooledObjects++;
 
 			instance.TriggerReturnToPool();
 
@@ -106,6 +111,7 @@ namespace ForestRoyale.Core.Pool
 			}
 
 			_queue.Enqueue(instance);
+			_numPooledObjects++;
 		}
 	}
 }

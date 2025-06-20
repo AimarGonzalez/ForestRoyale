@@ -176,6 +176,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			{
 				OnBeforeGetFromPool();
 				OnAfterGetFromPool();
+				CreateUnit();
 			}
 		}
 		
@@ -191,7 +192,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		// -------- Poolable ---------------------------------------
 		protected override void OnBeforeGetFromPool()
 		{
-			CreateUnit();
+			Reset();
 		}
 		protected override void OnAfterGetFromPool()
 		{
@@ -207,9 +208,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			OnReturnToPool();
 		}
 		// ----------------------------------------------------------
-		
 
-		private void CreateUnit()
+		public void Reset()
+		{
+			SetUnit(null);
+		}
+
+		public void CreateUnit()
 		{
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
