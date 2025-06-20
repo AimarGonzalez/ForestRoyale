@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ForestLib.Utils.Pool
+namespace ForestRoyale.Core.Pool
 {
 	public class PrefabPool
 	{

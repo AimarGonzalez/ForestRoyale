@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace ForestLib.Utils.Pool
+namespace ForestRoyale.Core.Pool
 {
 	[DisallowMultipleComponent]
 	public class PooledGameObject : MonoBehaviour, IDisposable

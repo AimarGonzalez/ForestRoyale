@@ -1,9 +1,9 @@
-using ForestRoyale.Core;
+using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ForestLib.Utils.Pool
+namespace ForestRoyale.Core.Pool
 {
 	public class ObjectPoolService : MonoBehaviour
 	{
@@ -93,7 +93,7 @@ namespace ForestLib.Utils.Pool
 
 		private void OnGUI()
 		{
-			CheatPanelSettings panelSettings = CheatsStyleProvider.PushPanelStyle();
+			GUIUtils.PushFontSize(40);
 			
 			// area centered on the middle right of the screen
 			GUILayout.BeginArea(new Rect(Screen.width - 200, Screen.width*0.5f - 200f, 200, 500), GUI.skin.box);
@@ -107,7 +107,7 @@ namespace ForestLib.Utils.Pool
 
 			GUILayout.EndArea();
 			
-			CheatsStyleProvider.PopPanelStyle();
+			GUIUtils.PopFontSize();
 		}
 	}
 }

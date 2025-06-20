@@ -1,4 +1,4 @@
-namespace ForestLib.Utils.Pool
+namespace ForestRoyale.Core.Pool
 {
 	public interface IPoolHandler
 	{
