@@ -19,27 +19,28 @@ namespace ForestRoyale.Core.Pool
 		/// </summary>
 		[SerializeField]
 		[ReadOnly, ShowIn(PrefabKind.InstanceInScene)]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[BoxGroup(DebugUI.Group)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool)]
 		private GameObject _automaticPrefab;
 
 		[SerializeField]
 		[ReadOnly, ShowIn(PrefabKind.InstanceInScene)]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool)]
 		private PooledGameObject _automaticComponent;
 
 
 		[ShowInInspector, ReadOnly]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool)]
 		private PooledGameObject _prefab;
 
 		[ShowInInspector, ReadOnly]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool)]
 		private PrefabPool _pool;
 
 		public PooledGameObject Prefab => CreatedOnPool ? _prefab : _automaticComponent;
 
 		[ShowInInspector, ReadOnly]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-1)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool-1)]
 		public bool CreatedOnPool { get; private set; }
 
 		private IPooledComponent[] _subComponents;
@@ -50,9 +51,12 @@ namespace ForestRoyale.Core.Pool
 			UpdatePrefabReferences();
 		}
 
+		/// <summary>
+		/// Updating the references the characters in the scene can be reused in the pool
+		/// </summary>
 		[Button]
 		[ShowIn(PrefabKind.InstanceInScene)]
-		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
+		[FoldoutGroup(DebugUI.GroupPool), PropertyOrder(DebugUI.OrderPool)]
 		private void UpdatePrefabReferences()
 		{
 			if (EditorApplication.isPlayingOrWillChangePlaymode)
