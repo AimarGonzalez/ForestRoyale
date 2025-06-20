@@ -13,15 +13,21 @@ namespace ForestRoyale.Core.Pool
 		
 		private Dictionary<PooledGameObject, GameObjectPool> _pools = new();
 
-		public GameObject Get(GameObject gameObject)
+		public GameObject Get(GameObject prefab)
 		{
-			return Get(gameObject, null, worldPositionStays: true, active: true, Vector3.zero, Quaternion.identity);
+			return Get(prefab, null, worldPositionStays: true, active: true, Vector3.zero, Quaternion.identity);
 		}
 
-		public GameObject Get(GameObject gameObject, Transform parent, bool worldPositionStays, bool active, Vector3 position, Quaternion rotation)
+		public GameObject Get(GameObject prefab, Transform parent, bool worldPositionStays, bool active, Vector3 position, Quaternion rotation)
 		{
-			PooledGameObject pooledGameObject = gameObject.GetComponent<PooledGameObject>();
-			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active, position, rotation);
+			PooledGameObject componentPrefab = prefab.GetComponent<PooledGameObject>();
+			if (componentPrefab == null)
+			{
+				Debug.LogError($"{prefab.name} is missing a PooledGameObject component");
+				return null;
+			}
+			
+			PooledGameObject instance = Get(componentPrefab, parent, worldPositionStays, active, position, rotation);
 			return instance.gameObject;
 		}
 
