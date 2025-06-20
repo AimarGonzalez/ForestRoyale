@@ -1,14 +1,14 @@
 using UnityEngine;
 using VContainer;
 using ForestRoyale.Core.Pool;
-using System;
+using Sirenix.OdinInspector;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
+	[ExecuteAlways]
 	public class UnitPlacement : MonoBehaviour
 	{
 		[SerializeField]
-		[ExecuteAlways]
 		private UnitRoot _prefab;
 
 		[Inject]
@@ -17,9 +17,35 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void Awake()
 		{
 #if UNITY_EDITOR
-			SpawnTemporalUnit();
+			if (!Application.isPlaying)
+			{
+				SpawnTemporalUnit();
+			}
 #endif
 		}
+
+#if UNITY_EDITOR
+		[Button, HideInPlayMode]
+		public void SpawnTemporalUnit()
+		{
+			if (Application.isPlaying)
+			{
+				Debug.LogError("UnitPlacement: SpawnTemporalUnits is not allowed in play mode", this);
+				return;
+			}
+
+			if (_prefab == null)
+			{
+				Debug.LogError("UnitPlacement: Prefab is not set", this);
+				return;
+			}
+
+			Debug.Log($"UnitPlacement: Creating TEMPORAL new unit {_prefab.name}", this);
+			UnitRoot instance = Instantiate(_prefab, transform, worldPositionStays: false);
+			instance.gameObject.hideFlags = HideFlags.DontSave;
+			instance.name = $"<TEMPORAL>_{_prefab.name}";
+		}
+#endif
 
 		public UnitRoot SpawnUnit()
 		{
@@ -36,28 +62,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 
 			Debug.Assert(transform.childCount == 0, "UnitPlacement: Prefab has unexpectedchildren");
+			Debug.Log($"UnitPlacement: Creating new unit {_prefab.name}", this);
 			return _poolService.Get(_prefab, transform, worldPositionStays: false);
 		}
 
-#if UNITY_EDITOR
-		public void SpawnTemporalUnit()
-		{
-			if (Application.isPlaying)
-			{
-				Debug.LogError("UnitPlacement: SpawnTemporalUnits is not allowed in play mode", this);
-				return;
-			}
-
-			if (_prefab == null)
-			{
-				Debug.LogError("UnitPlacement: Prefab is not set", this);
-				return;
-			}
-
-			Debug.Log($"UnitPlacement: Creating new unit {_prefab.name}", this);
-			UnitRoot instance = Instantiate(_prefab, transform, worldPositionStays: false);
-			instance.hideFlags = HideFlags.DontSave;
-		}
-#endif
 	}
 }

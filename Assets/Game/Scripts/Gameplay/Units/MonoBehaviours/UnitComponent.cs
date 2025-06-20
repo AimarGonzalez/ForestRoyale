@@ -1,4 +1,5 @@
-﻿using ForestRoyale.Core.UI;
+﻿using ForestLib.ExtensionMethods;
+using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		protected virtual void Awake()
 		{
 			_root ??= GetComponentInParent<UnitRoot>();
-			Debug.Assert(_root != null, "UnitComponent can't find a parent UnitRoot!");
+			Debug.Assert(_root != null, $"UnitComponent can't find a parent UnitRoot! - {gameObject.GetPathInHierarchy()}");
 
 			_unit = _root.Unit;
 		}
