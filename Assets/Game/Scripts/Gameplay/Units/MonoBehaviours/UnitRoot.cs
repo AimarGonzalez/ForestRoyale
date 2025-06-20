@@ -143,8 +143,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		public DeathComponent DeathComponent => _deathComponent;
 		public Vector3 Position => transform.position;
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+			
 #if UNITY_EDITOR
 			// VContainer injection for prefabs added from the editor.
 			AutoInject();
