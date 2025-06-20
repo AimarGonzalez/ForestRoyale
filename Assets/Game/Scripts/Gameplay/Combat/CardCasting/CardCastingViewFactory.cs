@@ -20,7 +20,7 @@ namespace ForestRoyale.Gameplay.Combat
 		private IObjectResolver _container;
 		
 		[Inject]
-		private ObjectPoolService _poolService;
+		private GameObjectPoolService _poolService;
 
 		public ICastingView BuildCastingPreview(CardData cardData, ArenaTeam team, ICastingView reusableCastingView)
 		{

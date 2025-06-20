@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace ForestRoyale.Core.Pool
 {
-	public class PrefabPool
+	public class GameObjectPool
 	{
 		private Transform _parent;
 		private IObjectResolver _vcontainer;
@@ -23,7 +23,7 @@ namespace ForestRoyale.Core.Pool
 		public int NumActiveObjects => _numActiveObjects;
 		public int NumTotalObjects => _numActiveObjects + _numPooledObjects;
 
-		public PrefabPool(IObjectResolver vcontainer, Transform parent)
+		public GameObjectPool(IObjectResolver vcontainer, Transform parent)
 		{
 			_vcontainer = vcontainer;
 			_parent = parent;

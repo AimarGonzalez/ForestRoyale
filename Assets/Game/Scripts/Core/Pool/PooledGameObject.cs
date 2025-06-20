@@ -41,7 +41,7 @@ namespace ForestRoyale.Core.Pool
 
 		[ShowInInspector, ReadOnly]
 		[BoxGroup(GroupPool), PropertyOrder(DebugUI.OrderPool)]
-		private PrefabPool _pool;
+		private GameObjectPool _pool;
 
 		public PooledGameObject Prefab => CreatedOnPool ? _prefab : _automaticComponent;
 
@@ -113,7 +113,7 @@ namespace ForestRoyale.Core.Pool
 		}
 #endif
 
-		public void Init(PooledGameObject prefab, PrefabPool pool)
+		public void Init(PooledGameObject prefab, GameObjectPool pool)
 		{
 			_prefab = prefab;
 			_pool = pool;

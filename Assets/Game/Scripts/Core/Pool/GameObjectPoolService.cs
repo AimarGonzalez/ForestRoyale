@@ -6,12 +6,12 @@ using VContainer;
 
 namespace ForestRoyale.Core.Pool
 {
-	public class ObjectPoolService : MonoBehaviour
+	public class GameObjectPoolService : MonoBehaviour
 	{
 		[Inject]
 		private IObjectResolver _vcontainer;
 		
-		private Dictionary<PooledGameObject, PrefabPool> _pools = new();
+		private Dictionary<PooledGameObject, GameObjectPool> _pools = new();
 
 		public GameObject Get(GameObject gameObject)
 		{
@@ -46,7 +46,7 @@ namespace ForestRoyale.Core.Pool
 				return null;
 			}
 
-			PrefabPool pool = GetOrCreatePool(prefab);
+			GameObjectPool pool = GetOrCreatePool(prefab);
 			return pool.Get(prefab, parent, worldPositionStays, active, position, rotation);
 		}
 
@@ -77,18 +77,18 @@ namespace ForestRoyale.Core.Pool
 			}
 			else
 			{
-				PrefabPool pool = GetOrCreatePool(instance.Prefab);
+				GameObjectPool pool = GetOrCreatePool(instance.Prefab);
 				pool.Release(instance);
 			}
 
 			
 		}
 
-		private PrefabPool GetOrCreatePool(PooledGameObject prefab)
+		private GameObjectPool GetOrCreatePool(PooledGameObject prefab)
 		{
-			if (!_pools.TryGetValue(prefab, out PrefabPool pool))
+			if (!_pools.TryGetValue(prefab, out GameObjectPool pool))
 			{
-				pool = new PrefabPool(_vcontainer, transform);
+				pool = new GameObjectPool(_vcontainer, transform);
 				_pools[prefab] = pool;
 			}
 			return pool;

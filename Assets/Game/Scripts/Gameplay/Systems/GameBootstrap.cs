@@ -30,7 +30,7 @@ namespace ForestRoyale.Gameplay.Systems
 				components.AddInHierarchy<GameState>();
 				components.AddInHierarchy<Arena>();
 				components.AddInHierarchy<CheatsStyleProvider>();
-				components.AddInHierarchy<ObjectPoolService>();
+				components.AddInHierarchy<GameObjectPoolService>();
 			});
 		}
 	}

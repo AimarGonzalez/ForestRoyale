@@ -11,7 +11,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private VFXInstance[] _vfxPrefabs;
 
 		[Inject]
-		private ObjectPoolService _objectPoolService;
+		private GameObjectPoolService _gameObjectPoolService;
 
 		protected override void Awake()
 		{
@@ -31,7 +31,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			{
 				if (!Unit.UnitStats.PermanentCorpse)
 				{
-					_objectPoolService.Release(Unit.UnitRoot.gameObject);
+					_gameObjectPoolService.Release(Unit.UnitRoot.gameObject);
 				}
 			}
 		}
