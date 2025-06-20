@@ -1,4 +1,5 @@
 using ForestLib.ExtensionMethods;
+using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System;
@@ -19,18 +20,22 @@ namespace ForestRoyale.Core.Pool
 		/// We keep a serialized reference to the prefab, so we return assets from the scene into the pool.
 		/// </summary>
 		[SerializeField]
-		[ReadOnly]
+		[ReadOnly, ShowIn(PrefabKind.InstanceInScene)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private GameObject _automaticPrefab;
-		
+
 		[SerializeField]
-		[ReadOnly]
+		[ReadOnly, ShowIn(PrefabKind.InstanceInScene)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private PooledGameObject _automaticComponent;
-		
+
 
 		[ShowInInspector, ReadOnly]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private PooledGameObject _prefab;
 
 		[ShowInInspector, ReadOnly]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private PrefabPool _pool;
 
 		public PooledGameObject Prefab => CreatedOnPool ? _prefab : _automaticComponent;
@@ -38,7 +43,7 @@ namespace ForestRoyale.Core.Pool
 		public bool CreatedOnPool { get; private set; }
 
 		private IPooledComponent[] _subComponents;
-		
+
 #if UNITY_EDITOR
 		private void OnValidate()
 		{
@@ -46,15 +51,40 @@ namespace ForestRoyale.Core.Pool
 		}
 
 		[Button]
+		[ShowIn(PrefabKind.InstanceInScene)]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private void UpdatePrefabReferences()
 		{
+			if (EditorApplication.isPlayingOrWillChangePlaymode)
+			{
+				return;
+			}
+
 			bool isOpenInPrefabStage = PrefabStageUtility.GetCurrentPrefabStage() != null;
-			if (!isOpenInPrefabStage && PrefabUtility.IsPartOfPrefabInstance(this))
+			if (!isOpenInPrefabStage && PrefabUtility.IsPartOfPrefabInstance(this) && !PrefabUtility.IsPartOfPrefabAsset(this))
 			{
 				String prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(this);
-				_automaticPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-				_automaticComponent = _automaticPrefab.GetComponent<PooledGameObject>();
-				Debug.Log($"{name} - instance in scene");
+
+				if (PrefabUtility.IsOutermostPrefabInstanceRoot(gameObject))
+				{
+					_automaticPrefab = PrefabUtility.GetCorrespondingObjectFromSource(gameObject);
+					_automaticComponent = PrefabUtility.GetCorrespondingObjectFromSource(this);
+				}
+				else
+				{
+					_automaticPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+					_automaticComponent = _automaticPrefab.GetComponent<PooledGameObject>();
+				}
+
+
+				Debug.Log($"{name} - instance in scene\n" +
+				$"IsAnyPrefabInstanceRoot: {PrefabUtility.IsAnyPrefabInstanceRoot(gameObject)}\n" +
+				$"IsOutermostPrefabInstanceRoot: {PrefabUtility.IsOutermostPrefabInstanceRoot(gameObject)}\n" +
+				$"IsPartOfVariantPrefab: {PrefabUtility.IsPartOfVariantPrefab(this)}\n" +
+				$"IsPartOfPrefabInstance: {PrefabUtility.IsPartOfPrefabInstance(this)}\n" +
+				$"IsPartOfPrefabAsset: {PrefabUtility.IsPartOfPrefabAsset(this)}\n" +
+				$"IsPartOfAnyPrefab: {PrefabUtility.IsPartOfAnyPrefab(this)}\n" +
+				"");
 			}
 		}
 #endif
