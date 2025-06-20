@@ -65,6 +65,8 @@ namespace ForestRoyale.Gameplay.Combat
 
 			SetParentAndCacheTroops(troop);
 			SetStartingProperties(team, state);
+			
+			MoveToMouseCursor(); //fixes bug with first frame in old position
 		}
 
 		private void SetParentAndCacheTroops(Transform squadTransform)
@@ -161,8 +163,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			if (_castingState == CastingState.Preview)
 			{
-				Vector3 tilePosition = GetClosestTilePosition();
-				transform.position = tilePosition;
+				MoveToMouseCursor();
 			}
 
 			if (_castingState == CastingState.Deploying)
@@ -171,6 +172,12 @@ namespace ForestRoyale.Gameplay.Combat
 				// play deploy animation
 				// play clock animation
 			}
+		}
+
+		private void MoveToMouseCursor()
+		{
+			Vector3 tilePosition = GetClosestTilePosition();
+			transform.position = tilePosition;
 		}
 
 		public void Cast(Transform charactersRoot)
