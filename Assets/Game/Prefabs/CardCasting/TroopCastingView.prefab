@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 746218267529341255}
   - component: {fileID: 43962531971720863}
+  - component: {fileID: 8975482890473666435}
   m_Layer: 0
   m_Name: TroopCastingView
   m_TagString: Untagged
@@ -46,6 +47,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castingMarker: {fileID: 3019216995190671862}
+--- !u!114 &8975482890473666435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999095385133728814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logMissingPool: 1
+  _automaticPrefab: {fileID: 0}
+  _automaticComponent: {fileID: 0}
 --- !u!1 &7106413649067212870
 GameObject:
   m_ObjectHideFlags: 0

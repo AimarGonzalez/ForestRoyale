@@ -25,6 +25,13 @@ namespace ForestRoyale.Core.Pool
 		}
 
 		private Dictionary<PooledGameObject, PrefabPool> _pools = new();
+		
+		public GameObject Get(GameObject gameObject, Transform parent = null, bool worldPositionStays = true, bool active = true)
+		{
+			PooledGameObject pooledGameObject = gameObject.GetComponent<PooledGameObject>();
+			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active);
+			return instance.gameObject;
+		}
 
 		public T Get<T>(T prefab, Transform parent = null, bool worldPositionStays = true, bool active = true) where T : MonoBehaviour
 		{
@@ -94,14 +101,15 @@ namespace ForestRoyale.Core.Pool
 		private void OnGUI()
 		{
 			GUIUtils.PushFontSize(40);
+			GUILayoutUtils.LabelHeight = GUI.skin.label.CalcHeight(new GUIContent("X"), 100);
 			
 			// area centered on the middle right of the screen
-			GUILayout.BeginArea(new Rect(Screen.width - 200, Screen.width*0.5f - 200f, 200, 500), GUI.skin.box);
+			GUILayout.BeginArea(new Rect(Screen.width - 400, Screen.height*0.5f - 200f, 400, 500), GUI.skin.box);
 
 			GUILayout.BeginVertical();
 			foreach (var pool in _pools)
 			{
-				GUILayout.Label($"{pool.Key.name}: {pool.Value.NumActiveObjects} / {pool.Value.NumTotalObjects}");
+				GUILayoutUtils.Label($"{pool.Key.name}: {pool.Value.NumActiveObjects} / {pool.Value.NumTotalObjects}");
 			}
 			GUILayout.EndVertical();
 

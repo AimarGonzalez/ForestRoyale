@@ -1,3 +1,4 @@
+using ForestRoyale.Core.Pool;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Units;
 using Sirenix.OdinInspector;
@@ -17,6 +18,9 @@ namespace ForestRoyale.Gameplay.Combat
 
 		[Inject]
 		private IObjectResolver _container;
+		
+		[Inject]
+		private ObjectPoolService _poolService;
 
 		public ICastingView BuildCastingPreview(CardData cardData, ArenaTeam team, ICastingView reusableCastingView)
 		{
@@ -39,11 +43,11 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private ICastingView BuildTroopCastingPreview(TroopCardData troopCard, ArenaTeam team, TroopCastingView reusableCastingView = null)
 		{
-			TroopCastingView troopCastingView = reusableCastingView ?? _container.Instantiate(_troopCastingViewPrefab, _castingArea);
+			TroopCastingView troopCastingView = reusableCastingView ?? _poolService.Get(_troopCastingViewPrefab, _castingArea);
 
 			if (troopCastingView.State == TroopCastingView.CastingState.Empty)
 			{
-				GameObject troopInstance = _container.Instantiate(troopCard.UnitPrefab);
+				GameObject troopInstance = _poolService.Get(troopCard.UnitPrefab);
 				troopCastingView.SetTroop(troopCard, troopInstance.transform, team, UnitState.CastingPreview);
 			}
 
