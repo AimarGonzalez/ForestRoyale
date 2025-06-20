@@ -12,23 +12,33 @@ namespace ForestRoyale.Core.Pool
 		private IObjectResolver _vcontainer;
 		
 		private Dictionary<PooledGameObject, PrefabPool> _pools = new();
-		
-		public GameObject Get(GameObject gameObject, Transform parent = null, bool worldPositionStays = true, bool active = true)
+
+		public GameObject Get(GameObject gameObject)
+		{
+			return Get(gameObject, null, worldPositionStays: true, active: true, Vector3.zero, Quaternion.identity);
+		}
+
+		public GameObject Get(GameObject gameObject, Transform parent, bool worldPositionStays, bool active, Vector3 position, Quaternion rotation)
 		{
 			PooledGameObject pooledGameObject = gameObject.GetComponent<PooledGameObject>();
-			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active);
+			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active, position, rotation);
 			return instance.gameObject;
 		}
 
-		public T Get<T>(T prefab, Transform parent = null, bool worldPositionStays = true, bool active = true) where T : MonoBehaviour
+		public T Get<T>(T prefab, Transform parent, bool worldPositionStays) where T : MonoBehaviour
+		{
+			return Get(prefab, parent, worldPositionStays, active: true, Vector3.zero, Quaternion.identity);
+		}
+
+		public T Get<T>(T prefab, Transform parent, bool worldPositionStays, bool active, Vector3 position, Quaternion rotation) where T : MonoBehaviour
 		{
 			PooledGameObject pooledGameObject = prefab.GetComponent<PooledGameObject>();
-			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active);
-			return instance.GetComponent<T>();
+			PooledGameObject instance = Get(pooledGameObject, parent, worldPositionStays, active, position, rotation);
+			return instance.GetComponentInChildren<T>(includeInactive: true);
 		}
 
 
-		public PooledGameObject Get(PooledGameObject prefab, Transform parent = null, bool worldPositionStays = true, bool active = true)
+		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool worldPositionStays, bool active, Vector3 position, Quaternion rotation)
 		{
 			if (prefab == null)
 			{
@@ -37,7 +47,7 @@ namespace ForestRoyale.Core.Pool
 			}
 
 			PrefabPool pool = GetOrCreatePool(prefab);
-			return pool.Get(prefab, parent, worldPositionStays, active);
+			return pool.Get(prefab, parent, worldPositionStays, active, position, rotation);
 		}
 
 
