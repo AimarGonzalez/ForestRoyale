@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -7,13 +8,17 @@ namespace ForestRoyale.Core.Pool
 {
 	public class PrefabPool
 	{
-		private Queue<PooledGameObject> _queue = new();
-
 		private Transform _parent;
 		private IObjectResolver _vcontainer;
 
+		[ShowInInspector, ReadOnly]
 		private int _numActiveObjects = 0;
+		
+		[ShowInInspector, ReadOnly]
 		private int _numPooledObjects = 0;
+		
+		[ShowInInspector, ReadOnly]
+		private Queue<PooledGameObject> _queue = new();
 
 		public int NumActiveObjects => _numActiveObjects;
 		public int NumTotalObjects => _numActiveObjects + _numPooledObjects;

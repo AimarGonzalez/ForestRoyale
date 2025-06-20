@@ -38,6 +38,8 @@ namespace ForestRoyale.Core.Pool
 
 		public PooledGameObject Prefab => CreatedOnPool ? _prefab : _automaticComponent;
 
+		[ShowInInspector, ReadOnly]
+		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order-1)]
 		public bool CreatedOnPool { get; private set; }
 
 		private IPooledComponent[] _subComponents;
