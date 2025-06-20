@@ -17,15 +17,16 @@ namespace ForestRoyale.Gameplay.Systems
 			_allUnits = new HashSet<Unit>();
 
 			_arenaEvents.OnUnitCreated += HandleUnitCreated;
-			_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
+			_arenaEvents.OnUnitRemoved += HandleUnitRemoved;
 		}
 
 		private void HandleUnitCreated(Unit unit)
 		{
 			_allUnits.Add(unit);
+			
 		}
 
-		private void HandleUnitDestroyed(Unit unit)
+		private void HandleUnitRemoved(Unit unit)
 		{
 			_allUnits.Remove(unit);
 		}
@@ -108,7 +109,6 @@ namespace ForestRoyale.Gameplay.Systems
 					if (troop.HasFinishedDeathFx())
 					{
 						troop.State = UnitState.Dead;
-						_arenaEvents.TriggerUnitDestroyed(troop);
 					}
 				}
 			}

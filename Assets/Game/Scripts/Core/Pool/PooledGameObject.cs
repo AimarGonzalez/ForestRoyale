@@ -102,29 +102,47 @@ namespace ForestRoyale.Core.Pool
 			_subComponents = GetComponentsInChildren<IPooledComponent>();
 		}
 
-		public virtual void OnGetFromPool()
+		public virtual void TriggerBeforeGetFromPool()
 		{
+			OnBeforeGetFromPool();
 			foreach (IPooledComponent component in _subComponents)
 			{
-				component.OnGetFromPool();
+				component.OnBeforeGetFromPool();
 			}
 		}
 
-		public virtual void OnReturnToPool()
+		public virtual void TriggerAfterGetFromPool()
 		{
+			OnAfterGetFromPool();
+			foreach (IPooledComponent component in _subComponents)
+			{
+				component.OnAfterGetFromPool();
+			}
+		}
+
+
+		public virtual void TriggerReturnToPool()
+		{
+			OnReturnToPool();
 			foreach (IPooledComponent component in _subComponents)
 			{
 				component.OnReturnToPool();
 			}
 		}
 
-		public virtual void OnDestroyElement()
+		public virtual void TriggerDestroyFromPool()
 		{
+			OnDestroyFromPool();
 			foreach (IPooledComponent component in _subComponents)
 			{
 				component.OnDestroyFromPool();
 			}
 		}
+
+		protected virtual void OnBeforeGetFromPool(){}
+		protected virtual void OnAfterGetFromPool(){}
+		protected virtual void OnReturnToPool(){}
+		protected virtual void OnDestroyFromPool(){}
 
 		public void ReleaseToPool()
 		{

@@ -1,11 +1,13 @@
 using ForestRoyale.Core;
 using ForestRoyale.Core.Pool;
+using System;
 using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
 	public class DeathComponent : UnitComponent, IUnitStateChangeListener
 	{
+		[NonSerialized]
 		private VFXInstance[] _vfxPrefabs;
 
 		[Inject]

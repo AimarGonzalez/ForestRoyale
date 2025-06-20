@@ -74,6 +74,7 @@ namespace Game.Scripts.Gameplay.Units.MonoBehaviours
 
 			//TODO: Use a factory to spawn the Unit from CardData
 			Unit unit = new Unit(cardData, _root, _root.StartingTeam, unitCard.UnitSO, UnitState.Idle);
+			
 			_root.SetUnit(unit);
 		}
 

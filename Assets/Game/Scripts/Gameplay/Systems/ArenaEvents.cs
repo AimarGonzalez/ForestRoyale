@@ -11,7 +11,7 @@ namespace ForestRoyale.Gameplay.Systems
 		public event Action OnSceneUnitsInitialized;
 
 		public event Action<Unit> OnUnitCreated;
-		public event Action<Unit> OnUnitDestroyed;
+		public event Action<Unit> OnUnitRemoved;
 		public event Action<Unit> OnUnitDamaged;
 
 		public event Action<Unit, Unit> OnUnitAttacked;
@@ -21,9 +21,9 @@ namespace ForestRoyale.Gameplay.Systems
 			OnUnitCreated?.Invoke(unit);
 		}
 
-		public void TriggerUnitDestroyed(Unit unit)
+		public void TriggerUnitRemoved(Unit unit)
 		{
-			OnUnitDestroyed?.Invoke(unit);
+			OnUnitRemoved?.Invoke(unit);
 		}
 
 		public void TriggerUnitDamaged(Unit unit)

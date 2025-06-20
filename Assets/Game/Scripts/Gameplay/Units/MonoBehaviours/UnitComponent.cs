@@ -47,11 +47,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			Awake();
 		}
-
-		public void ForceOnDestroy()
-		{
-			OnDestroy();
-		}
 #endif
 	}
 }

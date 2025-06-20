@@ -14,7 +14,7 @@ namespace ForestRoyale.Gameplay.Systems
 			_activeUnits = new HashSet<Unit>();
 
 			_arenaEvents.OnUnitCreated += HandleUnitCreated;
-			_arenaEvents.OnUnitDestroyed += HandleUnitDestroyed;
+			_arenaEvents.OnUnitRemoved += HandleUnitRemoved;
 		}
 
 		private void HandleUnitCreated(Unit unit)
@@ -25,7 +25,7 @@ namespace ForestRoyale.Gameplay.Systems
 			}
 		}
 
-		private void HandleUnitDestroyed(Unit unit)
+		private void HandleUnitRemoved(Unit unit)
 		{
 			_activeUnits.Remove(unit);
 		}

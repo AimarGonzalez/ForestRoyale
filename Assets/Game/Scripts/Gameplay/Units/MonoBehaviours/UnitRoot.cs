@@ -1,4 +1,5 @@
 ﻿using ForestLib.ExtensionMethods;
+using ForestRoyale.Core.Pool;
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
@@ -16,7 +17,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
 	// Add ExecuteInEditMode so OnGUI draws the debug panel in the editor
 	[ExecuteInEditMode]
-	public class UnitRoot : MonoBehaviour
+	public class UnitRoot : PooledGameObject
 	{
 		[SerializeField]
 		private ArenaTeam _startingTeam;
@@ -169,21 +170,76 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 		private void Start()
 		{
-			AutoUnitInitialization();
-
+			if (!CreatedOnPool)
+			{
+				OnBeforeGetFromPool();
+				OnAfterGetFromPool();
+			}
+		}
+		
+		
+		private void OnDestroy()
+		{
+			if (!CreatedOnPool)
+			{
+				OnDestroyFromPool();
+			}
+		}
+		
+		// -------- Poolable ---------------------------------------
+		public void OnBeforeGetFromPool()
+		{
+			CreateUnit();
+		}
+		public void OnAfterGetFromPool()
+		{
 			Subscribe();
 		}
-
-		private void AutoUnitInitialization()
+		public void OnReturnToPool()
 		{
-			// To be used by units originally in the scene (like towers)
+			Unsubscribe();
+			NotifyUnitRemoved();
+		}
+		public void OnDestroyFromPool()
+		{
+			OnReturnToPool();
+		}
+		// ----------------------------------------------------------
+		
 
+		private void CreateUnit()
+		{
 			Assert.IsNotNull(_startingUnitSO, "startingUnitSO is not set");
 			if (_startingUnitSO != null)
 			{
 				//TODO: Use a factory to spawn the Unit from CardData
 				Unit unit = new(null, this, _startingTeam, _startingUnitSO, _startingState);
 				SetUnit(unit);
+			}
+		}
+
+		public void NotifyUnitRemoved()
+		{
+			if (_unit != null)
+			{
+				_arenaEvents?.TriggerUnitRemoved(_unit);
+				_unit = null;
+			}
+		}
+
+		private void Subscribe()
+		{
+			if (_colliderListener != null)
+			{
+				_colliderListener.OnMouseDownEvent += OnMouseDown;
+			}
+		}
+
+		private void Unsubscribe()
+		{
+			if (_colliderListener != null)
+			{
+				_colliderListener.OnMouseDownEvent -= OnMouseDown;
 			}
 		}
 
@@ -197,7 +253,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			Unit oldUnit = _unit;
 			UnitState oldUnitState = oldUnit?.State ?? UnitState.None;
 
-			DestroyUnit(oldUnit);
+			NotifyUnitRemoved();
 
 			_unit = unit;
 
@@ -221,47 +277,14 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			UnitState oldState = _unit.State;
 
 			_unit.State = newState;
+			// PropagateStateChanged is called inside Unit.State setter.
 
 			if (oldState == UnitState.CastingPreview && newState == UnitState.Idle)
 			{
 				_arenaEvents?.TriggerUnitCreated(_unit);
 			}
 		}
-
-		private void DestroyUnit(Unit unit)
-		{
-			if (unit != null)
-			{
-				_arenaEvents?.TriggerUnitDestroyed(unit);
-			}
-		}
-
-		private void Subscribe()
-		{
-			if (_colliderListener != null)
-			{
-				_colliderListener.OnMouseDownEvent += OnMouseDown;
-			}
-		}
-
-		private void Unsubscribe()
-		{
-			if (_colliderListener != null)
-			{
-				_colliderListener.OnMouseDownEvent -= OnMouseDown;
-			}
-		}
-
-		private void OnDestroy()
-		{
-			Unsubscribe();
-
-#if UNITY_EDITOR
-			ForceOnDestroySubComponents();
-#endif
-		}
-
-
+		
 		private void UpdateUnitComponents(Unit newUnit)
 		{
 			foreach (var component in UnitComponents)
@@ -363,7 +386,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		private void ForceInitializeUnit()
 		{
 			ForceAwakeSubComponents();
-			AutoUnitInitialization();
+			CreateUnit();
 		}
 
 		private void ForceAwakeSubComponents()
@@ -371,14 +394,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			foreach (var component in UnitComponents)
 			{
 				component.ForceAwake(this);
-			}
-		}
-
-		private void ForceOnDestroySubComponents()
-		{
-			foreach (var component in UnitComponents)
-			{
-				component.ForceOnDestroy();
 			}
 		}
 #endif //UNITY_EDITOR

@@ -2,7 +2,8 @@ namespace ForestRoyale.Core.Pool
 {
 		public interface IPooledComponent
 	{
-		void OnGetFromPool();
+		void OnBeforeGetFromPool();
+		void OnAfterGetFromPool();
 		void OnReturnToPool();
 		void OnDestroyFromPool();
 	}

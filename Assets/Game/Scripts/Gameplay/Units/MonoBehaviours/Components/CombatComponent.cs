@@ -1,12 +1,13 @@
 ﻿using ForestLib.Utils;
 using ForestRoyale.Gameplay.Systems;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 using VContainer;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 {
-	public class CombatComponent : UnitComponent
+	public class CombatComponent : UnitComponent, IUnitStateChangeListener
 	{
 		public enum AttackState
 		{
@@ -23,6 +24,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		private Timer _timer;
 
+		[NonSerialized]
 		private AttackRangeMonitor _attackRangeMonitor;
 
 		public AttackState State
@@ -108,6 +110,25 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		private void OnCooldownFinished()
 		{
 			_state = AttackState.None;
+		}
+
+		public void OnUnitStateChanged(UnitState oldState, UnitState newState)
+		{
+			switch (newState)
+			{
+				case UnitState.None:
+				case UnitState.CastingPreview:
+				case UnitState.Idle:
+				case UnitState.Dying:
+				case UnitState.Dead:
+					_attackRangeMonitor.SetDetectionEnabled(false);
+					break;
+
+				case UnitState.MovingToTarget:
+				case UnitState.Attacking:
+					_attackRangeMonitor.SetDetectionEnabled(true);
+					break;
+			}
 		}
 	}
 }

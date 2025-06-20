@@ -47,9 +47,9 @@ namespace ForestRoyale.Core.Pool
 			
 			instance.transform.SetParent(parent, worldPositionStays);
 
+			instance.TriggerBeforeGetFromPool(); // UnitRoot.CreateUnit
 			instance.gameObject.SetActive(active);
-
-			instance.OnGetFromPool();
+			instance.TriggerAfterGetFromPool();
 
 			return instance;
 		}
@@ -81,7 +81,7 @@ namespace ForestRoyale.Core.Pool
 
 			_numPooledObjects++;
 
-			instance.OnReturnToPool();
+			instance.TriggerReturnToPool();
 
 			instance.gameObject.SetActive(false);
 			instance.transform.SetParent(_parent);

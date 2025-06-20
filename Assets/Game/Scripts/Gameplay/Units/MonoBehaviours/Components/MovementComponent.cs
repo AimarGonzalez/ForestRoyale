@@ -68,22 +68,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				_obstacle ??= GetComponentInChildren<NavMeshObstacle>(includeInactive: true);
 			}
 
-			Subscribe();
-
 			Stop();
-		}
-
-		private void Subscribe()
-		{
-		}
-
-		private void Unsubscribe()
-		{
-		}
-
-		protected override void OnDestroy()
-		{
-			Unsubscribe();
 		}
 
 		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
@@ -93,11 +78,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				Debug.LogError("Missing NavMeshAgent component.");
 				return;
 			}
+			
+			Stop();
 
-			if (Unit != null)
+			if (newUnit != null)
 			{
 				// Update agent with unit stats
-				_agent.speed = Unit.UnitStats.MovementSpeed;
+				_agent.speed = newUnit.UnitStats.MovementSpeed;
 			}
 			else
 			{

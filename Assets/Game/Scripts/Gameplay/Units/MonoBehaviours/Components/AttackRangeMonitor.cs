@@ -10,7 +10,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[SerializeField]
 		[Required]
 		private Collider2D _bodyCollider;
-		
+
 		[SerializeField]
 		[Required]
 		private CircleCollider2D _attackCollider;
@@ -23,7 +23,10 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		private bool _isTargetInCombatRange = false;
 
-		private Collider2DListener _targetListener;
+		private Collider2DListener _attackColliderListener;
+
+		private bool _isDetectionEnabled = false;
+		private bool _isSubscribed = false;
 
 		public Unit Target
 		{
@@ -42,26 +45,22 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		protected override void Awake()
 		{
 			base.Awake();
-
 			if (_attackCollider != null)
 			{
-				_targetListener = _attackCollider.GetComponent<Collider2DListener>();
-				_targetListener.OnTriggerEnterEvent += HandleTriggerEnter;
-				_targetListener.OnTriggerExitEvent += HandleTriggerExit;
-				_targetListener.OnTriggerStayEvent += HandleTriggerStay;
+				_attackColliderListener = _attackCollider.GetComponent<Collider2DListener>();
 			}
 		}
 
-		protected override void OnDestroy()
+		public void SetDetectionEnabled(bool enabled)
 		{
-			base.OnDestroy();
-
-			if (_targetListener != null)
+			if (_isDetectionEnabled == enabled)
 			{
-				_targetListener.OnTriggerEnterEvent -= HandleTriggerEnter;
-				_targetListener.OnTriggerExitEvent -= HandleTriggerExit;
-				_targetListener.OnTriggerStayEvent -= HandleTriggerStay;
+				return;
 			}
+
+			_isDetectionEnabled = enabled;
+
+			UpdateDetectionState();
 		}
 
 		void IUnitChangeListener.OnUnitChanged(Unit oldUnit, Unit newUnit)
@@ -72,8 +71,57 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			}
 			else
 			{
-				// Disable target detection
 				_attackCollider.radius = 0f;
+			}
+
+			UpdateDetectionState();
+		}
+
+		private void UpdateDetectionState()
+		{
+			if (_isDetectionEnabled && Unit != null)
+			{
+				Subscribe();
+			}
+			else
+			{
+				Unsubscribe();
+			}
+		}
+
+		private void Subscribe()
+		{
+			if (_isSubscribed)
+			{
+				return;
+			}
+
+			_isSubscribed = true;
+
+			if (_attackColliderListener != null)
+			{
+				_attackCollider.enabled = true;
+				_attackColliderListener.OnTriggerEnterEvent += HandleTriggerEnter;
+				_attackColliderListener.OnTriggerExitEvent += HandleTriggerExit;
+				_attackColliderListener.OnTriggerStayEvent += HandleTriggerStay;
+			}
+		}
+
+		private void Unsubscribe()
+		{
+			if (!_isSubscribed)
+			{
+				return;
+			}
+
+			_isSubscribed = false;
+
+			if (_attackColliderListener != null)
+			{
+				_attackCollider.enabled = false;
+				_attackColliderListener.OnTriggerEnterEvent -= HandleTriggerEnter;
+				_attackColliderListener.OnTriggerExitEvent -= HandleTriggerExit;
+				_attackColliderListener.OnTriggerStayEvent -= HandleTriggerStay;
 			}
 		}
 
@@ -109,7 +157,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 				// ignore own colliders
 				return;
 			}
-			
+
 			if (other.IsBodyCollider() && other.GetUnit() == _target)
 			{
 				_isTargetInCombatRange = true;
@@ -123,12 +171,12 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 			{
 				return;
 			}
-			
+
 			if (_target == null)
 			{
 				return;
 			}
-			
+
 			if (other == _bodyCollider)
 			{
 				// ignore my own colliders
