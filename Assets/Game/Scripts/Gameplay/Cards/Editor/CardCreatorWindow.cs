@@ -587,9 +587,9 @@ namespace ForestRoyale.Gameplay.Editor
 		private UnitSO CreateArchersUnit(string directory)
 		{
 			AssetUtils.CreateDirectory(directory);
-			string assetPath = $"{directory}/Archers_Unit.asset";
+			string assetPath = $"{directory}/Archer_Unit.asset";
 			var unitStats = UnitStats.Build(
-				name: "Archers",
+				name: "Archer",
 				type: UnitType.Troop,
 				hitPoints: 125f,
 				transport: TransportType.Ground,
