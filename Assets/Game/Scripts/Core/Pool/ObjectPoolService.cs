@@ -2,28 +2,15 @@ using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 namespace ForestRoyale.Core.Pool
 {
 	public class ObjectPoolService : MonoBehaviour
 	{
-		public class Handler : MonoBehaviour, IPoolHandler
-		{
-			[ShowInInspector] private PooledGameObject _prefabInfo;
-			[ShowInInspector] private ObjectPoolService _poolService;
-
-			public void Init(PooledGameObject prefabInfo, ObjectPoolService poolService)
-			{
-				_prefabInfo = prefabInfo;
-				_poolService = poolService;
-			}
-
-			public void ReturnToPool()
-			{
-				_poolService.Release(_prefabInfo);
-			}
-		}
-
+		[Inject]
+		private IObjectResolver _vcontainer;
+		
 		private Dictionary<PooledGameObject, PrefabPool> _pools = new();
 		
 		public GameObject Get(GameObject gameObject, Transform parent = null, bool worldPositionStays = true, bool active = true)
@@ -91,7 +78,7 @@ namespace ForestRoyale.Core.Pool
 		{
 			if (!_pools.TryGetValue(prefab, out PrefabPool pool))
 			{
-				pool = new PrefabPool(transform);
+				pool = new PrefabPool(_vcontainer, transform);
 				_pools[prefab] = pool;
 			}
 			return pool;

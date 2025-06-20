@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace ForestRoyale.Core.Pool
 {
@@ -8,6 +10,7 @@ namespace ForestRoyale.Core.Pool
 		private Queue<PooledGameObject> _queue = new();
 
 		private Transform _parent;
+		private IObjectResolver _vcontainer;
 
 		private int _numActiveObjects = 0;
 		private int _numPooledObjects = 0;
@@ -15,8 +18,9 @@ namespace ForestRoyale.Core.Pool
 		public int NumActiveObjects => _numActiveObjects;
 		public int NumTotalObjects => _numActiveObjects + _numPooledObjects;
 
-		public PrefabPool(Transform parent)
+		public PrefabPool(IObjectResolver vcontainer, Transform parent)
 		{
+			_vcontainer = vcontainer;
 			_parent = parent;
 		}
 
@@ -29,7 +33,7 @@ namespace ForestRoyale.Core.Pool
 			}
 			else
 			{
-				instance = Object.Instantiate(prefab);
+				instance = _vcontainer.Instantiate(prefab);
 			}
 
 			_numActiveObjects++;

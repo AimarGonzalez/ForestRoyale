@@ -44,7 +44,7 @@ namespace ForestRoyale.Gameplay.Combat
 		private ICastingView BuildTroopCastingPreview(TroopCardData troopCard, ArenaTeam team, TroopCastingView reusableCastingView = null)
 		{
 			TroopCastingView troopCastingView = reusableCastingView ?? _poolService.Get(_troopCastingViewPrefab, _castingArea);
-
+ 
 			if (troopCastingView.State == TroopCastingView.CastingState.Empty)
 			{
 				GameObject troopInstance = _poolService.Get(troopCard.UnitPrefab);
