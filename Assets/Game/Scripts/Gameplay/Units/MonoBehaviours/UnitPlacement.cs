@@ -63,7 +63,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			Debug.Assert(transform.childCount == 0, "UnitPlacement: Prefab has unexpectedchildren");
 			Debug.Log($"UnitPlacement: Creating new unit {_prefab.name}", this);
-			return _poolService.Get(_prefab, transform, worldPositionStays: false);
+			return _poolService.Get(_prefab, transform);
 		}
 
 	}
