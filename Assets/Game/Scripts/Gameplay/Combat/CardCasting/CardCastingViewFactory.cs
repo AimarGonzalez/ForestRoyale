@@ -22,13 +22,13 @@ namespace ForestRoyale.Gameplay.Combat
 		[Inject]
 		private GameObjectPoolService _poolService;
 
-		public ICastingView BuildCastingPreview(CardData cardData, ArenaTeam team, ICastingView reusableCastingView)
+		public ICastingView BuildCastingPreview(CardData cardData, ArenaTeam team)
 		{
 			switch (cardData)
 			{
 				case TroopCardData troopCard:
 					//TODO: pool casting views, instead of caching them
-					return BuildTroopCastingPreview(troopCard, team, reusableCastingView as TroopCastingView);
+					return BuildTroopCastingPreview(troopCard, team);
 
 				case SpellCardData spellCard:
 					//TODO: Implement
@@ -41,9 +41,9 @@ namespace ForestRoyale.Gameplay.Combat
 			}
 		}
 
-		private ICastingView BuildTroopCastingPreview(TroopCardData troopCard, ArenaTeam team, TroopCastingView reusableCastingView = null)
+		private ICastingView BuildTroopCastingPreview(TroopCardData troopCard, ArenaTeam team)
 		{
-			TroopCastingView troopCastingView = reusableCastingView ?? _poolService.Get(_troopCastingViewPrefab, _castingArea);
+			TroopCastingView troopCastingView = _poolService.Get(_troopCastingViewPrefab, _castingArea);
  
 			if (troopCastingView.State == TroopCastingView.CastingState.Empty)
 			{

@@ -7,5 +7,7 @@ namespace ForestRoyale.Gameplay.Combat
 	{
 		public void SetActive(bool value);
 		public void Cast(Transform charactersRoot);
+
+		public void ReturnToPool();
 	}
 }

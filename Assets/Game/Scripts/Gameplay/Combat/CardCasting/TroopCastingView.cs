@@ -21,7 +21,7 @@ namespace ForestRoyale.Gameplay.Combat
 	///  - display the deploying clock
 	///  - provide the troop instance
 	/// </summary>
-	public class TroopCastingView : MonoBehaviour, ICastingView
+	public class TroopCastingView : MonoBehaviour, ICastingView, IPooledComponent
 	{
 		public enum CastingState
 		{
@@ -48,7 +48,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		private List<UnitRoot> _chars = new List<UnitRoot>();
 
-		private Transform _charactersRoot;
+		private Transform _arenasRootForCharacters;
 
 		public CastingState State => _castingState;
 		public TroopCardData CardData => _cardData;
@@ -137,7 +137,7 @@ namespace ForestRoyale.Gameplay.Combat
 					// reparent troop to the battlefield
 					foreach (UnitRoot character in _chars)
 					{
-						character.transform.SetParent(_charactersRoot);
+						character.transform.SetParent(_arenasRootForCharacters);
 						character.SetState(UnitState.Idle);
 					}
 
@@ -178,7 +178,7 @@ namespace ForestRoyale.Gameplay.Combat
 
 		public void Cast(Transform charactersRoot)
 		{
-			_charactersRoot = charactersRoot;
+			_arenasRootForCharacters = charactersRoot;
 
 			SetState(CastingState.Deploying);
 
@@ -246,5 +246,50 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			gameObject.SetActive(value);
 		}
+
+		public void ReturnToPool()
+		{
+			GetComponent<PooledGameObject>().ReleaseToPool();
+		}
+
+		public void Reset()
+		{
+			_cardData = null;
+			_castingState = CastingState.Empty;
+			_chars.Clear();
+			_arenasRootForCharacters = null;
+			_targetTilePosition = Vector3.zero;
+			_walkablePosition = Vector3.zero;
+			_projectedTouchPosition = Vector3.zero;
+		}
+
+		// ------------------------------
+
+		public void OnBeforeGetFromPool()
+		{
+			Reset();
+		}
+
+		public void OnAfterGetFromPool()
+		{
+		}
+
+		public void OnReturnToPool()
+		{
+			// Return chars to pool
+			foreach (UnitRoot character in _chars)
+			{
+				character.ReleaseToPool();
+			}
+			
+			_chars.Clear();
+		}
+
+		public void OnDestroyFromPool()
+		{
+			OnReturnToPool();
+		}
+
+		// ------------------------------
 	}
 }

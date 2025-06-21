@@ -63,8 +63,6 @@ namespace Game.UI
 		private float _scale;
 		private bool _debugInitialized = false;
 
-		public ICastingView CastingView => _castingView;
-
 
 		[BoxGroup(DebugUI.Group), PropertyOrder(DebugUI.Order)]
 		[SerializeField]
@@ -326,7 +324,8 @@ namespace Game.UI
 					ApplyScale();
 					break;
 				case State.CastPreview:
-					_castingView.SetActive(false);
+					_castingView.ReturnToPool();
+					_castingView = null;
 					_cardView.gameObject.SetActive(true);
 					break;
 			}
@@ -356,14 +355,12 @@ namespace Game.UI
 				case State.CastPreview:
 					_cardView.gameObject.SetActive(false);
 					
-					//TODO: pool casting views, instead of caching them
-					_castingView = _cardCastingViewFactory.BuildCastingPreview(_cardData, ArenaTeam.Player, _castingView);
-					_castingView.SetActive(true);
+					_castingView = _cardCastingViewFactory.BuildCastingPreview(_cardData, ArenaTeam.Player);
 					break;
 
 				case State.Empty:
 					_cardView.gameObject.SetActive(false);
-					_castingView?.SetActive(false);
+					_castingView?.ReturnToPool();
 					break;
 			}
 		}
