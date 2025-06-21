@@ -87,7 +87,8 @@ namespace ForestRoyale.Gameplay.Combat
 				foreach (UnitPlacement placement in placements)
 				{
 					UnitRoot unit = placement.SpawnUnit();
-					unit.transform.SetParent(transform, true);
+					unit.transform.SetParent(transform, false);
+					unit.transform.localPosition = placement.transform.localPosition;
 					_chars.Add(unit);
 				}
 
