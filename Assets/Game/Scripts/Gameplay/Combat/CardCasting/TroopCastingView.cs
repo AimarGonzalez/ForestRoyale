@@ -2,6 +2,7 @@ using ForestLib.ExtensionMethods;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Units;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
+using ForestRoyale.Core.Pool;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,12 +42,12 @@ namespace ForestRoyale.Gameplay.Combat
 		[ShowInInspector]
 		[Tooltip("Max Distance is how far to check for a walkable position from the touch position")]
 		private float _maxDistance = 10.0f;
-		
+
 		[Inject]
 		private Arena _arena;
 
 		private List<UnitRoot> _chars = new List<UnitRoot>();
-		
+
 		private Transform _charactersRoot;
 
 		public CastingState State => _castingState;
@@ -57,23 +58,23 @@ namespace ForestRoyale.Gameplay.Combat
 		private Vector3 _walkablePosition;
 		private Vector3 _targetTilePosition;
 
-		public void SetTroop(TroopCardData cardData, Transform troop, ArenaTeam team, UnitState state)
+		public void SetTroop(TroopCardData cardData, GameObject troopInstance, ArenaTeam team, UnitState state)
 		{
 			_cardData = cardData;
 
 			SetState(CastingState.Preview);
 
-			SetParentAndCacheTroops(troop);
+			SetParentAndCacheTroops(troopInstance);
 			CreateUnits(team, state);
-			
+
 			MoveToMouseCursor(); //fixes bug with first frame in old position
 		}
 
-		private void SetParentAndCacheTroops(Transform squadTransform)
+		private void SetParentAndCacheTroops(GameObject troopInstance)
 		{
 			_chars.Clear();
 
-			if (squadTransform.TryGetComponent(out UnitRoot singleCharacter))
+			if (troopInstance.TryGetComponent(out UnitRoot singleCharacter))
 			{
 				// Single unit
 				_chars.Add(singleCharacter);
@@ -82,23 +83,16 @@ namespace ForestRoyale.Gameplay.Combat
 			else
 			{
 				// Multiple units
-				// Iterate backwards, to avoid skipping units when reparenting them
-				for (int i = squadTransform.childCount - 1; i >= 0; i--)
+				UnitPlacement[] placements = troopInstance.GetComponentsInChildren<UnitPlacement>();
+				foreach (UnitPlacement placement in placements)
 				{
-					Transform characterTransform = squadTransform.GetChild(i);
-					if (characterTransform.TryGetComponent(out UnitRoot characterUnit))
-					{
-						_chars.Add(characterUnit);
-						characterUnit.transform.SetParent(transform, false);
-					}
-					else
-					{
-						Debug.LogError($"TroopCastingView - {characterTransform.name} is not a UnitRoot");
-					}
+					UnitRoot unit = placement.SpawnUnit();
+					unit.transform.SetParent(transform, true);
+					_chars.Add(unit);
 				}
 
-				// Get rid of the squad root object
-				Destroy(squadTransform.gameObject);
+				// recycle Prefab
+				troopInstance.GetComponent<PooledGameObject>().ReleaseToPool();
 			}
 		}
 
@@ -111,7 +105,7 @@ namespace ForestRoyale.Gameplay.Combat
 				character.CreateUnit();
 			}
 		}
-		
+
 		private void SetState(CastingState newCastingState)
 		{
 			if (_castingState == newCastingState)
@@ -145,17 +139,17 @@ namespace ForestRoyale.Gameplay.Combat
 						character.transform.SetParent(_charactersRoot);
 						character.SetState(UnitState.Idle);
 					}
-					
+
 					// play deploy animation
 					// play clock animation
-					
+
 					break;
 
 				case CastingState.Empty:
 					// hide clock
 					_chars.Clear();
 					_cardData = null;
-					
+
 					break;
 			}
 		}
@@ -184,13 +178,13 @@ namespace ForestRoyale.Gameplay.Combat
 		public void Cast(Transform charactersRoot)
 		{
 			_charactersRoot = charactersRoot;
-			
+
 			SetState(CastingState.Deploying);
-			
+
 			// TODO: Wait for
 			// deploy animation
 			// clock animation
-			
+
 			SetState(CastingState.Empty);
 		}
 
@@ -199,7 +193,7 @@ namespace ForestRoyale.Gameplay.Combat
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawSphere(_targetTilePosition, 0.3f);
 			Gizmos.DrawLine(_walkablePosition, _targetTilePosition);
-			
+
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(_projectedTouchPosition, _walkablePosition);
 			Gizmos.DrawSphere(_walkablePosition, 0.3f);
@@ -230,7 +224,7 @@ namespace ForestRoyale.Gameplay.Combat
 			{
 				return Vector3.zero;
 			}
-			
+
 			_targetTilePosition = _arena.Grid.WorldToTileCenterPosition(_walkablePosition);
 
 			return _targetTilePosition;

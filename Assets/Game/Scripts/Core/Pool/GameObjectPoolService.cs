@@ -103,7 +103,7 @@ namespace ForestRoyale.Core.Pool
 
 		private void OnGUI()
 		{
-			GUIUtils.PushFontSize(40);
+			GUIUtils.PushFontSize(35);
 			GUILayoutUtils.LabelHeight = GUI.skin.label.CalcHeight(new GUIContent("X"), 100);
 			
 			// area centered on the middle right of the screen

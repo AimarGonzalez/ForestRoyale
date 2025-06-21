@@ -48,7 +48,7 @@ namespace ForestRoyale.Gameplay.Combat
 			if (troopCastingView.State == TroopCastingView.CastingState.Empty)
 			{
 				GameObject troopInstance = _poolService.Get(troopCard.UnitPrefab);
-				troopCastingView.SetTroop(troopCard, troopInstance.transform, team, UnitState.CastingPreview);
+				troopCastingView.SetTroop(troopCard, troopInstance, team, UnitState.CastingPreview);
 			}
 
 			return troopCastingView;
