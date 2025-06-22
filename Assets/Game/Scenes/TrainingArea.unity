@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85becdb5bfe4cc6b8d8f7d31874f601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDeck: {fileID: 11400000, guid: b10767c341ca30d41ac5b39c2401ed6f, type: 2}
+  _playerDeck: {fileID: 11400000, guid: 28b8f296515374f48b99080e4bc5fd54, type: 2}
   _botDeck: {fileID: 11400000, guid: 28b8f296515374f48b99080e4bc5fd54, type: 2}
 --- !u!1001 &369691720
 PrefabInstance:
