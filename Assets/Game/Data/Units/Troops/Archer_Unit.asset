@@ -15,13 +15,13 @@ MonoBehaviour:
   _unitStats:
     _name: Archer
     _type: 0
-    _hitPoints: 125
+    _hitPoints: 442
     _transport: 0
     _movementSpeed: 1.2
     _permanentCorpse: 0
   _combatStats:
-    _damage: 92
-    _attackSpeed: 1.2
+    _damage: 156
+    _attackSpeed: 0.9
     _attackRange: 5
     _areaDamageRadius: 0
     _sightRange: 6

@@ -586,19 +586,20 @@ namespace ForestRoyale.Gameplay.Editor
 
 		private UnitSO CreateArchersUnit(string directory)
 		{
+			// https://clashroyale.fandom.com/wiki/Archers (lvl 15)
 			AssetUtils.CreateDirectory(directory);
 			string assetPath = $"{directory}/Archer_Unit.asset";
 			var unitStats = UnitStats.Build(
 				name: "Archer",
 				type: UnitType.Troop,
-				hitPoints: 125f,
+				hitPoints: 442,
 				transport: TransportType.Ground,
 				movementSpeed: 1.2f,
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
-				damage: 92f,
-				attackSpeed: 1.2f,
+				damage: 156f,
+				attackSpeed: 0.9f,
 				attackRange: 5.0f,
 				areaDamageRadius: 0f,
 				sightRange: 6.0f,
