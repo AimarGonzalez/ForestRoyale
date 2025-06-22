@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 7137779135590494878}
   - component: {fileID: 7223079549603323635}
   m_Layer: 0
-  m_Name: spawnable_archers
+  m_Name: archers_group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

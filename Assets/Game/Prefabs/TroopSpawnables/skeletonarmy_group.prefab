@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 6708270818519017337}
   - component: {fileID: 7099801337888006958}
   m_Layer: 0
-  m_Name: spawnable_skeletonarmy
+  m_Name: skeletonarmy_group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

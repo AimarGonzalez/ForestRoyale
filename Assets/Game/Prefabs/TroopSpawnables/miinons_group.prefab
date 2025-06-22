@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4987795905229153425}
   - component: {fileID: 4391704570345981573}
   m_Layer: 0
-  m_Name: spawnable_minions
+  m_Name: miinons_group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
