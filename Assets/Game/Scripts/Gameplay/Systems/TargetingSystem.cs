@@ -2,9 +2,7 @@ using ForestLib.ExtensionMethods;
 using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
 using Game.Scripts.Gameplay.Cards.CardStats;
-using System;
 using System.Linq;
-using NUnit.Framework;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -37,7 +35,7 @@ namespace ForestRoyale.Gameplay.Systems
 			foreach (Unit troop in _activeUnits)
 			{
 				// If troop doesn't have a target, find a new target
-				if (troop.State is UnitState.Idle or UnitState.MovingToTarget)
+				if ((troop.State is UnitState.Idle or UnitState.MovingToTarget) || !troop.Target.IsAlive)
 				{
 					SetTarget(troop, FindBestTarget(troop));
 				}
@@ -72,7 +70,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private bool FindClosestTarget(Unit troop, UnitType targetType, out Unit result)
 		{
-			result = _activeUnits.Where(unit => unit.Team != troop.Team && unit.UnitStats.UnitType == targetType).
+			result = _activeUnits.Where(unit => unit.Team != troop.Team && unit.UnitStats.UnitType == targetType && unit.IsAlive).
 							OrderBy(target => troop.Position.DistanceSquared(target.Position)).
 							FirstOrDefault();
 
