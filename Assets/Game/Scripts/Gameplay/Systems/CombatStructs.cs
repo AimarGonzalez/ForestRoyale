@@ -60,7 +60,8 @@ namespace ForestRoyale.Gameplay.Systems
 			_target = target;
 			_speed = attacker.CombatStats.ProjectileSpeed;
 			_transform = pooledGameObject.transform;
-			_position = _transform.position;
+			_position = _attacker.Position;
+			_transform.position = _position;
 		}
 	}
 }
