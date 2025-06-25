@@ -26,7 +26,7 @@ MonoBehaviour:
     _attackRange: 7
     _sightRange: 8
     _areaDamageRadius: 0
-    _projectileSpeed: 1000
+    _projectileSpeed: 10
     _targetPreference: 0000000001000000
   _prefabs:
     _unitPrefab: {fileID: 7762124650586007950, guid: 7f19b886dfeb8554390d06e08ae59280, type: 3}

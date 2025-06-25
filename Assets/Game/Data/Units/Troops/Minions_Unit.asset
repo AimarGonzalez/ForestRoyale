@@ -20,13 +20,13 @@ MonoBehaviour:
     _movementSpeed: 3
     _permanentCorpse: 0
   _combatStats:
-    _attackType: 0
+    _attackType: 1
     _damage: 103
     _attackSpeed: 1
     _attackRange: 2
     _sightRange: 2.5
     _areaDamageRadius: 0
-    _projectileSpeed: 1000
+    _projectileSpeed: 6
     _targetPreference: 000000000100000002000000
   _prefabs:
     _unitPrefab: {fileID: 4391704570345981573, guid: 9e4b6d6d560e42640ba131a0ef5927a8, type: 3}

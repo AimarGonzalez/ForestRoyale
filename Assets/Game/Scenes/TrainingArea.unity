@@ -4794,6 +4794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeScale: 0.01
   _timeScales:
+  - 0
   - 0.01
   - 0.25
   - 0.5
@@ -4801,7 +4802,7 @@ MonoBehaviour:
   - 2
   - 4
   - 10
-  _timeScaleIndex: 0
+  _timeScaleIndex: 4
   _debugControlsSettings:
     _width: 0.45
     _height: 0.16

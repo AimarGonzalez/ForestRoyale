@@ -26,8 +26,8 @@ MonoBehaviour:
     _attackRange: 7.5
     _sightRange: 8.5
     _areaDamageRadius: 0
-    _projectileSpeed: 600
+    _projectileSpeed: 6
     _targetPreference: 0000000001000000
   _prefabs:
     _unitPrefab: {fileID: 7762124650586007950, guid: a60ed1f50244d714ca6e1f1b40ce688a, type: 3}
-    _projectilePrefab: {fileID: 6778019287032239652, guid: 5f505c64f3cc9c2409be1a571e0927ec, type: 3}
+    _projectilePrefab: {fileID: 6778019287032239652, guid: ffc9c5f2b4ce36640b5da4330ce14fcd, type: 3}
