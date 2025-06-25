@@ -4,6 +4,7 @@ using ForestRoyale.Gameplay.Settings;
 using ForestRoyale.Gameplay.Units;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -13,10 +14,20 @@ namespace ForestRoyale.Gameplay.Systems
 		private readonly ArenaEvents _arenaEvents;
 		private readonly ProjectileViewFactory _projectileViewFactory;
 		private readonly CombatSettings _combatSettings;
-		
+
 
 		// ----- Data ------------------
-		private List<ProjectileData> _projectiles = new ();
+		private List<ProjectileData> _projectiles = new();
+
+		private readonly ObjectPool<ProjectileData> _projectilePool = new(
+			() => new ProjectileData(),
+			null,
+			null,
+			null,
+			collectionCheck: false,
+			maxSize: 100,
+			defaultCapacity: 10
+		);
 
 		public ProjectilesSystem(ArenaEvents arenaEvents, ProjectileViewFactory projectileViewFactory, GameSettings gameSettings)
 		{
@@ -32,49 +43,63 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			Debug.Log($"Projectile fired from {attacker.Id} to {target.Id}");
 
-			// Get reference to projectile prefab
-			PooledGameObject projectileInstance = _projectileViewFactory.BuildProjectile(attacker);
-			ProjectileData projectileData = new ProjectileData(attacker, target, attacker.CombatStats.ProjectileSpeed, projectileInstance);
+			PooledGameObject projectileView = _projectileViewFactory.BuildProjectile(attacker);
+			ProjectileData projectileData = GetFromPool(attacker, target, projectileView);
 
-			// Orient projectile to face the target
-			MoveTowardsTarget(projectileData, 1f);
+			MoveToTarget(projectileData, 1f);
 
-			// Create ProjectileData and store it in the list
 			_projectiles.Add(projectileData);
+		}
+
+		private ProjectileData GetFromPool(Unit attacker, Unit target, PooledGameObject projectileInstance)
+		{
+			ProjectileData projectileData = _projectilePool.Get();
+			projectileData.Init(attacker, target, projectileInstance);
+			return projectileData;
+		}
+
+		private void ReleaseToPool(ProjectileData projectileData)
+		{
+			projectileData.PooledGameObject.ReleaseToPool();
+			_projectiles.Remove(projectileData);
+			_projectilePool.Release(projectileData);
 		}
 
 		private void HandleUnitRemoved(Unit unit)
 		{
-			_projectiles.RemoveAll(p => p.Target == unit);
-		}
-
-		private void UpdateProjectiles()
-		{
-			foreach (ProjectileData projectileData in _projectiles)
+			for (int i = _projectiles.Count - 1; i >= 0; i--)
 			{
-				if (MoveTowardsTarget(projectileData))
+				if (_projectiles[i].Target == unit)
 				{
-					_projectiles.Remove(projectileData);
-					_arenaEvents.TriggerProjectileHit(projectileData.Attacker, projectileData.Target);
+					ReleaseToPool(_projectiles[i]);
 				}
 			}
 		}
 
-		private bool MoveTowardsTarget(ProjectileData projectile)
+		public void UpdateProjectiles()
 		{
-			Vector3 targetPos = projectile.Target.UnitRoot.transform.position;
+			for (int i = _projectiles.Count - 1; i >= 0; i--)
+			{
+				ProjectileData projectileData = _projectiles[i];
+				float distanceToTarget = MoveToTarget(projectileData);
+				ProcessHit(projectileData, distanceToTarget);
+			}
+		}
+
+		private float MoveToTarget(ProjectileData projectile)
+		{
+			Vector3 targetPos = projectile.Target.Position;
 
 			Vector3 direction = targetPos - projectile.Position;
 			float distanceToTarget = direction.magnitude;
 			float distanceToMove = Mathf.Min(distanceToTarget, projectile.Speed * Time.deltaTime);
 			Vector3 newPosition = projectile.Position + direction.normalized * distanceToMove;
 
-			projectile.Transform.position = newPosition;
 			projectile.Position = newPosition;
 
-			projectile.Transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-			return IsTargetHit(distanceToTarget);
+			return distanceToTarget;
 		}
 
 		private bool IsTargetHit(float distanceToTarget)
@@ -82,18 +107,28 @@ namespace ForestRoyale.Gameplay.Systems
 			return distanceToTarget < _combatSettings.HitDistance;
 		}
 
-		private void MoveTowardsTarget(ProjectileData projectile, float distance)
+		private float MoveToTarget(ProjectileData projectile, float distance)
 		{
-			Vector3 targetPos = projectile.Target.UnitRoot.transform.position;
+			Vector3 targetPos = projectile.Target.Position;
 			Vector3 direction = targetPos - projectile.Position;
 			float distanceToTarget = direction.magnitude;
 			float distanceToMove = Mathf.Min(distanceToTarget, distance);
 			Vector3 newPosition = projectile.Position + direction.normalized * distanceToMove;
 
-			projectile.Transform.position = newPosition;
 			projectile.Position = newPosition;
 
-			projectile.Transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+			return distanceToTarget;
+		}
+
+		private void ProcessHit(ProjectileData projectile, float distanceToTarget)
+		{
+			if (IsTargetHit(distanceToTarget))
+			{
+				_arenaEvents.TriggerProjectileHit(projectile.Attacker, projectile.Target);
+				ReleaseToPool(projectile);
+			}
 		}
 	}
 }

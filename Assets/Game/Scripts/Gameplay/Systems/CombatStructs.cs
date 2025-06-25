@@ -20,23 +20,47 @@ namespace ForestRoyale.Gameplay.Systems
 	}
 
 
-	public struct ProjectileData
+	public class ProjectileData
 	{
-		public Unit Attacker;
-		public Unit Target;
-		public float Speed;
-		public PooledGameObject PooledGameObject;
-		public Transform Transform;
-		public Vector3 Position;
+		private PooledGameObject _pooledGameObject;
+		private Unit _attacker;
+		private Unit _target;
+		private Transform _transform;
+		private Vector3 _position;
+		private float _speed;
 
-		public ProjectileData(Unit attacker, Unit target, float speed, PooledGameObject pooledGameObject)
+		public PooledGameObject PooledGameObject => _pooledGameObject;
+		public Unit Attacker => _attacker;
+		public Unit Target => _target;
+		public Vector3 Position
 		{
-			Attacker = attacker;
-			Target = target;
-			Speed = speed;
-			PooledGameObject = pooledGameObject;
-			Transform = pooledGameObject.transform;
-			Position = Transform.position;
+			get => _position;
+			set
+			{
+				_position = value;
+				_transform.position = value;
+			}
+		}
+
+		public Quaternion Rotation
+		{
+			get => _transform.rotation;
+			set
+			{
+				_transform.rotation = value;
+			}
+		}
+
+		public float Speed => _speed;
+
+		public void Init(Unit attacker, Unit target, PooledGameObject pooledGameObject)
+		{
+			_pooledGameObject = pooledGameObject;
+			_attacker = attacker;
+			_target = target;
+			_speed = attacker.CombatStats.ProjectileSpeed;
+			_transform = pooledGameObject.transform;
+			_position = _transform.position;
 		}
 	}
 }

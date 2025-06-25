@@ -10,17 +10,20 @@ namespace ForestRoyale.Gameplay.Combat
 	{
 		[SerializeField, Required]
 		private Transform _projectilesContainer;
-		
-		[Inject]
-		private IObjectResolver _container;
-		
+
+
 		[Inject]
 		private GameObjectPoolService _poolService;
 
 		public PooledGameObject BuildProjectile(Unit attacker)
 		{
-			PooledGameObject projectile = _poolService.Get(attacker.Prefabs.ProjectilePrefab);
-			projectile.transform.SetParent(_projectilesContainer);
+			PooledGameObject projectile = _poolService.Get(
+															attacker.Prefabs.ProjectilePrefab,
+															_projectilesContainer,
+															active: true,
+															attacker.Position,
+															Quaternion.identity
+														);
 			return projectile;
 		}
 	}

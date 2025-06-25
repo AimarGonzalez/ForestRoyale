@@ -141,7 +141,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
 		public DeathComponent DeathComponent => _deathComponent;
-		public Vector3 Position => transform.position;
 
 		protected override void Awake()
 		{

@@ -9,10 +9,12 @@ using Game.Scripts.Gameplay.Cards.CardStats;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace ForestRoyale.Gameplay.Units
 {
 	// TODO: Rename IDamageable to IHealthBarSource
+	[DebuggerDisplay("id: {_id}, state: {_state}, team: {_team}, health: {_health}")]
 	public class Unit : IDamageable
 	{
 		private static Dictionary<string, uint> s_unitCount = new Dictionary<string, uint>();
@@ -28,6 +30,7 @@ namespace ForestRoyale.Gameplay.Units
 		[ShowInInspector, ReadOnly] private UnitPrefabs _prefabs;
 
 		private UnitRoot _unitRoot;
+		private Transform _transform;
 		private UnitSO _unitSO;
 
 		private MovementComponent _movementComponent;
@@ -92,7 +95,7 @@ namespace ForestRoyale.Gameplay.Units
 		public bool IsPlayerTeam => _team == ArenaTeam.Player;
 		public bool IsForestTeam => _team == ArenaTeam.Forest;
 
-		public Vector3 Position => _unitRoot.Position;
+		public Vector3 Position => _transform.position;
 
 		public bool HasTarget => _combatComponent.HasTarget;
 
@@ -108,6 +111,7 @@ namespace ForestRoyale.Gameplay.Units
 		{
 			_cardOrigin = cardOrigin;
 			_unitRoot = root;
+			_transform = root.transform;
 			_team = team;
 			_unitSO = unitSO;
 			_movementComponent = root.MovementComponent;
