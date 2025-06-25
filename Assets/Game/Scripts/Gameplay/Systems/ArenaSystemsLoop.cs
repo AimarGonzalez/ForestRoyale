@@ -41,8 +41,8 @@ namespace ForestRoyale.Gameplay.Systems
 				_unitStateMachine.UpdateState();
 
 
-				_combatSystem.UpdateCombat();
 				_projectilesSystem.UpdateProjectiles();
+				_combatSystem.UpdateCombat();
 				_unitStateMachine.UpdateState();
 			}
 			else
