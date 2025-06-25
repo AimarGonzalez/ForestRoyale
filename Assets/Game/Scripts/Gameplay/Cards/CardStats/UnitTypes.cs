@@ -12,4 +12,10 @@
 		Building,
 		ArenaTower,
 	}
+
+	public enum AttackType
+	{
+		Melee,
+		Ranged,
+	}
 }

@@ -409,11 +409,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 103f,
 				attackSpeed: 1.0f,
 				attackRange: 2.0f,
 				areaDamageRadius: 0f,
 				sightRange: 2.5f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -433,11 +435,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 368f,
 				attackSpeed: 1.5f,
 				attackRange: 1.0f,
 				areaDamageRadius: 0f,
 				sightRange: 1.5f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -456,11 +460,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 50f,
 				attackSpeed: 1.1f,
 				attackRange: 0.5f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -480,11 +486,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 293,
 				attackSpeed: 1.2f,
 				attackRange: 0.6f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -503,11 +511,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Ranged,
 				damage: 176f,
 				attackSpeed: 1.1f,
 				attackRange: 6.0f,
 				areaDamageRadius: 0f,
 				sightRange: 7.5f,
+				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -526,11 +536,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 264f,
 				attackSpeed: 1.6f,
 				attackRange: 0.8f,
 				areaDamageRadius: 0f,
 				sightRange: 6.0f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -550,11 +562,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Ranged,
 				damage: 83f,
 				attackSpeed: 1f,
 				attackRange: 5.5f,
 				areaDamageRadius: 0f,
 				sightRange: 7.0f,
+				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -574,11 +588,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Melee,
 				damage: 119,
 				attackSpeed: 1.0f,
 				attackRange: 0.2f,
 				areaDamageRadius: 0f,
 				sightRange: 5.5f,
+				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -598,11 +614,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: false
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Ranged,
 				damage: 156f,
 				attackSpeed: 0.9f,
 				attackRange: 5.0f,
 				areaDamageRadius: 0f,
 				sightRange: 6.0f,
+				projectileSpeed: 600f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -735,11 +753,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: true
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Ranged,
 				damage: 90f,
 				attackSpeed: 0.8f,
 				attackRange: 7.5f,
 				areaDamageRadius: 0f,
 				sightRange: 8.5f,
+				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
@@ -757,11 +777,13 @@ namespace ForestRoyale.Gameplay.Editor
 				permanentCorpse: true
 			);
 			var combatStats = CombatStats.Build(
+				attackType: AttackType.Ranged,
 				damage: 120f,
 				attackSpeed: 1.0f,
 				attackRange: 7.0f,
 				areaDamageRadius: 0f,
 				sightRange: 8.0f,
+				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
 			return CreateOrLoadUnit(assetPath, unitStats, combatStats);

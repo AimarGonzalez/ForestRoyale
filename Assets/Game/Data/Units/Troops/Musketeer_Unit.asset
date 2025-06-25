@@ -18,10 +18,13 @@ MonoBehaviour:
     _hitPoints: 720
     _transport: 0
     _movementSpeed: 1.5
+    _permanentCorpse: 0
   _combatStats:
+    _attackType: 1
     _damage: 176
     _attackSpeed: 1.1
     _attackRange: 6
-    _areaDamageRadius: 0
     _sightRange: 7.5
+    _areaDamageRadius: 0
+    _projectileSpeed: 1000
     _targetPreference: 000000000100000002000000

@@ -20,9 +20,11 @@ MonoBehaviour:
     _movementSpeed: 0
     _permanentCorpse: 1
   _combatStats:
+    _attackType: 1
     _damage: 158
     _attackSpeed: 1
     _attackRange: 7
-    _areaDamageRadius: 0
     _sightRange: 8
+    _areaDamageRadius: 0
+    _projectileSpeed: 1000
     _targetPreference: 0000000001000000
