@@ -1,9 +1,11 @@
+using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using Sirenix.OdinInspector;
 using UnityEngine;
+
 namespace ForestRoyale.Gameplay.Cards
 {
-	[CreateAssetMenu(fileName = "NewSpell", menuName = "ForestRoyale/Spell Data", order = 2)]
+	[CreateAssetMenu(fileName = "NewSpell_CardData", menuName = "ForestRoyale/Spell Card Data", order = ToolConstants.RootMenuOrder)]
 	public class SpellCardData : CardData
 	{
 		[SerializeField, InlineEditor]

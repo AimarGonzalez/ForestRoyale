@@ -25,6 +25,7 @@ namespace ForestRoyale.Gameplay.Units
 		[ShowInInspector, ReadOnly] private CardData _cardOrigin;
 		[ShowInInspector, ReadOnly] private UnitStats _unitStats;
 		[ShowInInspector, ReadOnly] private CombatStats _combatStats;
+		[ShowInInspector, ReadOnly] private UnitPrefabs _prefabs;
 
 		private UnitRoot _unitRoot;
 		private UnitSO _unitSO;
@@ -76,6 +77,7 @@ namespace ForestRoyale.Gameplay.Units
 		public CardData CardOrigin => _cardOrigin;
 		public UnitStats UnitStats => _unitStats;
 		public CombatStats CombatStats => _combatStats;
+		public UnitPrefabs Prefabs => _prefabs;
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
@@ -113,6 +115,7 @@ namespace ForestRoyale.Gameplay.Units
 			_deathComponent = root.DeathComponent;
 			_unitStats = unitSO.UnitStats;
 			_combatStats = unitSO.CombatStats;
+			_prefabs = unitSO.Prefabs;
 			_health = _unitStats.HitPoints;
 			_state = initialState;
 

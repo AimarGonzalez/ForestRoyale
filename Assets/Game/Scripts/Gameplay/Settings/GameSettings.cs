@@ -1,4 +1,3 @@
-using ForestRoyale.Gameplay.UI;
 using System;
 using UnityEngine;
 
@@ -64,6 +63,10 @@ namespace ForestRoyale.Gameplay.Settings
 		[SerializeField]
 		private UISettings _uiSettings;
 
+		[SerializeField]
+		private CombatSettings _combatSettings;
+
 		public UISettings UISettings => _uiSettings;
+		public CombatSettings CombatSettings => _combatSettings;
 	}
 }

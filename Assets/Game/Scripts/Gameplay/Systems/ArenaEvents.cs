@@ -15,6 +15,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 		public event Action<Unit, Unit> OnUnitAttacked;
 		public event Action<Unit, Unit> OnProjectileFired;
+		public event Action<Unit, Unit> OnProjectileHit;
 
 		public void TriggerUnitCreated(Unit unit)
 		{
@@ -39,6 +40,11 @@ namespace ForestRoyale.Gameplay.Systems
 		public void TriggerProjectileFired(Unit attacker, Unit target)
 		{
 			OnProjectileFired?.Invoke(attacker, target);
+		}
+
+		public void TriggerProjectileHit(Unit attacker, Unit target)
+		{
+			OnProjectileHit?.Invoke(attacker, target);
 		}
 
 		// ----- 

@@ -18,6 +18,7 @@ namespace ForestRoyale.Gameplay.Systems
 			_arenaEvents.OnUnitCreated += HandleUnitCreated;
 			_arenaEvents.OnUnitRemoved += HandleUnitRemoved;
 			_arenaEvents.OnUnitAttacked += HandleUnitAttacked;
+			_arenaEvents.OnProjectileHit += HandleProjectileHit;
 		}
 
 		private void HandleUnitCreated(Unit unit)
@@ -39,7 +40,11 @@ namespace ForestRoyale.Gameplay.Systems
 			_hits.Add(new HitData { Attacker = attacker, Targets = targets, Damage = attacker.CombatStats.Damage });
 		}
 
-
+		private void HandleProjectileHit(Unit attacker, Unit target)
+		{
+			List<Unit> targets = new List<Unit> { target }; // calculate targets (area of effect)
+			_hits.Add(new HitData { Attacker = attacker, Targets = targets, Damage = attacker.CombatStats.Damage });
+		}
 
 		public void UpdateCombat()
 		{
@@ -61,7 +66,7 @@ namespace ForestRoyale.Gameplay.Systems
 					}
 				}
 			}
-			
+
 			_hits.Clear();
 		}
 

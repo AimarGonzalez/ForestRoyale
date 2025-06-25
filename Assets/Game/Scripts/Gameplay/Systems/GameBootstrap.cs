@@ -19,6 +19,7 @@ namespace ForestRoyale.Gameplay.Systems
 			builder.Register<MovementSystem>(Lifetime.Scoped);
 			builder.Register<TargetingSystem>(Lifetime.Scoped);
 			builder.Register<CombatSystem>(Lifetime.Scoped);
+			builder.Register<ProjectilesSystem>(Lifetime.Scoped);
 			builder.Register<UnitStateMachine>(Lifetime.Scoped);
 
 			// Register MonoBehaviours
@@ -31,6 +32,7 @@ namespace ForestRoyale.Gameplay.Systems
 				components.AddInHierarchy<Arena>();
 				components.AddInHierarchy<CheatsStyleProvider>();
 				components.AddInHierarchy<GameObjectPoolService>();
+				components.AddInHierarchy<ProjectileViewFactory>();
 			});
 		}
 	}

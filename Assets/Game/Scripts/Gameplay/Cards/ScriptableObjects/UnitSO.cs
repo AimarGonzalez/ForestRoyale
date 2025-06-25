@@ -1,9 +1,10 @@
+using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Cards.ScriptableObjects
 {
-	[CreateAssetMenu(fileName = "New Unit", menuName = "Forest Royale/Unit")]
+	[CreateAssetMenu(fileName = "New Unit", menuName = "ForestRoyale/UnitSO", order = ToolConstants.RootMenuOrder)]
 	public class UnitSO : ScriptableObject
 	{
 		[SerializeField]

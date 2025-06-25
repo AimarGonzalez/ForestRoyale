@@ -1,10 +1,11 @@
-using UnityEngine;
+using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Cards
 {
-	[CreateAssetMenu(fileName = "NewTroop", menuName = "ForestRoyale/Troop Data", order = 1)]
+	[CreateAssetMenu(fileName = "NewTroop", menuName = "ForestRoyale/Troop Data", order = ToolConstants.RootMenuOrder)]
 	public class TroopCardData : CardData, IUnitCard
 	{
 		[Tooltip("Number of units in this card")]

@@ -1,3 +1,4 @@
+using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -5,13 +6,13 @@ using UnityEngine;
 using FilePathAttribute = UnityEditor.FilePathAttribute;
 #endif
 
-namespace ForestRoyale.Gameplay.UI
+namespace ForestRoyale.Gameplay.Settings
 {
 	
 #if UNITY_EDITOR
 	[FilePath("Assets/Game/Settings/UISettings.asset", FilePathAttribute.Location.ProjectFolder)]
 #endif
-	[CreateAssetMenu(fileName = "UISettings", menuName = "Forest Royale/Settings/UISettings")]
+	[CreateAssetMenu(fileName = "UISettings", menuName = "ForestRoyale/Settings/UISettings", order = ToolConstants.SettingsMenuOrder)]
 	public class UISettings : ScriptableObject
 	{
 		[Serializable]
