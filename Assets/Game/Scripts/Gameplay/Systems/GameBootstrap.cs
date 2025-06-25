@@ -1,6 +1,7 @@
 using ForestRoyale.Core;
 using ForestRoyale.Core.Pool;
 using ForestRoyale.Gameplay.Combat;
+using ForestRoyale.Gameplay.Settings;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -27,11 +28,12 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				components.AddInHierarchy<TimeController>();
 				components.AddInHierarchy<CardCaster>();
-				components.AddInHierarchy<CardCastingViewFactory>();
 				components.AddInHierarchy<GameState>();
 				components.AddInHierarchy<Arena>();
 				components.AddInHierarchy<CheatsStyleProvider>();
 				components.AddInHierarchy<GameObjectPoolService>();
+				components.AddInHierarchy<GameSettings>();
+				components.AddInHierarchy<CardCastingViewFactory>();
 				components.AddInHierarchy<ProjectileViewFactory>();
 			});
 		}
