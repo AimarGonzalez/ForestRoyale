@@ -46,7 +46,7 @@ namespace ForestRoyale.Gameplay.Systems
 			PooledGameObject projectileView = _projectileViewFactory.BuildProjectile(attacker);
 			ProjectileData projectileData = GetFromPool(attacker, target, projectileView);
 
-			MoveToTarget(projectileData, 1f);
+			MoveToTarget(projectileData, _combatSettings.Projectile.InitialOffset);
 
 			_projectiles.Add(projectileData);
 		}
@@ -104,7 +104,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private bool IsTargetHit(float distanceToTarget)
 		{
-			return distanceToTarget < _combatSettings.HitDistance;
+			return distanceToTarget < _combatSettings.Projectile.HitDistance;
 		}
 
 		private float MoveToTarget(ProjectileData projectile, float distance)

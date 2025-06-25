@@ -1,15 +1,29 @@
 ﻿using ForestRoyale.Core.UI;
 using UnityEngine;
+using System;
 
 namespace ForestRoyale.Gameplay.Settings
 {
 	[CreateAssetMenu(fileName = "CombatSettings", menuName = "ForestRoyale/Settings/CombatSettings", order = ToolConstants.SettingsMenuOrder)]
-	public class CombatSettings : ScriptableObject
+	public class
+	CombatSettings : ScriptableObject
 	{
-		[SerializeField]
-		[Min(0.0001f)]
-		private float _hitDistance = 0.1f;
+		[Serializable]
+		public class ProjectileSettings
+		{
+			[SerializeField]
+			private float _initialOffset = 0.5f;
 
-		public float HitDistance => _hitDistance;
+			[SerializeField]
+			private float _hitDistance = 0.1f;
+
+			public float InitialOffset => _initialOffset;
+			public float HitDistance => _hitDistance;
+		}
+
+		[SerializeField]
+		private ProjectileSettings _projectileSettings;
+
+		public ProjectileSettings Projectile => _projectileSettings;
 	}
 }
