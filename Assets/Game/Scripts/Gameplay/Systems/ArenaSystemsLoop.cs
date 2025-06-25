@@ -21,6 +21,9 @@ namespace ForestRoyale.Gameplay.Systems
 		[Inject]
 		private readonly CombatSystem _combatSystem;
 
+		[Inject]
+		private readonly ProjectilesSystem _projectilesSystem;
+
 		private void HandleBattlePaused(Battle battle)
 		{
 			// Movement system has autonomous components we need to pause
@@ -37,7 +40,9 @@ namespace ForestRoyale.Gameplay.Systems
 				_movementSystem.UpdateMovement();
 				_unitStateMachine.UpdateState();
 
+
 				_combatSystem.UpdateCombat();
+				_projectilesSystem.UpdateProjectiles();
 				_unitStateMachine.UpdateState();
 			}
 			else
@@ -48,4 +53,3 @@ namespace ForestRoyale.Gameplay.Systems
 		}
 	}
 }
-
