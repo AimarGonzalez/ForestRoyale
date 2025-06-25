@@ -18,10 +18,16 @@ MonoBehaviour:
     _hitPoints: 5944
     _transport: 0
     _movementSpeed: 1
+    _permanentCorpse: 0
   _combatStats:
+    _attackType: 0
     _damage: 368
     _attackSpeed: 1.5
     _attackRange: 1
-    _areaDamageRadius: 0
     _sightRange: 1.5
+    _areaDamageRadius: 0
+    _projectileSpeed: 1000
     _targetPreference: 0100000002000000
+  _prefabs:
+    _unitPrefab: {fileID: 8456799644483888947, guid: a48d75f5fac9df84ea1301c2b123a16e, type: 3}
+    _projectilePrefab: {fileID: 0}

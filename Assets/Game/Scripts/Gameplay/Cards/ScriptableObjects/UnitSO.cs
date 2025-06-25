@@ -12,15 +12,19 @@ namespace ForestRoyale.Gameplay.Cards.ScriptableObjects
 		[SerializeField]
 		private CombatStats _combatStats;
 
+		[SerializeField]
+		private UnitPrefabs _prefabs;
+
 		public UnitStats UnitStats => _unitStats;
 		public CombatStats CombatStats => _combatStats;
-
+		public UnitPrefabs Prefabs => _prefabs;
 #if UNITY_EDITOR
-		public static UnitSO Build(UnitStats unitStats, CombatStats combatStats)
+		public static UnitSO Build(UnitStats unitStats, CombatStats combatStats, UnitPrefabs unitPrefabs)
 		{
 			UnitSO unitSO = CreateInstance<UnitSO>();
 			unitSO._unitStats = unitStats;
 			unitSO._combatStats = combatStats;
+			unitSO._prefabs = unitPrefabs;
 
 			return unitSO;
 		}

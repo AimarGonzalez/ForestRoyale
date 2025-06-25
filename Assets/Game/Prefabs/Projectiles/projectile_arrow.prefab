@@ -829,8 +829,9 @@ GameObject:
   - component: {fileID: 3496601044012924823}
   - component: {fileID: 3137197227974410106}
   - component: {fileID: 6387325321256943821}
+  - component: {fileID: 6778019287032239652}
   m_Layer: 0
-  m_Name: arrow_projectile
+  m_Name: projectile_arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1196,6 +1197,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &6778019287032239652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945613913828213152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logMissingPool: 1
+  _automaticPrefab: {fileID: 0}
+  _automaticComponent: {fileID: 0}
 --- !u!1 &7099114609804379077
 GameObject:
   m_ObjectHideFlags: 0

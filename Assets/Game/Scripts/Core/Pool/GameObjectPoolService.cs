@@ -13,24 +13,6 @@ namespace ForestRoyale.Core.Pool
 		
 		private Dictionary<PooledGameObject, GameObjectPool> _pools = new();
 
-		public GameObject Get(GameObject prefab)
-		{
-			return Get(prefab, null, active: true, Vector3.zero, Quaternion.identity);
-		}
-
-		public GameObject Get(GameObject prefab, Transform parent, bool active, Vector3 position, Quaternion rotation)
-		{
-			PooledGameObject componentPrefab = prefab.GetComponent<PooledGameObject>();
-			if (componentPrefab == null)
-			{
-				Debug.LogError($"{prefab.name} is missing a PooledGameObject component");
-				return null;
-			}
-			
-			PooledGameObject instance = Get(componentPrefab, parent, active, position, rotation);
-			return instance.gameObject;
-		}
-
 		public T Get<T>(T prefab, Transform parent) where T : MonoBehaviour
 		{
 			return Get(prefab, parent, active: true, Vector3.zero, Quaternion.identity);
@@ -43,6 +25,10 @@ namespace ForestRoyale.Core.Pool
 			return instance.GetComponentInChildren<T>(includeInactive: true);
 		}
 
+		public PooledGameObject Get(PooledGameObject prefab)
+		{
+			return Get(prefab, parent: null, active: true, Vector3.zero, Quaternion.identity);
+		}
 
 		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool active, Vector3 position, Quaternion rotation)
 		{
@@ -55,6 +41,7 @@ namespace ForestRoyale.Core.Pool
 			GameObjectPool pool = GetOrCreatePool(prefab);
 			return pool.Get(prefab, parent, active, position, rotation);
 		}
+
 
 
 		public void Release(GameObject instance)

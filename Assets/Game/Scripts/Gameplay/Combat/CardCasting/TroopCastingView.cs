@@ -58,7 +58,7 @@ namespace ForestRoyale.Gameplay.Combat
 		private Vector3 _walkablePosition;
 		private Vector3 _targetTilePosition;
 
-		public void SetTroop(TroopCardData cardData, GameObject troopInstance, ArenaTeam team, UnitState state)
+		public void SetTroop(TroopCardData cardData, PooledGameObject troopInstance, ArenaTeam team, UnitState state)
 		{
 			_cardData = cardData;
 
@@ -70,7 +70,7 @@ namespace ForestRoyale.Gameplay.Combat
 			MoveToMouseCursor(); //fixes bug with first frame in old position
 		}
 
-		private void SetParentAndCacheTroops(GameObject troopInstance)
+		private void SetParentAndCacheTroops(PooledGameObject troopInstance)
 		{
 			_chars.Clear();
 

@@ -5,14 +5,6 @@ namespace ForestRoyale.Gameplay.Systems
 {
 	public class CombatSystem
 	{
-
-		public struct HitData
-		{
-			public Unit Attacker;
-			public List<Unit> Targets;
-			public float Damage;
-		}
-
 		private readonly ArenaEvents _arenaEvents;
 		private readonly HashSet<Unit> _combatUnits;
 

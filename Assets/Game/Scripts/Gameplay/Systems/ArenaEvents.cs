@@ -14,6 +14,7 @@ namespace ForestRoyale.Gameplay.Systems
 		public event Action<Unit> OnUnitDamaged;
 
 		public event Action<Unit, Unit> OnUnitAttacked;
+		public event Action<Unit, Unit> OnProjectileFired;
 
 		public void TriggerUnitCreated(Unit unit)
 		{
@@ -35,8 +36,13 @@ namespace ForestRoyale.Gameplay.Systems
 			OnUnitAttacked?.Invoke(attacker, target);
 		}
 
+		public void TriggerProjectileFired(Unit attacker, Unit target)
+		{
+			OnProjectileFired?.Invoke(attacker, target);
+		}
+
 		// ----- 
-		
+
 		/// <summary>
 		/// We know Units do AutoInitialization during Start() so its safe to assume they are initialized.
 		/// </summary>

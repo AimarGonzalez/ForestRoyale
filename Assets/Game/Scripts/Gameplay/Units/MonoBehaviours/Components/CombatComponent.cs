@@ -99,7 +99,14 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		private void OnAnimationHitEvent()
 		{
-			_arenaEvents.TriggerUnitAttacked(Unit, _target);
+			if (Unit.CombatStats.IsMelee)
+			{
+				_arenaEvents.TriggerUnitAttacked(Unit, _target);
+			}
+			else
+			{
+				_arenaEvents.TriggerProjectileFired(Unit, _target);
+			}
 		}
 
 		private void StartCooldown()

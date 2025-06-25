@@ -135,7 +135,7 @@ namespace ForestRoyale.Gameplay.Units
 			return $"{_unitStats.Name} ({_id}/{_team}/{_state})";
 		}
 
-		public void TakeDamage(CombatSystem.HitData hitData)
+		public void TakeDamage(HitData hitData)
 		{
 			_health -= hitData.Damage;
 

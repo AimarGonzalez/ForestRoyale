@@ -1,4 +1,5 @@
 using ForestLib.Utils;
+using ForestRoyale.Core.Pool;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Cards.CardStats;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
@@ -93,8 +94,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 5,
 				rarity: CardRarity.Common,
 				unitCount: 6,
-				unitSO: minionsSO,
-				prefab: LoadSquadPrefab("Minions")
+				unitSO: minionsSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -117,8 +117,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 5,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: giantSO,
-				prefab: LoadUnitPrefab("Giant")
+				unitSO: giantSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -259,8 +258,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 2,
 				rarity: CardRarity.Common,
 				unitCount: 3,
-				unitSO: goblinSO,
-				prefab: LoadSquadPrefab("Goblin")
+				unitSO: goblinSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -280,8 +278,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				unitSO: knightSO,
-				prefab: LoadUnitPrefab("Knight")
+				unitSO: knightSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -301,8 +298,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: musketeerSO,
-				prefab: LoadUnitPrefab("Musketeer")
+				unitSO: musketeerSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -322,8 +318,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 3,
 				rarity: CardRarity.Epic,
 				unitCount: 15,
-				unitSO: skeletonSO,
-				prefab: LoadSquadPrefab("SkeletonArmy")
+				unitSO: skeletonSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -343,8 +338,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 1,
-				unitSO: cannonSO,
-				prefab: LoadUnitPrefab("Cannon")
+				unitSO: cannonSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -364,8 +358,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 4,
 				rarity: CardRarity.Rare,
 				unitCount: 1,
-				unitSO: hogRiderSO,
-				prefab: LoadUnitPrefab("HogRider")
+				unitSO: hogRiderSO
 			);
 
 			string cardAssetPath = $"{CARDS_DIRECTORY}/HogRider_Card.asset";
@@ -384,8 +377,7 @@ namespace ForestRoyale.Gameplay.Editor
 				elixirCost: 3,
 				rarity: CardRarity.Common,
 				unitCount: 2,
-				unitSO: archersSO,
-				prefab: LoadSquadPrefab("Archers")
+				unitSO: archersSO
 			);
 
 			AssetUtils.CreateDirectory(CARDS_DIRECTORY);
@@ -418,7 +410,13 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var unitPrefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Minions"),
+				projectilePrefab: null
+			);
+
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, unitPrefabs);
 		}
 
 		private UnitSO CreateGiantUnit(string directory)
@@ -444,7 +442,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Giant"),
+				projectilePrefab: null
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateGoblinUnit(string directory)
@@ -469,7 +472,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Goblin"),
+				projectilePrefab: null
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateKnightUnit(string directory)
@@ -495,7 +503,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Knight"),
+				projectilePrefab: null
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateMusketerUnit(string directory)
@@ -520,7 +533,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Musketeer"),
+				projectilePrefab: LoadProjectilePrefab("bullet")
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateHogRiderUnit(string directory)
@@ -545,7 +563,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("HogRider"),
+				projectilePrefab: null
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateCannonUnit(string directory)
@@ -571,7 +594,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Cannon"),
+				projectilePrefab: LoadProjectilePrefab("cannonball")
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateSkeletonUnit(string directory)
@@ -597,7 +625,11 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 0f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+			UnitPrefabs prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Skeleton"),
+				projectilePrefab: null
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateArchersUnit(string directory)
@@ -623,7 +655,13 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 600f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building, UnitType.ArenaTower }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			UnitPrefabs prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("Archer"),
+				projectilePrefab: LoadProjectilePrefab("arrow")
+			);
+
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 		#endregion // Unit Creation Methods
 
@@ -681,6 +719,7 @@ namespace ForestRoyale.Gameplay.Editor
 				AssetDatabase.SaveAssets();
 				AssetDatabase.Refresh();
 			}
+
 			Debug.Log($"Created {createdCount} unit ScriptableObjects");
 		}
 
@@ -762,7 +801,12 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("PrincessTower"),
+				projectilePrefab: LoadProjectilePrefab("arrow")
+			);
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 
 		private UnitSO CreateKingTower(string directory)
@@ -786,11 +830,29 @@ namespace ForestRoyale.Gameplay.Editor
 				projectileSpeed: 1000f,
 				targetPreference: new List<UnitType> { UnitType.Troop, UnitType.Building }
 			);
-			return CreateOrLoadUnit(assetPath, unitStats, combatStats);
+
+			var prefabs = UnitPrefabs.Build(
+				unitPrefab: LoadUnitPrefab("KingTower"),
+				projectilePrefab: LoadProjectilePrefab("cannonball")
+			);
+
+			return CreateOrLoadUnit(assetPath, unitStats, combatStats, prefabs);
 		}
 		#endregion
 
 		#region Helper Methods
+		private UnitSO CreateOrLoadUnit(string assetPath, UnitStats unitStats, CombatStats combatStats, UnitPrefabs prefabs)
+		{
+			if (File.Exists(assetPath))
+			{
+				return AssetDatabase.LoadAssetAtPath<UnitSO>(assetPath);
+			}
+
+			var unitSO = UnitSO.Build(unitStats: unitStats, combatStats: combatStats, unitPrefabs: prefabs);
+			AssetDatabase.CreateAsset(unitSO, assetPath);
+			return unitSO;
+		}
+
 		private UnitSO CreateOrLoadUnit(string assetPath, UnitStats unitStats, CombatStats combatStats)
 		{
 			if (File.Exists(assetPath))
@@ -798,7 +860,11 @@ namespace ForestRoyale.Gameplay.Editor
 				return AssetDatabase.LoadAssetAtPath<UnitSO>(assetPath);
 			}
 
-			var unitSO = UnitSO.Build(unitStats: unitStats, combatStats: combatStats);
+			var defaultPrefabs = UnitPrefabs.Build(
+				unitPrefab: null,
+				projectilePrefab: null
+			);
+			var unitSO = UnitSO.Build(unitStats: unitStats, combatStats: combatStats, unitPrefabs: defaultPrefabs);
 			AssetDatabase.CreateAsset(unitSO, assetPath);
 			return unitSO;
 		}
@@ -815,18 +881,25 @@ namespace ForestRoyale.Gameplay.Editor
 			return spellSO;
 		}
 
-		private GameObject LoadUnitPrefab(string cardName)
+		private PooledGameObject LoadUnitPrefab(string cardName)
 		{
 			string prefabName = $"ut_{cardName.ToLower()}";
 			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
-			return AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+			return AssetDatabase.LoadAssetAtPath<PooledGameObject>(prefabPath);
 		}
 
-		private GameObject LoadSquadPrefab(string cardName)
+		private PooledGameObject LoadSquadPrefab(string cardName)
 		{
 			string prefabName = $"spawnable_{cardName.ToLower()}";
 			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
-			return AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+			return AssetDatabase.LoadAssetAtPath<PooledGameObject>(prefabPath);
+		}
+
+		private PooledGameObject LoadProjectilePrefab(string cardName)
+		{
+			string prefabName = $"projectile_{cardName.ToLower()}";
+			string prefabPath = $"{PREFABS_DIRECTORY}/{prefabName}.prefab";
+			return AssetDatabase.LoadAssetAtPath<PooledGameObject>(prefabPath);
 		}
 		#endregion // Helper Methods
 	}

@@ -28,3 +28,6 @@ MonoBehaviour:
     _areaDamageRadius: 0
     _projectileSpeed: 1000
     _targetPreference: 000000000100000002000000
+  _prefabs:
+    _unitPrefab: {fileID: 8456799644483888947, guid: 7896abe1ba634ad439c3b10a4c574f8d, type: 3}
+    _projectilePrefab: {fileID: 6778019287032239652, guid: 3e41d6f6697d3704eaf5d1a3e2d1ef52, type: 3}
