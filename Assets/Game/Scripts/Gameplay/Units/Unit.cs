@@ -56,7 +56,7 @@ namespace ForestRoyale.Gameplay.Units
 		public bool CanMove => _movementComponent != null;
 		public bool CanFight => _combatComponent != null;
 
-		public bool IsAlive => _state != UnitState.Dying && _state != UnitState.Dead;
+		public bool IsAlive => _state == UnitState.Idle || _state == UnitState.MovingToTarget || _state == UnitState.Attacking;
 
 		public UnitType UnitType => _unitStats.UnitType;
 
