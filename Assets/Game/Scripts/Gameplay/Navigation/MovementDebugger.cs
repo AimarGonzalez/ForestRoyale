@@ -14,7 +14,7 @@ namespace ForestRoyale.Gameplay.Navigation
 		[SerializeField] private Color pathColor = Color.yellow;
 
 		[Tooltip("Color of the destination marker")]
-		[SerializeField] private Color destinationColor = Color.red;
+		[SerializeField] private Color destinationColor = Color.yellow;
 
 		[Tooltip("Size of the destination marker")]
 		[SerializeField] private float destinationMarkerSize = 0.5f;

@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5762265297845dc8288bb0ca10d03b7, type: 3}
   m_Name: CombatSettings
   m_EditorClassIdentifier: 
+  _projectileSettings:
+    _initialOffset: 0.5
+    _hitDistance: 0.01

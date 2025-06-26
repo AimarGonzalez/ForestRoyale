@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
+	// TODO: Rename to UnitSubComponent
 	public abstract class UnitComponent : MonoBehaviour
 	{
 

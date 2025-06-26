@@ -1,9 +1,9 @@
-﻿using ForestLib.ExtensionMethods;
-using ForestRoyale.Core.Pool;
+﻿using ForestRoyale.Core.Pool;
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.BodyLocations;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -61,6 +61,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[Inject]
 		private IObjectResolver _objectResolver;
 
+		private Body _body;
 		private MovementComponent _movementComponent;
 		private CombatComponent _combatComponent;
 		private DeathComponent _deathComponent;
@@ -138,6 +139,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		}
 
 		public Unit Unit => _unit;
+		public Body Body => _body;
 		public MovementComponent MovementComponent => _movementComponent;
 		public CombatComponent CombatComponent => _combatComponent;
 		public DeathComponent DeathComponent => _deathComponent;
@@ -151,10 +153,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			AutoInject();
 #endif
 
+			_body = GetComponent<Body>();
 			_movementComponent = GetComponent<MovementComponent>();
 			_combatComponent = GetComponent<CombatComponent>();
 			_deathComponent = GetComponent<DeathComponent>();
-
+			
 			if (_movementComponent)
 			{
 				_colliderListener = _movementComponent.Body.GetComponent<Collider2DListener>();

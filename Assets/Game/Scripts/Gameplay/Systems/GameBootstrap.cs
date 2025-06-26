@@ -35,6 +35,7 @@ namespace ForestRoyale.Gameplay.Systems
 				components.AddInHierarchy<GameSettings>();
 				components.AddInHierarchy<CardCastingViewFactory>();
 				components.AddInHierarchy<ProjectileViewFactory>();
+				components.AddInHierarchy<ProjectileSystemDebugger>();
 			});
 		}
 	}

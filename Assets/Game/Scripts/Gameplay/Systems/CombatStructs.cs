@@ -27,6 +27,7 @@ namespace ForestRoyale.Gameplay.Systems
 		private Unit _target;
 		private Transform _transform;
 		private Vector3 _position;
+		private Vector3 _targetPosition;
 		private float _speed;
 
 		public PooledGameObject PooledGameObject => _pooledGameObject;
@@ -39,6 +40,15 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				_position = value;
 				_transform.position = value;
+			}
+		}
+
+		public Vector3 TargetPosition
+		{
+			get => _targetPosition;
+			set
+			{
+				_targetPosition = value;
 			}
 		}
 
@@ -59,9 +69,10 @@ namespace ForestRoyale.Gameplay.Systems
 			_attacker = attacker;
 			_target = target;
 			_speed = attacker.CombatStats.ProjectileSpeed;
+			_position = _attacker.Body.ProjectileSourcePosition;
 			_transform = pooledGameObject.transform;
-			_position = _attacker.Position;
 			_transform.position = _position;
+			_targetPosition = _target.Body.Center;
 		}
 	}
 }

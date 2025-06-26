@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 3143487958949891205, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _root
+      value: 
+      objectReference: {fileID: 8456799644483888947}
+    - target: {fileID: 3143487958949891205, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _bodyMeshRenderer
+      value: 
+      objectReference: {fileID: 7084369475482945021}
     - target: {fileID: 3176194029410523179, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -62,19 +70,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8870109
+      value: 0.000000041688292
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4617486
+      value: -0.000000013144269
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000003877248
+      value: -0.95371693
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000020183673
+      value: 0.30070582
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -253,6 +261,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1369662808626639127, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
   m_PrefabInstance: {fileID: 1919810202611914964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8456799644483888947 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8068233149362356199, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+  m_PrefabInstance: {fileID: 1919810202611914964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ea9175476b4bab9a14c68a6b992720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8471597595929254265
 PrefabInstance:
   m_ObjectHideFlags: 0

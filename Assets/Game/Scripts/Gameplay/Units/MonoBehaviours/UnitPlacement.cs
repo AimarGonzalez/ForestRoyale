@@ -55,8 +55,8 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 				Debug.LogError("UnitPlacement: Prefab is not set", this);
 				return null;
 			}
-
-			Debug.Log($"UnitPlacement: Creating TEMPORAL new unit {_prefab.name}", this);
+			
+			//Debug.Log($"UnitPlacement: Creating TEMPORAL new unit {_prefab.name}", this);
 			UnitRoot temporalInstance = Instantiate(_prefab, transform, worldPositionStays: false);
 			temporalInstance.gameObject.hideFlags = HideFlags.DontSave;
 			temporalInstance.name = $"<TEMPORAL>_{_prefab.name}";
@@ -80,7 +80,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 			}
 
 			Debug.Assert(transform.childCount == 0, "UnitPlacement: Prefab has unexpectedchildren");
-			Debug.Log($"UnitPlacement: Creating new unit {_prefab.name}", this);
+			//Debug.Log($"UnitPlacement: Creating new unit {_prefab.name}", this);
 			return _poolService.Get(_prefab, transform);
 		}
 

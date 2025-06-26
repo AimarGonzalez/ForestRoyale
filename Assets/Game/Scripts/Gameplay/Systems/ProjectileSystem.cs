@@ -88,13 +88,14 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private float MoveToTarget(ProjectileData projectile)
 		{
-			Vector3 targetPos = projectile.Target.Position;
+			Vector3 targetPos = projectile.Target.Body.GetTargetPositionFrom(projectile.Position);
 
 			Vector3 direction = targetPos - projectile.Position;
 			float distanceToTarget = direction.magnitude;
 			float distanceToMove = Mathf.Min(distanceToTarget, projectile.Speed * Time.deltaTime);
 			Vector3 newPosition = projectile.Position + direction.normalized * distanceToMove;
 
+			projectile.TargetPosition = targetPos;
 			projectile.Position = newPosition;
 
 			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -109,12 +110,13 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private float MoveToTarget(ProjectileData projectile, float distance)
 		{
-			Vector3 targetPos = projectile.Target.Position;
+			Vector3 targetPos = projectile.Target.Body.GetTargetPositionFrom(projectile.Position);
 			Vector3 direction = targetPos - projectile.Position;
 			float distanceToTarget = direction.magnitude;
 			float distanceToMove = Mathf.Min(distanceToTarget, distance);
 			Vector3 newPosition = projectile.Position + direction.normalized * distanceToMove;
 
+			projectile.TargetPosition = targetPos;
 			projectile.Position = newPosition;
 
 			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -128,6 +130,16 @@ namespace ForestRoyale.Gameplay.Systems
 			{
 				_arenaEvents.TriggerProjectileHit(projectile.Attacker, projectile.Target);
 				ReleaseToPool(projectile);
+			}
+		}
+
+		public void OnDrawGizmos()
+		{
+			Gizmos.color = Color.blue;
+			foreach (ProjectileData projectile in _projectiles)
+			{
+				Gizmos.DrawLine(projectile.Position, projectile.TargetPosition);
+				Gizmos.DrawWireSphere(projectile.TargetPosition, 0.1f);
 			}
 		}
 	}

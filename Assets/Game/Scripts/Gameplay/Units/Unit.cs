@@ -5,11 +5,14 @@ using ForestRoyale.Gameplay.Cards.ScriptableObjects;
 using ForestRoyale.Gameplay.Systems;
 using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
+using ForestRoyale.Gameplay.Units.MonoBehaviours.BodyLocations;
 using Game.Scripts.Gameplay.Cards.CardStats;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
+
 
 namespace ForestRoyale.Gameplay.Units
 {
@@ -27,6 +30,7 @@ namespace ForestRoyale.Gameplay.Units
 		[ShowInInspector, ReadOnly] private CardData _cardOrigin;
 		[ShowInInspector, ReadOnly] private UnitStats _unitStats;
 		[ShowInInspector, ReadOnly] private CombatStats _combatStats;
+		[ShowInInspector, ReadOnly] private Body _body;
 		[ShowInInspector, ReadOnly] private UnitPrefabs _prefabs;
 
 		private UnitRoot _unitRoot;
@@ -80,6 +84,7 @@ namespace ForestRoyale.Gameplay.Units
 		public CardData CardOrigin => _cardOrigin;
 		public UnitStats UnitStats => _unitStats;
 		public CombatStats CombatStats => _combatStats;
+		public Body Body => _body;
 		public UnitPrefabs Prefabs => _prefabs;
 		public UnitRoot UnitRoot => _unitRoot;
 		public MovementComponent MovementComponent => _movementComponent;
@@ -114,6 +119,7 @@ namespace ForestRoyale.Gameplay.Units
 			_transform = root.transform;
 			_team = team;
 			_unitSO = unitSO;
+			_body = root.Body;
 			_movementComponent = root.MovementComponent;
 			_combatComponent = root.CombatComponent;
 			_deathComponent = root.DeathComponent;
