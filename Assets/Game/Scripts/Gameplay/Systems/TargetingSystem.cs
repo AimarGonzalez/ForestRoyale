@@ -4,6 +4,7 @@ using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Game.Scripts.Gameplay.Cards.CardStats;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -35,10 +36,29 @@ namespace ForestRoyale.Gameplay.Systems
 		{
 			foreach (Unit troop in _activeUnits)
 			{
-				// If troop doesn't have a target, find a new target
-				if ((troop.State is UnitState.Idle or UnitState.MovingToTarget) || !troop.Target.IsAlive)
+				switch (troop.State)
 				{
-					SetTarget(troop, FindBestTarget(troop));
+					case UnitState.Idle:
+					case UnitState.MovingToTarget:
+						SetTarget(troop, FindBestTarget(troop));
+						break;
+
+					case UnitState.Attacking:
+						// Current target died, find a new target
+						if (!troop.Target.IsAlive)
+						{
+							SetTarget(troop, FindBestTarget(troop));
+						}
+						break;
+
+					case UnitState.Dead:
+					case UnitState.Dying:
+					case UnitState.CastingPreview:
+						break;
+
+					default:
+						Debug.LogError($"Unknown unit state: {troop.State}");
+						break;
 				}
 			}
 		}
