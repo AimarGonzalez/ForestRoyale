@@ -1,10 +1,10 @@
 using ForestRoyale.Core.Pool;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Units;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace ForestRoyale.Gameplay.Combat
 {

@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 
-namespace ForestRoyale.Gameplay.Units
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
 	[Flags]
 	public enum UnitState

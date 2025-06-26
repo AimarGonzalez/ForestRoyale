@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using ForestRoyale.Gameplay.Units;
-using ForestRoyale.Gameplay.Units.MonoBehaviours.Components;
+using ForestRoyale.Gameplay.Units.MonoBehaviours;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -95,7 +95,7 @@ namespace ForestRoyale.Gameplay.Systems
 						break;
 
 					default:
-						UnityEngine.Debug.LogError($"Unknown unit state: {troop.State}");
+						Debug.LogError($"Unknown unit state: {troop.State}");
 						break;
 				}
 

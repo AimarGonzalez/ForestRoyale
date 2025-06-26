@@ -1,7 +1,10 @@
 
-
-public enum ArenaTeam
+namespace ForestRoyale.Gameplay.Units
 {
-	Player,
-	Forest
+	public enum ArenaTeam
+	{
+		Player,
+		Forest
+	}
 }
+

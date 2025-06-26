@@ -3,6 +3,7 @@ using ForestLib.Utils;
 using ForestRoyale.Core.UI;
 using ForestRoyale.Gameplay.Cards;
 using ForestRoyale.Gameplay.Combat;
+using ForestRoyale.Gameplay.Units;
 using Sirenix.OdinInspector;
 using System;
 using TMPro;

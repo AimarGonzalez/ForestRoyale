@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 
-namespace Game.Scripts.Gameplay.Units.MonoBehaviours
+namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
 	[RequireComponent(typeof(UnitRoot))]
 	public class UnitDebugTools : MonoBehaviour
