@@ -29,5 +29,5 @@ MonoBehaviour:
     _projectileSpeed: 6
     _targetPreference: 000000000100000002000000
   _prefabs:
-    _unitPrefab: {fileID: 4391704570345981573, guid: 9e4b6d6d560e42640ba131a0ef5927a8, type: 3}
+    _unitPrefab: {fileID: 5146799372820585348, guid: 9e4b6d6d560e42640ba131a0ef5927a8, type: 3}
     _projectilePrefab: {fileID: 6778019287032239652, guid: 3e41d6f6697d3704eaf5d1a3e2d1ef52, type: 3}
