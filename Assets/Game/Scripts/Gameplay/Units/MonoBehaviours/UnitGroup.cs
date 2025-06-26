@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
-	public class UnitSquad : MonoBehaviour
+	public class UnitGroup : MonoBehaviour
 	{
 		[SerializeField]
 		private UnitPlacement[] _placements;
