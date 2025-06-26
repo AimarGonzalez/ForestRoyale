@@ -74,26 +74,28 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			_chars.Clear();
 
-			if (troopInstance.TryGetComponent(out UnitRoot singleCharacter))
-			{
-				// Single unit
-				_chars.Add(singleCharacter);
-				singleCharacter.transform.SetParent(transform, false);
-			}
-			else
+			if (troopInstance is UnitGroup unitGroup)
 			{
 				// Multiple units
-				UnitPlacement[] placements = troopInstance.GetComponentsInChildren<UnitPlacement>();
+				UnitPlacement[] placements = unitGroup.Placements;
 				foreach (UnitPlacement placement in placements)
 				{
-					UnitRoot unit = placement.SpawnUnit();
+					UnitRoot unit = placement.UnitRoot;
 					unit.transform.SetParent(transform, false);
 					unit.transform.localPosition = placement.transform.localPosition;
 					_chars.Add(unit);
 				}
 
 				// recycle Prefab
-				troopInstance.GetComponent<PooledGameObject>().ReleaseToPool();
+				unitGroup.ReleaseToPool();
+			}
+			else
+			{
+				UnitRoot singleCharacter = troopInstance.GetComponent<UnitRoot>();
+				
+				// Single unit
+				_chars.Add(singleCharacter);
+				singleCharacter.transform.SetParent(transform, false);
 			}
 		}
 
@@ -101,9 +103,7 @@ namespace ForestRoyale.Gameplay.Combat
 		{
 			foreach (UnitRoot character in _chars)
 			{
-				character.StartingTeam = team;
-				character.StartingState = state;
-				character.CreateUnit();
+				character.CreateUnit(team, state);
 			}
 		}
 

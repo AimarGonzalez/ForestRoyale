@@ -459,7 +459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6708270818519017337}
-  - component: {fileID: 7099801337888006958}
+  - component: {fileID: 657737248091319594}
   m_Layer: 0
   m_Name: skeletonarmy_group
   m_TagString: Untagged
@@ -497,7 +497,7 @@ Transform:
   - {fileID: 5797331973789229193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7099801337888006958
+--- !u!114 &657737248091319594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -506,12 +506,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 3360633588996386929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Script: {fileID: 11500000, guid: 2946f377bd24fa1488524ffe766c473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _logMissingPool: 1
   _automaticPrefab: {fileID: 0}
   _automaticComponent: {fileID: 0}
+  _placements:
+  - {fileID: 3174324160488779686}
+  - {fileID: 7157116533272552593}
+  - {fileID: 1429287674708921356}
+  - {fileID: 7087479445454043363}
+  - {fileID: 3771095731695843944}
+  - {fileID: 3524795370567764427}
+  - {fileID: 504097271985765672}
+  - {fileID: 3751968059037299870}
+  - {fileID: 4450011511096805650}
+  - {fileID: 264847872589685190}
+  - {fileID: 5116029395035432960}
+  - {fileID: 5706369758407840271}
+  - {fileID: 8667952699103646538}
+  - {fileID: 8589834541409076239}
+  - {fileID: 1631325050683947366}
 --- !u!1 &3418542093218839420
 GameObject:
   m_ObjectHideFlags: 0

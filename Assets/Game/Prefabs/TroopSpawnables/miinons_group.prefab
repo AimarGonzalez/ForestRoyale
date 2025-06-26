@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4987795905229153425}
-  - component: {fileID: 4391704570345981573}
+  - component: {fileID: 5146799372820585348}
   m_Layer: 0
   m_Name: miinons_group
   m_TagString: Untagged
@@ -38,7 +38,7 @@ Transform:
   - {fileID: 3365689716500623963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4391704570345981573
+--- !u!114 &5146799372820585348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2219401901363815516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Script: {fileID: 11500000, guid: 2946f377bd24fa1488524ffe766c473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _logMissingPool: 1

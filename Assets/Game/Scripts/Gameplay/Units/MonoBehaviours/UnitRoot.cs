@@ -169,17 +169,6 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 #endif
 		}
 
-		private void Start()
-		{
-			if (!CreatedOnPool)
-			{
-				OnBeforeGetFromPool();
-				OnAfterGetFromPool();
-				CreateUnit();
-			}
-		}
-		
-		
 		private void OnDestroy()
 		{
 			if (!CreatedOnPool)
@@ -192,6 +181,11 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		protected override void OnBeforeGetFromPool()
 		{
 			Reset();
+			
+			if (!CreatedOnPool)
+			{
+				CreateUnit();
+			}
 		}
 		protected override void OnAfterGetFromPool()
 		{
@@ -211,6 +205,13 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		public void Reset()
 		{
 			SetUnit(null);
+		}
+
+		public void CreateUnit(ArenaTeam team, UnitState startingState)
+		{
+			_startingTeam = team;
+			_startingState = startingState;
+			CreateUnit();
 		}
 
 		public void CreateUnit()
@@ -265,9 +266,9 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 
 			UpdateUnitComponents(unit);
 			PropagateUnitChanged(oldUnit, unit);
-			PropagateStateChanged(oldUnitState, unit.State);
+			PropagateStateChanged(oldUnitState, unit?.State ?? UnitState.None);
 
-			if (unit.State == UnitState.Idle)
+			if (unit != null && unit.State == UnitState.Idle)
 			{
 				_arenaEvents?.TriggerUnitCreated(_unit);
 			}

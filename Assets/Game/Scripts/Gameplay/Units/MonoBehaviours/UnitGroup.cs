@@ -1,25 +1,74 @@
+using ForestRoyale.Core.Pool;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
-	public class UnitGroup : MonoBehaviour
+	[ExecuteAlways]
+	public class UnitGroup : PooledGameObject
 	{
-		[SerializeField]
+		[ShowInInspector, ReadOnly]
 		private UnitPlacement[] _placements;
 
-		private void Awake()
+		public UnitPlacement[] Placements => _placements;
+
+		protected override void Awake()
 		{
+			base.Awake();
+
 			_placements = GetComponentsInChildren<UnitPlacement>();
 		}
 
-		[Button, HideInPlayMode]
-		private void SpawnTemporalUnits()
+		protected override void OnBeforeGetFromPool()
+		{
+			base.OnBeforeGetFromPool();
+
+			SpawnPrefabs();
+
+			if (!CreatedOnPool)
+			{
+				CreateUnits();
+			}
+		}
+
+		protected override void OnReturnToPool()
+		{
+			base.OnReturnToPool();
+
+			// The TroopCastingView is responsible of reparenting the spawned prefabs.
+			Debug.Assert(!HasSpawnedPrefabLeftovers(), "Returning a UnitGroup with spawned prefabs. This will generate garbage");
+		}
+
+		private bool HasSpawnedPrefabLeftovers()
 		{
 			foreach (UnitPlacement placement in _placements)
 			{
-				placement.SpawnTemporalUnit();
+				if (placement.transform.childCount > 0)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		[Button, HideInPlayMode]
+		private void SpawnPrefabs()
+		{
+			foreach (UnitPlacement placement in _placements)
+			{
+				placement.SpawnPrefab();
 			}
 		}
+
+		private void CreateUnits()
+		{
+			foreach (UnitPlacement placement in _placements)
+			{
+				placement.UnitRoot.CreateUnit();
+			}
+		}
+
+
 	}
 }

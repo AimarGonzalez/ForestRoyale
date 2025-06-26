@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 
 namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 {
-	[ExecuteAlways]
 	public class UnitPlacement : MonoBehaviour
 	{
 		[SerializeField]
@@ -16,46 +15,57 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours
 		[Inject]
 		private GameObjectPoolService _poolService;
 
-		private void Awake()
+		private UnitRoot _instance;
+		
+		public UnitRoot UnitRoot => _instance;
+
+		[Button, HideInPlayMode]
+		public UnitRoot SpawnPrefab()
 		{
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
+			if (Application.isPlaying)
 			{
-				SpawnTemporalUnit();
+				_instance = SpanwPoolUnit();
+			}
+#if UNITY_EDITOR
+			else
+			{
+				_instance = SpawnTemporalUnit();
 			}
 #endif
+			return _instance;
 		}
 
 #if UNITY_EDITOR
-		[Button, HideInPlayMode]
-		public void SpawnTemporalUnit()
+		private UnitRoot SpawnTemporalUnit()
 		{
 			if (transform.childCount > 0)
 			{
 				// we have a temporal instance already - skip
-				return;
+				return null;
 			}
 			
 			if (Application.isPlaying)
 			{
 				Debug.LogError("UnitPlacement: SpawnTemporalUnits is not allowed in play mode", this);
-				return;
+				return null;
 			}
 
 			if (_prefab == null)
 			{
 				Debug.LogError("UnitPlacement: Prefab is not set", this);
-				return;
+				return null;
 			}
 
 			Debug.Log($"UnitPlacement: Creating TEMPORAL new unit {_prefab.name}", this);
 			UnitRoot temporalInstance = Instantiate(_prefab, transform, worldPositionStays: false);
 			temporalInstance.gameObject.hideFlags = HideFlags.DontSave;
 			temporalInstance.name = $"<TEMPORAL>_{_prefab.name}";
+			
+			return temporalInstance;
 		}
 #endif
 
-		public UnitRoot SpawnUnit()
+		private UnitRoot SpanwPoolUnit()
 		{
 			if (!Application.isPlaying)
 			{

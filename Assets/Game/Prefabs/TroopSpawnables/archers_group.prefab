@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7137779135590494878}
-  - component: {fileID: 7223079549603323635}
+  - component: {fileID: 1047905927138767496}
   m_Layer: 0
   m_Name: archers_group
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Transform:
   - {fileID: 6925440535628121321}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7223079549603323635
+--- !u!114 &1047905927138767496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2058212665263622368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06e13eddb53181042909943c43fe3b40, type: 3}
+  m_Script: {fileID: 11500000, guid: 2946f377bd24fa1488524ffe766c473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _logMissingPool: 1

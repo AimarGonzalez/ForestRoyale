@@ -125,6 +125,15 @@ namespace ForestRoyale.Core.Pool
 		{
 			_subComponents = GetComponentsInChildren<IPooledComponent>();
 		}
+		
+		protected virtual void Start()
+		{
+			if (!CreatedOnPool)
+			{
+				OnBeforeGetFromPool();
+				OnAfterGetFromPool();
+			}	
+		}
 
 		public virtual void TriggerBeforeGetFromPool()
 		{
