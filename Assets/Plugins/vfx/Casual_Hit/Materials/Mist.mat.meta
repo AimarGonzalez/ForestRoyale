@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b03fe77d14ae8624f85b0b8afde13aa0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 318002
+  packageName: Casual_Hit
+  packageVersion: 1.0
+  assetPath: Assets/Casual_Hit/Materials/Mist.mat
+  uploadId: 750804

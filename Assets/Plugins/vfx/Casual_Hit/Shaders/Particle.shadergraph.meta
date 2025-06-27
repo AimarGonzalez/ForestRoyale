@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 32a4a62f333515c4ebb502a656373f53
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 318002
+  packageName: Casual_Hit
+  packageVersion: 1.0
+  assetPath: Assets/Casual_Hit/Shaders/Particle.shadergraph
+  uploadId: 750804
