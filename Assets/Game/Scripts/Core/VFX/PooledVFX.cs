@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ForestRoyale.Core
 {
 
-	public class VFXInstance : PooledGameObject
+	public class PooledVFX : PooledGameObject
 	{
 		public enum State
 		{

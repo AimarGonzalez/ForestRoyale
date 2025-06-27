@@ -1,3 +1,4 @@
+using ForestRoyale.Core;
 using ForestRoyale.Core.Pool;
 using ForestRoyale.Gameplay.Combat;
 using ForestRoyale.Gameplay.Settings;
@@ -5,6 +6,7 @@ using ForestRoyale.Gameplay.Units;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using VContainer;
 
 namespace ForestRoyale.Gameplay.Systems
 {
@@ -14,6 +16,8 @@ namespace ForestRoyale.Gameplay.Systems
 		private readonly ArenaEvents _arenaEvents;
 		private readonly ProjectileViewFactory _projectileViewFactory;
 		private readonly CombatSettings _combatSettings;
+		private readonly IObjectResolver _vcontainer;
+		private readonly GameObjectPoolService _poolService;
 
 
 		// ----- Data ------------------
@@ -29,12 +33,13 @@ namespace ForestRoyale.Gameplay.Systems
 			defaultCapacity: 10
 		);
 
-		public ProjectilesSystem(ArenaEvents arenaEvents, ProjectileViewFactory projectileViewFactory, GameSettings gameSettings)
+		public ProjectilesSystem(ArenaEvents arenaEvents, ProjectileViewFactory projectileViewFactory, GameSettings gameSettings, IObjectResolver vcontainer, GameObjectPoolService poolService)
 		{
 			_arenaEvents = arenaEvents;
 			_projectileViewFactory = projectileViewFactory;
 			_combatSettings = gameSettings.CombatSettings;
-
+			_vcontainer = vcontainer;
+			_poolService = poolService;
 			_arenaEvents.OnProjectileFired += HandleProjectileFired;
 			_arenaEvents.OnUnitRemoved += HandleUnitRemoved;
 		}
@@ -103,11 +108,6 @@ namespace ForestRoyale.Gameplay.Systems
 			return distanceToTarget - distanceToMove;
 		}
 
-		private bool IsTargetHit(float distanceToTarget)
-		{
-			return distanceToTarget < _combatSettings.Projectile.HitDistance;
-		}
-
 		private float MoveToTarget(ProjectileData projectile, float distance)
 		{
 			Vector3 targetPos = projectile.Target.Body.GetTargetPositionFrom(projectile.Position);
@@ -129,8 +129,20 @@ namespace ForestRoyale.Gameplay.Systems
 			if (IsTargetHit(distanceToTarget))
 			{
 				_arenaEvents.TriggerProjectileHit(projectile.Attacker, projectile.Target);
+				PlayHitVFX(projectile);
 				ReleaseToPool(projectile);
 			}
+		}
+
+		private bool IsTargetHit(float distanceToTarget)
+		{
+			return distanceToTarget < _combatSettings.Projectile.HitDistance;
+		}
+
+		private void PlayHitVFX(ProjectileData projectile)
+		{
+			PooledVFX hitVFX = _poolService.Get(_combatSettings.VFX.HitVFX, projectile.Transform.parent, active: true, projectile.TargetPosition, Quaternion.identity);
+			hitVFX.Play();
 		}
 
 		public void OnDrawGizmos()

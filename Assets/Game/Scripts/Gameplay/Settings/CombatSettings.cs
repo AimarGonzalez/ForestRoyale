@@ -1,4 +1,5 @@
-﻿using ForestRoyale.Core.UI;
+﻿using ForestRoyale.Core;
+using ForestRoyale.Core.UI;
 using UnityEngine;
 using System;
 
@@ -21,9 +22,22 @@ namespace ForestRoyale.Gameplay.Settings
 			public float HitDistance => _hitDistance;
 		}
 
+		[Serializable]
+		public class VFXSettings
+		{
+			[SerializeField]
+			private PooledVFX _hitVFX;
+
+			public PooledVFX HitVFX => _hitVFX;
+		}
+
 		[SerializeField]
 		private ProjectileSettings _projectileSettings;
 
+		[SerializeField]
+		private VFXSettings _vfxSettings;
+
 		public ProjectileSettings Projectile => _projectileSettings;
+		public VFXSettings VFX => _vfxSettings;
 	}
 }

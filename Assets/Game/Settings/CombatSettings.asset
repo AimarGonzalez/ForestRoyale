@@ -15,3 +15,5 @@ MonoBehaviour:
   _projectileSettings:
     _initialOffset: 0.5
     _hitDistance: 0.01
+  _vfxSettings:
+    _hitVFX: {fileID: 2538506113845390313, guid: f803f89b9aa766043a6345c90a152ffa, type: 3}

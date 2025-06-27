@@ -33,6 +33,7 @@ namespace ForestRoyale.Gameplay.Systems
 		public PooledGameObject PooledGameObject => _pooledGameObject;
 		public Unit Attacker => _attacker;
 		public Unit Target => _target;
+		public Transform Transform => _transform;
 		public Vector3 Position
 		{
 			get => _position;
