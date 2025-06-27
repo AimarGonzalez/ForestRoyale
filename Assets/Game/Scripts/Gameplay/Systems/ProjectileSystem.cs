@@ -141,7 +141,14 @@ namespace ForestRoyale.Gameplay.Systems
 
 		private void PlayHitVFX(ProjectileData projectile)
 		{
-			PooledVFX hitVFX = _poolService.Get(_combatSettings.VFX.HitVFX, projectile.Transform.parent, active: true, projectile.TargetPosition, Quaternion.identity);
+			PooledVFX hitVFX = _poolService.Get(
+				_combatSettings.VFX.HitVFX,
+				projectile.Transform.parent,
+				projectile.TargetPosition,
+				Quaternion.identity,
+				inWorldSpace: true
+			);
+
 			hitVFX.Play();
 		}
 

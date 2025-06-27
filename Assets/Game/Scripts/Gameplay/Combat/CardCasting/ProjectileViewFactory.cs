@@ -20,7 +20,6 @@ namespace ForestRoyale.Gameplay.Combat
 			PooledGameObject projectile = _poolService.Get(
 															attacker.Prefabs.ProjectilePrefab,
 															_projectilesContainer,
-															active: true,
 															attacker.Position,
 															Quaternion.identity
 														);

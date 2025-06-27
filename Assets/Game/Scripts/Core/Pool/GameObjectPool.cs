@@ -34,15 +34,15 @@ namespace ForestRoyale.Core.Pool
 
 		public PooledGameObject Get(PooledGameObject prefab, Transform parent)
 		{
-			return Get(prefab, parent, active: true, Vector3.zero, Quaternion.identity);
+			return Get(prefab, parent, active: true, Vector3.zero, Quaternion.identity, inWorldSpace: false);
 		}
 
 		public PooledGameObject Get(PooledGameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
 		{ 
-			return Get(prefab, parent, active: true, position, rotation);
+			return Get(prefab, parent, active: true, position, rotation, inWorldSpace: false);
 		} 
 
-		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool active, Vector3 position, Quaternion rotation)
+		public PooledGameObject Get(PooledGameObject prefab, Transform parent, bool active, Vector3 position, Quaternion rotation, bool inWorldSpace)
 		{
 			PooledGameObject instance;
 			if (_queue.Count > 0)
@@ -63,8 +63,17 @@ namespace ForestRoyale.Core.Pool
 			
 			Transform transform = instance.transform;
 			transform.SetParent(parent, false);
-			transform.localPosition = position;
-			transform.localRotation = rotation;
+
+			if (inWorldSpace)
+			{
+				transform.position = position;
+				transform.rotation = rotation;
+			}
+			else
+			{
+				transform.localPosition = position;
+				transform.localRotation = rotation;
+			}
 
 			instance.TriggerBeforeGetFromPool(); // UnitRoot.CreateUnit
 			instance.gameObject.SetActive(active);
