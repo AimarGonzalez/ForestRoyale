@@ -1,3 +1,4 @@
+using ForestLib.ExtensionMethods;
 using ForestRoyale.Core.Pool;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace ForestRoyale.Core
 
 		private State _state;
 
+		private List<WaitParticleEnd> _existingParticleWaiters = new List<WaitParticleEnd>();
 		private List<WaitParticleEnd> _waitingParticles = new List<WaitParticleEnd>();
 		private bool HaveAllParticlesFinished => _waitingParticles.Count == 0;
 
@@ -36,19 +38,36 @@ namespace ForestRoyale.Core
 		{
 			foreach (ParticleSystem particle in _particleSystems)
 			{
-				if (!particle.TryGetComponent(out WaitParticleEnd waitParticleEnd))
-				{
-					waitParticleEnd = particle.gameObject.AddComponent<WaitParticleEnd>();
-				}
-
-				_waitingParticles.Add(waitParticleEnd);
+				WaitParticleEnd waitParticleEnd = particle.GetOrCreate<WaitParticleEnd>();
+				_existingParticleWaiters.Add(waitParticleEnd);
 				waitParticleEnd.OnParticleEnd += OnParticleEnd;
 			}
 		}
 
-		private void OnEnable()
+		protected override void OnBeforeGetFromPool()
 		{
+			base.OnBeforeGetFromPool();
+
+			_state = State.NotStarted;
+
+			_waitingParticles.Clear();
+			_waitingParticles.AddRange(_existingParticleWaiters);
+		}
+
+		protected override void OnAfterGetFromPool()
+		{
+			base.OnAfterGetFromPool();
 			Play();
+		}
+
+		protected override void OnReturnToPool()
+		{
+			base.OnReturnToPool();
+
+			foreach (var particle in _particleSystems)
+			{
+				particle.Stop();
+			}
 		}
 
 		public void Play()

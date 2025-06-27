@@ -59,5 +59,19 @@ namespace ForestLib.ExtensionMethods
 			component = gameObject.GetComponentInChildren<T>(includeInactive);
 			return component != null;
 		}
+
+		public static T GetOrCreate<T>(this Component source) where T : Component
+		{
+			return source.gameObject.GetOrCreate<T>();
+		}
+
+		public static T GetOrCreate<T>(this GameObject gameObject) where T : Component
+		{
+			if (gameObject.TryGetComponent(out T component))
+			{
+				return component;
+			}
+			return gameObject.AddComponent<T>();
+		}
 	}
 }

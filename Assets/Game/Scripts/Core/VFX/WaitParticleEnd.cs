@@ -7,6 +7,12 @@ namespace ForestRoyale.Core
 	{
 		public event Action<WaitParticleEnd> OnParticleEnd;
 
+		private void Awake()
+		{
+			ParticleSystem.MainModule mainModule = GetComponent<ParticleSystem>().main;
+			mainModule.stopAction = ParticleSystemStopAction.Callback;
+		}
+
 		private void OnParticleSystemStopped()
 		{
 			OnParticleEnd?.Invoke(this);
