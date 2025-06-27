@@ -100,7 +100,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-			return distanceToTarget;
+			return distanceToTarget - distanceToMove;
 		}
 
 		private bool IsTargetHit(float distanceToTarget)
@@ -121,7 +121,7 @@ namespace ForestRoyale.Gameplay.Systems
 
 			projectile.Rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-			return distanceToTarget;
+			return distanceToTarget - distanceToMove;
 		}
 
 		private void ProcessHit(ProjectileData projectile, float distanceToTarget)
