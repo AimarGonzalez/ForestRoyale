@@ -25,6 +25,8 @@ namespace ForestRoyale.Core
 
 		protected override void Awake()
 		{
+			base.Awake();
+			
 			_particleSystems = GetComponentsInChildren<ParticleSystem>();
 
 			SetupWaitForParticles();
