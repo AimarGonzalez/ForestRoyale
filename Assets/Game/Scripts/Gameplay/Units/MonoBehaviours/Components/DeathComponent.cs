@@ -8,7 +8,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 	public class DeathComponent : UnitComponent, IUnitStateChangeListener
 	{
 		[NonSerialized]
-		private VFXInstance[] _vfxPrefabs;
+		private PooledVFX[] _vfxPrefabs;
 
 		[Inject]
 		private GameObjectPoolService _gameObjectPoolService;
@@ -17,7 +17,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 		{
 			base.Awake();
 
-			_vfxPrefabs = GetComponentsInChildren<VFXInstance>(includeInactive: true);
+			_vfxPrefabs = GetComponentsInChildren<PooledVFX>(includeInactive: true);
 		}
 
 		void IUnitStateChangeListener.OnUnitStateChanged(UnitState oldState, UnitState newState)
@@ -46,7 +46,7 @@ namespace ForestRoyale.Gameplay.Units.MonoBehaviours.Components
 
 		public bool HasFinished()
 		{
-			foreach (VFXInstance vfxPrefab in _vfxPrefabs)
+			foreach (PooledVFX vfxPrefab in _vfxPrefabs)
 			{
 				if (!vfxPrefab.HasFinished)
 				{
