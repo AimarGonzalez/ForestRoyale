@@ -512,22 +512,6 @@ MonoBehaviour:
   _logMissingPool: 1
   _automaticPrefab: {fileID: 0}
   _automaticComponent: {fileID: 0}
-  _placements:
-  - {fileID: 3174324160488779686}
-  - {fileID: 7157116533272552593}
-  - {fileID: 1429287674708921356}
-  - {fileID: 7087479445454043363}
-  - {fileID: 3771095731695843944}
-  - {fileID: 3524795370567764427}
-  - {fileID: 504097271985765672}
-  - {fileID: 3751968059037299870}
-  - {fileID: 4450011511096805650}
-  - {fileID: 264847872589685190}
-  - {fileID: 5116029395035432960}
-  - {fileID: 5706369758407840271}
-  - {fileID: 8667952699103646538}
-  - {fileID: 8589834541409076239}
-  - {fileID: 1631325050683947366}
 --- !u!1 &3418542093218839420
 GameObject:
   m_ObjectHideFlags: 0
