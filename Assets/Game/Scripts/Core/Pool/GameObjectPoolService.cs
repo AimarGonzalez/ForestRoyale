@@ -13,6 +13,9 @@ namespace ForestRoyale.Core.Pool
 		
 		private Dictionary<PooledGameObject, GameObjectPool> _pools = new();
 
+		[SerializeField]
+		private bool _showDebugPanel = false;
+
 		public T Get<T>(T prefab, Transform parent) where T : MonoBehaviour
 		{
 			return Get(prefab, parent, Vector3.zero, Quaternion.identity);
@@ -95,6 +98,11 @@ namespace ForestRoyale.Core.Pool
 
 		private void OnGUI()
 		{
+			if (!_showDebugPanel)
+			{
+				return;
+			}
+			
 			GUIUtils.PushFontSize(35);
 			GUILayoutUtils.LabelHeight = GUI.skin.label.CalcHeight(new GUIContent("X"), 100);
 			
