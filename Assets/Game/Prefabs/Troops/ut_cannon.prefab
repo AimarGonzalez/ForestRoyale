@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: _root
       value: 
       objectReference: {fileID: 8456799644483888947}
+    - target: {fileID: 3143487958949891205, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: _bodyMeshRenderer
+      value: 
+      objectReference: {fileID: 2354312898275439301}
     - target: {fileID: 3176194029410523179, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -167,20 +171,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000041688292
+      value: -0.00000003877248
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000013144269
+      value: -0.000000020183673
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.95371693
+      value: 0.8870109
       objectReference: {fileID: 0}
     - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.30070582
+      value: 0.4617486
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397127145087499016, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 3960739159654457305, guid: e99fc33b115fc404281a455e0b3769c7, type: 3}
       propertyPath: m_Speed
@@ -353,6 +365,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2729970056679a40b251de88e9eba5b, type: 3}
+--- !u!23 &2354312898275439301 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8577743373132383625, guid: c2729970056679a40b251de88e9eba5b, type: 3}
+  m_PrefabInstance: {fileID: 2907505401822464178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3446152837830356825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2729970056679a40b251de88e9eba5b, type: 3}
