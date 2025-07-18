@@ -1,8 +1,10 @@
 using ForestRoyale.Core.UI;
 using Sirenix.OdinInspector;
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 
 namespace ForestRoyale.Core.Pool
@@ -100,6 +102,7 @@ namespace ForestRoyale.Core.Pool
 		
 		private bool IsPrefabInstanceInScene(Component component)
 		{
+			
 			bool isPrefabStageOpen = PrefabStageUtility.GetCurrentPrefabStage() != null;
 			bool isInstance = PrefabUtility.IsPartOfPrefabInstance(component);
 
