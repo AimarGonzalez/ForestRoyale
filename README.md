@@ -2,7 +2,7 @@
   <img src="docs/banner_02.jpg" alt="Forest Royale Banner" width="100%"/>
 </div>
 
-## 🚧 **WIP** - This project is currently under active development. 🚧
+## 🚧 Under construction 🚧
 
 # Forest Royale
 
@@ -22,35 +22,17 @@ Forest Royale combines the tactical card-based gameplay of Clash Royale with an 
 
 This project is licensed under a custom license - see the [LICENSE](LICENSE) file for details.
 
-## 🛠️ Project settings
+## Libraries
+- VContainer
+- Odin Inspector
+- DOTween
 
-- **Engine**: Unity 6000.0.41f1
-- **Platform**: Mobile (Android/iOS)
-- **Version Control**: Git
-
-### Key Dependencies
-- DOTween (Animation)
-- TextMesh Pro (Text Rendering)
-- VContainer (Dependency Injection)
-- Odin Inspector (Editor Tools)
-- Shader Graph (Custom Shaders)
-
-
-## 🚀 Getting Started
-
-### Installation
+## Installation
 1. Clone the repository
    ```bash
    git clone git@github.com:AimarGonzalez/ForestRoyale.git
    ```
 2. Open the main scene `Assets/Game/Scenes/TrainingArea.unity`
-
-### Building
-- **Android**: File → Build Settings → Android → Build
-
-## 🤝 Contributing
-
-This is currently a personal project. Contribution guidelines may be added in the future.
 
 ## 📞 Contact
 
